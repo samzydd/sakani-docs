@@ -76,6 +76,16 @@ export const docsNav: NavGroup[] = [
     ],
   },
   {
+    title: "E-commerce",
+    items: [
+      { title: "Product Card", href: "/docs/components/product-card", label: "New" },
+      { title: "Product Options", href: "/docs/components/product-options", label: "New" },
+      { title: "Product Gallery", href: "/docs/components/product-gallery", label: "New" },
+      { title: "Cart", href: "/docs/components/cart", label: "New" },
+      { title: "Star Rating", href: "/docs/components/star-rating" },
+    ],
+  },
+  {
     title: "Feedback",
     items: [
       { title: "Toast", href: "/docs/components/toast", label: "New" },
@@ -96,7 +106,6 @@ export const docsNav: NavGroup[] = [
       { title: "Board Card", href: "/docs/components/board-card", label: "New" },
       { title: "Chat", href: "/docs/components/chat", label: "New" },
       { title: "Calendar", href: "/docs/components/calendar", label: "New" },
-      { title: "Star Rating", href: "/docs/components/star-rating" },
     ],
   },
   {
