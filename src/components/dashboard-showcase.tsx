@@ -6,14 +6,26 @@ import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock } from "@sakaniui/r
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";
 
-const TABS = [
-  { key: "crm", label: "CRM Dashboard", path: "app.yourcompany.com/crm", Block: CRMDashboardBlock },
-  { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", Block: KanbanBoardBlock },
-  { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", Block: DataTableBlock },
-] as const;
+type Tab =
+  | { key: string; label: string; path: string; kind: "block"; Block: React.FC; live?: false }
+  | { key: string; label: string; path: string; kind: "iframe"; url: string; live: true };
+
+const TABS: Tab[] = [
+  {
+    key: "sakani-crm",
+    label: "Sakani CRM",
+    path: "dist-olive-five-72.vercel.app",
+    kind: "iframe",
+    url: "https://dist-olive-five-72.vercel.app/",
+    live: true,
+  },
+  { key: "crm", label: "CRM Demo", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock },
+  { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock },
+  { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", kind: "block", Block: DataTableBlock },
+];
 
 export function DashboardShowcase() {
-  const [active, setActive] = useState<(typeof TABS)[number]["key"]>("crm");
+  const [active, setActive] = useState(TABS[0].key);
   const tab = TABS.find((t) => t.key === active)!;
   const { ref, style } = useScrollReveal<HTMLDivElement>();
 
@@ -24,7 +36,7 @@ export function DashboardShowcase() {
           Real dashboards, not mockups
         </h2>
         <p className="mt-3 text-ink-muted">
-          These are live Sakani blocks rendering below, not screenshots — hover the
+          Real Sakani blocks and a real production app, not screenshots — hover the
           sidebar, switch tabs, scroll the table. It all works.
         </p>
       </div>
@@ -36,13 +48,18 @@ export function DashboardShowcase() {
               key={t.key}
               onClick={() => setActive(t.key)}
               className={cn(
-                "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
+                "flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
                 active === t.key
                   ? "border-ink bg-ink text-ink-on-inverse"
                   : "border-line-subtle text-ink-muted hover:border-line-default hover:text-ink"
               )}
             >
               {t.label}
+              {t.live && (
+                <span className="flex items-center gap-1 rounded-full bg-success/20 px-1.5 py-0.5 text-[10px] font-semibold text-success">
+                  <span className="h-1.5 w-1.5 rounded-full bg-success" /> LIVE
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -83,7 +100,17 @@ export function DashboardShowcase() {
             at typical desktop widths; overflow-auto stays on as a safety
             net for narrower viewports. */}
         <div className="dashboard-embed h-[640px] overflow-auto bg-canvas">
-          <tab.Block />
+          {tab.kind === "iframe" ? (
+            <iframe
+              key={tab.key}
+              src={tab.url}
+              title={tab.label}
+              className="h-full w-full border-0"
+              loading="lazy"
+            />
+          ) : (
+            <tab.Block />
+          )}
         </div>
       </div>
     </section>
