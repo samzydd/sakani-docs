@@ -25,10 +25,14 @@ export const docsNav: NavGroup[] = [
       { title: "Badge", href: "/docs/components/badge" },
       { title: "Input", href: "/docs/components/input" },
       { title: "Select", href: "/docs/components/select" },
-      { title: "Alert", href: "/docs/components/alert", label: "New" },
+      { title: "Alert", href: "/docs/components/alert" },
       { title: "Card", href: "/docs/components/card" },
       { title: "Avatar", href: "/docs/components/avatar" },
       { title: "Tabs", href: "/docs/components/tabs" },
+      { title: "Table", href: "/docs/components/table" },
+      { title: "Stat Card", href: "/docs/components/stat-card" },
+      { title: "Line Chart", href: "/docs/components/line-chart" },
+      { title: "Star Rating", href: "/docs/components/star-rating" },
     ],
   },
   {
@@ -36,6 +40,9 @@ export const docsNav: NavGroup[] = [
     items: [
       { title: "Pricing Table", href: "/docs/blocks/pricing-table" },
       { title: "Billing Address", href: "/docs/blocks/billing-address" },
+      { title: "Data Table", href: "/docs/blocks/data-table" },
+      { title: "Kanban Board", href: "/docs/blocks/kanban-board" },
+      { title: "CRM Dashboard", href: "/docs/blocks/crm-dashboard", label: "New" },
     ],
   },
 ];

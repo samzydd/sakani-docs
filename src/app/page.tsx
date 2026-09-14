@@ -4,6 +4,9 @@ import Link from "next/link";
 import { ArrowRight, Moon, Blocks, Palette, Component } from "lucide-react";
 import { Button, Badge, Avatar, AvatarGroup, Switch, Alert } from "@sakaniui/react";
 import { CodeBlock } from "@/components/code-block";
+import { DashboardShowcase } from "@/components/dashboard-showcase";
+import { CategoryGrid } from "@/components/category-grid";
+import { FaqSection } from "@/components/faq-section";
 
 const FEATURES = [
   {
@@ -110,6 +113,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <DashboardShowcase />
+
       {/* Features */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-xl text-center">
@@ -132,6 +137,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <CategoryGrid />
 
       {/* Usage */}
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
@@ -157,6 +164,8 @@ export default function HomePage() {
           <CodeBlock code={USAGE_CODE} lang="tsx" />
         </div>
       </section>
+
+      <FaqSection />
     </main>
   );
 }

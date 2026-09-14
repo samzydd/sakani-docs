@@ -9,10 +9,15 @@ export function ComponentPreview({
   children,
   code,
   lang = "tsx",
+  fullBleed = false,
 }: {
   children: ReactNode;
   code: string;
   lang?: string;
+  /** For wide, self-contained blocks (dashboards, tables) — drops the
+   * centered padding so the block renders at its own natural width with
+   * horizontal scroll instead of being squeezed into a padded box. */
+  fullBleed?: boolean;
 }) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
   const html = useHighlightedCode(code, lang);
@@ -35,7 +40,14 @@ export function ComponentPreview({
       </div>
 
       {tab === "preview" ? (
-        <div className="flex min-h-52 items-center justify-center bg-canvas p-10">
+        <div
+          className={cn(
+            "bg-canvas",
+            fullBleed
+              ? "max-h-[600px] overflow-auto"
+              : "flex min-h-52 items-center justify-center p-10"
+          )}
+        >
           {children}
         </div>
       ) : (
