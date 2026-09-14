@@ -11,8 +11,8 @@ import Image from "next/image";
  * ending with a hard edge at the fold.
  */
 const BACK_LAYERS = [
-  { src: "/showcase/stocks.png", alt: "Stock market app", inset: "inset-x-16 sm:inset-x-24", offset: "-top-12 sm:-top-16", z: "z-0" },
-  { src: "/showcase/finance.png", alt: "Financial overview dashboard", inset: "inset-x-8 sm:inset-x-12", offset: "-top-6 sm:-top-8", z: "z-10" },
+  { src: "/showcase/stocks.png", alt: "Stock market app", inset: "inset-x-16 sm:inset-x-24", offset: "-top-6 sm:-top-8", opacity: "opacity-40", z: "z-0" },
+  { src: "/showcase/finance.png", alt: "Financial overview dashboard", inset: "inset-x-8 sm:inset-x-12", offset: "-top-3 sm:-top-4", opacity: "opacity-70", z: "z-10" },
 ] as const;
 
 export function HeroPreview() {
@@ -23,7 +23,7 @@ export function HeroPreview() {
           <div
             key={layer.src}
             aria-hidden="true"
-            className={`absolute ${layer.inset} ${layer.offset} ${layer.z} h-full overflow-hidden rounded-t-2xl border border-b-0 border-line-subtle bg-surface shadow-xl`}
+            className={`absolute ${layer.inset} ${layer.offset} ${layer.opacity} ${layer.z} h-full overflow-hidden rounded-t-2xl border border-b-0 border-line-subtle bg-surface shadow-xl`}
           >
             <Image
               src={layer.src}
