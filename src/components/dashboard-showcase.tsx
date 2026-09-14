@@ -66,11 +66,12 @@ export function DashboardShowcase() {
           Real Sakani blocks and a real production app, not screenshots: hover the
           sidebar, switch tabs, scroll the table. It all works.
         </p>
-      </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Same max-w-5xl column as the title above, not the wider
+            max-w-7xl the demo frame uses, so the tabs start at the
+            title's own left edge instead of a wider column's. */}
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap gap-2">
             {TABS.map((t) => (
               <button
                 key={t.key}
