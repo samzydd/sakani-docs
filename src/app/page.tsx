@@ -10,7 +10,6 @@ import { FaqSection } from "@/components/faq-section";
 import { DashboardExplode } from "@/components/dashboard-explode";
 import { GithubIcon } from "@/components/icons/github-icon";
 import { Reveal } from "@/components/reveal";
-import { HeroScene } from "@/components/hero-scene";
 import { HeroPreview } from "@/components/hero-preview";
 
 const FEATURES = [
@@ -50,32 +49,34 @@ export default function HomePage() {
     <main>
       {/* Hero — fills the viewport on load; text animates in on mount (not
           scroll-triggered, it's already in view), each element staggered
-          slightly after the last. The product screenshot bleeds off the
-          bottom of the fold rather than ending the section abruptly. */}
-      <section className="relative flex min-h-dvh flex-col overflow-hidden pt-20 sm:pt-24">
-        <HeroScene />
-        <div className="relative mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-4 text-center sm:px-6 lg:px-8">
-          <Link
-            href="/docs"
-            className="animate-fade-in mx-auto mb-6 inline-flex items-center gap-1.5 rounded-full border border-line-subtle bg-surface px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default"
-          >
-            Last updated: September 3rd <ArrowRight size={12} />
-          </Link>
-          <h1
-            className="animate-fade-in text-balance text-5xl font-bold tracking-tight text-ink sm:text-6xl md:text-7xl"
-            style={{ animationDelay: "80ms" }}
-          >
-            A design system built from Figma, not around it.
-          </h1>
+          slightly after the last. No background decoration: a plain
+          canvas, left-aligned copy, and a dimmed product preview doing
+          the work instead. */}
+      <section className="relative flex min-h-dvh flex-col overflow-hidden bg-canvas pt-32 sm:pt-40">
+        <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <h1
+              className="animate-fade-in text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+            >
+              A design system built from Figma, not around it.
+            </h1>
+            <Link
+              href="/docs"
+              className="animate-fade-in inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
+              style={{ animationDelay: "80ms" }}
+            >
+              Last updated: September 3rd <ArrowRight size={12} />
+            </Link>
+          </div>
           <p
-            className="animate-fade-in mx-auto mt-5 max-w-xl text-balance text-lg text-ink-muted"
+            className="animate-fade-in mt-4 max-w-md text-balance text-ink-muted"
             style={{ animationDelay: "160ms" }}
           >
             114+ components and 41 blocks for React, matching a single Figma source
             of truth exactly — install it, import it, ship it.
           </p>
           <div
-            className="animate-fade-in mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            className="animate-fade-in mt-8 flex flex-wrap items-center gap-3"
             style={{ animationDelay: "240ms" }}
           >
             <Link href="/docs">
@@ -90,7 +91,7 @@ export default function HomePage() {
             </a>
           </div>
 
-          <div className="animate-fade-in mx-auto mt-8 max-w-md" style={{ animationDelay: "320ms" }}>
+          <div className="animate-fade-in mt-6 max-w-md" style={{ animationDelay: "320ms" }}>
             <CodeBlock code={INSTALL_CODE} lang="bash" />
           </div>
         </div>

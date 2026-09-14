@@ -53,7 +53,7 @@ export function DashboardShowcase() {
   }, [tab, dashboardTheme]);
 
   return (
-    <section className="mx-auto max-w-[1600px] px-4 py-20 sm:px-6 lg:px-8">
+    <section id="showcase" className="mx-auto max-w-[1600px] px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-xl text-center">
         <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           Real dashboards, not mockups
