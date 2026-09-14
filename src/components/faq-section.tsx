@@ -36,7 +36,7 @@ export function FaqSection() {
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
-      <div>
+      <div className="px-8">
         <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           Frequently asked questions
         </h2>
