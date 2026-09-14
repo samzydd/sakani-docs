@@ -184,6 +184,21 @@ html.dark .noise-overlay {
   font-style: italic;
 }
 
+/* Dashboard ticker (see dashboard-ticker.tsx): the track is rendered
+   twice back to back and this animates it exactly -50% of its own width,
+   so the loop point is invisible. Pauses on hover; frozen entirely under
+   prefers-reduced-motion below. */
+@keyframes dashboard-ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.dashboard-ticker {
+  animation: dashboard-ticker 42s linear infinite;
+}
+.dashboard-ticker:hover {
+  animation-play-state: paused;
+}
+
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
@@ -205,28 +220,6 @@ html.dark .noise-overlay {
 }
 .reveal.is-visible {
   animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* Hero background chips (see hero-scene.tsx): rotation is a static
-   transform on the outer element, so the entrance fade lives there too
-   (opacity only, never transform -- animating transform on the same
-   element would overwrite the rotate every frame). The continuous float
-   lives on the inner element instead, where translateY has the `transform`
-   property to itself. */
-@keyframes hero-chip-in {
-  from { opacity: 0; }
-  to { opacity: 0.92; }
-}
-.hero-chip-in {
-  opacity: 0;
-  animation: hero-chip-in 0.6s ease-out both;
-}
-@keyframes hero-chip-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-.hero-chip-float {
-  animation: hero-chip-float 7s ease-in-out infinite;
 }
 
 /* Sakani's tokens.css only ever defines a .dark override -- there's no
@@ -323,11 +316,7 @@ html.dark .noise-overlay {
   .animate-fade-in {
     animation: none;
   }
-  .hero-chip-in {
-    opacity: 0.92;
-    animation: none;
-  }
-  .hero-chip-float {
+  .dashboard-ticker {
     animation: none;
   }
 }

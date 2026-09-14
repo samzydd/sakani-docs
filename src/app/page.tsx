@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { ArrowRight, Moon, Blocks, Palette, Component } from "lucide-react";
-import { Button, Badge, Avatar, AvatarGroup, Switch, Alert } from "@sakaniui/react";
+import { Button, Alert } from "@sakaniui/react";
 import { CodeBlock } from "@/components/code-block";
 import { DashboardShowcase } from "@/components/dashboard-showcase";
 import { CategoryGrid } from "@/components/category-grid";
 import { FaqSection } from "@/components/faq-section";
-import { DashboardExplode } from "@/components/dashboard-explode";
+import { DashboardTicker } from "@/components/dashboard-ticker";
 import { GithubIcon } from "@/components/icons/github-icon";
 import { Reveal } from "@/components/reveal";
 import { HeroPreview } from "@/components/hero-preview";
@@ -94,43 +94,8 @@ export default function HomePage() {
         <HeroPreview />
       </section>
 
-      <DashboardExplode />
-
-      {/* Live component strip */}
       <Reveal>
-        <section className="border-b border-line-subtle bg-surface/40 py-14">
-          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-6 px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
-              <Avatar initials="SO" size="md" />
-              <AvatarGroup
-                size="sm"
-                max={3}
-                avatars={[
-                  { initials: "AK" },
-                  { initials: "CD" },
-                  { initials: "FM" },
-                  { initials: "DR" },
-                ]}
-              />
-            </div>
-            <div className="flex items-center gap-2 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
-              <Badge variant="accent">New</Badge>
-              <Badge variant="success" emphasis="solid">
-                Shipped
-              </Badge>
-              <Badge variant="neutral">v0.3.2</Badge>
-            </div>
-            <div className="flex items-center gap-3 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
-              <Button size="sm" variant="primary">
-                Primary
-              </Button>
-              <Button size="sm" variant="outline">
-                Outline
-              </Button>
-              <Switch defaultChecked aria-label="Toggle" />
-            </div>
-          </div>
-        </section>
+        <DashboardTicker />
       </Reveal>
 
       <Reveal>
@@ -140,7 +105,7 @@ export default function HomePage() {
       {/* Features */}
       <Reveal>
         <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-xl text-center">
+          <div className="max-w-xl">
             <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
               Everything a real product needs
             </h2>
@@ -169,7 +134,7 @@ export default function HomePage() {
       {/* Usage */}
       <Reveal>
         <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 rounded-2xl border border-line-subtle bg-surface p-8 lg:grid-cols-2 lg:p-10">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
               <h2 className="text-2xl font-semibold tracking-tight text-ink">
                 Up and running in a minute

@@ -53,8 +53,8 @@ export function DashboardShowcase() {
   }, [tab, dashboardTheme]);
 
   return (
-    <section id="showcase" className="mx-auto max-w-[1600px] px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-xl text-center">
+    <section id="showcase" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div className="max-w-xl">
         <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           Real dashboards, not mockups
         </h2>
@@ -64,7 +64,7 @@ export function DashboardShowcase() {
         </p>
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <div className="mt-8 flex flex-wrap items-center gap-3">
         <div className="flex flex-wrap justify-center gap-2">
           {TABS.map((t) => (
             <button
@@ -89,7 +89,7 @@ export function DashboardShowcase() {
       <div
         ref={ref}
         style={style}
-        className="mx-auto mt-8 max-w-[1500px] overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-xl"
+        className="mx-auto mt-8 w-full overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-xl"
       >
         <div className="flex items-center gap-3 border-b border-line-subtle px-4 py-3">
           <div className="flex gap-1.5">
