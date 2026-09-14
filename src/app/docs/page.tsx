@@ -14,7 +14,7 @@ export default function IntroductionPage() {
       <div className="doc-prose">
         <p>
           Sakani is a React component library generated directly from a single Figma
-          file — every component, variant, and state you see in the design file has a
+          file: every component, variant, and state you see in the design file has a
           matching implementation here. Nothing is guessed or approximated: colors,
           spacing, radii, and typography all trace back to the same token definitions
           the designers use.
@@ -27,15 +27,15 @@ export default function IntroductionPage() {
         </p>
         <ul>
           <li>
-            <strong>Components</strong> — real, importable, configurable React
+            <strong>Components</strong>: real, importable, configurable React
             components (<code>Button</code>, <code>Select</code>,{" "}
             <code>Card</code>…). You install these and use them as-is, the same way
             you&apos;d use any other component library.
           </li>
           <li>
-            <strong>Blocks</strong> — full page sections (a pricing table, a
+            <strong>Blocks</strong>: full page sections (a pricing table, a
             checkout flow, a billing form). These are{" "}
-            <strong>composition examples</strong>, not configurable components — the
+            <strong>composition examples</strong>, not configurable components, and the
             intent is to copy the source file into your own project and edit it
             directly, the same way shadcn/ui&apos;s blocks work.
           </li>
@@ -53,7 +53,7 @@ export default function IntroductionPage() {
         <h2>Not a fork, not a wrapper</h2>
         <p>
           Sakani doesn&apos;t sit on top of Radix, Headless UI, or any other primitive
-          library — every interactive behavior (keyboard navigation, focus
+          library: every interactive behavior (keyboard navigation, focus
           management, portal positioning) is implemented directly against the DOM.
           That keeps the bundle small and the behavior fully within this project&apos;s
           control.

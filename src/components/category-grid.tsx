@@ -20,7 +20,7 @@ export function CategoryGrid() {
           Browse everything
         </h2>
         <p className="mt-3 text-ink-muted">
-          114+ components and 41 blocks, organized by category — jump straight to
+          114+ components and 41 blocks, organized by category. Jump straight to
           the one you need.
         </p>
       </div>

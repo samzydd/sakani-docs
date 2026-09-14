@@ -38,7 +38,7 @@ const PROPS = [
 export default function SelectPage() {
   return (
     <article>
-      <PageHeader title="Select" description="A custom, fully-styled single-select dropdown — not a native <select>." />
+      <PageHeader title="Select" description="A custom, fully-styled single-select dropdown, not a native <select>." />
 
       <div className="doc-prose mb-8">
         <p>

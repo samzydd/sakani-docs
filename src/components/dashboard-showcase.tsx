@@ -59,7 +59,7 @@ export function DashboardShowcase() {
           Real dashboards, not mockups
         </h2>
         <p className="mt-3 text-ink-muted">
-          Real Sakani blocks and a real production app, not screenshots — hover the
+          Real Sakani blocks and a real production app, not screenshots: hover the
           sidebar, switch tabs, scroll the table. It all works.
         </p>
       </div>
@@ -82,7 +82,7 @@ export function DashboardShowcase() {
           ))}
         </div>
         <span className="flex items-center gap-1.5 rounded-full bg-accent-subtle px-3 py-1.5 text-xs font-medium text-ink">
-          <MousePointerClick size={13} /> Fully interactive — try it
+          <MousePointerClick size={13} /> Fully interactive, try it
         </span>
       </div>
 

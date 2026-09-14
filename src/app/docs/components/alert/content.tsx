@@ -28,7 +28,7 @@ const PROPS = [
 export default function AlertPage() {
   return (
     <article>
-      <PageHeader title="Alert" description="An inline status message — 5 colors, each with a matching default icon." />
+      <PageHeader title="Alert" description="An inline status message: 5 colors, each with a matching default icon." />
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>

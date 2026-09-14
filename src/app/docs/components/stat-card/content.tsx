@@ -24,17 +24,17 @@ const PROPS = [
   { name: "title", type: "string", description: "Stat label." },
   { name: "value", type: "string", description: "The headline number." },
   { name: "description", type: "string", description: "Supporting line under the delta." },
-  { name: "delta", type: "string", description: "e.g. \"+12.5%\" — colored by trend." },
+  { name: "delta", type: "string", description: "e.g. \"+12.5%\", colored by trend." },
   { name: "trend", type: "'up' | 'down' | 'flat'", description: "Drives the delta's color and arrow." },
   { name: "sparkline", type: "number[]", description: "Data points for an inline sparkline." },
   { name: "variant", type: "'minimal' | 'icon' | 'featured'", default: "'minimal'", description: "Visual density." },
-  { name: "icon", type: "LucideIcon", description: "Leading icon — shown for icon/featured variants." },
+  { name: "icon", type: "LucideIcon", description: "Leading icon, shown for icon/featured variants." },
 ];
 
 export default function StatCardPage() {
   return (
     <article>
-      <PageHeader title="Stat Card" description="A KPI card with an optional sparkline — the building block behind every Sakani dashboard." />
+      <PageHeader title="Stat Card" description="A KPI card with an optional sparkline: the building block behind every Sakani dashboard." />
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>

@@ -13,13 +13,13 @@ const CODE = `import { CRMDashboardBlock } from '@sakaniui/react/blocks';
 export default function CRMDashboardBlockPage() {
   return (
     <article>
-      <PageHeader title="CRM Dashboard" description="A full CRM screen — sidebar, filters, and a real data table — assembled entirely from Sakani components." />
+      <PageHeader title="CRM Dashboard" description="A full CRM screen (sidebar, filters, and a real data table) assembled entirely from Sakani components." />
 
       <div className="doc-prose mb-8">
         <p>
           This is the flagship example of what Sakani is actually for: not just
           marketing pages, but real application shells. Scroll inside the frame
-          below — everything (sidebar, filters, table, avatars, badges) is a live
+          below: everything (sidebar, filters, table, avatars, badges) is a live
           Sakani component, not a screenshot. Copy{" "}
           <a
             href="https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks/CRMDashboardBlock/CRMDashboardBlock.tsx"

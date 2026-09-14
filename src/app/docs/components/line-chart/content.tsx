@@ -32,7 +32,7 @@ const PROPS = [
   { name: "xKey", type: "string", default: "'label'", description: "Field used for the x-axis." },
   { name: "variant", type: "'default' | 'linear' | 'step' | 'multiple' | 'dots' | ...", default: "'default'", description: "Line style." },
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Preset height." },
-  { name: "height", type: "number", description: "Pixel height override — takes precedence over size." },
+  { name: "height", type: "number", description: "Pixel height override, takes precedence over size." },
   { name: "showLegend", type: "boolean", default: "false", description: "Shows a legend below the chart." },
 ];
 

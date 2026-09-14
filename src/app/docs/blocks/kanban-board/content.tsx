@@ -13,12 +13,12 @@ const CODE = `import { KanbanBoardBlock } from '@sakaniui/react/blocks';
 export default function KanbanBoardBlockPage() {
   return (
     <article>
-      <PageHeader title="Kanban Board" description="A project-management board with columns, cards, and drag states — the Data & Content category's block." />
+      <PageHeader title="Kanban Board" description="A project-management board with columns, cards, and drag states: the Data & Content category's block." />
 
       <div className="doc-prose mb-8">
         <p>
           Ships with a <code>state</code> prop demonstrating{" "}
-          <code>default | loading | empty-column | dragging</code> — copy{" "}
+          <code>default | loading | empty-column | dragging</code>. Copy{" "}
           <a
             href="https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks/KanbanBoardBlock/KanbanBoardBlock.tsx"
             target="_blank"

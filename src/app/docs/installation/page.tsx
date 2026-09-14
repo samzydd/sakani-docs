@@ -38,7 +38,7 @@ export default function InstallationPage() {
         <h2>2. Import the tokens once</h2>
         <p>
           Every component references CSS variables for color, spacing, radius, and
-          shadow — <code>tokens.css</code> is what actually defines them. Import it
+          shadow; <code>tokens.css</code> is what actually defines them. Import it
           exactly once, at your app&apos;s root, before any component renders.
         </p>
       </div>
@@ -70,7 +70,7 @@ export default function InstallationPage() {
         <h2>Dark mode</h2>
         <p>
           Every token has a light and dark definition. Sakani doesn&apos;t ship a theme
-          switcher — toggle the <code>.dark</code> class on any ancestor element
+          switcher: toggle the <code>.dark</code> class on any ancestor element
           (typically <code>&lt;html&gt;</code>) and every component underneath it
           re-themes automatically.
         </p>

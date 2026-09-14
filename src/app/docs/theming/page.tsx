@@ -40,7 +40,7 @@ export default function ThemingPage() {
 
         <h2>1. Primitives</h2>
         <p>
-          Raw scales with no semantic meaning attached — <code>color/neutral/500</code>
+          Raw scales with no semantic meaning attached: <code>color/neutral/500</code>
           , <code>space/16</code>, <code>radius/md</code>. These exist so the
           semantic layer has something consistent to alias, and are never referenced
           by component CSS directly.
@@ -50,7 +50,7 @@ export default function ThemingPage() {
         <p>
           Names like <code>bg/surface</code>, <code>fg/muted</code>, and{" "}
           <code>accent/default</code> alias primitives and carry both a light and a
-          dark value. This is the only layer components bind to — so a rebrand or
+          dark value. This is the only layer components bind to, so a rebrand or
           theme change means repointing a semantic token, and every component using
           it updates automatically.
         </p>
@@ -87,7 +87,7 @@ export default function ThemingPage() {
         <p>
           Every semantic token has a value under <code>:root</code> (light) and
           another under <code>.dark</code>. Never hardcode a color in your own
-          code that sits alongside Sakani components — bind to the semantic
+          code that sits alongside Sakani components: bind to the semantic
           variable instead, and dark mode comes for free.
         </p>
 
@@ -95,7 +95,7 @@ export default function ThemingPage() {
         <p>
           Because every component reads from the semantic layer, overriding a
           handful of variables after <code>tokens.css</code> loads re-themes the
-          entire library — no component source changes, no rebuild.
+          entire library, no component source changes, no rebuild.
         </p>
       </div>
       <div className="mt-4">

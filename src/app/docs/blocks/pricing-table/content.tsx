@@ -44,12 +44,12 @@ const CODE = `import { PricingTableBlock } from '@sakaniui/react/blocks';
 export default function PricingTableBlockPage() {
   return (
     <article>
-      <PageHeader title="Pricing Table" description="A full pricing section — 2 or 3 plans, one highlighted as the recommended tier." />
+      <PageHeader title="Pricing Table" description="A full pricing section: 2 or 3 plans, one highlighted as the recommended tier." />
 
       <div className="doc-prose mb-8">
         <p>
           Blocks are <strong>composition examples</strong>, not configurable
-          components — this page shows it running with realistic props, but the
+          components: this page shows it running with realistic props, but the
           intent is to copy{" "}
           <a
             href="https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks/PricingTableBlock/PricingTableBlock.tsx"
@@ -59,7 +59,7 @@ export default function PricingTableBlockPage() {
           >
             the source file <ExternalLink size={13} />
           </a>{" "}
-          into your own project and edit it directly — restyle a card, change the
+          into your own project and edit it directly: restyle a card, change the
           layout, add a 4th plan.
         </p>
       </div>

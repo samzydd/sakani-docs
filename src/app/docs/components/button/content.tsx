@@ -42,12 +42,12 @@ const PROPS = [
 export default function ButtonPage() {
   return (
     <article>
-      <PageHeader title="Button" description="The primary action primitive — 5 variants × 3 sizes, all token-bound." />
+      <PageHeader title="Button" description="The primary action primitive: 5 variants × 3 sizes, all token-bound." />
 
       <div className="doc-prose mb-8">
         <p>
           Maps 1:1 to the Figma Button component set. States (hover, focus, disabled)
-          are handled entirely with CSS pseudo-classes, not extra props — what looks
+          are handled entirely with CSS pseudo-classes, not extra props: what looks
           like a variant in Figma is a real interactive state in code.
         </p>
       </div>

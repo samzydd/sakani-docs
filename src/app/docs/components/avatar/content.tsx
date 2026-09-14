@@ -26,15 +26,15 @@ const GROUP = `<AvatarGroup
 
 const PROPS = [
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Avatar diameter." },
-  { name: "src", type: "string", description: "Image URL — renders an image avatar." },
-  { name: "initials", type: "string", description: "1–2 letters — renders when no src is given." },
+  { name: "src", type: "string", description: "Image URL, renders an image avatar." },
+  { name: "initials", type: "string", description: "1–2 letters, renders when no src is given." },
   { name: "icon", type: "ReactNode", description: "Custom icon, used when neither src nor initials are given." },
 ];
 
 export default function AvatarPage() {
   return (
     <article>
-      <PageHeader title="Avatar" description="User or entity avatar — image, initials, or icon, in 4 sizes." />
+      <PageHeader title="Avatar" description="User or entity avatar: image, initials, or icon, in 4 sizes." />
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>

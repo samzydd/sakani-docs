@@ -49,7 +49,7 @@ export function HeroPreview() {
           <div className="relative h-[calc(100%-49px)]">
             <Image
               src="/showcase/crm-dashboard.png"
-              alt="Sakani CRM — a real production dashboard built on the design system"
+              alt="Sakani CRM, a real production dashboard built on the design system"
               fill
               priority
               sizes="(min-width: 1024px) 1152px, 100vw"

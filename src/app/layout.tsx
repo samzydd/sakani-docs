@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Sakani — Design System for React",
+    default: "Sakani · Design System for React",
     template: "%s · Sakani",
   },
   description:

@@ -29,7 +29,7 @@ const PROPS = [
 export default function BadgePage() {
   return (
     <article>
-      <PageHeader title="Badge" description="A small status or category label — 5 colors × 2 emphasis levels." />
+      <PageHeader title="Badge" description="A small status or category label: 5 colors × 2 emphasis levels." />
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>

@@ -25,7 +25,7 @@ export default function BillingAddressBlockPage() {
         <p>
           Unlike most blocks, this one carries a small real state machine (
           <code>idle | invalid | server-error | loading</code>) so the form actually
-          works in this preview — try submitting with an incomplete postal code.
+          works in this preview: try submitting with an incomplete postal code.
           Copy{" "}
           <a
             href="https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks/Billing/BillingAddressBlock/BillingAddressBlock.tsx"

@@ -13,7 +13,7 @@ const CODE = `import { DataTableBlock } from '@sakaniui/react/blocks';
 export default function DataTableBlockPage() {
   return (
     <article>
-      <PageHeader title="Data Table" description="A full data table with a toolbar — search, filters, bulk actions, and pagination." />
+      <PageHeader title="Data Table" description="A full data table with a toolbar: search, filters, bulk actions, and pagination." />
 
       <div className="doc-prose mb-8">
         <p>

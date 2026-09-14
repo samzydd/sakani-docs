@@ -16,12 +16,12 @@ const FEATURES = [
   {
     icon: Component,
     title: "114+ components",
-    body: "Every atom, molecule, and pattern in the Sakani Figma file, exported 1:1 — not reinterpreted.",
+    body: "Every atom, molecule, and pattern in the Sakani Figma file, exported 1:1, not reinterpreted.",
   },
   {
     icon: Blocks,
     title: "41 ready-made blocks",
-    body: "Full page sections — pricing tables, checkout flows, auth screens — meant to be copied and edited, not configured.",
+    body: "Full page sections (pricing tables, checkout flows, auth screens) meant to be copied and edited, not configured.",
   },
   {
     icon: Palette,
@@ -31,7 +31,7 @@ const FEATURES = [
   {
     icon: Moon,
     title: "Dark mode included",
-    body: "Not bolted on after the fact — every component ships with a verified dark-mode pass from day one.",
+    body: "Not bolted on after the fact: every component ships with a verified dark-mode pass from day one.",
   },
 ];
 
@@ -70,7 +70,7 @@ export default function HomePage() {
             className="animate-fade-in mt-4 max-w-md text-balance text-ink-muted"
             style={{ animationDelay: "160ms" }}
           >
-            114+ components and 41 blocks, matching your Figma file exactly — so
+            114+ components and 41 blocks, matching your Figma file exactly, so
             your whole team ships from one source of truth, not a reinterpretation of it.
           </p>
           <div
@@ -145,7 +145,7 @@ export default function HomePage() {
               Everything a real product needs
             </h2>
             <p className="mt-3 text-ink-muted">
-              Not a component playground — a system built to ship actual screens.
+              Not a component playground: a system built to ship actual screens.
             </p>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -182,7 +182,7 @@ export default function HomePage() {
                 className="mt-5"
                 color="info"
                 title="Don't forget the tokens"
-                description="Component styles reference CSS variables — tokens.css supplies the values."
+                description="Component styles reference CSS variables; tokens.css supplies the values."
               />
               <Link href="/docs/installation" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:underline">
                 Full installation guide <ArrowRight size={14} />

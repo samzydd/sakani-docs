@@ -39,7 +39,7 @@ const columns = [
 <Table columns={columns} rows={rows} />`;
 
 const PROPS = [
-  { name: "columns", type: "TableColumn<T>[]", description: "Column definitions — key, header, optional render()." },
+  { name: "columns", type: "TableColumn<T>[]", description: "Column definitions: key, header, optional render()." },
   { name: "rows", type: "T[]", description: "The row data." },
   { name: "selectable", type: "boolean", default: "false", description: "Adds a checkbox column for row selection." },
   { name: "reorderable", type: "boolean", default: "false", description: "Enables drag-to-reorder on rows." },
@@ -50,7 +50,7 @@ const PROPS = [
 export default function TablePage() {
   return (
     <article>
-      <PageHeader title="Table" description="A generic, selectable data table — column definitions drive fully custom cell rendering." />
+      <PageHeader title="Table" description="A generic, selectable data table: column definitions drive fully custom cell rendering." />
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
