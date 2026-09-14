@@ -64,14 +64,14 @@ export default function HomePage() {
             className="animate-fade-in mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
             style={{ animationDelay: "80ms" }}
           >
-            A design system built from Figma, not around it.
+            Design and engineering, finally on the same page.
           </h1>
           <p
             className="animate-fade-in mt-4 max-w-md text-balance text-ink-muted"
             style={{ animationDelay: "160ms" }}
           >
-            114+ components and 41 blocks for React, matching a single Figma source
-            of truth exactly — install it, import it, ship it.
+            114+ components and 41 blocks, matching your Figma file exactly — so
+            your whole team ships from one source of truth, not a reinterpretation of it.
           </p>
           <div
             className="animate-fade-in mt-8 flex flex-wrap items-center gap-3"
