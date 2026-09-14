@@ -23,7 +23,7 @@ export function HeroPreview() {
           <div
             key={layer.src}
             aria-hidden="true"
-            className={`absolute ${layer.inset} ${layer.offset} ${layer.opacity} ${layer.z} h-full overflow-hidden rounded-t-2xl border border-b-0 border-line-subtle bg-surface shadow-xl`}
+            className={`force-light absolute ${layer.inset} ${layer.offset} ${layer.opacity} ${layer.z} h-full overflow-hidden rounded-t-2xl border border-b-0 border-line-subtle bg-surface shadow-xl`}
           >
             <Image
               src={layer.src}
@@ -35,7 +35,12 @@ export function HeroPreview() {
           </div>
         ))}
 
-        <div className="absolute inset-x-0 top-0 z-20 h-full overflow-hidden rounded-t-2xl border border-b-0 border-line-subtle shadow-2xl">
+        {/* force-light: the crm-dashboard.png screenshot is a static light-mode
+            capture, so the chrome bar around it needs to stay light too --
+            without this it read the site's own ambient theme via bg-surface
+            and went dark in dark mode while the screenshot inside stayed
+            light, an obviously mismatched mockup. */}
+        <div className="force-light absolute inset-x-0 top-0 z-20 h-full overflow-hidden rounded-t-2xl border border-b-0 border-line-subtle shadow-2xl">
           <div className="flex items-center gap-3 border-b border-line-subtle bg-surface px-4 py-3">
             <div className="flex gap-1.5">
               <span className="h-3 w-3 rounded-full bg-danger/60" />
