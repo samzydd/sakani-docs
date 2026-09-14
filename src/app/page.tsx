@@ -7,7 +7,7 @@ import { CodeBlock } from "@/components/code-block";
 import { DashboardShowcase } from "@/components/dashboard-showcase";
 import { CategoryGrid } from "@/components/category-grid";
 import { FaqSection } from "@/components/faq-section";
-import { ShowcaseMarquee } from "@/components/showcase-marquee";
+import { DashboardExplode } from "@/components/dashboard-explode";
 import { Reveal } from "@/components/reveal";
 
 const FEATURES = [
@@ -90,7 +90,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <ShowcaseMarquee />
+      <DashboardExplode />
 
       {/* Live component strip */}
       <Reveal>
