@@ -54,20 +54,18 @@ export default function HomePage() {
           the work instead. */}
       <section className="relative flex min-h-dvh flex-col overflow-hidden bg-canvas pt-32 sm:pt-40">
         <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <h1
-              className="animate-fade-in text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
-            >
-              A design system built from Figma, not around it.
-            </h1>
-            <Link
-              href="/docs"
-              className="animate-fade-in inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
-              style={{ animationDelay: "80ms" }}
-            >
-              Last updated: September 3rd <ArrowRight size={12} />
-            </Link>
-          </div>
+          <Link
+            href="/docs"
+            className="animate-fade-in inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
+          >
+            Last updated: September 3rd <ArrowRight size={12} />
+          </Link>
+          <h1
+            className="animate-fade-in mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+            style={{ animationDelay: "80ms" }}
+          >
+            A design system built from Figma, not around it.
+          </h1>
           <p
             className="animate-fade-in mt-4 max-w-md text-balance text-ink-muted"
             style={{ animationDelay: "160ms" }}
@@ -89,10 +87,7 @@ export default function HomePage() {
                 View on GitHub
               </Button>
             </a>
-          </div>
-
-          <div className="animate-fade-in mt-6 max-w-md" style={{ animationDelay: "320ms" }}>
-            <CodeBlock code={INSTALL_CODE} lang="bash" />
+            <CodeBlock code={INSTALL_CODE} lang="bash" compact className="h-[42px] w-fit" />
           </div>
         </div>
 
