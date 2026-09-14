@@ -63,6 +63,19 @@ export const docsNav: NavGroup[] = [
     ],
   },
   {
+    title: "Application",
+    items: [
+      { title: "Modal", href: "/docs/components/modal", label: "New" },
+      { title: "Notifications", href: "/docs/components/notifications", label: "New" },
+      { title: "Activity Feed", href: "/docs/components/activity-feed", label: "New" },
+      { title: "Progress Steps", href: "/docs/components/progress-steps", label: "New" },
+      { title: "Finance", href: "/docs/components/finance", label: "New" },
+      { title: "Code Snippet", href: "/docs/components/code-snippet", label: "New" },
+      { title: "Avatar Upload", href: "/docs/components/avatar-upload", label: "New" },
+      { title: "Tags", href: "/docs/components/tags", label: "New" },
+    ],
+  },
+  {
     title: "Feedback",
     items: [
       { title: "Toast", href: "/docs/components/toast", label: "New" },
@@ -80,6 +93,8 @@ export const docsNav: NavGroup[] = [
       { title: "Tabs", href: "/docs/components/tabs" },
       { title: "Stat Card", href: "/docs/components/stat-card" },
       { title: "List Item", href: "/docs/components/list-item", label: "New" },
+      { title: "Board Card", href: "/docs/components/board-card", label: "New" },
+      { title: "Chat", href: "/docs/components/chat", label: "New" },
       { title: "Calendar", href: "/docs/components/calendar", label: "New" },
       { title: "Star Rating", href: "/docs/components/star-rating" },
     ],
