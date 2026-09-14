@@ -207,12 +207,71 @@ html.dark .noise-overlay {
   animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Sakani's tokens.css only ever defines a .dark override -- there's no
+   .light counterpart, because normally you'd never need one: the page is
+   either themed or it isn't, and :root's own defaults are already "light".
+   That falls apart the moment something wants an independent light/dark
+   toggle *nested inside* a page that might itself already be dark (the
+   per-dashboard preview toggles) -- an un-classed wrapper would just
+   inherit the ambient .dark cascade instead of actually forcing light.
+   .force-light mirrors .dark's own override list with the light-mode
+   values instead, so both directions are always explicit rather than one
+   being "explicit dark" and the other "hope nothing dark is above me". */
+.force-light {
+  --color-bg-canvas: var(--color-neutral-50);
+  --color-bg-surface: var(--color-base-white);
+  --color-bg-subtle: var(--color-neutral-100);
+  --color-bg-muted: var(--color-neutral-200);
+  --color-bg-inverse: var(--color-neutral-900);
+  --color-fg-default: var(--color-neutral-900);
+  --color-fg-muted: var(--color-neutral-500);
+  --color-fg-subtle: var(--color-neutral-400);
+  --color-fg-on-accent: var(--color-base-white);
+  --color-fg-on-inverse: var(--color-neutral-50);
+  --color-border-subtle: var(--color-neutral-200);
+  --color-border-default: var(--color-neutral-300);
+  --color-border-strong: var(--color-neutral-400);
+  --color-border-focus: var(--color-primary-500);
+  --color-accent-default: var(--color-neutral-900);
+  --color-accent-hover: var(--color-neutral-800);
+  --color-accent-active: var(--color-neutral-700);
+  --color-accent-subtle: var(--color-neutral-100);
+  --color-accent-fg: var(--color-base-white);
+  --color-brand-default: var(--color-primary-500);
+  --color-brand-hover: var(--color-primary-600);
+  --color-brand-subtle: var(--color-primary-50);
+  --color-brand-fg: var(--color-primary-600);
+  --color-success-fg: var(--color-success-700);
+  --color-success-bg: var(--color-success-50);
+  --color-success-border: var(--color-success-200);
+  --color-success-solid: var(--color-success-500);
+  --color-warning-fg: var(--color-warning-700);
+  --color-warning-bg: var(--color-warning-50);
+  --color-warning-border: var(--color-warning-200);
+  --color-warning-solid: var(--color-warning-500);
+  --color-danger-fg: var(--color-danger-700);
+  --color-danger-bg: var(--color-danger-50);
+  --color-danger-border: var(--color-danger-200);
+  --color-danger-solid: var(--color-danger-500);
+  --color-info-fg: var(--color-info-700);
+  --color-info-bg: var(--color-info-50);
+  --color-info-border: var(--color-info-200);
+  --color-info-solid: var(--color-info-500);
+}
+
 /* CRMDashboardBlock's root hardcodes width:100vw/height:100vh (it's built
    to sit directly in <body>) -- override its direct child back down to
    the embedding frame's own size. No-op for blocks that are already
    fluid-width (Kanban, DataTable), so this is safe to apply generically
-   to whatever block is currently mounted inside .dashboard-embed. */
-.dashboard-embed > div {
+   to whatever block is currently mounted inside .dashboard-embed.
+
+   Targets both > div (a block rendered directly) and > div > div (a block
+   wrapped in DashboardShowcase's own .dark/.force-light theme div) --
+   that wrapper sits between .dashboard-embed and the block's real root,
+   so the direct-child selector alone stopped reaching it once the
+   per-dashboard theme toggle was added. */
+.dashboard-embed > div,
+.dashboard-embed > div > div {
   width: 100% !important;
   height: 100% !important;
 }

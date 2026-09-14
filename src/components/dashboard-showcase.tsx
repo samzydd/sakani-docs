@@ -1,33 +1,56 @@
 "use client";
 
-import { useState } from "react";
-import { MousePointerClick } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { MousePointerClick, Sun, Moon } from "lucide-react";
 import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock } from "@sakaniui/react/blocks";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";
 
 type Tab =
-  | { key: string; label: string; path: string; kind: "block"; Block: React.FC; live?: false }
-  | { key: string; label: string; path: string; kind: "iframe"; url: string; live: true };
+  | { key: string; label: string; path: string; kind: "block"; Block: React.FC }
+  | { key: string; label: string; path: string; kind: "iframe"; url: string };
 
 const TABS: Tab[] = [
   {
-    key: "sakani-crm",
-    label: "Sakani CRM",
+    key: "crm-demo-1",
+    label: "CRM demo 1",
     path: "dist-olive-five-72.vercel.app",
     kind: "iframe",
     url: "https://dist-olive-five-72.vercel.app/",
-    live: true,
   },
-  { key: "crm", label: "CRM Demo", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock },
+  { key: "crm-demo-2", label: "CRM demo 2", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock },
   { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock },
   { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", kind: "block", Block: DataTableBlock },
 ];
 
+// Matches the message contract useEmbeddedThemeControl listens for in the
+// CRM demo 1 app's own source (samzydd/saas-crm-sakani-ds) -- cross-origin
+// means postMessage is the only channel available to flip its theme from
+// out here, there's no reaching into that document's classList directly.
+const IFRAME_THEME_MESSAGE = "sakani-crm:set-theme";
+
 export function DashboardShowcase() {
   const [active, setActive] = useState(TABS[0].key);
+  const [dashboardTheme, setDashboardTheme] = useState<"light" | "dark">("light");
   const tab = TABS.find((t) => t.key === active)!;
   const { ref, style } = useScrollReveal<HTMLDivElement>();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    if (tab.kind !== "iframe") return;
+    const send = () => {
+      iframeRef.current?.contentWindow?.postMessage({ type: IFRAME_THEME_MESSAGE, theme: dashboardTheme }, "*");
+    };
+    // The iframe announces "<type>:ready" with its current theme on mount
+    // (see useEmbeddedThemeControl) -- listen for it so a tab switch or a
+    // slow load doesn't race sending the theme before it's listening.
+    const onMessage = (event: MessageEvent) => {
+      if (event.data?.type === `${IFRAME_THEME_MESSAGE}:ready`) send();
+    };
+    window.addEventListener("message", onMessage);
+    send();
+    return () => window.removeEventListener("message", onMessage);
+  }, [tab, dashboardTheme]);
 
   return (
     <section className="mx-auto max-w-[1600px] px-4 py-20 sm:px-6 lg:px-8">
@@ -42,24 +65,19 @@ export function DashboardShowcase() {
       </div>
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
           {TABS.map((t) => (
             <button
               key={t.key}
               onClick={() => setActive(t.key)}
               className={cn(
-                "flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
+                "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
                 active === t.key
                   ? "border-ink bg-ink text-ink-on-inverse"
                   : "border-line-subtle text-ink-muted hover:border-line-default hover:text-ink"
               )}
             >
               {t.label}
-              {t.live && (
-                <span className="flex items-center gap-1 rounded-full bg-success/20 px-1.5 py-0.5 text-[10px] font-semibold text-success">
-                  <span className="h-1.5 w-1.5 rounded-full bg-success" /> LIVE
-                </span>
-              )}
             </button>
           ))}
         </div>
@@ -82,6 +100,14 @@ export function DashboardShowcase() {
           <div className="mx-auto flex w-full max-w-xs items-center justify-center rounded-md bg-canvas px-3 py-1 text-xs text-ink-subtle">
             {tab.path}
           </div>
+          <button
+            type="button"
+            onClick={() => setDashboardTheme((v) => (v === "dark" ? "light" : "dark"))}
+            aria-label={dashboardTheme === "dark" ? "Switch this dashboard to light mode" : "Switch this dashboard to dark mode"}
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-ink-subtle transition-colors hover:bg-subtle hover:text-ink"
+          >
+            {dashboardTheme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+          </button>
         </div>
         {/* Real width, real scroll, real hover states -- no scale trick and
             no pointer-events-none.
@@ -102,6 +128,7 @@ export function DashboardShowcase() {
         <div className="dashboard-embed h-[640px] overflow-auto bg-canvas">
           {tab.kind === "iframe" ? (
             <iframe
+              ref={iframeRef}
               key={tab.key}
               src={tab.url}
               title={tab.label}
@@ -109,7 +136,13 @@ export function DashboardShowcase() {
               loading="lazy"
             />
           ) : (
-            <tab.Block />
+            // Block demos aren't cross-origin -- toggling dark mode is just
+            // the ancestor .dark class Sakani's own tokens already key off,
+            // same mechanism the site's own ThemeToggle uses, just scoped
+            // to this one embed instead of the whole page.
+            <div className={cn("h-full", dashboardTheme === "dark" ? "dark" : "force-light")}>
+              <tab.Block />
+            </div>
           )}
         </div>
       </div>
