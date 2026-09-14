@@ -76,6 +76,17 @@ export const docsNav: NavGroup[] = [
     ],
   },
   {
+    title: "Marketing",
+    items: [
+      { title: "Section Heading", href: "/docs/components/section-heading", label: "New" },
+      { title: "Rich Text", href: "/docs/components/rich-text", label: "New" },
+      { title: "Blog Listing", href: "/docs/components/blog-listing", label: "New" },
+      { title: "Team Cards", href: "/docs/components/team-cards", label: "New" },
+      { title: "Marketing Elements", href: "/docs/components/marketing-elements", label: "New" },
+      { title: "Mobile Navigation", href: "/docs/components/mobile-navigation", label: "New" },
+    ],
+  },
+  {
     title: "E-commerce",
     items: [
       { title: "Product Card", href: "/docs/components/product-card", label: "New" },
