@@ -18,8 +18,12 @@ interface Shot {
 }
 
 const SHOTS: Shot[] = [
-  { src: "/showcase/crm-dashboard.png", alt: "Sakani CRM — a real production app built on the design system", position: "left top", x: -78, y: -58, rotate: -6, scale: 1.05 },
+  // finance.png leads (highest z-index -- see the zIndex calc below) rather
+  // than crm-dashboard.png: the hero above this section already bleeds that
+  // exact screenshot off the fold, so leading with it again here read as an
+  // accidental duplicate rather than a new example.
   { src: "/showcase/finance.png", alt: "Financial overview dashboard", position: "right top", x: 76, y: -64, rotate: 5, scale: 0.95 },
+  { src: "/showcase/crm-dashboard.png", alt: "Sakani CRM — a real production app built on the design system", position: "left top", x: -78, y: -58, rotate: -6, scale: 1.05 },
   { src: "/showcase/ecommerce.png", alt: "E-commerce dashboard", position: "left top", x: -88, y: 54, rotate: 4, scale: 0.9 },
   { src: "/showcase/sales-dark.png", alt: "Sales dashboard, dark mode", position: "right top", x: 0, y: 78, rotate: -3, scale: 1.1 },
   { src: "/showcase/stocks.png", alt: "Stock market app", position: "left top", x: 86, y: 42, rotate: -5, scale: 0.92 },

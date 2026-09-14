@@ -11,6 +11,7 @@ import { DashboardExplode } from "@/components/dashboard-explode";
 import { GithubIcon } from "@/components/icons/github-icon";
 import { Reveal } from "@/components/reveal";
 import { HeroScene } from "@/components/hero-scene";
+import { HeroPreview } from "@/components/hero-preview";
 
 const FEATURES = [
   {
@@ -47,11 +48,13 @@ export function Example() {
 export default function HomePage() {
   return (
     <main>
-      {/* Hero — animates in on mount (not scroll-triggered, it's already
-          in view on load), each element staggered slightly after the last. */}
-      <section className="relative mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28 lg:px-8">
+      {/* Hero — fills the viewport on load; text animates in on mount (not
+          scroll-triggered, it's already in view), each element staggered
+          slightly after the last. The product screenshot bleeds off the
+          bottom of the fold rather than ending the section abruptly. */}
+      <section className="relative flex min-h-dvh flex-col overflow-hidden pt-20 sm:pt-24">
         <HeroScene />
-        <div className="relative mx-auto max-w-3xl text-center">
+        <div className="relative mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-4 text-center sm:px-6 lg:px-8">
           <Link
             href="/docs"
             className="animate-fade-in mx-auto mb-6 inline-flex items-center gap-1.5 rounded-full border border-line-subtle bg-surface px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default"
@@ -59,7 +62,7 @@ export default function HomePage() {
             Last updated: September 3rd <ArrowRight size={12} />
           </Link>
           <h1
-            className="animate-fade-in text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl md:text-6xl"
+            className="animate-fade-in text-balance text-5xl font-bold tracking-tight text-ink sm:text-6xl md:text-7xl"
             style={{ animationDelay: "80ms" }}
           >
             A design system built from Figma, not around it.
@@ -86,11 +89,13 @@ export default function HomePage() {
               </Button>
             </a>
           </div>
+
+          <div className="animate-fade-in mx-auto mt-8 max-w-md" style={{ animationDelay: "320ms" }}>
+            <CodeBlock code={INSTALL_CODE} lang="bash" />
+          </div>
         </div>
 
-        <div className="animate-fade-in mx-auto mt-12 max-w-md" style={{ animationDelay: "320ms" }}>
-          <CodeBlock code={INSTALL_CODE} lang="bash" />
-        </div>
+        <HeroPreview />
       </section>
 
       <DashboardExplode />
