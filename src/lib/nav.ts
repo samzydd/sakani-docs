@@ -23,9 +23,14 @@ export const docsNav: NavGroup[] = [
     items: [
       { title: "Button", href: "/docs/components/button" },
       { title: "Badge", href: "/docs/components/badge" },
+      { title: "Icon Button", href: "/docs/components/icon-button", label: "New" },
       { title: "Card", href: "/docs/components/card" },
       { title: "Avatar", href: "/docs/components/avatar" },
       { title: "Alert", href: "/docs/components/alert" },
+      { title: "Accordion", href: "/docs/components/accordion", label: "New" },
+      { title: "Divider", href: "/docs/components/divider", label: "New" },
+      { title: "Link", href: "/docs/components/link", label: "New" },
+      { title: "Kbd", href: "/docs/components/kbd", label: "New" },
     ],
   },
   {
@@ -42,6 +47,17 @@ export const docsNav: NavGroup[] = [
       { title: "Segmented Control", href: "/docs/components/segmented-control", label: "New" },
       { title: "File Upload", href: "/docs/components/file-upload", label: "New" },
       { title: "Label", href: "/docs/components/label", label: "New" },
+    ],
+  },
+  {
+    title: "Feedback",
+    items: [
+      { title: "Toast", href: "/docs/components/toast", label: "New" },
+      { title: "Tooltip", href: "/docs/components/tooltip", label: "New" },
+      { title: "Progress", href: "/docs/components/progress", label: "New" },
+      { title: "Spinner", href: "/docs/components/spinner", label: "New" },
+      { title: "Skeleton", href: "/docs/components/skeleton", label: "New" },
+      { title: "Empty State", href: "/docs/components/empty-state", label: "New" },
     ],
   },
   {
