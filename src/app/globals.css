@@ -76,6 +76,12 @@ html.dark {
   color-scheme: dark;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--color-bg-canvas);
   color: var(--color-fg-default);
@@ -153,4 +159,57 @@ body {
 }
 .animate-fade-in {
   animation: fade-in 0.35s ease-out both;
+}
+
+/* Scroll-reveal: sections/elements fade + rise into place. Toggled by
+   .is-visible once IntersectionObserver confirms they're in view (see
+   useReveal in src/lib/use-reveal.ts) — kept out of the initial paint so
+   there's no flash of hidden content if JS is slow to attach. */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+}
+.reveal.is-visible {
+  animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 44s linear infinite;
+}
+
+/* Accordion collapse: grid-template-rows 0fr -> 1fr animates smoothly even
+   though the panel's content height is dynamic (a fixed max-height can't do
+   that without guessing). Same technique Sakani's own Accordion component
+   uses. .faq-panel needs its own overflow:hidden since the 0fr row still
+   renders its child at full intrinsic height otherwise. */
+.faq-panel-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--motion-slow) var(--ease-out);
+}
+.faq-panel-wrap.is-open {
+  grid-template-rows: 1fr;
+}
+.faq-panel {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    animation: none !important;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+  .animate-fade-in {
+    animation: none;
+  }
 }

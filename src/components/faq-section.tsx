@@ -48,6 +48,7 @@ export function FaqSection() {
             <div key={item.q}>
               <button
                 onClick={() => setOpen(isOpen ? null : i)}
+                aria-expanded={isOpen}
                 className="flex w-full items-center justify-between gap-4 py-4 text-left"
               >
                 <span className="text-sm font-medium text-ink">{item.q}</span>
@@ -56,7 +57,11 @@ export function FaqSection() {
                   className={cn("shrink-0 text-ink-subtle transition-transform", isOpen && "rotate-180")}
                 />
               </button>
-              {isOpen && <p className="pb-4 text-sm text-ink-muted">{item.a}</p>}
+              <div className={cn("faq-panel-wrap", isOpen && "is-open")}>
+                <div className="faq-panel">
+                  <p className="pb-4 text-sm text-ink-muted">{item.a}</p>
+                </div>
+              </div>
             </div>
           );
         })}

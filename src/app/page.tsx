@@ -7,6 +7,8 @@ import { CodeBlock } from "@/components/code-block";
 import { DashboardShowcase } from "@/components/dashboard-showcase";
 import { CategoryGrid } from "@/components/category-grid";
 import { FaqSection } from "@/components/faq-section";
+import { ShowcaseMarquee } from "@/components/showcase-marquee";
+import { Reveal } from "@/components/reveal";
 
 const FEATURES = [
   {
@@ -43,23 +45,33 @@ export function Example() {
 export default function HomePage() {
   return (
     <main>
-      {/* Hero */}
+      {/* Hero — animates in on mount (not scroll-triggered, it's already
+          in view on load), each element staggered slightly after the last. */}
       <section className="mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <Link
             href="/docs"
-            className="mx-auto mb-6 inline-flex items-center gap-1.5 rounded-full border border-line-subtle bg-surface px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default"
+            className="animate-fade-in mx-auto mb-6 inline-flex items-center gap-1.5 rounded-full border border-line-subtle bg-surface px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default"
           >
             v0.3 is out now <ArrowRight size={12} />
           </Link>
-          <h1 className="text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl md:text-6xl">
+          <h1
+            className="animate-fade-in text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl md:text-6xl"
+            style={{ animationDelay: "80ms" }}
+          >
             A design system built from Figma, not around it.
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-balance text-lg text-ink-muted">
+          <p
+            className="animate-fade-in mx-auto mt-5 max-w-xl text-balance text-lg text-ink-muted"
+            style={{ animationDelay: "160ms" }}
+          >
             114+ components and 41 blocks for React, matching a single Figma source
             of truth exactly — install it, import it, ship it.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div
+            className="animate-fade-in mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            style={{ animationDelay: "240ms" }}
+          >
             <Link href="/docs">
               <Button variant="primary" size="lg" rightIcon={<ArrowRight size={16} />}>
                 Get started
@@ -73,99 +85,113 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 max-w-md">
+        <div className="animate-fade-in mx-auto mt-12 max-w-md" style={{ animationDelay: "320ms" }}>
           <CodeBlock code={INSTALL_CODE} lang="bash" />
         </div>
       </section>
 
-      {/* Live component strip */}
-      <section className="border-y border-line-subtle bg-surface/40 py-14">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-6 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
-            <Avatar initials="SO" size="md" />
-            <AvatarGroup
-              size="sm"
-              max={3}
-              avatars={[
-                { initials: "AK" },
-                { initials: "CD" },
-                { initials: "FM" },
-                { initials: "DR" },
-              ]}
-            />
-          </div>
-          <div className="flex items-center gap-2 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
-            <Badge variant="accent">New</Badge>
-            <Badge variant="success" emphasis="solid">
-              Shipped
-            </Badge>
-            <Badge variant="neutral">v0.3.2</Badge>
-          </div>
-          <div className="flex items-center gap-3 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
-            <Button size="sm" variant="primary">
-              Primary
-            </Button>
-            <Button size="sm" variant="outline">
-              Outline
-            </Button>
-            <Switch defaultChecked aria-label="Toggle" />
-          </div>
-        </div>
-      </section>
+      <ShowcaseMarquee />
 
-      <DashboardShowcase />
+      {/* Live component strip */}
+      <Reveal>
+        <section className="border-b border-line-subtle bg-surface/40 py-14">
+          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-6 px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-3 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
+              <Avatar initials="SO" size="md" />
+              <AvatarGroup
+                size="sm"
+                max={3}
+                avatars={[
+                  { initials: "AK" },
+                  { initials: "CD" },
+                  { initials: "FM" },
+                  { initials: "DR" },
+                ]}
+              />
+            </div>
+            <div className="flex items-center gap-2 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
+              <Badge variant="accent">New</Badge>
+              <Badge variant="success" emphasis="solid">
+                Shipped
+              </Badge>
+              <Badge variant="neutral">v0.3.2</Badge>
+            </div>
+            <div className="flex items-center gap-3 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
+              <Button size="sm" variant="primary">
+                Primary
+              </Button>
+              <Button size="sm" variant="outline">
+                Outline
+              </Button>
+              <Switch defaultChecked aria-label="Toggle" />
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal>
+        <DashboardShowcase />
+      </Reveal>
 
       {/* Features */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-xl text-center">
-          <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Everything a real product needs
-          </h2>
-          <p className="mt-3 text-ink-muted">
-            Not a component playground — a system built to ship actual screens.
-          </p>
-        </div>
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((f) => (
-            <div key={f.title} className="rounded-xl border border-line-subtle bg-surface p-5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-subtle text-ink">
-                <f.icon size={18} strokeWidth={1.75} />
-              </div>
-              <h3 className="mt-4 text-sm font-semibold text-ink">{f.title}</h3>
-              <p className="mt-1.5 text-sm text-ink-muted">{f.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <CategoryGrid />
-
-      {/* Usage */}
-      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 rounded-2xl border border-line-subtle bg-surface p-8 lg:grid-cols-2 lg:p-10">
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-ink">
-              Up and running in a minute
+      <Reveal>
+        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-xl text-center">
+            <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+              Everything a real product needs
             </h2>
             <p className="mt-3 text-ink-muted">
-              Install the package, import the tokens once at your app root, then
-              import any component like you would from any other library.
+              Not a component playground — a system built to ship actual screens.
             </p>
-            <Alert
-              className="mt-5"
-              color="info"
-              title="Don't forget the tokens"
-              description="Component styles reference CSS variables — tokens.css supplies the values."
-            />
-            <Link href="/docs/installation" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:underline">
-              Full installation guide <ArrowRight size={14} />
-            </Link>
           </div>
-          <CodeBlock code={USAGE_CODE} lang="tsx" />
-        </div>
-      </section>
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {FEATURES.map((f) => (
+              <div key={f.title} className="rounded-xl border border-line-subtle bg-surface p-5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-subtle text-ink">
+                  <f.icon size={18} strokeWidth={1.75} />
+                </div>
+                <h3 className="mt-4 text-sm font-semibold text-ink">{f.title}</h3>
+                <p className="mt-1.5 text-sm text-ink-muted">{f.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </Reveal>
 
-      <FaqSection />
+      <Reveal>
+        <CategoryGrid />
+      </Reveal>
+
+      {/* Usage */}
+      <Reveal>
+        <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-8 rounded-2xl border border-line-subtle bg-surface p-8 lg:grid-cols-2 lg:p-10">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight text-ink">
+                Up and running in a minute
+              </h2>
+              <p className="mt-3 text-ink-muted">
+                Install the package, import the tokens once at your app root, then
+                import any component like you would from any other library.
+              </p>
+              <Alert
+                className="mt-5"
+                color="info"
+                title="Don't forget the tokens"
+                description="Component styles reference CSS variables — tokens.css supplies the values."
+              />
+              <Link href="/docs/installation" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:underline">
+                Full installation guide <ArrowRight size={14} />
+              </Link>
+            </div>
+            <CodeBlock code={USAGE_CODE} lang="tsx" />
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal>
+        <FaqSection />
+      </Reveal>
     </main>
   );
 }
