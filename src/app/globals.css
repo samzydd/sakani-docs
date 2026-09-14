@@ -204,7 +204,7 @@ html.dark .noise-overlay {
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in {
-  animation: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fade-in 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Scroll-reveal: sections/elements fade + rise into place on the way in,
