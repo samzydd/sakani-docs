@@ -76,8 +76,21 @@ export const docsNav: NavGroup[] = [
       { title: "Table", href: "/docs/components/table" },
       { title: "Tabs", href: "/docs/components/tabs" },
       { title: "Stat Card", href: "/docs/components/stat-card" },
-      { title: "Line Chart", href: "/docs/components/line-chart" },
       { title: "Star Rating", href: "/docs/components/star-rating" },
+    ],
+  },
+  {
+    title: "Charts",
+    items: [
+      { title: "Line Chart", href: "/docs/components/line-chart" },
+      { title: "Area Chart", href: "/docs/components/area-chart", label: "New" },
+      { title: "Bar Chart", href: "/docs/components/bar-chart", label: "New" },
+      { title: "Pie Chart", href: "/docs/components/pie-chart", label: "New" },
+      { title: "Donut Chart", href: "/docs/components/donut-chart", label: "New" },
+      { title: "Radial Chart", href: "/docs/components/radial-chart", label: "New" },
+      { title: "Radar Chart", href: "/docs/components/radar-chart", label: "New" },
+      { title: "Funnel Chart", href: "/docs/components/funnel-chart", label: "New" },
+      { title: "Heatmap Chart", href: "/docs/components/heatmap-chart", label: "New" },
     ],
   },
   {
