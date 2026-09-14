@@ -14,9 +14,9 @@ const TABS: Tab[] = [
   {
     key: "crm-demo-1",
     label: "CRM demo 1",
-    path: "dist-olive-five-72.vercel.app",
+    path: "saas-crm-sakani-ds.vercel.app",
     kind: "iframe",
-    url: "https://dist-olive-five-72.vercel.app/",
+    url: "https://saas-crm-sakani-ds.vercel.app/",
   },
   { key: "crm-demo-2", label: "CRM demo 2", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock },
   { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock },
@@ -125,7 +125,7 @@ export function DashboardShowcase() {
             ~1440px minimum so nothing needs its own horizontal scrollbar
             at typical desktop widths; overflow-auto stays on as a safety
             net for narrower viewports. */}
-        <div className="dashboard-embed h-[640px] overflow-auto bg-canvas">
+        <div className="dashboard-embed h-[840px] overflow-auto bg-canvas">
           {tab.kind === "iframe" ? (
             <iframe
               ref={iframeRef}

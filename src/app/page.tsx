@@ -53,7 +53,7 @@ export default function HomePage() {
             href="/docs"
             className="animate-fade-in mx-auto mb-6 inline-flex items-center gap-1.5 rounded-full border border-line-subtle bg-surface px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default"
           >
-            v0.3 is out now <ArrowRight size={12} />
+            Last updated: September 3rd <ArrowRight size={12} />
           </Link>
           <h1
             className="animate-fade-in text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl md:text-6xl"
