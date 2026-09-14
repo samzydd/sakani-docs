@@ -54,17 +54,21 @@ export function DashboardShowcase() {
 
   return (
     <section id="showcase" className="py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-xl px-8">
-          <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Real dashboards, not mockups
-          </h2>
-          <p className="mt-3 text-ink-muted">
-            Real Sakani blocks and a real production app, not screenshots: hover the
-            sidebar, switch tabs, scroll the table. It all works.
-          </p>
-        </div>
+      {/* Matches the hero's own container exactly (mx-auto max-w-5xl px-4
+          sm:px-6 lg:px-8) so this heading's left edge lines up with the
+          hero headline's, rather than the wider max-w-7xl the tabs row
+          and demo frame use. */}
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          Real dashboards, not mockups
+        </h2>
+        <p className="mt-3 text-ink-muted">
+          Real Sakani blocks and a real production app, not screenshots: hover the
+          sidebar, switch tabs, scroll the table. It all works.
+        </p>
+      </div>
 
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <div className="flex flex-wrap justify-center gap-2">
             {TABS.map((t) => (
