@@ -1,69 +1,162 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Link from "next/link";
+import { ArrowRight, Moon, Blocks, Palette, Component } from "lucide-react";
+import { Button, Badge, Avatar, AvatarGroup, Switch, Alert } from "@sakaniui/react";
+import { CodeBlock } from "@/components/code-block";
+
+const FEATURES = [
+  {
+    icon: Component,
+    title: "114+ components",
+    body: "Every atom, molecule, and pattern in the Sakani Figma file, exported 1:1 — not reinterpreted.",
+  },
+  {
+    icon: Blocks,
+    title: "41 ready-made blocks",
+    body: "Full page sections — pricing tables, checkout flows, auth screens — meant to be copied and edited, not configured.",
+  },
+  {
+    icon: Palette,
+    title: "Token-driven theming",
+    body: "Every color, radius, and shadow traces back to a CSS variable. Rebrand by repointing the semantic layer.",
+  },
+  {
+    icon: Moon,
+    title: "Dark mode included",
+    body: "Not bolted on after the fact — every component ships with a verified dark-mode pass from day one.",
+  },
+];
+
+const INSTALL_CODE = `npm install @sakaniui/react`;
+
+const USAGE_CODE = `import '@sakaniui/react/tokens.css';
+import { Button } from '@sakaniui/react';
+
+export function Example() {
+  return <Button variant="primary">Get started</Button>;
+}`;
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <main>
+      {/* Hero */}
+      <section className="mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <Link
+            href="/docs"
+            className="mx-auto mb-6 inline-flex items-center gap-1.5 rounded-full border border-line-subtle bg-surface px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default"
+          >
+            v0.3 is out now <ArrowRight size={12} />
+          </Link>
+          <h1 className="text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl md:text-6xl">
+            A design system built from Figma, not around it.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mx-auto mt-5 max-w-xl text-balance text-lg text-ink-muted">
+            114+ components and 41 blocks for React, matching a single Figma source
+            of truth exactly — install it, import it, ship it.
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link href="/docs">
+              <Button variant="primary" size="lg" rightIcon={<ArrowRight size={16} />}>
+                Get started
+              </Button>
+            </Link>
+            <a href="https://github.com/samzydd/Sakani-design-system" target="_blank" rel="noreferrer">
+              <Button variant="outline" size="lg">
+                View on GitHub
+              </Button>
+            </a>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-12 max-w-md">
+          <CodeBlock code={INSTALL_CODE} lang="bash" />
+        </div>
+      </section>
+
+      {/* Live component strip */}
+      <section className="border-y border-line-subtle bg-surface/40 py-14">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-6 px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
+            <Avatar initials="SO" size="md" />
+            <AvatarGroup
+              size="sm"
+              max={3}
+              avatars={[
+                { initials: "AK" },
+                { initials: "CD" },
+                { initials: "FM" },
+                { initials: "DR" },
+              ]}
+            />
+          </div>
+          <div className="flex items-center gap-2 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
+            <Badge variant="accent">New</Badge>
+            <Badge variant="success" emphasis="solid">
+              Shipped
+            </Badge>
+            <Badge variant="neutral">v0.3.2</Badge>
+          </div>
+          <div className="flex items-center gap-3 rounded-xl border border-line-subtle bg-surface p-4 shadow-xs">
+            <Button size="sm" variant="primary">
+              Primary
+            </Button>
+            <Button size="sm" variant="outline">
+              Outline
+            </Button>
+            <Switch defaultChecked aria-label="Toggle" />
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-xl text-center">
+          <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+            Everything a real product needs
+          </h2>
+          <p className="mt-3 text-ink-muted">
+            Not a component playground — a system built to ship actual screens.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURES.map((f) => (
+            <div key={f.title} className="rounded-xl border border-line-subtle bg-surface p-5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-subtle text-ink">
+                <f.icon size={18} strokeWidth={1.75} />
+              </div>
+              <h3 className="mt-4 text-sm font-semibold text-ink">{f.title}</h3>
+              <p className="mt-1.5 text-sm text-ink-muted">{f.body}</p>
+            </div>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Usage */}
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 rounded-2xl border border-line-subtle bg-surface p-8 lg:grid-cols-2 lg:p-10">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight text-ink">
+              Up and running in a minute
+            </h2>
+            <p className="mt-3 text-ink-muted">
+              Install the package, import the tokens once at your app root, then
+              import any component like you would from any other library.
+            </p>
+            <Alert
+              className="mt-5"
+              color="info"
+              title="Don't forget the tokens"
+              description="Component styles reference CSS variables — tokens.css supplies the values."
+            />
+            <Link href="/docs/installation" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:underline">
+              Full installation guide <ArrowRight size={14} />
+            </Link>
+          </div>
+          <CodeBlock code={USAGE_CODE} lang="tsx" />
+        </div>
+      </section>
+    </main>
   );
 }
