@@ -50,6 +50,16 @@ export const docsNav: NavGroup[] = [
     ],
   },
   {
+    title: "Navigation",
+    items: [
+      { title: "Breadcrumb", href: "/docs/components/breadcrumb", label: "New" },
+      { title: "Pagination", href: "/docs/components/pagination", label: "New" },
+      { title: "Stepper", href: "/docs/components/stepper", label: "New" },
+      { title: "Popover", href: "/docs/components/popover", label: "New" },
+      { title: "Filter Chip", href: "/docs/components/filter-chip", label: "New" },
+    ],
+  },
+  {
     title: "Feedback",
     items: [
       { title: "Toast", href: "/docs/components/toast", label: "New" },
