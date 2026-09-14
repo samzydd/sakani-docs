@@ -52,6 +52,9 @@ export const docsNav: NavGroup[] = [
   {
     title: "Navigation",
     items: [
+      { title: "Sidebar", href: "/docs/components/sidebar", label: "New" },
+      { title: "Top Bar", href: "/docs/components/top-bar", label: "New" },
+      { title: "Menu", href: "/docs/components/menu", label: "New" },
       { title: "Breadcrumb", href: "/docs/components/breadcrumb", label: "New" },
       { title: "Pagination", href: "/docs/components/pagination", label: "New" },
       { title: "Stepper", href: "/docs/components/stepper", label: "New" },
@@ -76,6 +79,8 @@ export const docsNav: NavGroup[] = [
       { title: "Table", href: "/docs/components/table" },
       { title: "Tabs", href: "/docs/components/tabs" },
       { title: "Stat Card", href: "/docs/components/stat-card" },
+      { title: "List Item", href: "/docs/components/list-item", label: "New" },
+      { title: "Calendar", href: "/docs/components/calendar", label: "New" },
       { title: "Star Rating", href: "/docs/components/star-rating" },
     ],
   },
