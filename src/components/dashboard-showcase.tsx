@@ -125,7 +125,7 @@ export function DashboardShowcase() {
             ~1440px minimum so nothing needs its own horizontal scrollbar
             at typical desktop widths; overflow-auto stays on as a safety
             net for narrower viewports. */}
-        <div className="dashboard-embed h-[980px] overflow-auto bg-canvas">
+        <div className="dashboard-embed h-[720px] overflow-auto bg-canvas">
           {tab.kind === "iframe" ? (
             <iframe
               ref={iframeRef}
