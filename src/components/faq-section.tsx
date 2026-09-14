@@ -36,16 +36,15 @@ export function FaqSection() {
 
   return (
     <section className="py-20">
-      {/* Matches the hero's own container exactly (mx-auto max-w-5xl px-4
-          sm:px-6 lg:px-8) so this heading's left edge lines up with the
-          hero headline's, rather than the narrower max-w-3xl reading
-          column the accordion below uses. */}
+      {/* Same max-w-5xl column as the hero's own container, and now the
+          accordion below shares it too, so both the title and the
+          accordion start flush with the hero headline's left edge. */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           Frequently asked questions
         </h2>
       </div>
-      <div className="mx-auto mt-10 max-w-3xl divide-y divide-line-subtle border-t border-b border-line-subtle px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto mt-10 max-w-5xl divide-y divide-line-subtle border-t border-b border-line-subtle px-4 sm:px-6 lg:px-8">
         {FAQS.map((item, i) => {
           const isOpen = open === i;
           return (
