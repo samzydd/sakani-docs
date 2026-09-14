@@ -8,6 +8,7 @@ import { DashboardShowcase } from "@/components/dashboard-showcase";
 import { CategoryGrid } from "@/components/category-grid";
 import { FaqSection } from "@/components/faq-section";
 import { DashboardExplode } from "@/components/dashboard-explode";
+import { GithubIcon } from "@/components/icons/github-icon";
 import { Reveal } from "@/components/reveal";
 
 const FEATURES = [
@@ -78,7 +79,7 @@ export default function HomePage() {
               </Button>
             </Link>
             <a href="https://github.com/samzydd/Sakani-design-system" target="_blank" rel="noreferrer">
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" leftIcon={<GithubIcon size={16} />}>
                 View on GitHub
               </Button>
             </a>

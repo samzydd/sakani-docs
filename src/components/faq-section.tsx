@@ -19,7 +19,7 @@ const FAQS = [
   },
   {
     q: "How is this different from shadcn/ui?",
-    a: "shadcn/ui gives you copy-pasted source built on Radix primitives that you own and edit from day one. Sakani's components are an installable, compiled npm package — you import them like any other library. Blocks are the exception: those are meant to be copied and edited directly, closer to how shadcn/ui blocks work.",
+    a: "shadcn/ui hands you generic source to copy, paste, and restyle into your own design language. Sakani starts from the other end: every component is a 1:1 export of a real, maintained Figma file, so the tokens, spacing, and states you see in design are exactly what ships in code — no restyling pass, no drift between design and build. It's also an installable npm package, not a folder of files to maintain yourself: `npm install`, import, done, with dark mode and 114+ components covered from day one. Blocks stay copy-and-edit, same as shadcn's — that model is genuinely the right fit for full page sections you're meant to customize.",
   },
   {
     q: "Can I customize a block's behavior, not just its style?",

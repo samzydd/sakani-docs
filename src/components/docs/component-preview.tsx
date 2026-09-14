@@ -61,7 +61,7 @@ export function ComponentPreview({
             "bg-canvas",
             previewTheme === "dark" ? "dark" : "force-light",
             fullBleed
-              ? "max-h-[840px] overflow-auto"
+              ? "max-h-[980px] overflow-auto"
               : "flex min-h-52 items-center justify-center p-10"
           )}
         >
