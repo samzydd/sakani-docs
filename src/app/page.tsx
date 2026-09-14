@@ -10,6 +10,7 @@ import { FaqSection } from "@/components/faq-section";
 import { DashboardExplode } from "@/components/dashboard-explode";
 import { GithubIcon } from "@/components/icons/github-icon";
 import { Reveal } from "@/components/reveal";
+import { HeroScene } from "@/components/hero-scene";
 
 const FEATURES = [
   {
@@ -48,8 +49,9 @@ export default function HomePage() {
     <main>
       {/* Hero — animates in on mount (not scroll-triggered, it's already
           in view on load), each element staggered slightly after the last. */}
-      <section className="mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+      <section className="relative mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28 lg:px-8">
+        <HeroScene />
+        <div className="relative mx-auto max-w-3xl text-center">
           <Link
             href="/docs"
             className="animate-fade-in mx-auto mb-6 inline-flex items-center gap-1.5 rounded-full border border-line-subtle bg-surface px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default"

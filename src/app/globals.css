@@ -207,6 +207,28 @@ html.dark .noise-overlay {
   animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Hero background chips (see hero-scene.tsx): rotation is a static
+   transform on the outer element, so the entrance fade lives there too
+   (opacity only, never transform -- animating transform on the same
+   element would overwrite the rotate every frame). The continuous float
+   lives on the inner element instead, where translateY has the `transform`
+   property to itself. */
+@keyframes hero-chip-in {
+  from { opacity: 0; }
+  to { opacity: 0.92; }
+}
+.hero-chip-in {
+  opacity: 0;
+  animation: hero-chip-in 0.6s ease-out both;
+}
+@keyframes hero-chip-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.hero-chip-float {
+  animation: hero-chip-float 7s ease-in-out infinite;
+}
+
 /* Sakani's tokens.css only ever defines a .dark override -- there's no
    .light counterpart, because normally you'd never need one: the page is
    either themed or it isn't, and :root's own defaults are already "light".
@@ -299,6 +321,13 @@ html.dark .noise-overlay {
     animation: none !important;
   }
   .animate-fade-in {
+    animation: none;
+  }
+  .hero-chip-in {
+    opacity: 0.92;
+    animation: none;
+  }
+  .hero-chip-float {
     animation: none;
   }
 }
