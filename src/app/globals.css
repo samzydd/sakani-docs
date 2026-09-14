@@ -31,10 +31,18 @@
   --color-line-strong: var(--color-border-strong);
   --color-line-focus: var(--color-border-focus);
 
-  /* Accent + brand primary ramp */
+  /* Accent (neutral -- what most components use for their own "primary"
+     button etc.) vs. brand (the fixed orange identity color -- logo,
+     marketing accents. A DIFFERENT token on purpose: accent/default flips
+     black<->white between light/dark mode, but the brand mark needs to
+     stay recognizably orange in both, which is exactly what
+     --color-brand-* already encodes as its own semantic pair). */
   --color-accent: var(--color-accent-default);
   --color-accent-hover: var(--color-accent-hover);
   --color-accent-subtle: var(--color-accent-subtle);
+  --color-brand: var(--color-brand-default);
+  --color-brand-hover: var(--color-brand-hover);
+  --color-brand-subtle: var(--color-brand-subtle);
   --color-primary-500: var(--color-primary-500);
   --color-primary-600: var(--color-primary-600);
 
@@ -90,6 +98,29 @@ body {
 
 ::selection {
   background: var(--color-accent-subtle);
+}
+
+/* Subtle film-grain texture over the whole site -- a fixed layer, not
+   painted per-section, so it reads as one consistent surface instead of
+   visibly tiling differently across sections. mix-blend-mode: overlay
+   keeps it invisible on truly flat mid-tone fills and only shows as a
+   faint grain on the canvas/surface backgrounds, in both themes. */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* This project's dark mode is next-themes' class strategy (html.dark),
+   matching the html.dark rule already above -- not the data-theme
+   attribute some other setups use. */
+html.dark .noise-overlay {
+  opacity: 0.08;
+  mix-blend-mode: soft-light;
 }
 
 /* Prose used for MDX doc body copy */
@@ -174,6 +205,16 @@ body {
 }
 .reveal.is-visible {
   animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* CRMDashboardBlock's root hardcodes width:100vw/height:100vh (it's built
+   to sit directly in <body>) -- override its direct child back down to
+   the embedding frame's own size. No-op for blocks that are already
+   fluid-width (Kanban, DataTable), so this is safe to apply generically
+   to whatever block is currently mounted inside .dashboard-embed. */
+.dashboard-embed > div {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Accordion collapse: grid-template-rows 0fr -> 1fr animates smoothly even

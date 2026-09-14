@@ -17,7 +17,7 @@ export function SiteHeader() {
         <MobileNav />
 
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-ink text-xs font-bold text-ink-on-inverse">
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">
             S
           </span>
           <span className="text-[15px] font-semibold tracking-tight text-ink">Sakani</span>

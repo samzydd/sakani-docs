@@ -18,7 +18,7 @@ export function DashboardShowcase() {
   const { ref, style } = useScrollReveal<HTMLDivElement>();
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-[1600px] px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-xl text-center">
         <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           Real dashboards, not mockups
@@ -54,7 +54,7 @@ export function DashboardShowcase() {
       <div
         ref={ref}
         style={style}
-        className="mx-auto mt-8 max-w-7xl overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-xl"
+        className="mx-auto mt-8 max-w-[1500px] overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-xl"
       >
         <div className="flex items-center gap-3 border-b border-line-subtle px-4 py-3">
           <div className="flex gap-1.5">
@@ -67,12 +67,22 @@ export function DashboardShowcase() {
           </div>
         </div>
         {/* Real width, real scroll, real hover states -- no scale trick and
-            no pointer-events-none. These blocks are already fluid-width
-            (confirmed by rendering CRMDashboardBlock standalone: it reflows
-            to its container instead of demanding a fixed canvas), so the
-            frame just needs a comfortable height with its own scrollbar for
-            content taller than the viewport. */}
-        <div className="h-[640px] overflow-auto bg-canvas">
+            no pointer-events-none.
+
+            CRMDashboardBlock's own root hardcodes `width: 100vw;
+            height: 100vh` (confirmed directly from its compiled CSS Module
+            rule) -- built to sit straight in <body>, not to be embedded in
+            a sized container, so it always renders at the full *browser*
+            viewport size regardless of how wide this frame is. The
+            .dashboard-embed override in globals.css forces its direct
+            child to 100%/100% instead. Kanban/DataTable don't have this
+            problem (each already reports its own width as exactly this
+            frame's width), so the override is a no-op for them -- and the
+            frame is still sized wider than the dashboard's natural
+            ~1440px minimum so nothing needs its own horizontal scrollbar
+            at typical desktop widths; overflow-auto stays on as a safety
+            net for narrower viewports. */}
+        <div className="dashboard-embed h-[640px] overflow-auto bg-canvas">
           <tab.Block />
         </div>
       </div>

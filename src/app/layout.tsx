@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning className="h-full">
       <body className="flex min-h-full flex-col antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div aria-hidden className="noise-overlay" />
           <SiteHeader />
           <div className="flex-1">{children}</div>
           <SiteFooter />
