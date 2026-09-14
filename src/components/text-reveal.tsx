@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useRevealTrigger, type RevealTrigger } from "@/lib/use-reveal-trigger";
 
 /**
  * Splits a heading into explicit lines and reveals them one at a time,
@@ -11,62 +11,42 @@ import { cn } from "@/lib/utils";
  * trade-off is that at very wide or very narrow viewports a declared
  * "line" may itself wrap again, which just makes that chunk animate
  * together rather than breaking the effect.
- *
- * `trigger="mount"` fires shortly after mount (the hero, already in view
- * on load); `trigger="scroll"` fires via IntersectionObserver the first
- * time it scrolls into view (every other section title).
  */
 export function TextReveal({
   lines,
   as: Tag = "span",
   trigger = "scroll",
-  lineDelay = 110,
+  lineDelay = 90,
+  startDelay = 0,
+  duration,
   className,
 }: {
   lines: string[];
   as?: "span" | "h1" | "h2";
-  trigger?: "mount" | "scroll";
+  trigger?: RevealTrigger;
+  /** Stagger between consecutive lines. */
   lineDelay?: number;
+  /** Offset before the first line starts, for sequencing against an
+   * eyebrow above or a subtext below. */
+  startDelay?: number;
+  /** Overrides the default rise duration (ms). The hero runs slower than
+   * the section headings on purpose. */
+  duration?: number;
   className?: string;
 }) {
-  const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (trigger === "mount") {
-      // A tick late so the transition actually runs instead of starting in
-      // its end state (mounting already-visible skips the transition). A
-      // timeout rather than requestAnimationFrame -- rAF callbacks can be
-      // throttled or skipped entirely for a backgrounded/hidden tab, and
-      // this is exactly the kind of "just fire shortly after mount" timer
-      // that doesn't need frame-precision.
-      const timer = setTimeout(() => setVisible(true), 10);
-      return () => clearTimeout(timer);
-    }
-    const el = ref.current;
-    if (!el || typeof IntersectionObserver === "undefined") {
-      setVisible(true);
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.4, rootMargin: "0px 0px -10% 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [trigger]);
+  const { ref, visible } = useRevealTrigger<HTMLHeadingElement>(trigger);
 
   return (
-    // @ts-expect-error -- Tag is one of a fixed set of intrinsic elements
     <Tag ref={ref} className={className}>
       {lines.map((line, i) => (
         <span key={line} className="text-reveal-line">
-          <span style={{ transitionDelay: visible ? `${i * lineDelay}ms` : "0ms" }} className={cn(visible && "is-visible")}>
+          <span
+            className={cn(visible && "is-visible")}
+            style={{
+              transitionDelay: visible ? `${startDelay + i * lineDelay}ms` : "0ms",
+              ...(duration ? { transitionDuration: `${duration}ms` } : null),
+            }}
+          >
             {line}
           </span>
         </span>

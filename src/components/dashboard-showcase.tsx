@@ -6,6 +6,7 @@ import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock } from "@sakaniui/r
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";
 import { TextReveal } from "@/components/text-reveal";
+import { MaskReveal } from "@/components/mask-reveal";
 
 type Tab =
   | { key: string; label: string; path: string; kind: "block"; Block: React.FC<{ fillPlaceholders?: boolean }> }
@@ -65,10 +66,10 @@ export function DashboardShowcase() {
           lines={["Real dashboards, not mockups"]}
           className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
         />
-        <p className="mt-3 text-ink-muted">
+        <MaskReveal as="p" delay={180} className="mt-3 text-ink-muted">
           Real Sakani blocks and a real production app, not screenshots: hover the
           sidebar, switch tabs, scroll the table. It all works.
-        </p>
+        </MaskReveal>
 
         {/* Same max-w-5xl column as the title above, not the wider
             max-w-7xl the demo frame uses, so the tabs start at the

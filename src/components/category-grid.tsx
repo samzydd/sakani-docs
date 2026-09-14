@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Component, SlidersHorizontal, LayoutGrid, LineChart as LineChartIcon, LayoutDashboard, ShoppingBag, Megaphone, CreditCard } from "lucide-react";
 import { TextReveal } from "@/components/text-reveal";
+import { MaskReveal } from "@/components/mask-reveal";
 
 const CATEGORIES = [
   { title: "Core", count: "13 components", icon: Component, href: "/docs/components/button" },
@@ -26,10 +27,10 @@ export function CategoryGrid() {
           lines={["Browse everything"]}
           className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
         />
-        <p className="mt-3 text-ink-muted">
+        <MaskReveal as="p" delay={180} className="mt-3 text-ink-muted">
           114+ components and 41 blocks, organized by category. Jump straight to
           the one you need.
-        </p>
+        </MaskReveal>
       </div>
       <div className="mx-auto mt-10 max-w-7xl grid grid-cols-2 gap-4 px-4 sm:grid-cols-3 sm:px-6 lg:grid-cols-4 lg:px-8">
         {CATEGORIES.map((c) => (

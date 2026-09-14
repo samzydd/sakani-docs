@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { TextReveal } from "@/components/text-reveal";
+import { MaskReveal } from "@/components/mask-reveal";
 
 /**
  * A continuously auto-scrolling row of real screenshots (a ticker/marquee,
@@ -34,9 +35,9 @@ export function DashboardTicker() {
           lines={["Built for real products"]}
           className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
         />
-        <p className="mt-3 text-ink-muted">
+        <MaskReveal as="p" delay={180} className="mt-3 text-ink-muted">
           Real dashboards and apps shipped with Sakani.
-        </p>
+        </MaskReveal>
       </div>
 
       <div className="relative mx-auto mt-10 max-w-7xl overflow-hidden px-4 sm:px-6 lg:px-8 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">

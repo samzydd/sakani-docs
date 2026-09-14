@@ -12,6 +12,12 @@ import { GithubIcon } from "@/components/icons/github-icon";
 import { Reveal } from "@/components/reveal";
 import { HeroPreview } from "@/components/hero-preview";
 import { TextReveal } from "@/components/text-reveal";
+import { MaskReveal } from "@/components/mask-reveal";
+
+/** The hero's rise is slower than the section reveals further down (see
+ *  --reveal-rise-hero in globals.css); it's the page's first impression
+ *  and the only one that plays on load rather than on scroll. */
+const HERO_RISE = 1500;
 
 const FEATURES = [
   {
@@ -54,42 +60,47 @@ export default function HomePage() {
           canvas, left-aligned copy, and a dimmed product preview doing
           the work instead. */}
       <section className="relative flex min-h-dvh flex-col overflow-hidden bg-canvas pt-32 sm:pt-40">
+        {/* One sequenced cascade rather than four independent fades:
+            eyebrow, then each headline line, then subtext, then the CTA
+            row -- each waiting on roughly the previous one's midpoint so
+            the whole hero resolves as a single movement. */}
         <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/docs"
-            className="animate-fade-in inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
-          >
-            Last updated: September 3rd <ArrowRight size={12} />
-          </Link>
+          <MaskReveal trigger="mount" delay={0} duration={HERO_RISE} className="w-fit">
+            <Link
+              href="/docs"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
+            >
+              Last updated: September 3rd <ArrowRight size={12} />
+            </Link>
+          </MaskReveal>
           <TextReveal
             as="h1"
             trigger="mount"
+            startDelay={140}
+            lineDelay={140}
+            duration={HERO_RISE}
             lines={["Design and engineering,", "finally on the same page."]}
             className="mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
           />
-          <p
-            className="animate-fade-in mt-4 max-w-md text-balance text-ink-muted"
-            style={{ animationDelay: "160ms" }}
-          >
+          <MaskReveal as="p" trigger="mount" delay={460} duration={HERO_RISE} className="mt-4 max-w-md text-balance text-ink-muted">
             114+ components and 41 blocks, matching your Figma file exactly, so
             your whole team ships from one source of truth, not a reinterpretation of it.
-          </p>
-          <div
-            className="animate-fade-in mt-8 flex flex-wrap items-center gap-3"
-            style={{ animationDelay: "240ms" }}
-          >
-            <Link href="/docs">
-              <Button variant="primary" size="lg" rightIcon={<ArrowRight size={16} />}>
-                Get started
-              </Button>
-            </Link>
-            <a href="https://github.com/samzydd/Sakani-design-system" target="_blank" rel="noreferrer">
-              <Button variant="outline" size="lg" leftIcon={<GithubIcon size={16} />}>
-                View on GitHub
-              </Button>
-            </a>
-            <CodeBlock code={INSTALL_CODE} lang="bash" compact className="h-[42px] w-fit" />
-          </div>
+          </MaskReveal>
+          <MaskReveal trigger="mount" delay={620} duration={HERO_RISE} className="mt-8">
+            <span className="flex flex-wrap items-center gap-3">
+              <Link href="/docs">
+                <Button variant="primary" size="lg" rightIcon={<ArrowRight size={16} />}>
+                  Get started
+                </Button>
+              </Link>
+              <a href="https://github.com/samzydd/Sakani-design-system" target="_blank" rel="noreferrer">
+                <Button variant="outline" size="lg" leftIcon={<GithubIcon size={16} />}>
+                  View on GitHub
+                </Button>
+              </a>
+              <CodeBlock code={INSTALL_CODE} lang="bash" compact className="h-[42px] w-fit" />
+            </span>
+          </MaskReveal>
         </div>
 
         <HeroPreview />
@@ -116,9 +127,9 @@ export default function HomePage() {
               lines={["Everything a real product needs"]}
               className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
             />
-            <p className="mt-3 text-ink-muted">
+            <MaskReveal as="p" delay={180} className="mt-3 text-ink-muted">
               Not a component playground: a system built to ship actual screens.
-            </p>
+            </MaskReveal>
           </div>
           <div className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
             {FEATURES.map((f) => (
@@ -148,10 +159,10 @@ export default function HomePage() {
                 lines={["Up and running in a minute"]}
                 className="text-2xl font-semibold tracking-tight text-ink"
               />
-              <p className="mt-3 text-ink-muted">
+              <MaskReveal as="p" delay={180} className="mt-3 text-ink-muted">
                 Install the package, import the tokens once at your app root, then
                 import any component like you would from any other library.
-              </p>
+              </MaskReveal>
               <Alert
                 className="mt-5"
                 color="info"

@@ -73,6 +73,22 @@
   --shadow-xl: var(--shadow-xl);
 }
 
+/* One motion system, so durations are tuned together rather than nudged
+   one component at a time. Everything easing-wise uses the same curve:
+   a fast start that settles long and slow, which is what makes a reveal
+   read as "smooth" rather than "slow". */
+:root {
+  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Headings/eyebrows/subtext rising out of their mask. */
+  --reveal-rise: 900ms;
+  /* The hero's own first-paint cascade, deliberately more languid than
+     the section reveals further down the page. */
+  --reveal-rise-hero: 1500ms;
+  /* The section-level block fade (Reveal), which runs both ways as you
+     scroll past, so it sits longer than a one-shot rise. */
+  --reveal-block: 1900ms;
+}
+
 * {
   border-color: var(--color-border-subtle);
 }
@@ -110,7 +126,7 @@ body {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.075;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -119,7 +135,7 @@ body {
    matching the html.dark rule already above -- not the data-theme
    attribute some other setups use. */
 html.dark .noise-overlay {
-  opacity: 0.08;
+  opacity: 0.11;
   mix-blend-mode: soft-light;
 }
 
@@ -199,12 +215,16 @@ html.dark .noise-overlay {
   animation-play-state: paused;
 }
 
+/* Dialog entrance (the ⌘K command menu, its only consumer since the hero
+   moved to MaskReveal). Deliberately fast where the page reveals are
+   slow: a panel you summoned should already be there, while content you
+   scrolled to can afford to unfold. */
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(4px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .animate-fade-in {
-  animation: fade-in 3.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fade-in 180ms var(--ease-reveal) both;
 }
 
 /* Scroll-reveal: sections/elements fade + rise into place on the way in,
@@ -216,7 +236,7 @@ html.dark .noise-overlay {
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 1.9s cubic-bezier(0.16, 1, 0.3, 1), transform 1.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity var(--reveal-block) var(--ease-reveal), transform var(--reveal-block) var(--ease-reveal);
   will-change: opacity, transform;
 }
 .reveal.is-visible {
@@ -236,10 +256,31 @@ html.dark .noise-overlay {
   display: inline-block;
   transform: translateY(100%);
   opacity: 0;
-  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform var(--reveal-rise) var(--ease-reveal), opacity var(--reveal-rise) var(--ease-reveal);
   will-change: transform, opacity;
 }
 .text-reveal-line > span.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Same rise, for arbitrary children (eyebrow pills, subtext, button
+   rows) -- see mask-reveal.tsx. The clipping mask is dropped once the
+   reveal lands so it can't clip focus rings or hover borders later. */
+.mask-reveal {
+  overflow: hidden;
+}
+.mask-reveal.is-settled {
+  overflow: visible;
+}
+.mask-reveal__inner {
+  display: block;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform var(--reveal-rise) var(--ease-reveal), opacity var(--reveal-rise) var(--ease-reveal);
+  will-change: transform, opacity;
+}
+.mask-reveal.is-visible .mask-reveal__inner {
   transform: translateY(0);
   opacity: 1;
 }
@@ -342,9 +383,14 @@ html.dark .noise-overlay {
   .dashboard-ticker {
     animation: none;
   }
-  .text-reveal-line > span {
+  .text-reveal-line > span,
+  .mask-reveal__inner {
     opacity: 1;
     transform: none;
     transition: none !important;
+  }
+  /* Nothing is animating in, so the clipping mask would only ever clip. */
+  .mask-reveal {
+    overflow: visible;
   }
 }
