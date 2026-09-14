@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";
 
 type Tab =
-  | { key: string; label: string; path: string; kind: "block"; Block: React.FC }
+  | { key: string; label: string; path: string; kind: "block"; Block: React.FC<{ fillPlaceholders?: boolean }> }
   | { key: string; label: string; path: string; kind: "iframe"; url: string };
 
 const TABS: Tab[] = [
@@ -141,7 +141,7 @@ export function DashboardShowcase() {
             // same mechanism the site's own ThemeToggle uses, just scoped
             // to this one embed instead of the whole page.
             <div className={cn("h-full", dashboardTheme === "dark" ? "dark" : "force-light")}>
-              <tab.Block />
+              <tab.Block fillPlaceholders />
             </div>
           )}
         </div>
