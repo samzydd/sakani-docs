@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { TextReveal } from "@/components/text-reveal";
 
 /**
  * A continuously auto-scrolling row of real screenshots (a ticker/marquee,
@@ -28,9 +29,11 @@ export function DashboardTicker() {
           hero headline's, rather than the wider max-w-7xl the ticker
           track below uses. */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Built for real products
-        </h2>
+        <TextReveal
+          as="h2"
+          lines={["Built for real products"]}
+          className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
+        />
         <p className="mt-3 text-ink-muted">
           Real dashboards and apps shipped with Sakani.
         </p>

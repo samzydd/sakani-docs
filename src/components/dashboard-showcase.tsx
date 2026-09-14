@@ -5,6 +5,7 @@ import { MousePointerClick, Sun, Moon } from "lucide-react";
 import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock } from "@sakaniui/react/blocks";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";
+import { TextReveal } from "@/components/text-reveal";
 
 type Tab =
   | { key: string; label: string; path: string; kind: "block"; Block: React.FC<{ fillPlaceholders?: boolean }> }
@@ -59,9 +60,11 @@ export function DashboardShowcase() {
           hero headline's, rather than the wider max-w-7xl the tabs row
           and demo frame use. */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Real dashboards, not mockups
-        </h2>
+        <TextReveal
+          as="h2"
+          lines={["Real dashboards, not mockups"]}
+          className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
+        />
         <p className="mt-3 text-ink-muted">
           Real Sakani blocks and a real production app, not screenshots: hover the
           sidebar, switch tabs, scroll the table. It all works.

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TextReveal } from "@/components/text-reveal";
 
 const FAQS = [
   {
@@ -40,9 +41,11 @@ export function FaqSection() {
           accordion below shares it too, so both the title and the
           accordion start flush with the hero headline's left edge. */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Frequently asked questions
-        </h2>
+        <TextReveal
+          as="h2"
+          lines={["Frequently asked questions"]}
+          className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
+        />
       </div>
       <div className="mx-auto mt-10 max-w-5xl divide-y divide-line-subtle border-t border-b border-line-subtle px-4 sm:px-6 lg:px-8">
         {FAQS.map((item, i) => {

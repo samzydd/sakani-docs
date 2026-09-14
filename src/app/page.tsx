@@ -11,6 +11,7 @@ import { DashboardTicker } from "@/components/dashboard-ticker";
 import { GithubIcon } from "@/components/icons/github-icon";
 import { Reveal } from "@/components/reveal";
 import { HeroPreview } from "@/components/hero-preview";
+import { TextReveal } from "@/components/text-reveal";
 
 const FEATURES = [
   {
@@ -60,12 +61,12 @@ export default function HomePage() {
           >
             Last updated: September 3rd <ArrowRight size={12} />
           </Link>
-          <h1
-            className="animate-fade-in mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
-            style={{ animationDelay: "80ms" }}
-          >
-            Design and engineering, finally on the same page.
-          </h1>
+          <TextReveal
+            as="h1"
+            trigger="mount"
+            lines={["Design and engineering,", "finally on the same page."]}
+            className="mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+          />
           <p
             className="animate-fade-in mt-4 max-w-md text-balance text-ink-muted"
             style={{ animationDelay: "160ms" }}
@@ -110,9 +111,11 @@ export default function HomePage() {
               with the hero headline's, rather than the wider max-w-7xl
               the feature grid below uses. */}
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              Everything a real product needs
-            </h2>
+            <TextReveal
+              as="h2"
+              lines={["Everything a real product needs"]}
+              className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
+            />
             <p className="mt-3 text-ink-muted">
               Not a component playground: a system built to ship actual screens.
             </p>
@@ -140,9 +143,11 @@ export default function HomePage() {
         <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
-              <h2 className="text-2xl font-semibold tracking-tight text-ink">
-                Up and running in a minute
-              </h2>
+              <TextReveal
+                as="h2"
+                lines={["Up and running in a minute"]}
+                className="text-2xl font-semibold tracking-tight text-ink"
+              />
               <p className="mt-3 text-ink-muted">
                 Install the package, import the tokens once at your app root, then
                 import any component like you would from any other library.

@@ -224,6 +224,26 @@ html.dark .noise-overlay {
   transform: translateY(0);
 }
 
+/* Line-by-line heading reveal (see text-reveal.tsx): each declared line
+   sits in its own overflow:hidden mask and rises up into place from
+   below rather than the whole heading fading in as one block, staggered
+   line by line via each inner span's own transition-delay. */
+.text-reveal-line {
+  display: block;
+  overflow: hidden;
+}
+.text-reveal-line > span {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+.text-reveal-line > span.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 /* Sakani's tokens.css only ever defines a .dark override -- there's no
    .light counterpart, because normally you'd never need one: the page is
    either themed or it isn't, and :root's own defaults are already "light".
@@ -321,5 +341,10 @@ html.dark .noise-overlay {
   }
   .dashboard-ticker {
     animation: none;
+  }
+  .text-reveal-line > span {
+    opacity: 1;
+    transform: none;
+    transition: none !important;
   }
 }

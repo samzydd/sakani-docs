@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Component, SlidersHorizontal, LayoutGrid, LineChart as LineChartIcon, LayoutDashboard, ShoppingBag, Megaphone, CreditCard } from "lucide-react";
+import { TextReveal } from "@/components/text-reveal";
 
 const CATEGORIES = [
   { title: "Core", count: "13 components", icon: Component, href: "/docs/components/button" },
@@ -20,9 +21,11 @@ export function CategoryGrid() {
           hero headline's, rather than the wider max-w-7xl the grid below
           uses. */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Browse everything
-        </h2>
+        <TextReveal
+          as="h2"
+          lines={["Browse everything"]}
+          className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
+        />
         <p className="mt-3 text-ink-muted">
           114+ components and 41 blocks, organized by category. Jump straight to
           the one you need.
