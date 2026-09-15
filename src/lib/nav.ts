@@ -136,11 +136,18 @@ export const docsNav: NavGroup[] = [
   {
     title: "Blocks",
     items: [
-      { title: "Pricing Table", href: "/docs/blocks/pricing-table" },
-      { title: "Billing Address", href: "/docs/blocks/billing-address" },
+      { title: "CRM Dashboard", href: "/docs/blocks/crm-dashboard" },
       { title: "Data Table", href: "/docs/blocks/data-table" },
       { title: "Kanban Board", href: "/docs/blocks/kanban-board" },
-      { title: "CRM Dashboard", href: "/docs/blocks/crm-dashboard", label: "New" },
+      { title: "App Shell", href: "/docs/blocks/app-shell", label: "New" },
+      { title: "Panels & Flows", href: "/docs/blocks/panels", label: "New" },
+      { title: "Authentication", href: "/docs/blocks/authentication", label: "New" },
+      { title: "Marketing Sections", href: "/docs/blocks/marketing-sections", label: "New" },
+      { title: "Content Sections", href: "/docs/blocks/content-sections", label: "New" },
+      { title: "E-commerce", href: "/docs/blocks/ecommerce", label: "New" },
+      { title: "Pricing Table", href: "/docs/blocks/pricing-table" },
+      { title: "Billing", href: "/docs/blocks/billing", label: "New" },
+      { title: "Billing Address", href: "/docs/blocks/billing-address" },
     ],
   },
 ];
