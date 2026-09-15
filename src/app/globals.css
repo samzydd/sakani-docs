@@ -343,13 +343,14 @@ html.dark .noise-overlay {
    fluid-width (Kanban, DataTable), so this is safe to apply generically
    to whatever block is currently mounted inside .dashboard-embed.
 
-   Targets both > div (a block rendered directly) and > div > div (a block
-   wrapped in DashboardShowcase's own .dark/.force-light theme div) --
-   that wrapper sits between .dashboard-embed and the block's real root,
-   so the direct-child selector alone stopped reaching it once the
-   per-dashboard theme toggle was added. */
-.dashboard-embed > div,
-.dashboard-embed > div > div {
+   Direct child only. This used to also target > div > div, to reach
+   through the .dark/.force-light wrapper DashboardShowcase once put
+   around the block -- but that wrapper moved up to the frame itself when
+   the chrome bar had to follow the per-dashboard theme too. With it gone,
+   > div > div matched each block's *first inner child* instead: Kanban's
+   and DataTable's toolbars were being stretched to the full 840px frame,
+   pushing the actual content out of view. */
+.dashboard-embed > div {
   width: 100% !important;
   height: 100% !important;
 }
