@@ -82,9 +82,28 @@ export default function HomePage() {
             lines={["Design and engineering,", "finally on the same page."]}
             className="mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
           />
-          <MaskReveal as="p" trigger="mount" delay={460} duration={HERO_RISE} className="mt-4 max-w-md text-balance text-ink-muted">
+          {/* 680px, up from the max-w-md (448px) this used to be, where the
+              copy stacked into a narrow, dense brick under a 48px headline.
+
+              Line count here is a property of copy length against the
+              measure, not something the class list can pin, and text-balance
+              then shrinks the block to its longest line -- so the width you
+              actually see is (characters x ~8.02px at 18px Geist) / 3. The
+              sentence is sized to that: ~234 characters fills this 680px
+              measure across three even lines. Editing it much shorter
+              visibly narrows the block, and past ~250 it spills to a
+              fourth line. */}
+          <MaskReveal
+            as="p"
+            trigger="mount"
+            delay={460}
+            duration={HERO_RISE}
+            className="mt-5 max-w-[680px] text-balance text-lg leading-[1.4] text-ink-muted"
+          >
             114+ components and 41 blocks, matching your Figma file exactly, so
-            your whole team ships from one source of truth, not a reinterpretation of it.
+            designers hand off what engineers already have, and your whole team
+            ships from one source of truth, not a reinterpretation of it. No
+            redlines, no rebuilding it twice.
           </MaskReveal>
           <MaskReveal trigger="mount" delay={620} duration={HERO_RISE} className="mt-8">
             <span className="flex flex-wrap items-center gap-3">

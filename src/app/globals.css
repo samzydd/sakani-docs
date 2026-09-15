@@ -248,12 +248,39 @@ html.dark .noise-overlay {
    sits in its own overflow:hidden mask and rises up into place from
    below rather than the whole heading fading in as one block, staggered
    line by line via each inner span's own transition-delay. */
+/* Headings here run at tight leading (text-5xl is 3rem at line-height 1),
+   so glyph descenders -- the "p" in "page", the "g" in "engineering" --
+   paint below the line box. This mask can never be dropped the way
+   .mask-reveal's is (it has to keep clipping every line's rise), so
+   without the padding below it would shave those descenders permanently.
+
+   The padding is deliberately on BOTH boxes, and each is cancelled by an
+   equal negative margin:
+     - on the line, it extends the clip box past the descender without
+       changing layout;
+     - on the span, it grows the box translateY(100%) is measured against,
+       so the hidden text still clears the now-taller clip box instead of
+       peeking into that extra strip before its turn.
+   0.2em covers Geist's ~0.11em descent overhang at line-height 1, and
+   scales with the heading rather than being pinned to one size. */
+/* flow-root so the last line's negative margin below resolves INSIDE this
+   heading instead of collapsing through it. Without this the heading keeps
+   the padding in its own height and pushes the -0.2em outward, where it
+   cancels against whatever sits below: the hero's 20px gap under the
+   headline silently became 10.4px. */
+.text-reveal {
+  display: flow-root;
+}
 .text-reveal-line {
   display: block;
   overflow: hidden;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
 }
 .text-reveal-line > span {
   display: inline-block;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
   transform: translateY(100%);
   opacity: 0;
   transition: transform var(--reveal-rise) var(--ease-reveal), opacity var(--reveal-rise) var(--ease-reveal);

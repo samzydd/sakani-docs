@@ -37,7 +37,7 @@ export function TextReveal({
   const { ref, visible } = useRevealTrigger<HTMLHeadingElement>(trigger);
 
   return (
-    <Tag ref={ref} className={className}>
+    <Tag ref={ref} className={cn("text-reveal", className)}>
       {lines.map((line, i) => (
         <span key={line} className="text-reveal-line">
           <span
