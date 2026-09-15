@@ -8,8 +8,19 @@ import { useScrollReveal } from "@/lib/use-scroll-reveal";
 import { TextReveal } from "@/components/text-reveal";
 import { MaskReveal } from "@/components/mask-reveal";
 
+/**
+ * `fillPlaceholders` only exists on these blocks from @sakaniui/react
+ * 0.3.3 onward, and 0.3.3 isn't on the registry yet. Typing the slot
+ * structurally (rather than as the imported components' own prop types)
+ * keeps this building against the published 0.3.1, where the blocks
+ * simply ignore the extra prop and render at their natural height. Once
+ * 0.3.3 is published and installed, the same code starts filling the
+ * frame with no edit here.
+ */
+type BlockComponent = React.ComponentType<{ fillPlaceholders?: boolean }>;
+
 type Tab =
-  | { key: string; label: string; path: string; kind: "block"; Block: React.FC<{ fillPlaceholders?: boolean }> }
+  | { key: string; label: string; path: string; kind: "block"; Block: BlockComponent }
   | { key: string; label: string; path: string; kind: "iframe"; url: string };
 
 const TABS: Tab[] = [
@@ -20,9 +31,9 @@ const TABS: Tab[] = [
     kind: "iframe",
     url: "https://saas-crm-sakani-ds.vercel.app/",
   },
-  { key: "crm-demo-2", label: "CRM demo 2", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock },
-  { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock },
-  { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", kind: "block", Block: DataTableBlock },
+  { key: "crm-demo-2", label: "CRM demo 2", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock as BlockComponent },
+  { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock as BlockComponent },
+  { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", kind: "block", Block: DataTableBlock as BlockComponent },
 ];
 
 // Matches the message contract useEmbeddedThemeControl listens for in the
