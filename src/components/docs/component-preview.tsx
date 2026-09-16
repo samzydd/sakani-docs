@@ -94,7 +94,7 @@ export function ComponentPreview({
               onClick={() => setTab(t)}
               className={cn(
                 "rounded-t-md px-3 py-1.5 text-sm capitalize transition-colors",
-                tab === t ? "bg-canvas text-ink" : "text-ink-subtle hover:text-ink"
+                tab === t ? "bg-canvas text-ink" : "text-ink-muted hover:text-ink"
               )}
             >
               {t}
@@ -106,7 +106,7 @@ export function ComponentPreview({
             type="button"
             onClick={() => setPreviewTheme((v) => (v === "dark" ? "light" : "dark"))}
             aria-label={previewTheme === "dark" ? "Preview in light mode" : "Preview in dark mode"}
-            className="mb-1.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-ink-subtle transition-colors hover:bg-subtle hover:text-ink"
+            className="mb-1.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-ink-muted transition-colors hover:bg-subtle hover:text-ink"
           >
             {previewTheme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
           </button>

@@ -132,14 +132,14 @@ export function DashboardShowcase() {
               <span className="h-3 w-3 rounded-full bg-warning/60" />
               <span className="h-3 w-3 rounded-full bg-success/60" />
             </div>
-            <div className="mx-auto flex w-full max-w-xs items-center justify-center rounded-md bg-canvas px-3 py-1 text-xs text-ink-subtle">
+            <div className="mx-auto flex w-full max-w-xs items-center justify-center rounded-md bg-canvas px-3 py-1 text-xs text-ink-muted">
               {tab.path}
             </div>
             <button
               type="button"
               onClick={() => setDashboardTheme((v) => (v === "dark" ? "light" : "dark"))}
               aria-label={dashboardTheme === "dark" ? "Switch this dashboard to light mode" : "Switch this dashboard to dark mode"}
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-ink-subtle transition-colors hover:bg-subtle hover:text-ink"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-ink-muted transition-colors hover:bg-subtle hover:text-ink"
             >
               {dashboardTheme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
             </button>

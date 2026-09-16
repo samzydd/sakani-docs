@@ -4,7 +4,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-line-subtle">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-        <p className="text-sm text-ink-subtle">
+        <p className="text-sm text-ink-muted">
           Built by{" "}
           <a href="https://github.com/samzydd" target="_blank" rel="noreferrer" className="text-ink-muted underline underline-offset-2 hover:text-ink">
             Samuel Okpere

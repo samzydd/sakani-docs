@@ -38,7 +38,7 @@ export function MobileNav() {
           <nav className="h-[calc(100vh-4rem)] overflow-y-auto px-4 py-6">
             {docsNav.map((group) => (
               <div key={group.title} className="mb-6">
-                <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink-subtle">
+                <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink-muted">
                   {group.title}
                 </p>
                 <div className="flex flex-col gap-0.5">

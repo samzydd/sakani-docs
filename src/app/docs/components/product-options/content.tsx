@@ -116,7 +116,7 @@ function OptionsDemo() {
         />
         <WishlistButton saved={saved} onToggle={setSaved} label="Ceramic Pour-Over Mug" />
       </div>
-      <p className="text-xs text-ink-subtle">
+      <p className="text-xs text-ink-muted">
         {color} · {size} · ×{qty}
         {saved ? " · saved" : ""}
       </p>

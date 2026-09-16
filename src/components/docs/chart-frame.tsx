@@ -55,7 +55,7 @@ export function ChartVariants({
             <code className="rounded bg-subtle px-1.5 py-0.5 text-xs font-medium text-ink">
               {item.label}
             </code>
-            {item.note && <span className="text-xs text-ink-subtle">{item.note}</span>}
+            {item.note && <span className="text-xs text-ink-muted">{item.note}</span>}
           </div>
           {item.chart}
         </div>

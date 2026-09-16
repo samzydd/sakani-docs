@@ -69,7 +69,7 @@ function ControlledDemo() {
   return (
     <div className="w-full max-w-sm">
       <Combobox mode="multi" label="Markets" options={OPTIONS} value={value} onChange={setValue} />
-      <p className="mt-2 text-xs text-ink-subtle">{count} selected</p>
+      <p className="mt-2 text-xs text-ink-muted">{count} selected</p>
     </div>
   );
 }

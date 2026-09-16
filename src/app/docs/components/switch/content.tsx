@@ -42,7 +42,7 @@ function ControlledDemo() {
         checked={on}
         onChange={(e) => setOn(e.target.checked)}
       />
-      <p className="text-xs text-ink-subtle">{on ? "Backing up nightly" : "Backups paused"}</p>
+      <p className="text-xs text-ink-muted">{on ? "Backing up nightly" : "Backups paused"}</p>
     </div>
   );
 }

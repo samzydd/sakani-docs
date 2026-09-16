@@ -48,7 +48,7 @@ function ControlledDemo() {
           </button>
         ))}
       </div>
-      <p className="text-xs text-ink-subtle">Showing image {index + 1}</p>
+      <p className="text-xs text-ink-muted">Showing image {index + 1}</p>
     </div>
   );
 }

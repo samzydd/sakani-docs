@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* Tailwind v4's `dark:` variant defaults to @media (prefers-color-scheme),
+   but the theme here is a class on <html> driven by next-themes, and the
+   token layer below is scoped to `.dark` to match. Without this the two
+   disagree: with the OS in dark mode and the site switched to light, every
+   `dark:` utility still applied. The code blocks render a light and a dark
+   copy and pick between them with `dark:hidden` / `dark:block`, so that
+   showed the github-dark markup on a white background -- syntax tokens at
+   1.28:1 against a 4.5:1 requirement. Binding the variant to the class makes
+   utilities follow the same signal the tokens already do. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* TEMP: vendored copy of tokens.css until @sakaniui/react@0.3.2 is published
    (the npm-exported ./tokens.css path is currently broken on the registry —
    see src/styles/README-TEMP.txt). Swap this for the package import once fixed:

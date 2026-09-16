@@ -50,11 +50,13 @@ export function CommandMenu() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex h-9 w-full max-w-64 items-center gap-2 rounded-md border border-line-subtle bg-surface px-3 text-sm text-ink-subtle transition-colors hover:border-line-default"
+        className="flex h-9 w-full max-w-64 items-center gap-2 rounded-md border border-line-subtle bg-surface px-3 text-sm text-ink-muted transition-colors hover:border-line-default"
       >
         <Search size={14} strokeWidth={1.75} />
         <span className="flex-1 text-left">Search docs…</span>
-        <kbd className="rounded border border-line-subtle bg-subtle px-1.5 py-0.5 font-mono text-[11px] text-ink-muted">
+        {/* text-ink, not text-ink-muted: muted on bg-subtle measures 4.37:1,
+            just under AA, and at 11px this is the smallest text on the page. */}
+        <kbd className="rounded border border-line-subtle bg-subtle px-1.5 py-0.5 font-mono text-[11px] text-ink">
           ⌘K
         </kbd>
       </button>
@@ -66,22 +68,22 @@ export function CommandMenu() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-2 border-b border-line-subtle px-4 py-3">
-              <Search size={16} className="text-ink-subtle" />
+              <Search size={16} className="text-ink-muted" />
               <input
                 autoFocus
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search components, blocks, guides…"
-                className="flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-ink-subtle"
+                className="flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-ink-muted"
               />
             </div>
             <div className="max-h-80 overflow-y-auto p-2">
               {results.length === 0 && (
-                <p className="px-3 py-6 text-center text-sm text-ink-subtle">No results.</p>
+                <p className="px-3 py-6 text-center text-sm text-ink-muted">No results.</p>
               )}
               {results.map((group) => (
                 <div key={group.title} className="mb-2 last:mb-0">
-                  <p className="px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-ink-subtle">
+                  <p className="px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-ink-muted">
                     {group.title}
                   </p>
                   {group.items.map((item) => (

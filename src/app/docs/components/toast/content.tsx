@@ -64,7 +64,7 @@ function QueueDemo() {
         ))}
       </div>
       {toasts.length === 0 && (
-        <p className="text-xs text-ink-subtle">Each one clears itself after 4s.</p>
+        <p className="text-xs text-ink-muted">Each one clears itself after 4s.</p>
       )}
     </div>
   );

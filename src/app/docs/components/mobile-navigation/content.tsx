@@ -50,7 +50,7 @@ function ControlledDemo() {
         open={open}
         onOpenChange={setOpen}
       />
-      <p className="text-xs text-ink-subtle">Menu is {open ? "open" : "closed"}</p>
+      <p className="text-xs text-ink-muted">Menu is {open ? "open" : "closed"}</p>
     </div>
   );
 }

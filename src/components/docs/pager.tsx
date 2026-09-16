@@ -15,7 +15,7 @@ export function Pager({ current }: { current: string }) {
         <Link href={prev.href} className="group flex items-center gap-2 text-sm text-ink-muted hover:text-ink">
           <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
           <span>
-            <span className="block text-xs text-ink-subtle">Previous</span>
+            <span className="block text-xs text-ink-muted">Previous</span>
             {prev.title}
           </span>
         </Link>
@@ -25,7 +25,7 @@ export function Pager({ current }: { current: string }) {
       {next ? (
         <Link href={next.href} className="group flex items-center gap-2 text-right text-sm text-ink-muted hover:text-ink">
           <span>
-            <span className="block text-xs text-ink-subtle">Next</span>
+            <span className="block text-xs text-ink-muted">Next</span>
             {next.title}
           </span>
           <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />

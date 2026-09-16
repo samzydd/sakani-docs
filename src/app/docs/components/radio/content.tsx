@@ -64,7 +64,7 @@ function ControlledDemo() {
           onChange={() => setPlan(o.value)}
         />
       ))}
-      <p className="mt-1 text-xs text-ink-subtle">Selected: {plan}</p>
+      <p className="mt-1 text-xs text-ink-muted">Selected: {plan}</p>
     </div>
   );
 }

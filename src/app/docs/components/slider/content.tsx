@@ -50,7 +50,7 @@ function ControlledDemo() {
         value={budget}
         onChange={(e) => setBudget(Number(e.target.value))}
       />
-      <p className="mt-2 text-xs text-ink-subtle">
+      <p className="mt-2 text-xs text-ink-muted">
         ${budget.toLocaleString("en-US")} per month
       </p>
     </div>

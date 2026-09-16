@@ -39,7 +39,7 @@ export function DocsSidebar() {
       <div className="relative mb-4 shrink-0">
         <Search
           size={14}
-          className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-subtle"
+          className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-muted"
         />
         <input
           ref={inputRef}
@@ -54,7 +54,7 @@ export function DocsSidebar() {
           }}
           placeholder="Filter components…"
           aria-label="Filter components"
-          className="h-8 w-full rounded-md border border-line-subtle bg-surface pl-8 pr-7 text-sm text-ink outline-none transition-colors placeholder:text-ink-subtle hover:border-line-default focus:border-line-strong"
+          className="h-8 w-full rounded-md border border-line-subtle bg-surface pl-8 pr-7 text-sm text-ink outline-none transition-colors placeholder:text-ink-muted hover:border-line-default focus:border-line-strong"
         />
         {query && (
           <button
@@ -64,7 +64,7 @@ export function DocsSidebar() {
               inputRef.current?.focus();
             }}
             aria-label="Clear filter"
-            className="absolute right-1.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded text-ink-subtle transition-colors hover:bg-subtle hover:text-ink"
+            className="absolute right-1.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded text-ink-muted transition-colors hover:bg-subtle hover:text-ink"
           >
             <X size={12} />
           </button>
@@ -79,13 +79,13 @@ export function DocsSidebar() {
 
       <div className="min-h-0 flex-1 overflow-y-auto">
         {count === 0 ? (
-          <p className="px-1 py-6 text-sm text-ink-subtle">
+          <p className="px-1 py-6 text-sm text-ink-muted">
             No components match &ldquo;{query}&rdquo;.
           </p>
         ) : (
           results.map((group) => (
             <div key={group.title} className="mb-6">
-              <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink-subtle">
+              <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink-muted">
                 {group.title}
               </p>
               <div className="flex flex-col gap-0.5 border-l border-line-subtle">

@@ -60,7 +60,7 @@ export function FaqSection() {
                 <span className="text-sm font-medium text-ink">{item.q}</span>
                 <ChevronDown
                   size={16}
-                  className={cn("shrink-0 text-ink-subtle transition-transform", isOpen && "rotate-180")}
+                  className={cn("shrink-0 text-ink-muted transition-transform", isOpen && "rotate-180")}
                 />
               </button>
               <div className={cn("faq-panel-wrap", isOpen && "is-open")}>

@@ -43,7 +43,7 @@ export function CategoryGrid() {
               <c.icon size={18} strokeWidth={1.75} />
             </div>
             <h3 className="mt-4 text-sm font-semibold text-ink">{c.title}</h3>
-            <p className="mt-1 text-xs text-ink-subtle">{c.count}</p>
+            <p className="mt-1 text-xs text-ink-muted">{c.count}</p>
           </Link>
         ))}
       </div>

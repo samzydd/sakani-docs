@@ -40,7 +40,7 @@ function HandlerDemo() {
   return (
     <div className="flex flex-col items-center gap-3">
       <AvatarUpload onFileSelect={setFile} accept="image/png,image/jpeg" title="Profile photo" />
-      <p className="text-xs text-ink-subtle">
+      <p className="text-xs text-ink-muted">
         {file ? `${file.name} ready to upload` : "No file chosen yet."}
       </p>
     </div>

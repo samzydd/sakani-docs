@@ -49,7 +49,7 @@ function SingleDemo() {
   return (
     <div className="flex flex-col items-center gap-3">
       <Calendar value={date} onChange={setDate} />
-      <p className="text-xs text-ink-subtle">
+      <p className="text-xs text-ink-muted">
         {date ? date.toDateString() : "No date selected"}
       </p>
     </div>
@@ -61,7 +61,7 @@ function RangeDemo() {
   return (
     <div className="flex flex-col items-center gap-3">
       <Calendar mode="range" range={range} onRangeChange={setRange} />
-      <p className="text-xs text-ink-subtle">
+      <p className="text-xs text-ink-muted">
         {range.from ? range.from.toDateString() : "Pick a start"} →{" "}
         {range.to ? range.to.toDateString() : "pick an end"}
       </p>

@@ -59,7 +59,7 @@ function ControlledDemo() {
           { value: "quarter", label: "Quarter" },
         ]}
       />
-      <p className="text-xs text-ink-subtle">Showing the last {range}</p>
+      <p className="text-xs text-ink-muted">Showing the last {range}</p>
     </div>
   );
 }

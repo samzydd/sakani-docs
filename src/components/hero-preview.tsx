@@ -47,7 +47,7 @@ export function HeroPreview() {
               <span className="h-3 w-3 rounded-full bg-warning/60" />
               <span className="h-3 w-3 rounded-full bg-success/60" />
             </div>
-            <div className="mx-auto flex w-full max-w-xs items-center justify-center rounded-md bg-canvas px-3 py-1 text-xs text-ink-subtle">
+            <div className="mx-auto flex w-full max-w-xs items-center justify-center rounded-md bg-canvas px-3 py-1 text-xs text-ink-muted">
               app.yourcompany.com/crm
             </div>
           </div>

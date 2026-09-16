@@ -59,7 +59,7 @@ export default function ThemingPage() {
       <div className="mt-5 overflow-hidden rounded-lg border border-line-subtle">
         <table className="w-full border-collapse text-left text-sm">
           <thead>
-            <tr className="border-b border-line-subtle bg-surface text-xs uppercase tracking-wide text-ink-subtle">
+            <tr className="border-b border-line-subtle bg-surface text-xs uppercase tracking-wide text-ink-muted">
               <th className="px-4 py-2.5 font-medium">Token</th>
               <th className="px-4 py-2.5 font-medium">Preview</th>
               <th className="px-4 py-2.5 font-medium">Used for</th>

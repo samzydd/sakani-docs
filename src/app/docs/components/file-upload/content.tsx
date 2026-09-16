@@ -38,7 +38,7 @@ function HandlerDemo() {
   return (
     <div className="w-full max-w-md">
       <FileUpload multiple onFilesChange={setFiles} hint="Attachments" />
-      <p className="mt-3 text-xs text-ink-subtle">
+      <p className="mt-3 text-xs text-ink-muted">
         {files.length === 0
           ? "No files selected yet."
           : `${files.length} file${files.length === 1 ? "" : "s"} ready to upload`}

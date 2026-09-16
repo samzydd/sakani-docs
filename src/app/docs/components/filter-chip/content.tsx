@@ -49,7 +49,7 @@ function BarDemo() {
         Add filter
       </FilterChip>
       {filters.length === 0 && (
-        <span className="text-xs text-ink-subtle">No filters applied.</span>
+        <span className="text-xs text-ink-muted">No filters applied.</span>
       )}
     </div>
   );

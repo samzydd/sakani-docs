@@ -82,7 +82,7 @@ function CartDemo() {
         Subtotal: ${total.toFixed(2)}
       </p>
       {items.length === 0 && (
-        <p className="text-center text-xs text-ink-subtle">Your bag is empty.</p>
+        <p className="text-center text-xs text-ink-muted">Your bag is empty.</p>
       )}
     </div>
   );

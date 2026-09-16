@@ -44,7 +44,7 @@ function EditableDemo() {
   return (
     <div className="w-full max-w-lg">
       <CodeSnippet editable code={code} onChange={setCode} filename="playground.tsx" />
-      <p className="mt-2 text-xs text-ink-subtle">{code.length} characters</p>
+      <p className="mt-2 text-xs text-ink-muted">{code.length} characters</p>
     </div>
   );
 }

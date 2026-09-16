@@ -16,7 +16,7 @@ const SIBLINGS = `// How many numbers flank the current page before it collapses
 <Pagination total={24} page={12} siblings={2} onPageChange={setPage} />`;
 
 const FOOTER = `<div className="flex items-center justify-between">
-  <p className="text-sm text-ink-subtle">Showing 1–20 of 482</p>
+  <p className="text-sm text-ink-muted">Showing 1–20 of 482</p>
   <Pagination total={25} page={page} onPageChange={setPage} />
 </div>`;
 
@@ -46,7 +46,7 @@ function FooterDemo() {
   const [page, setPage] = useState(1);
   return (
     <div className="flex w-full max-w-lg items-center justify-between gap-4">
-      <p className="text-sm text-ink-subtle">Showing 1–20 of 482</p>
+      <p className="text-sm text-ink-muted">Showing 1–20 of 482</p>
       <Pagination total={25} page={page} onPageChange={setPage} />
     </div>
   );

@@ -170,7 +170,7 @@ export default function ModalPage() {
             unsure whether it went through.
           </p>
           <ComponentPreview code={LOADING}>
-            <p className="text-sm text-ink-subtle">See the code tab.</p>
+            <p className="text-sm text-ink-muted">See the code tab.</p>
           </ComponentPreview>
         </section>
 

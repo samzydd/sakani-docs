@@ -26,7 +26,7 @@ function RemovableDemo() {
       <Tags tags={tags} onRemove={(_, index) => setTags(tags.filter((_, i) => i !== index))} />
       {tags.length === 0 && (
         <button
-          className="text-xs text-ink-subtle underline"
+          className="text-xs text-ink-muted underline"
           onClick={() => setTags(["Design", "Engineering", "Q3"])}
         >
           Reset
