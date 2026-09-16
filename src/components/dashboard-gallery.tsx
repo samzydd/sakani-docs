@@ -186,7 +186,20 @@ export function DashboardGallery() {
                 alt=""
                 width={1200}
                 height={800}
-                priority={i < 2}
+                /* Eager, deliberately. Next/Image lazy-loads through an
+                   IntersectionObserver on the image, and this layout defeats
+                   it: cards are pushed out of the viewport by transforms and
+                   some are visibility:hidden, so five of the seven never
+                   intersected, never fetched, and arrived blank. Anything
+                   observer-driven would be fighting the same geometry that
+                   caused the bug, so these just load. It is also no worse
+                   than the marquee this replaced, which rendered all seven
+                   twice over and loaded every copy. */
+                loading="eager"
+                /* Without this Next cannot know how wide these render and
+                   takes the top of the srcset -- it was fetching the 3840px
+                   variant for a card that is never wider than 820. */
+                sizes="(max-width: 640px) 78vw, (max-width: 1400px) 62vw, 820px"
                 className="aspect-[3/2] w-full object-cover object-top"
               />
             </div>
