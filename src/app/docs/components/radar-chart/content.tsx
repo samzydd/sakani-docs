@@ -7,31 +7,44 @@ import { ChartFrame, ChartVariants } from "@/components/docs/chart-frame";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
+/* One series and two, kept separate on purpose. The chart draws a second
+   shape whenever a row carries value2, so passing the two-series set to
+   every variant would render all of them as comparisons -- which is not what
+   most of these variants are for, and not how they appear in Storybook. */
 const DATA = [
-  { label: "Speed", value: 82, value2: 65 },
-  { label: "Reliability", value: 74, value2: 80 },
-  { label: "Support", value: 68, value2: 55 },
-  { label: "Pricing", value: 55, value2: 72 },
-  { label: "Features", value: 91, value2: 60 },
+  { label: "January", value: 240 },
+  { label: "February", value: 300 },
+  { label: "March", value: 256 },
+  { label: "April", value: 84 },
+  { label: "May", value: 210 },
+  { label: "June", value: 280 },
+];
+
+const TWO_SERIES = [
+  { label: "January", value: 240, value2: 60 },
+  { label: "February", value: 300, value2: 201 },
+  { label: "March", value: 256, value2: 110 },
+  { label: "April", value: 84, value2: 200 },
+  { label: "May", value: 210, value2: 110 },
+  { label: "June", value: 280, value2: 120 },
 ];
 
 const BASIC = `const data = [
-  { label: "Speed", value: 82 },
-  { label: "Reliability", value: 74 },
-  { label: "Support", value: 68 },
-  { label: "Pricing", value: 55 },
-  { label: "Features", value: 91 },
+  { label: 'January', value: 240 },
+  { label: 'February', value: 300 },
+  { label: 'March', value: 256 },
 ];
 
 <RadarChart data={data} />`;
 
-const MULTIPLE = `<RadarChart
-  data={data}
+const MULTIPLE = `// A second shape appears as soon as rows carry value2.
+<RadarChart
+  data={twoSeriesData}
   variant="multiple"
-  seriesLabels={["Us", "Competitor"]}
+  seriesLabels={['Revenue', 'Costs']}
 />`;
 
-const GRIDS = `// Polygon grid (straight edges between spokes)
+const GRIDS = `// Polygon grid (straight edges joining the spokes)
 <RadarChart data={data} variant="default" />
 <RadarChart data={data} variant="grid-custom" />
 <RadarChart data={data} variant="grid-filled" />
@@ -43,8 +56,10 @@ const GRIDS = `// Polygon grid (straight edges between spokes)
 
 const MARKERS = `<RadarChart data={data} variant="dots" />
 <RadarChart data={data} variant="dots-grid-none" />
-<RadarChart data={data} variant="lines-only" />
-<RadarChart data={data} variant="custom-label" />`;
+
+// These two take the two-series set.
+<RadarChart data={twoSeriesData} variant="lines-only" />
+<RadarChart data={twoSeriesData} variant="custom-label" />`;
 
 const PROPS = [
   { name: "data", type: "{ label: string; value: number; value2?: number }[]", description: "One spoke per entry. value2 draws a second shape for comparison." },
@@ -69,18 +84,23 @@ export default function RadarChartPage() {
           <h2 className="mb-3 text-lg font-semibold text-ink">Only when the axes share a scale</h2>
           <p className="mb-3 text-sm text-ink-muted">
             The shape only means something if every spoke is measured the same
-            way — all scores out of 100, all percentages. Mixing units makes the
+            way: all scores out of 100, all percentages. Mixing units makes the
             enclosed area meaningless even though it still looks like a chart.
-            Spoke order matters too: rearranging them changes the shape without
-            changing the data.
+            Spoke order matters too, since rearranging them changes the shape
+            without changing the data.
           </p>
         </section>
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Comparing two profiles</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            The second shape is derived from the data, not switched on by the
+            variant: any row carrying <code>value2</code> gets one. That is why
+            the single-series variants below are fed rows without it.
+          </p>
           <ComponentPreview code={MULTIPLE}>
             <ChartFrame kind="radar">
-              <RadarChart data={DATA} variant="multiple" seriesLabels={["Us", "Competitor"]} />
+              <RadarChart data={TWO_SERIES} variant="multiple" seriesLabels={["Revenue", "Costs"]} />
             </ChartFrame>
           </ComponentPreview>
         </section>
@@ -115,8 +135,8 @@ export default function RadarChartPage() {
               items={[
                 { label: "dots", note: "point markers on the shape", chart: <RadarChart data={DATA} variant="dots" /> },
                 { label: "dots-grid-none", note: "markers, grid removed", chart: <RadarChart data={DATA} variant="dots-grid-none" /> },
-                { label: "lines-only", note: "outline, no fill", chart: <RadarChart data={DATA} variant="lines-only" /> },
-                { label: "custom-label", note: "restyled spoke labels", chart: <RadarChart data={DATA} variant="custom-label" /> },
+                { label: "lines-only", note: "outlines, no fill, two series", chart: <RadarChart data={TWO_SERIES} variant="lines-only" /> },
+                { label: "custom-label", note: "restyled spoke labels, two series", chart: <RadarChart data={TWO_SERIES} variant="custom-label" /> },
               ]}
             />
           </ComponentPreview>
