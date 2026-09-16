@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { CommandMenu } from "./command-menu";
 import { MobileNav } from "./mobile-nav";
@@ -9,6 +10,15 @@ const NAV_LINKS = [
   { title: "Components", href: "/docs/components/button" },
   { title: "Blocks", href: "/docs/blocks/pricing-table" },
 ];
+
+/**
+ * The published Storybook, and the closest thing to a browsable design
+ * source now that the Figma file sits behind a plan that only exposes its
+ * first page. This is the branch permalink rather than a build URL
+ * (…-jgczzpdmmk.chromatic.com), which is pinned to one build and goes stale;
+ * this one always serves the latest published build.
+ */
+export const STORYBOOK_URL = "https://main--6a5a658b3681fcc010430db5.chromatic.com";
 
 export function SiteHeader() {
   return (
@@ -39,6 +49,15 @@ export function SiteHeader() {
           <div className="hidden sm:block">
             <CommandMenu />
           </div>
+          <a
+            href={STORYBOOK_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="hidden items-center gap-1.5 rounded-md border border-line-subtle px-3 py-1.5 text-sm text-ink-muted transition-colors hover:bg-subtle hover:text-ink lg:inline-flex"
+          >
+            Storybook
+            <ArrowUpRight size={14} />
+          </a>
           <a
             href="https://github.com/samzydd/Sakani-design-system"
             target="_blank"

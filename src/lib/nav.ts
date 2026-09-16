@@ -16,6 +16,7 @@ export const docsNav: NavGroup[] = [
       { title: "Introduction", href: "/docs" },
       { title: "Installation", href: "/docs/installation" },
       { title: "Theming", href: "/docs/theming" },
+      { title: "Tokens", href: "/docs/tokens", label: "New" },
     ],
   },
   {

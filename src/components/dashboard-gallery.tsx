@@ -195,7 +195,9 @@ export function DashboardGallery() {
       {/* Sticky, not fixed: the stage releases the page naturally at the end
           of the section instead of needing a scroll listener to unpin it. */}
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
-        <div className="pt-10">{heading}</div>
+        {/* 80px, matching the py-20 the reduced-motion variant and the rest
+            of the landing sections use. */}
+        <div className="pt-20">{heading}</div>
 
         <div
           className="relative mt-8 flex flex-1 items-center justify-center"
