@@ -53,6 +53,27 @@ const SPREAD = 0.46;
 const DEPTH = 300;
 /** Degrees each step rotates away from the viewer. */
 const TURN = 34;
+/**
+ * Cards stay fully opaque out to here, and only fade over the short run
+ * between this and CULL.
+ *
+ * They used to start fading immediately (opacity 0.62 one step out, 0.24 two
+ * steps out), which meant overlapping cards were translucent and you saw one
+ * dashboard straight through another -- two busy UIs blended into a muddy
+ * seam wherever they crossed. Opaque cards occlude each other cleanly
+ * instead, the way physical cards would, and depth is carried by the scrim
+ * below rather than by transparency.
+ */
+const SOLID_UNTIL = 2;
+/** Beyond this a card contributes nothing but overdraw. */
+const CULL = 3.2;
+/**
+ * How far each receding card is dimmed toward the page background. Tinting
+ * with the canvas color (rather than black, or plain transparency) reads as
+ * distance in both themes: far cards settle back into the page instead of
+ * turning grey in light mode or glowing in dark.
+ */
+const MAX_SCRIM = 0.55;
 
 export function DashboardGallery() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -89,8 +110,7 @@ export function DashboardGallery() {
         if (!card) return;
         const offset = i - focus;
         const distance = Math.abs(offset);
-        // Cards past the third neighbour contribute nothing but overdraw.
-        if (distance > 3.2) {
+        if (distance > CULL) {
           card.style.opacity = "0";
           card.style.visibility = "hidden";
           return;
@@ -101,7 +121,17 @@ export function DashboardGallery() {
         const rotate = offset * -TURN;
         const scale = 1 - Math.min(distance * 0.12, 0.42);
         card.style.transform = `translate3d(${x}px, 0, ${z}px) rotateY(${rotate}deg) scale(${scale})`;
-        card.style.opacity = String(Math.max(0, 1 - distance * 0.38));
+        // Fully opaque while cards overlap; the fade only runs over the last
+        // stretch, by which point the card is mostly past the stage edge.
+        card.style.opacity = String(
+          distance <= SOLID_UNTIL
+            ? 1
+            : Math.max(0, 1 - (distance - SOLID_UNTIL) / (CULL - SOLID_UNTIL))
+        );
+        const scrim = card.firstElementChild as HTMLElement | null;
+        if (scrim) {
+          scrim.style.opacity = String(Math.min(distance * 0.2, MAX_SCRIM));
+        }
         // Nearer cards paint over farther ones; translateZ alone doesn't
         // settle paint order reliably across browsers.
         card.style.zIndex = String(100 - Math.round(distance * 10));
@@ -181,6 +211,16 @@ export function DashboardGallery() {
               className="absolute w-[78vw] max-w-[820px] overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-2xl sm:w-[62vw]"
               style={{ transformStyle: "preserve-3d", willChange: "transform, opacity" }}
             >
+              {/* Depth scrim. Must stay the card's first child: draw() reaches
+                  for firstElementChild to set its opacity each frame. Painted
+                  over the image (z-10) and tinted with the page background, so
+                  a receding card dims into the page rather than going
+                  translucent and letting the card behind bleed through it. */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-10 bg-canvas"
+                style={{ opacity: 0, willChange: "opacity" }}
+              />
               <Image
                 src={shot.src}
                 alt=""
