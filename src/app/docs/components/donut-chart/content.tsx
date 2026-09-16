@@ -3,6 +3,7 @@
 import { DonutChart } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { ChartFrame, CHART_WIDTH } from "@/components/docs/chart-frame";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
@@ -46,9 +47,9 @@ export default function DonutChartPage() {
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
-          <div className="w-full max-w-md">
+          <ChartFrame kind="donut">
             <DonutChart data={DATA} />
-          </div>
+          </ChartFrame>
         </ComponentPreview>
 
         <section>
@@ -59,9 +60,9 @@ export default function DonutChartPage() {
             with a hole in it.
           </p>
           <ComponentPreview code={CENTER}>
-            <div className="w-full max-w-md">
+            <ChartFrame kind="donut">
               <DonutChart data={DATA} centerValue="$2.44M" centerCaption="of revenue" />
-            </div>
+            </ChartFrame>
           </ComponentPreview>
         </section>
 
@@ -78,7 +79,7 @@ export default function DonutChartPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Sizes</h2>
           <ComponentPreview code={SIZES}>
-            <div className="flex w-full max-w-lg flex-col gap-6">
+            <div className="flex w-full flex-col gap-6" style={{ maxWidth: CHART_WIDTH.donut }}>
               <DonutChart data={DATA} size="sm" />
               <DonutChart data={DATA} size="lg" />
             </div>

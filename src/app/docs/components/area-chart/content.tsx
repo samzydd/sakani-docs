@@ -3,6 +3,7 @@
 import { AreaChart } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { ChartFrame, CHART_WIDTH } from "@/components/docs/chart-frame";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
@@ -50,9 +51,9 @@ export default function AreaChartPage() {
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
-          <div className="w-full max-w-lg">
+          <ChartFrame kind="area">
             <AreaChart data={DATA} height={240} />
-          </div>
+          </ChartFrame>
         </ComponentPreview>
 
         <section>
@@ -69,9 +70,9 @@ export default function AreaChartPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Two series, stacked</h2>
           <ComponentPreview code={STACKED}>
-            <div className="w-full max-w-lg">
+            <ChartFrame kind="area">
               <AreaChart data={DATA} variant="stacked" seriesLabels={["Revenue", "Costs"]} height={240} />
-            </div>
+            </ChartFrame>
           </ComponentPreview>
         </section>
 
@@ -83,7 +84,7 @@ export default function AreaChartPage() {
             readings that never happened.
           </p>
           <ComponentPreview code={VARIANTS}>
-            <div className="flex w-full max-w-lg flex-col gap-6">
+            <div className="flex w-full flex-col gap-6" style={{ maxWidth: CHART_WIDTH.area }}>
               <AreaChart data={DATA} variant="default" height={160} />
               <AreaChart data={DATA} variant="linear" height={160} />
               <AreaChart data={DATA} variant="step" height={160} />

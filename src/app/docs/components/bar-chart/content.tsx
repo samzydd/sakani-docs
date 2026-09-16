@@ -3,6 +3,7 @@
 import { BarChart } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { ChartFrame, CHART_WIDTH } from "@/components/docs/chart-frame";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
@@ -56,10 +57,25 @@ export default function BarChartPage() {
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
-          <div className="w-full max-w-lg">
+          <ChartFrame kind="bar">
             <BarChart data={DATA} />
-          </div>
+          </ChartFrame>
         </ComponentPreview>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Highlighting one bar</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            <code>active</code> keeps one bar emphasised at rest rather than
+            only on hover, for when the chart exists to make a point about a
+            particular period.
+          </p>
+          <ComponentPreview code={`<BarChart data={data} variant="default" />\n<BarChart data={data} variant="active" />`}>
+            <div className="flex w-full flex-col gap-6" style={{ maxWidth: CHART_WIDTH.bar }}>
+              <BarChart data={DATA} variant="default" />
+              <BarChart data={DATA} variant="active" />
+            </div>
+          </ComponentPreview>
+        </section>
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Grouped vs stacked</h2>
@@ -70,7 +86,7 @@ export default function BarChartPage() {
             series people care about most at the bottom.
           </p>
           <ComponentPreview code={MULTIPLE}>
-            <div className="flex w-full max-w-lg flex-col gap-6">
+            <div className="flex w-full flex-col gap-6" style={{ maxWidth: CHART_WIDTH.bar }}>
               <BarChart data={DATA} variant="multiple" seriesLabels={["Revenue", "Costs"]} />
               <BarChart data={DATA} variant="stacked" seriesLabels={["Revenue", "Costs"]} />
             </div>
@@ -80,18 +96,18 @@ export default function BarChartPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Horizontal</h2>
           <ComponentPreview code={HORIZONTAL}>
-            <div className="w-full max-w-lg">
+            <ChartFrame kind="bar">
               <BarChart data={DATA} variant="horizontal" />
-            </div>
+            </ChartFrame>
           </ComponentPreview>
         </section>
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Negative values</h2>
           <ComponentPreview code={NEGATIVE_CODE}>
-            <div className="w-full max-w-lg">
+            <ChartFrame kind="bar">
               <BarChart data={NEGATIVE} variant="negative" />
-            </div>
+            </ChartFrame>
           </ComponentPreview>
         </section>
 

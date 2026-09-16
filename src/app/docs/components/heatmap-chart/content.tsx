@@ -3,6 +3,7 @@
 import { HeatmapChart } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { ChartFrame, CHART_WIDTH } from "@/components/docs/chart-frame";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
@@ -45,9 +46,9 @@ export default function HeatmapChartPage() {
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
-          <div className="w-full max-w-lg">
+          <ChartFrame kind="heatmap">
             <HeatmapChart data={DATA} rowLabels={ROWS} colLabels={COLS} valueLabel="sessions" />
-          </div>
+          </ChartFrame>
         </ComponentPreview>
 
         <section>

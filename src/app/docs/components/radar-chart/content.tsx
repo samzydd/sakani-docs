@@ -3,6 +3,7 @@
 import { RadarChart } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { ChartFrame, ChartVariants } from "@/components/docs/chart-frame";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
@@ -30,9 +31,20 @@ const MULTIPLE = `<RadarChart
   seriesLabels={["Us", "Competitor"]}
 />`;
 
-const GRIDS = `<RadarChart data={data} variant="circle-grid" />
+const GRIDS = `// Polygon grid (straight edges between spokes)
+<RadarChart data={data} variant="default" />
+<RadarChart data={data} variant="grid-custom" />
 <RadarChart data={data} variant="grid-filled" />
-<RadarChart data={data} variant="lines-only" />`;
+
+// Circular grid (concentric rings instead)
+<RadarChart data={data} variant="circle-grid" />
+<RadarChart data={data} variant="circle-grid-no-lines" />
+<RadarChart data={data} variant="circle-grid-filled" />`;
+
+const MARKERS = `<RadarChart data={data} variant="dots" />
+<RadarChart data={data} variant="dots-grid-none" />
+<RadarChart data={data} variant="lines-only" />
+<RadarChart data={data} variant="custom-label" />`;
 
 const PROPS = [
   { name: "data", type: "{ label: string; value: number; value2?: number }[]", description: "One spoke per entry. value2 draws a second shape for comparison." },
@@ -48,9 +60,9 @@ export default function RadarChartPage() {
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
-          <div className="w-full max-w-md">
+          <ChartFrame kind="radar">
             <RadarChart data={DATA} />
-          </div>
+          </ChartFrame>
         </ComponentPreview>
 
         <section>
@@ -67,20 +79,46 @@ export default function RadarChartPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Comparing two profiles</h2>
           <ComponentPreview code={MULTIPLE}>
-            <div className="w-full max-w-md">
+            <ChartFrame kind="radar">
               <RadarChart data={DATA} variant="multiple" seriesLabels={["Us", "Competitor"]} />
-            </div>
+            </ChartFrame>
           </ComponentPreview>
         </section>
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Grid treatments</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            The grid is either a polygon (straight edges joining the spokes) or
+            a set of concentric circles. Everything else is whether the web
+            lines show and whether the shape is filled.
+          </p>
           <ComponentPreview code={GRIDS}>
-            <div className="flex w-full max-w-lg flex-col gap-6">
-              <RadarChart data={DATA} variant="circle-grid" />
-              <RadarChart data={DATA} variant="grid-filled" />
-              <RadarChart data={DATA} variant="lines-only" />
-            </div>
+            <ChartVariants
+              kind="radar"
+              items={[
+                { label: "default", note: "polygon grid", chart: <RadarChart data={DATA} /> },
+                { label: "grid-custom", note: "polygon, restyled grid", chart: <RadarChart data={DATA} variant="grid-custom" /> },
+                { label: "grid-filled", note: "polygon, filled shape", chart: <RadarChart data={DATA} variant="grid-filled" /> },
+                { label: "circle-grid", note: "concentric rings", chart: <RadarChart data={DATA} variant="circle-grid" /> },
+                { label: "circle-grid-no-lines", note: "rings, no spokes", chart: <RadarChart data={DATA} variant="circle-grid-no-lines" /> },
+                { label: "circle-grid-filled", note: "rings, filled shape", chart: <RadarChart data={DATA} variant="circle-grid-filled" /> },
+              ]}
+            />
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Markers and labels</h2>
+          <ComponentPreview code={MARKERS}>
+            <ChartVariants
+              kind="radar"
+              items={[
+                { label: "dots", note: "point markers on the shape", chart: <RadarChart data={DATA} variant="dots" /> },
+                { label: "dots-grid-none", note: "markers, grid removed", chart: <RadarChart data={DATA} variant="dots-grid-none" /> },
+                { label: "lines-only", note: "outline, no fill", chart: <RadarChart data={DATA} variant="lines-only" /> },
+                { label: "custom-label", note: "restyled spoke labels", chart: <RadarChart data={DATA} variant="custom-label" /> },
+              ]}
+            />
           </ComponentPreview>
         </section>
 
