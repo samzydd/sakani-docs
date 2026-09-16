@@ -7,7 +7,7 @@ import { CodeBlock } from "@/components/code-block";
 import { DashboardShowcase } from "@/components/dashboard-showcase";
 import { CategoryGrid } from "@/components/category-grid";
 import { FaqSection } from "@/components/faq-section";
-import { DashboardTicker } from "@/components/dashboard-ticker";
+import { DashboardGallery } from "@/components/dashboard-gallery";
 import { GithubIcon } from "@/components/icons/github-icon";
 import { Reveal } from "@/components/reveal";
 import { HeroPreview } from "@/components/hero-preview";
@@ -125,9 +125,11 @@ export default function HomePage() {
         <HeroPreview />
       </section>
 
-      <Reveal>
-        <DashboardTicker />
-      </Reveal>
+      {/* Deliberately not wrapped in <Reveal>: it animates with a
+          transform, and a transformed ancestor becomes the containing
+          block for its descendants, which stops the gallery's sticky
+          stage from sticking. It reveals its own heading instead. */}
+      <DashboardGallery />
 
       <Reveal>
         <DashboardShowcase />
