@@ -95,11 +95,12 @@ export function DocsSidebar() {
                     <Link
                       key={item.href}
                       href={item.href}
+                      aria-current={active ? "page" : undefined}
                       className={cn(
-                        "-ml-px flex items-center justify-between border-l px-3 py-1.5 text-sm transition-colors",
+                        "sidebar-link -ml-px flex items-center justify-between rounded-r-md border-l px-3 py-1.5 text-sm",
                         active
-                          ? "border-ink font-medium text-ink"
-                          : "border-transparent text-ink-muted hover:border-line-strong hover:text-ink"
+                          ? "border-ink bg-subtle font-medium text-ink"
+                          : "border-transparent text-ink-muted hover:border-line-strong hover:bg-subtle/60 hover:text-ink"
                       )}
                     >
                       {item.title}

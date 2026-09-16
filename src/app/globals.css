@@ -100,8 +100,19 @@
   --reveal-block: 1900ms;
 }
 
-* {
-  border-color: var(--color-border-subtle);
+/* In @layer base, not unlayered.
+ *
+ * Unlayered declarations beat layered ones outright, whatever their
+ * specificity, and Tailwind's utilities live in @layer utilities. Sitting
+ * outside a layer, this one-line default was overriding every border-colour
+ * utility on the site: border-ink, border-line-strong and border-danger all
+ * computed to border-subtle, so the sidebar's active indicator and hover
+ * border had simply never rendered. Inside base it still supplies the
+ * default, and any explicit border-* utility now wins as intended. */
+@layer base {
+  * {
+    border-color: var(--color-border-subtle);
+  }
 }
 
 html {
@@ -209,6 +220,46 @@ html.dark .noise-overlay {
   padding-left: 1em;
   color: var(--color-fg-muted);
   font-style: italic;
+}
+
+/* Docs sidebar links.
+ *
+ * The nudge is `transform: translateX`, not extra left padding. Padding is a
+ * layout property, so animating it reflows the link (and re-wraps any label
+ * long enough to be near its line), while transform is composited and moves
+ * nothing around it. Same displacement, none of the cost or the text
+ * shifting mid-hover.
+ *
+ * 3px is deliberately small: it should register as the row leaning toward
+ * the cursor, not as a drawer opening. --ease-reveal is the page's own
+ * curve, which starts fast and settles long, so the row arrives quickly and
+ * eases out -- that's the "flow" rather than a linear slide. The return is
+ * given a little longer than the approach, which reads as the row relaxing
+ * back instead of snapping.
+ */
+.sidebar-link {
+  transition:
+    transform 260ms var(--ease-reveal),
+    background-color 200ms var(--ease-reveal),
+    color 160ms var(--ease-reveal),
+    border-color 160ms var(--ease-reveal);
+}
+.sidebar-link:hover {
+  transform: translateX(3px);
+  transition-duration: 180ms, 140ms, 120ms, 120ms;
+}
+/* The current page shouldn't drift when the pointer crosses it: it is a
+   position indicator, and one that moves is a worse indicator. */
+.sidebar-link[aria-current="page"]:hover {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-link,
+  .sidebar-link:hover {
+    transform: none;
+    transition: background-color 120ms linear, color 120ms linear;
+  }
 }
 
 /* Dialog entrance (the ⌘K command menu, its only consumer since the hero

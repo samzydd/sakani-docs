@@ -8,21 +8,36 @@ export const metadata = {
     "Every design token in Sakani, with its resolved value in light and dark mode, generated from the stylesheet itself.",
 };
 
-/** Two chips, so a themed token shows both values without toggling the page. */
+/**
+ * One chip, or two only when the token actually resolves differently per
+ * theme.
+ *
+ * Every colour row used to render two chips, but most of these are
+ * primitives with a single fixed value -- 87 of the 121 colour rows were
+ * drawing the identical swatch twice, which implied a light/dark distinction
+ * that isn't there. Two chips now mean something.
+ */
 function Swatch({ token }: { token: Token }) {
-  return (
-    <div className="flex shrink-0 items-center gap-1">
+  const themed = token.light !== token.dark;
+
+  if (!themed) {
+    return (
       <span
-        className="h-9 w-9 rounded-md border border-line-subtle"
+        className="h-9 w-9 shrink-0 rounded-md border border-line-subtle"
         style={{ background: token.light }}
-        title={`light ${token.light}`}
+        title={token.light}
       />
-      <span
-        className="h-9 w-9 rounded-md border border-line-subtle"
-        style={{ background: token.dark }}
-        title={`dark ${token.dark}`}
-      />
-    </div>
+    );
+  }
+
+  return (
+    <span
+      className="flex h-9 w-9 shrink-0 overflow-hidden rounded-md border border-line-subtle"
+      title={`light ${token.light} · dark ${token.dark}`}
+    >
+      <span className="w-1/2" style={{ background: token.light }} />
+      <span className="w-1/2" style={{ background: token.dark }} />
+    </span>
   );
 }
 
@@ -122,10 +137,11 @@ export default function TokensPage() {
           is why the chart colours look the same in both themes.
         </p>
         <p>
-          Two swatches means the token is themed: left is light, right is dark.
-          A <code>→</code> line means the token is an alias, and points at what
-          it resolves through. Everything here is a plain CSS custom property,
-          so you can read or override any of it without a build step.
+          A split swatch means the token resolves differently per theme: left
+          half is light, right half is dark. A solid swatch is a single fixed
+          value. A <code>→</code> line means the token is an alias, and points
+          at what it resolves through. Everything here is a plain CSS custom
+          property, so you can read or override any of it without a build step.
         </p>
       </div>
 
