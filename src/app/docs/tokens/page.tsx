@@ -120,8 +120,13 @@ function TokenRow({ token }: { token: Token }) {
 
 export default function TokensPage() {
   const groups = getTokenGroups();
-  const total = groups.reduce((n, g) => n + g.tokens.length, 0);
-  const themed = groups.reduce((n, g) => n + g.tokens.filter((t) => t.themed).length, 0);
+  const all = groups.flatMap((g) => g.tokens);
+  const total = all.length;
+  // Counted by resolved value, not by whether `.dark` mentions the token:
+  // five are restated there and land on the same colour anyway (the brand
+  // orange and the four status solids, which hold across both themes), so
+  // counting declarations would disagree with the swatches on the page.
+  const themed = all.filter((t) => t.light !== t.dark).length;
 
   return (
     <article>
@@ -132,9 +137,11 @@ export default function TokensPage() {
 
       <div className="doc-prose mb-8">
         <p>
-          {total} tokens across {groups.length} groups. {themed} of them are
-          restated for dark mode; the rest are primitives that stay put, which
-          is why the chart colours look the same in both themes.
+          {total} tokens across {groups.length} groups. {themed} of them
+          resolve to a different value in dark mode; the rest hold across both,
+          either because they are primitives or because they are meant to stay
+          fixed, which is why the brand orange and the chart colours look the
+          same either way.
         </p>
         <p>
           A split swatch means the token resolves differently per theme: left
