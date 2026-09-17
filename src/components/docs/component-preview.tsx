@@ -85,8 +85,23 @@ export function ComponentPreview({
   const html = useHighlightedCode(code, lang);
 
   return (
-    <div className="overflow-hidden rounded-xl border border-line-subtle">
-      <div className="flex items-center justify-between gap-1 border-b border-line-subtle bg-surface px-2 pt-2">
+    /* No overflow-hidden here, deliberately.
+     *
+     * Several components reveal a floating panel that is positioned inline
+     * rather than portaled -- Popover and Tooltip put theirs in an absolutely
+     * positioned element inside their own root -- so a clipping ancestor cuts
+     * them off. Every preview pane is 208px tall with the example centred in
+     * it, which left popovers overflowing by up to 53px and losing their
+     * action buttons off the bottom edge. Growing the pane is a poor fix:
+     * centred content means half of any height added lands above the trigger,
+     * and the number would have to be re-guessed for every component that
+     * opens something.
+     *
+     * Letting the panel escape the card is also just what a popover does in a
+     * real layout. The rounded corners that overflow-hidden used to clip are
+     * applied directly to the header and to each pane below instead. */
+    <div className="rounded-xl border border-line-subtle">
+      <div className="flex items-center justify-between gap-1 rounded-t-xl border-b border-line-subtle bg-surface px-2 pt-2">
         <div className="flex items-center gap-1">
           {(["preview", "code"] as const).map((t) => (
             <button
@@ -116,10 +131,12 @@ export function ComponentPreview({
       {tab === "preview" ? (
         <div
           className={cn(
-            "bg-canvas",
+            // rounded-b-xl on each pane, since the card no longer clips to
+            // its own corners.
+            "rounded-b-xl bg-canvas",
             previewTheme === "dark" ? "dark" : "force-light",
             scaleToFit
-              ? ""
+              ? "overflow-hidden"
               : fullBleed
                 ? "max-h-[980px] overflow-auto"
                 : "flex min-h-52 items-center justify-center p-10"
@@ -128,7 +145,7 @@ export function ComponentPreview({
           {scaleToFit ? <ScaleToFit>{children}</ScaleToFit> : children}
         </div>
       ) : (
-        <div className="group relative bg-surface">
+        <div className="group relative overflow-hidden rounded-b-xl bg-surface">
           <CopyButton text={code} />
           {html ? (
             <>
