@@ -106,7 +106,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           // remote input reaches it.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
         />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        {/* Light by default, and deliberately not following the OS.
+            enableSystem is off rather than just overridden: the toggle only
+            ever sets "light" or "dark", never "system", so leaving it on
+            would keep a third state alive that nothing can return the visitor
+            to once they've switched. A first visit now lands on light
+            whatever the OS prefers; an explicit choice is still remembered. */}
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <div aria-hidden className="noise-overlay" />
           <SiteHeader />
           <div className="flex-1">{children}</div>
