@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { SakaniLogo } from "./icons/sakani-logo";
 import { docsNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +26,10 @@ export function MobileNav() {
       {open && (
         <div className="fixed inset-0 z-50 bg-canvas">
           <div className="flex h-16 items-center justify-between border-b border-line-subtle px-4">
-            <span className="text-[15px] font-semibold text-ink">Sakani</span>
+            <span className="flex items-center gap-2">
+              <SakaniLogo size={28} />
+              <span className="text-[15px] font-semibold text-ink">Sakani</span>
+            </span>
             <button
               type="button"
               onClick={() => setOpen(false)}

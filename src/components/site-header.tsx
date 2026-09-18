@@ -4,6 +4,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { CommandMenu } from "./command-menu";
 import { MobileNav } from "./mobile-nav";
 import { GithubIcon } from "./icons/github-icon";
+import { SakaniLogo } from "./icons/sakani-logo";
 
 const NAV_LINKS = [
   { title: "Docs", href: "/docs" },
@@ -27,9 +28,7 @@ export function SiteHeader() {
         <MobileNav />
 
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">
-            S
-          </span>
+          <SakaniLogo size={32} />
           <span className="text-[15px] font-semibold tracking-tight text-ink">Sakani</span>
         </Link>
 
