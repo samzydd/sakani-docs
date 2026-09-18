@@ -2,7 +2,11 @@ import { PageHeader } from "@/components/docs/page-header";
 import { CodeBlock } from "@/components/code-block";
 import { Pager } from "@/components/docs/pager";
 
-export const metadata = { title: "Theming" };
+export const metadata = {
+  title: "Theming",
+  description:
+    "Retheme Sakani by repointing CSS custom properties. Semantic tokens for colour, radius and shadow, a scoped .dark class for dark mode, and no build step required.",
+};
 
 const SEMANTIC_TOKENS = [
   { name: "--color-bg-canvas", role: "Page background" },

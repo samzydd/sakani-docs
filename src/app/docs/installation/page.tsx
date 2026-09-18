@@ -2,7 +2,11 @@ import { PageHeader } from "@/components/docs/page-header";
 import { CodeBlock } from "@/components/code-block";
 import { Pager } from "@/components/docs/pager";
 
-export const metadata = { title: "Installation" };
+export const metadata = {
+  title: "Installation",
+  description:
+    "Install @sakaniui/react with npm, import the token stylesheet once, and render your first component. Works with Next.js App Router, Vite and any React 19 setup.",
+};
 
 const INSTALL = `npm install @sakaniui/react`;
 
