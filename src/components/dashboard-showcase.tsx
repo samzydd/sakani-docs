@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MousePointerClick, Sun, Moon } from "lucide-react";
 import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock } from "@sakaniui/react/blocks";
 import { cn } from "@/lib/utils";
@@ -48,6 +48,54 @@ export function DashboardShowcase() {
   const tab = TABS.find((t) => t.key === active)!;
   const { ref, style } = useScrollReveal<HTMLDivElement>();
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const isFirstThemeRun = useRef(true);
+
+  /**
+   * Suppresses every transition inside this frame for the single instant
+   * dashboardTheme flips .dark/.force-light on it (see .dashboard-theme-swap
+   * in globals.css). CRMDashboardBlock, KanbanBoardBlock and DataTableBlock
+   * each ship real @sakaniui/react components -- sidebar items, table rows,
+   * badges -- that declare their OWN transition for hover/focus, and those
+   * fire on any value change to that property, theme-driven or not.
+   * Measured directly: wrapping a live CRMDashboardBlock in this same
+   * .force-light -> .dark flip and reading document.getAnimations()
+   * immediately after produced 942 simultaneous transitions from one
+   * toggle, at two different durations running at once -- some elements
+   * visibly still finishing while others had already landed.
+   *
+   * useLayoutEffect, not useEffect: `.dark`/`.force-light` here comes from
+   * React's own className render, which commits to the DOM before any
+   * effect runs. useEffect fires after the browser has already painted that
+   * commit, so by the time it added the suppression class, transitions
+   * would already be VISUALLY RUNNING -- forcing `transition: none` on an
+   * already-started transition cancels it mid-interpolated-value, not
+   * before it starts, which looks like elements freezing mid-fade rather
+   * than a clean snap. useLayoutEffect runs synchronously in the same
+   * commit, before paint, so the suppression class and the new colors
+   * reach the screen in the same first paint together.
+   */
+  useLayoutEffect(() => {
+    if (isFirstThemeRun.current) {
+      // Nothing to suppress against on mount -- the frame's very first
+      // paint has no prior state for anything to transition away from.
+      isFirstThemeRun.current = false;
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+    el.classList.add("dashboard-theme-swap");
+    // Cheap: only re-enable once the suppressed paint has actually
+    // happened, not on a fixed delay that could race a slow frame.
+    const raf = requestAnimationFrame(() => el.classList.remove("dashboard-theme-swap"));
+    // Backs up rAF in a backgrounded tab (deferred there), so the
+    // suppression can't get stuck on and silently kill every hover
+    // transition inside the frame afterward.
+    const timer = setTimeout(() => el.classList.remove("dashboard-theme-swap"), 100);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+    };
+  }, [dashboardTheme, ref]);
 
   useEffect(() => {
     if (tab.kind !== "iframe") return;

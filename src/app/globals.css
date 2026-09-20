@@ -411,6 +411,33 @@ html.dark .noise-overlay {
   --color-info-solid: var(--color-info-500);
 }
 
+/* Suppresses every transition inside the "Real dashboards, not mockups"
+ * showcase for the single instant its own light/dark toggle flips
+ * .dark/.force-light on the frame (see dashboard-showcase.tsx, which adds
+ * and removes this class around that change).
+ *
+ * Directly measured why this is needed: CRMDashboardBlock, KanbanBoardBlock
+ * and DataTableBlock each ship real @sakaniui/react markup -- sidebar items,
+ * table rows, stat cards, badges -- and nearly every one of those declares
+ * its OWN transition for hover/focus. A CSS transition fires on any value
+ * change to that property, with no way to tell "the user is hovering" from
+ * "a color token changed because the theme swapped." Wrapping a live
+ * CRMDashboardBlock in a scoped .force-light -> .dark flip and reading
+ * document.getAnimations() immediately after: 942 simultaneous transitions
+ * from one toggle, at two different durations running at once -- the same
+ * "some things finish before others" desync already fixed for the
+ * standalone CRM app (saas-crm-sakani-ds), just far larger here because a
+ * full dashboard has far more components than one page of app chrome.
+ *
+ * This is the identical fix, scoped to the frame rather than <html>: no
+ * component's own transition is touched or removed, it simply has nothing
+ * to animate at the one moment it would otherwise be responding to a theme
+ * change instead of a real interaction. */
+.dashboard-theme-swap,
+.dashboard-theme-swap * {
+  transition: none !important;
+}
+
 /* CRMDashboardBlock's root hardcodes width:100vw/height:100vh (it's built
    to sit directly in <body>) -- override its direct child back down to
    the embedding frame's own size. No-op for blocks that are already
