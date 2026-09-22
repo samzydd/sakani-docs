@@ -21,19 +21,26 @@ import { MaskReveal } from "@/components/mask-reveal";
  * event would be the one thing guaranteed to make this feel cheap.
  */
 /**
- * Every screen here is an export of the Figma file's own rendered frames
- * (fileKey Fd3uY263mEQKnaTEfrzQxh, node 2128:22476 "Section 1") — the
+ * All six frames from the Figma file (fileKey Fd3uY263mEQKnaTEfrzQxh) — the
  * design's actual pixels rather than a recreation of them. None of the
  * earlier hand-supplied screenshots remain anywhere on the site.
  *
- * That section holds six frames; five are here. The sixth (the workspace
- * overview) is the hero's own screenshot and is deliberately left out, since
- * showing it at the top of the page and again halfway down was what made the
- * page feel like it was repeating itself.
+ * `node` is the frame each shot was exported from. It is recorded here
+ * because getting it wrong is silent and has happened: the procurement board
+ * and the storefront were once swapped, so each was captioned as the other.
+ * Re-exporting means matching these ids, not eyeballing the pictures.
+ *
+ * The exports are not raw Figma renders. Those frames still carry the
+ * previous brand mark (a dark tile, a dark circle on Finance, a light tile
+ * on the dark Team screen), so in each file that mark has been replaced with
+ * the current one. Re-exporting a frame will bring the old mark back with it
+ * until the Figma file itself is updated.
  *
  * Ordered to alternate silhouette and theme as they fly past — a dense
  * table, then a board, then the dark screen, then a product grid — so no two
- * adjacent cards read as the same layout at a glance.
+ * adjacent cards read as the same layout at a glance. The overview sits last
+ * because it is also the hero's screenshot, and putting it at the far end of
+ * the run keeps the most distance between the two times it appears.
  */
 /**
  * Intrinsic pixel size travels with each shot because the cards are sized
@@ -43,11 +50,12 @@ import { MaskReveal } from "@/components/mask-reveal";
  * object-cover was slicing the bottom off four of the five screens.
  */
 const SHOTS = [
-  { src: "/showcase/finance.png", alt: "Financial overview dashboard", label: "Finance", url: "app.sakani.com/finance", w: 1200, h: 853 },
-  { src: "/showcase/kanban.png", alt: "Procurement kanban board", label: "Procurement", url: "app.sakani.com/procurement", w: 1200, h: 853 },
-  { src: "/showcase/team-dark.png", alt: "Team management, dark mode", label: "Team", url: "app.sakani.com/team", w: 1200, h: 853 },
-  { src: "/showcase/ecommerce.png", alt: "E-commerce product listing with filters", label: "Storefront", url: "shop.sakani.com/running", w: 1200, h: 853 },
-  { src: "/showcase/settings.png", alt: "Data management settings", label: "Settings", url: "app.sakani.com/settings/data", w: 1200, h: 766 },
+  { node: "2128:19179", src: "/showcase/finance.png", alt: "Financial overview dashboard", label: "Finance", url: "app.sakani.com/finance", w: 1200, h: 853 },
+  { node: "2128:20407", src: "/showcase/kanban.png", alt: "Procurement kanban board", label: "Procurement", url: "app.sakani.com/procurement", w: 1200, h: 853 },
+  { node: "2128:21745", src: "/showcase/team-dark.png", alt: "Team management, dark mode", label: "Team", url: "app.sakani.com/team", w: 1200, h: 853 },
+  { node: "2128:21233", src: "/showcase/ecommerce.png", alt: "Storefront product listing with filters", label: "Storefront", url: "shop.sakani.com/running", w: 1200, h: 853 },
+  { node: "2128:12726", src: "/showcase/settings.png", alt: "Data management settings", label: "Settings", url: "app.sakani.com/settings/data", w: 1200, h: 767 },
+  { node: "2128:12981", src: "/showcase/overview.png", alt: "Workspace overview dashboard", label: "Overview", url: "app.sakani.com/dashboard", w: 1200, h: 832 },
 ] as const;
 
 /**
@@ -251,9 +259,10 @@ export function DashboardGallery() {
 
   return (
     /* 50vh of travel per card after the first, so the scrub rate per screen
-       stays the same whatever the count -- the old fixed 340vh was tuned for
-       seven cards and would have sped the run up now that there are six. */
-    <section ref={sectionRef} className="relative h-[300vh]">
+       stays the same whatever the count -- a fixed height tuned for one
+       number of cards silently speeds the run up or slows it down when that
+       number changes. Six cards: 100 + 5 x 50. */
+    <section ref={sectionRef} className="relative h-[350vh]">
       {/* Sticky, not fixed: the stage releases the page naturally at the end
           of the section instead of needing a scroll listener to unpin it. */}
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
