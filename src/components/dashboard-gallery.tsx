@@ -35,13 +35,29 @@ import { MaskReveal } from "@/components/mask-reveal";
  * table, then a board, then the dark screen, then a product grid — so no two
  * adjacent cards read as the same layout at a glance.
  */
+/**
+ * Intrinsic pixel size travels with each shot because the cards are sized
+ * from it. These exports are not a uniform shape (four are 1200x853, the
+ * settings screen is 1200x766, the hero's overview is 1200x831), so any
+ * single fixed aspect box cropped most of them -- a 3/2 box with
+ * object-cover was slicing the bottom off four of the five screens.
+ */
 const SHOTS = [
-  { src: "/showcase/finance.png", alt: "Financial overview dashboard", label: "Finance", url: "app.sakani.com/finance" },
-  { src: "/showcase/kanban.png", alt: "Procurement kanban board", label: "Procurement", url: "app.sakani.com/procurement" },
-  { src: "/showcase/team-dark.png", alt: "Team management, dark mode", label: "Team", url: "app.sakani.com/team" },
-  { src: "/showcase/ecommerce.png", alt: "E-commerce product listing with filters", label: "Storefront", url: "shop.sakani.com/running" },
-  { src: "/showcase/settings.png", alt: "Data management settings", label: "Settings", url: "app.sakani.com/settings/data" },
+  { src: "/showcase/finance.png", alt: "Financial overview dashboard", label: "Finance", url: "app.sakani.com/finance", w: 1200, h: 853 },
+  { src: "/showcase/kanban.png", alt: "Procurement kanban board", label: "Procurement", url: "app.sakani.com/procurement", w: 1200, h: 853 },
+  { src: "/showcase/team-dark.png", alt: "Team management, dark mode", label: "Team", url: "app.sakani.com/team", w: 1200, h: 853 },
+  { src: "/showcase/ecommerce.png", alt: "E-commerce product listing with filters", label: "Storefront", url: "shop.sakani.com/running", w: 1200, h: 853 },
+  { src: "/showcase/settings.png", alt: "Data management settings", label: "Settings", url: "app.sakani.com/settings/data", w: 1200, h: 766 },
 ] as const;
+
+/**
+ * Vertical space the stage does NOT have: the heading block above it, the
+ * label row and progress line below it, and the card's own titlebar. A card
+ * is sized from whatever is left, so it can never be taller than the sticky
+ * frame that clips it -- which is the other half of why screens looked cut
+ * off. At 1280x720 the cards were rendering 571px tall inside a 443px stage.
+ */
+const STAGE_CHROME = "22rem";
 
 /**
  * Reduced-motion as an external store rather than state synced in an effect:
@@ -222,7 +238,9 @@ export function DashboardGallery() {
                   {shot.url}
                 </div>
               </div>
-              <Image src={shot.src} alt={shot.alt} width={800} height={600} className="h-52 w-full object-cover object-top" />
+              {/* Natural ratio here too -- a fixed h-52 with object-cover was
+                  cropping these the same way the scroll variant's cards were. */}
+              <Image src={shot.src} alt={shot.alt} width={shot.w} height={shot.h} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="block h-auto w-full" />
               <figcaption className="px-4 py-3 text-sm font-medium text-ink">{shot.label}</figcaption>
             </figure>
           ))}
@@ -264,8 +282,16 @@ export function DashboardGallery() {
               ref={(el) => {
                 cardRefs.current[i] = el;
               }}
-              className="force-light absolute w-[78vw] max-w-[860px] overflow-hidden rounded-xl border border-black/10 bg-surface shadow-[0_2px_8px_rgba(15,14,12,0.04),0_18px_40px_-12px_rgba(15,14,12,0.18),0_48px_80px_-24px_rgba(15,14,12,0.22)] sm:w-[62vw]"
-              style={{ transformStyle: "preserve-3d", willChange: "transform, opacity" }}
+              className="force-light absolute overflow-hidden rounded-xl border border-black/10 bg-surface shadow-[0_2px_8px_rgba(15,14,12,0.04),0_18px_40px_-12px_rgba(15,14,12,0.18),0_48px_80px_-24px_rgba(15,14,12,0.22)]"
+              style={{
+                transformStyle: "preserve-3d",
+                willChange: "transform, opacity",
+                /* Whichever runs out first: the viewport's width, the design
+                   cap, or the height the stage can actually give this card.
+                   The last term is what keeps a tall screen from growing past
+                   the sticky frame and getting clipped at the top and bottom. */
+                width: `min(86vw, 860px, calc((100vh - ${STAGE_CHROME}) * ${shot.w / shot.h}))`,
+              }}
             >
               {/* Depth scrim. Must stay the card's first child: draw() reaches
                   for firstElementChild to set its opacity each frame. Painted
@@ -298,23 +324,25 @@ export function DashboardGallery() {
               <Image
                 src={shot.src}
                 alt=""
-                width={1200}
-                height={800}
+                /* The shot's real pixel size, so the rendered box takes the
+                   image's own aspect ratio. Paired with h-auto below this is
+                   what guarantees the whole screen is inside the frame:
+                   there is no crop box left for anything to be cut off by. */
+                width={shot.w}
+                height={shot.h}
                 /* Eager, deliberately. Next/Image lazy-loads through an
                    IntersectionObserver on the image, and this layout defeats
                    it: cards are pushed out of the viewport by transforms and
-                   some are visibility:hidden, so five of the seven never
-                   intersected, never fetched, and arrived blank. Anything
-                   observer-driven would be fighting the same geometry that
-                   caused the bug, so these just load. It is also no worse
-                   than the marquee this replaced, which rendered all seven
-                   twice over and loaded every copy. */
+                   some are visibility:hidden, so most never intersected,
+                   never fetched, and arrived blank. Anything observer-driven
+                   would be fighting the same geometry that caused the bug, so
+                   these just load. */
                 loading="eager"
                 /* Without this Next cannot know how wide these render and
                    takes the top of the srcset -- it was fetching the 3840px
-                   variant for a card that is never wider than 820. */
-                sizes="(max-width: 640px) 78vw, (max-width: 1400px) 62vw, 820px"
-                className="aspect-[3/2] w-full object-cover object-top"
+                   variant for a card that is never wider than 860. */
+                sizes="(max-width: 640px) 86vw, 860px"
+                className="block h-auto w-full"
               />
             </div>
           ))}
