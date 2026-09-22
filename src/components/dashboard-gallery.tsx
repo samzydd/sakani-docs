@@ -50,22 +50,26 @@ import { MaskReveal } from "@/components/mask-reveal";
  * object-cover was slicing the bottom off four of the five screens.
  */
 const SHOTS = [
-  { node: "2128:19179", src: "/showcase/finance.png", alt: "Financial overview dashboard", label: "Finance", url: "app.sakani.com/finance", w: 1200, h: 853 },
-  { node: "2128:20407", src: "/showcase/kanban.png", alt: "Procurement kanban board", label: "Procurement", url: "app.sakani.com/procurement", w: 1200, h: 853 },
-  { node: "2128:21745", src: "/showcase/team-dark.png", alt: "Team management, dark mode", label: "Team", url: "app.sakani.com/team", w: 1200, h: 853 },
-  { node: "2128:21233", src: "/showcase/ecommerce.png", alt: "Storefront product listing with filters", label: "Storefront", url: "shop.sakani.com/running", w: 1200, h: 853 },
-  { node: "2128:12726", src: "/showcase/settings.png", alt: "Data management settings", label: "Settings", url: "app.sakani.com/settings/data", w: 1200, h: 767 },
-  { node: "2128:12981", src: "/showcase/overview.png", alt: "Workspace overview dashboard", label: "Overview", url: "app.sakani.com/dashboard", w: 1200, h: 832 },
+  { node: "2128:19179", src: "/showcase/finance.png", alt: "Financial overview dashboard", label: "Finance", w: 1200, h: 853 },
+  { node: "2128:20407", src: "/showcase/kanban.png", alt: "Procurement kanban board", label: "Procurement", w: 1200, h: 853 },
+  { node: "2128:21745", src: "/showcase/team-dark.png", alt: "Team management, dark mode", label: "Team", w: 1200, h: 853 },
+  { node: "2128:21233", src: "/showcase/ecommerce.png", alt: "Storefront product listing with filters", label: "Storefront", w: 1200, h: 853 },
+  { node: "2128:12726", src: "/showcase/settings.png", alt: "Data management settings", label: "Settings", w: 1200, h: 767 },
+  { node: "2128:12981", src: "/showcase/overview.png", alt: "Workspace overview dashboard", label: "Overview", w: 1200, h: 832 },
 ] as const;
 
 /**
- * Vertical space the stage does NOT have: the heading block above it, the
- * label row and progress line below it, and the card's own titlebar. A card
- * is sized from whatever is left, so it can never be taller than the sticky
- * frame that clips it -- which is the other half of why screens looked cut
- * off. At 1280x720 the cards were rendering 571px tall inside a 443px stage.
+ * Vertical space the stage does NOT have: the heading block above it, plus
+ * the label row and progress line below it. A card is sized from whatever is
+ * left, so it can never be taller than the sticky frame that clips it --
+ * which is half of why screens looked cut off before. At 1280x720 the cards
+ * were rendering 571px tall inside a 443px stage.
+ *
+ * Down from 22rem now that the cards have no titlebar of their own; that
+ * height goes back to the screenshot rather than being reserved for a bar
+ * that no longer exists.
  */
-const STAGE_CHROME = "22rem";
+const STAGE_CHROME = "19.5rem";
 
 /**
  * Reduced-motion as an external store rather than state synced in an effect:
@@ -232,20 +236,7 @@ export function DashboardGallery() {
         {heading}
         <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8">
           {SHOTS.map((shot) => (
-            <figure key={shot.src} className="force-light overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-lg">
-              {/* Same window chrome as the scroll variant's cards, so the two
-                  renderings of this section are the same design and not two
-                  different ones that happen to show the same screenshots. */}
-              <div className="flex items-center gap-3 border-b border-line-subtle bg-surface px-4 py-3">
-                <div className="flex gap-1.5">
-                  <span className="h-3 w-3 rounded-full bg-danger/60" />
-                  <span className="h-3 w-3 rounded-full bg-warning/60" />
-                  <span className="h-3 w-3 rounded-full bg-success/60" />
-                </div>
-                <div className="mx-auto flex w-full max-w-xs items-center justify-center truncate rounded-md bg-canvas px-3 py-1 text-xs text-ink-muted">
-                  {shot.url}
-                </div>
-              </div>
+            <figure key={shot.src} className="force-light overflow-hidden rounded-[20px] border border-line-subtle bg-surface shadow-lg">
               {/* Natural ratio here too -- a fixed h-52 with object-cover was
                   cropping these the same way the scroll variant's cards were. */}
               <Image src={shot.src} alt={shot.alt} width={shot.w} height={shot.h} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="block h-auto w-full" />
@@ -291,7 +282,7 @@ export function DashboardGallery() {
               ref={(el) => {
                 cardRefs.current[i] = el;
               }}
-              className="force-light absolute overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-[0_2px_8px_rgba(15,14,12,0.04),0_18px_40px_-12px_rgba(15,14,12,0.18),0_48px_80px_-24px_rgba(15,14,12,0.22)]"
+              className="force-light absolute overflow-hidden rounded-[20px] border border-line-subtle bg-surface shadow-[0_2px_8px_rgba(15,14,12,0.04),0_18px_40px_-12px_rgba(15,14,12,0.18),0_48px_80px_-24px_rgba(15,14,12,0.22)]"
               style={{
                 transformStyle: "preserve-3d",
                 willChange: "transform, opacity",
@@ -304,37 +295,14 @@ export function DashboardGallery() {
             >
               {/* Depth scrim. Must stay the card's first child: draw() reaches
                   for firstElementChild to set its opacity each frame. Painted
-                  over everything (z-20, chrome included) and tinted with the
-                  page background, so a receding card dims into the page rather
-                  than going translucent and letting the card behind bleed
-                  through it. */}
+                  over the image (z-20) and tinted with the page background, so
+                  a receding card dims into the page rather than going
+                  translucent and letting the card behind bleed through it. */}
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 z-20 bg-canvas"
                 style={{ opacity: 0, willChange: "opacity" }}
               />
-              {/* Deliberately the exact chrome the "Real dashboards" section
-                  puts around its live demos -- same radius, same dot size,
-                  same token colours, same padding, same pill. It was drawn
-                  slightly differently here (12px radius against their 16px,
-                  10px dots against their 12px, hardcoded macOS hex instead of
-                  the palette) and two nearly-identical frames on one page
-                  read as a mistake rather than a set.
-
-                  force-light on the card keeps this bar light even in dark
-                  mode, since every shot except the Team one is a light-mode
-                  capture and a dark bar over a white screenshot looks like a
-                  rendering bug. */}
-              <div className="flex items-center gap-3 border-b border-line-subtle bg-surface px-4 py-3">
-                <div className="flex gap-1.5">
-                  <span className="h-3 w-3 rounded-full bg-danger/60" />
-                  <span className="h-3 w-3 rounded-full bg-warning/60" />
-                  <span className="h-3 w-3 rounded-full bg-success/60" />
-                </div>
-                <div className="mx-auto flex w-full max-w-xs items-center justify-center truncate rounded-md bg-canvas px-3 py-1 text-xs text-ink-muted">
-                  {shot.url}
-                </div>
-              </div>
               <Image
                 src={shot.src}
                 alt=""
