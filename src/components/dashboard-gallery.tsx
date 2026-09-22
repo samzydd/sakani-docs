@@ -224,17 +224,17 @@ export function DashboardGallery() {
         {heading}
         <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8">
           {SHOTS.map((shot) => (
-            <figure key={shot.src} className="overflow-hidden rounded-xl border border-line-subtle bg-surface shadow-lg">
+            <figure key={shot.src} className="force-light overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-lg">
               {/* Same window chrome as the scroll variant's cards, so the two
                   renderings of this section are the same design and not two
                   different ones that happen to show the same screenshots. */}
-              <div className="force-light flex items-center gap-2 border-b border-black/[0.07] bg-[#fbfbfa] px-3 py-2">
+              <div className="flex items-center gap-3 border-b border-line-subtle bg-surface px-4 py-3">
                 <div className="flex gap-1.5">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                  <span className="h-3 w-3 rounded-full bg-danger/60" />
+                  <span className="h-3 w-3 rounded-full bg-warning/60" />
+                  <span className="h-3 w-3 rounded-full bg-success/60" />
                 </div>
-                <div className="mx-auto max-w-[70%] truncate rounded-md bg-black/[0.04] px-3 py-1 text-[11px] font-medium text-black/45">
+                <div className="mx-auto flex w-full max-w-xs items-center justify-center truncate rounded-md bg-canvas px-3 py-1 text-xs text-ink-muted">
                   {shot.url}
                 </div>
               </div>
@@ -282,7 +282,7 @@ export function DashboardGallery() {
               ref={(el) => {
                 cardRefs.current[i] = el;
               }}
-              className="force-light absolute overflow-hidden rounded-xl border border-black/10 bg-surface shadow-[0_2px_8px_rgba(15,14,12,0.04),0_18px_40px_-12px_rgba(15,14,12,0.18),0_48px_80px_-24px_rgba(15,14,12,0.22)]"
+              className="force-light absolute overflow-hidden rounded-2xl border border-line-subtle bg-surface shadow-[0_2px_8px_rgba(15,14,12,0.04),0_18px_40px_-12px_rgba(15,14,12,0.18),0_48px_80px_-24px_rgba(15,14,12,0.22)]"
               style={{
                 transformStyle: "preserve-3d",
                 willChange: "transform, opacity",
@@ -304,20 +304,25 @@ export function DashboardGallery() {
                 className="pointer-events-none absolute inset-0 z-20 bg-canvas"
                 style={{ opacity: 0, willChange: "opacity" }}
               />
-              {/* Window chrome, matching the frame the "Real dashboards"
-                  section puts around its live demos. A bare screenshot reads
-                  as a flat picture pasted on the page; the same image inside
-                  a titlebar reads as an application. force-light on the card
-                  keeps this bar light even in dark mode, since every shot
-                  except the Team one is a light-mode capture and a dark bar
-                  over a white screenshot looks like a rendering bug. */}
-              <div className="flex items-center gap-2 border-b border-black/[0.07] bg-[#fbfbfa] px-3 py-2">
+              {/* Deliberately the exact chrome the "Real dashboards" section
+                  puts around its live demos -- same radius, same dot size,
+                  same token colours, same padding, same pill. It was drawn
+                  slightly differently here (12px radius against their 16px,
+                  10px dots against their 12px, hardcoded macOS hex instead of
+                  the palette) and two nearly-identical frames on one page
+                  read as a mistake rather than a set.
+
+                  force-light on the card keeps this bar light even in dark
+                  mode, since every shot except the Team one is a light-mode
+                  capture and a dark bar over a white screenshot looks like a
+                  rendering bug. */}
+              <div className="flex items-center gap-3 border-b border-line-subtle bg-surface px-4 py-3">
                 <div className="flex gap-1.5">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                  <span className="h-3 w-3 rounded-full bg-danger/60" />
+                  <span className="h-3 w-3 rounded-full bg-warning/60" />
+                  <span className="h-3 w-3 rounded-full bg-success/60" />
                 </div>
-                <div className="mx-auto max-w-[60%] truncate rounded-md bg-black/[0.04] px-3 py-1 text-[11px] font-medium text-black/45">
+                <div className="mx-auto flex w-full max-w-xs items-center justify-center truncate rounded-md bg-canvas px-3 py-1 text-xs text-ink-muted">
                   {shot.url}
                 </div>
               </div>
