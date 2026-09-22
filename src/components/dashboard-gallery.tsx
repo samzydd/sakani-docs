@@ -236,7 +236,7 @@ export function DashboardGallery() {
         {heading}
         <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8">
           {SHOTS.map((shot) => (
-            <figure key={shot.src} className="force-light overflow-hidden rounded-[20px] border border-line-subtle bg-surface shadow-lg">
+            <figure key={shot.src} className="force-light overflow-hidden rounded-[20px] bg-surface shadow-lg">
               {/* Natural ratio here too -- a fixed h-52 with object-cover was
                   cropping these the same way the scroll variant's cards were. */}
               <Image src={shot.src} alt={shot.alt} width={shot.w} height={shot.h} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="block h-auto w-full" />
@@ -282,7 +282,10 @@ export function DashboardGallery() {
               ref={(el) => {
                 cardRefs.current[i] = el;
               }}
-              className="force-light absolute overflow-hidden rounded-[20px] border border-line-subtle bg-surface shadow-[0_2px_8px_rgba(15,14,12,0.04),0_18px_40px_-12px_rgba(15,14,12,0.18),0_48px_80px_-24px_rgba(15,14,12,0.22)]"
+              /* No border: the screenshots already carry their own edge, and
+                 a 1px line on top of that read as a second frame drawn around
+                 the first. Depth comes from the shadow alone. */
+              className="force-light absolute overflow-hidden rounded-[20px] bg-surface shadow-[0_2px_8px_rgba(15,14,12,0.04),0_18px_40px_-12px_rgba(15,14,12,0.18),0_48px_80px_-24px_rgba(15,14,12,0.22)]"
               style={{
                 transformStyle: "preserve-3d",
                 willChange: "transform, opacity",
