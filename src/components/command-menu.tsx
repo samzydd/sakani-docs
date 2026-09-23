@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { docsNav } from "@/lib/nav";
@@ -61,7 +62,19 @@ export function CommandMenu() {
         </kbd>
       </button>
 
-      {open && (
+      {/*
+       * Portaled to <body> rather than rendered in place. This overlay sits
+       * inside <SiteHeader>, and the header carries backdrop-blur -- a
+       * backdrop-filter (like a filter, transform, or perspective) makes its
+       * element the containing block for any `fixed` descendant, per the
+       * Filter Effects spec. Left in place, `fixed inset-0` here resolved
+       * against the header's own ~65px box instead of the viewport: the
+       * scrim covered only that strip, and everything below it, including
+       * the panel most of the time, sat on plain white. Moving the overlay
+       * out from under the blurred ancestor is what lets `fixed` reach the
+       * viewport as it's meant to.
+       */}
+      {open && createPortal(
         <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 pt-[15vh]" onClick={close}>
           <div
             className="w-full max-w-lg animate-fade-in overflow-hidden rounded-xl border border-line-subtle bg-surface shadow-xl"
@@ -99,7 +112,8 @@ export function CommandMenu() {
               ))}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -23,7 +24,12 @@ export function MobileNav() {
         <Menu size={18} />
       </button>
 
-      {open && (
+      {/* Portaled to <body> for the same reason as command-menu.tsx: this
+          button lives inside <SiteHeader>, and the header's backdrop-blur
+          makes it a containing block for `fixed` descendants, confining
+          `fixed inset-0` here to the header's own ~65px box instead of the
+          full screen. */}
+      {open && createPortal(
         <div className="fixed inset-0 z-50 bg-canvas">
           <div className="flex h-16 items-center justify-between border-b border-line-subtle px-4">
             <span className="flex items-center gap-2">
@@ -65,7 +71,8 @@ export function MobileNav() {
               </div>
             ))}
           </nav>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
