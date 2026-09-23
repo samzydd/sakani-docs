@@ -104,11 +104,6 @@ export function DocsSidebar() {
                       )}
                     >
                       {item.title}
-                      {item.label && (
-                        <span className="rounded-full bg-accent-subtle px-1.5 py-0.5 text-[10px] font-medium text-ink">
-                          {item.label}
-                        </span>
-                      )}
                     </Link>
                   );
                 })}
