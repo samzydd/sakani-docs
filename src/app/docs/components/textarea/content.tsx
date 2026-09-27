@@ -9,6 +9,8 @@ import { Pager } from "@/components/docs/pager";
 
 const BASIC = `<Textarea label="Release notes" placeholder="What changed in this version?" />`;
 
+const FOCUS = `<Textarea label="Message" autoFocus />`;
+
 const DESCRIPTION = `<Textarea
   label="Bio"
   description="Shown on your public profile. Markdown is supported."
@@ -74,6 +76,18 @@ export default function TextareaPage() {
             <Textarea label="Release notes" placeholder="What changed in this version?" />
           </div>
         </ComponentPreview>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Focus</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            A neutral border and soft shadow, same as Input -- not an accent-colored ring.
+          </p>
+          <ComponentPreview code={FOCUS}>
+            <div className="w-full max-w-md">
+              <Textarea label="Message" autoFocus />
+            </div>
+          </ComponentPreview>
+        </section>
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">With a description</h2>
