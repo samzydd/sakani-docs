@@ -80,8 +80,9 @@ export default function TextareaPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Focus</h2>
           <p className="mb-3 text-sm text-ink-muted">
-            A 1.5px border in the brand color. An invalid field keeps its red
-            border while focused, so the error doesn&apos;t disappear as you fix it.
+            Same treatment as Input: a neutral border and a soft shadow, not
+            an accent-colored ring. An invalid field keeps its red border
+            while focused, so the error doesn&apos;t disappear as you fix it.
           </p>
           <ComponentPreview code={FOCUS}>
             <div className="w-full max-w-md">
