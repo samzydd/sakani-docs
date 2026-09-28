@@ -17,9 +17,10 @@ import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
+import { SakaniLogo } from "@/components/icons/sakani-logo";
 
 const FULL = `<Sidebar>
-  <SidebarHeader type="workspace" title="Acme" subtitle="Pro plan" logo="A" />
+  <SidebarHeader type="workspace" title="Sakani" subtitle="Pro plan" logo="S" />
   <SidebarSearch placeholder="Search…" />
 
   <SidebarGroupLabel>Overview</SidebarGroupLabel>
@@ -44,7 +45,7 @@ const FULL = `<Sidebar>
 const COLLAPSED = `// collapsed goes on the parts, not just the shell — each one
 // has its own icon-only layout.
 <Sidebar collapsed>
-  <SidebarHeader type="brand" title="Acme" logo="A" collapsed />
+  <SidebarHeader type="brand" title="Sakani" logo="S" collapsed />
   <SidebarItem icon={LayoutGrid} label="Dashboard" active collapsed />
   <SidebarItem icon={Mail} label="Inbox" collapsed />
 </Sidebar>`;
@@ -54,8 +55,8 @@ const TOGGLE = `const [collapsed, setCollapsed] = useState(false);
 <Sidebar collapsed={collapsed}>
   <SidebarHeader
     type="brand-toggle"
-    title="Acme"
-    logo="A"
+    title="Sakani"
+    logo="S"
     collapsed={collapsed}
     onToggle={() => setCollapsed((c) => !c)}
   />
@@ -106,8 +107,8 @@ function ToggleDemo() {
     <Sidebar collapsed={collapsed}>
       <SidebarHeader
         type="brand-toggle"
-        title="Acme"
-        logo="A"
+        title="Sakani"
+        logo={<SakaniLogo />}
         collapsed={collapsed}
         onToggle={() => setCollapsed((c) => !c)}
       />
@@ -126,7 +127,7 @@ export default function SidebarPage() {
       <div className="space-y-10">
         <ComponentPreview code={FULL}>
           <Sidebar>
-            <SidebarHeader type="workspace" title="Acme" subtitle="Pro plan" logo="A" />
+            <SidebarHeader type="workspace" title="Sakani" subtitle="Pro plan" logo={<SakaniLogo />} />
             <SidebarSearch placeholder="Search…" />
             <SidebarGroupLabel>Overview</SidebarGroupLabel>
             <SidebarItem icon={LayoutGrid} label="Dashboard" active />
@@ -186,7 +187,7 @@ export default function SidebarPage() {
           </p>
           <ComponentPreview code={COLLAPSED}>
             <Sidebar collapsed>
-              <SidebarHeader type="brand" title="Acme" logo="A" collapsed />
+              <SidebarHeader type="brand" title="Sakani" logo={<SakaniLogo />} collapsed />
               <SidebarItem icon={LayoutGrid} label="Dashboard" active collapsed />
               <SidebarItem icon={Mail} label="Inbox" collapsed />
               <SidebarItem icon={Settings} label="Settings" collapsed />
