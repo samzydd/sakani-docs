@@ -5,12 +5,23 @@
  * The URL has to be real and absolute: canonical tags, og:url and og:image all
  * resolve against it, and pointing them at the wrong host is worse than
  * omitting them -- it tells search engines the canonical copy of every page
- * lives somewhere it doesn't. It reads from NEXT_PUBLIC_SITE_URL so preview
- * and production deployments each describe themselves correctly. Set that in
- * the deployment environment; the fallback below is only so local builds work.
+ * lives somewhere it doesn't. NEXT_PUBLIC_SITE_URL wins when set; otherwise
+ * Vercel's own build env decides. Production used to fall through to
+ * localhost because that variable was never set there, which put
+ * http://localhost:3000 in the live canonical tags, og:url/og:image, the
+ * sitemap and robots.txt -- so production now defaults to the real domain
+ * (www: the apex 308-redirects to it), previews describe their own URL, and
+ * only a local build uses localhost.
  */
+const PRODUCTION_URL = "https://www.sakaniui.com";
+
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_ENV === "production"
+    ? PRODUCTION_URL
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000")
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Sakani";
