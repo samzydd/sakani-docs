@@ -11,7 +11,7 @@ const BASIC = `const [page, setPage] = useState(1);
 
 <Pagination total={10} page={page} onPageChange={setPage} />`;
 
-const SIBLINGS = `// How many numbers flank the current page before it collapses to an ellipsis.
+const SIBLINGS = `// Sets the size of the block between the ellipses: siblings * 2 + 1 pages.
 <Pagination total={24} page={12} siblings={1} onPageChange={setPage} />
 <Pagination total={24} page={12} siblings={2} onPageChange={setPage} />`;
 
@@ -24,7 +24,7 @@ const PROPS = [
   { name: "total", type: "number", description: "Total number of pages, not total rows. Divide by your page size first." },
   { name: "page", type: "number", description: "Current page, 1-based." },
   { name: "onPageChange", type: "(page: number) => void", description: "Fires with the requested page." },
-  { name: "siblings", type: "number", default: "1", description: "How many page numbers to show either side of the current one before collapsing to an ellipsis." },
+  { name: "siblings", type: "number", default: "1", description: "Sets how many page numbers sit between the ellipses, in blocks of siblings × 2 + 1. The control is always siblings × 2 + 5 slots wide." },
 ];
 
 function BasicDemo() {
@@ -73,10 +73,21 @@ export default function PaginationPage() {
         </section>
 
         <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">How it pages</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            The first and last page are always there. Between them, page
+            numbers come in fixed blocks and the highlight moves across them,
+            so the numbers only change when you step past the edge of the
+            block, never on every click. It stays the same width the whole
+            way through, and an ellipsis always hides at least two pages.
+          </p>
+        </section>
+
+        <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Siblings</h2>
           <p className="mb-3 text-sm text-ink-muted">
-            Higher values keep more context visible at the cost of width. Below,
-            the same page in a 24-page set with one sibling and then two.
+            Higher values show a bigger block of pages at the cost of width.
+            Below, the same page in a 24-page set with one sibling and then two.
           </p>
           <ComponentPreview code={SIBLINGS}>
             <SiblingsDemo />
