@@ -43,7 +43,7 @@ const HERO_SPLIT = `// Same block, Figma's other layout: content column beside t
 <HeroBlock
   eyebrow="v1.2 now available"
   title="Your product, styled to production standard."
-  description="114+ components, full state coverage, real Figma-to-code parity."
+  description="60+ components, full state coverage, real Figma-to-code parity."
   primaryAction={{ label: 'Get started' }}
   secondaryAction={{ label: 'View on GitHub' }}
   secondaryActionIcon
@@ -69,8 +69,8 @@ const LOGOS = `<LogoCloudBlock variant="monochrome" />
 // 'brands' picks which built-in marks to show, and in what order.`;
 
 const CTA_BANNER = `<CtaBannerBlock
-  title="Ship your next screen this afternoon"
-  description="Install the package and import what you need."
+  title="Ready to build faster?"
+  description="Start with the free, open-source component library — no account required."
   primaryAction={{ label: 'Get started' }}
   secondaryAction={{ label: 'View on GitHub' }}
   secondaryActionIcon
@@ -98,7 +98,7 @@ const FEATURE_ITEMS = [
   { id: "a", icon: <Zap />, title: "Built for speed", description: "Every component is optimized out of the box, so your interface stays fast without extra work." },
   { id: "b", icon: <ShieldCheck />, title: "Accessible by default", description: "Keyboard navigation, focus states, and semantic markup are built in, not bolted on." },
   { id: "c", icon: <Layers />, title: "Composable by design", description: "Every block is assembled from the same primitives your app already uses." },
-  { id: "d", icon: <Palette />, title: "Token-driven theming", description: "Swap a variable, not a stylesheet. Light and dark modes ship for free." },
+  { id: "d", icon: <Palette />, title: "Token-driven theming", description: "Swap a variable, not a stylesheet — light and dark modes ship for free." },
 ];
 
 export default function MarketingSectionsPage() {
@@ -139,7 +139,7 @@ export default function MarketingSectionsPage() {
             <HeroBlock
               eyebrow="Now open source"
               title="Design faster. Ship sooner."
-              description="Sakani is an open-source, production-ready design system with full Figma-to-React parity, built to take you from idea to shipped interface."
+              description="Sakani is an open-source, production-ready design system with full Figma-to-React parity — built to take you from idea to shipped interface."
               primaryAction={{ label: "Get started" }}
               secondaryAction={{ label: "View on GitHub" }}
               secondaryActionIcon
@@ -162,7 +162,7 @@ export default function MarketingSectionsPage() {
             <HeroBlock
               eyebrow="v1.2 now available"
               title="Your product, styled to production standard."
-              description="114+ components, full state coverage, real Figma-to-code parity. Everything you need to build without starting from a blank canvas."
+              description="60+ components, full state coverage, real Figma-to-code parity. Everything you need to build without starting from a blank canvas."
               primaryAction={{ label: "Get started" }}
               secondaryAction={{ label: "View on GitHub" }}
               secondaryActionIcon
@@ -240,16 +240,16 @@ export default function MarketingSectionsPage() {
           <ComponentPreview code={CTA_BANNER} scaleToFit>
             <div className="flex w-full flex-col">
               <CtaBannerBlock
-                title="Ship your next screen this afternoon"
-                description="Install the package and import what you need."
+                title="Ready to build faster?"
+                description="Start with the free, open-source component library — no account required."
                 primaryAction={{ label: "Get started" }}
                 secondaryAction={{ label: "View on GitHub" }}
                 secondaryActionIcon
                 variant="neutral"
               />
               <CtaBannerBlock
-                title="Ship your next screen this afternoon"
-                description="Install the package and import what you need."
+                title="Ready to build faster?"
+                description="Start with the free, open-source component library — no account required."
                 primaryAction={{ label: "Get started" }}
                 secondaryAction={{ label: "View on GitHub" }}
                 secondaryActionIcon
@@ -275,9 +275,9 @@ export default function MarketingSectionsPage() {
               />
               <InlineCtaBlock
                 variant="accent"
-                title="Still comparing options?"
-                description="See how Sakani differs from copy-paste libraries."
-                actionLabel="Read the comparison"
+                title="Free trial ends in 3 days"
+                description="Add a payment method to keep access to Pro features."
+                actionLabel="Add payment method"
               />
             </div>
           </ComponentPreview>

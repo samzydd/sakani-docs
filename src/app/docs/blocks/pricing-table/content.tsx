@@ -20,7 +20,7 @@ const CODE = `import { PricingTableBlock } from '@sakaniui/react/blocks';
       period: '/month',
       description: 'For solo builders exploring the system.',
       ctaLabel: 'Get started',
-      features: ['Up to 3 projects', 'Core components', 'Community support'],
+      features: ['Up to 3 projects', 'Core components', 'Community support', 'MIT license'],
     },
     {
       name: 'Pro',
@@ -29,14 +29,14 @@ const CODE = `import { PricingTableBlock } from '@sakaniui/react/blocks';
       description: 'For teams shipping product.',
       ctaLabel: 'Start free trial',
       highlighted: true,
-      features: ['Unlimited projects', 'All components & blocks', 'Priority support'],
+      features: ['Unlimited projects', 'All components & blocks', 'Priority support', 'Figma team library', 'Early access to new blocks'],
     },
     {
       name: 'Enterprise',
       price: 'Custom',
       description: 'For organizations with advanced needs.',
       ctaLabel: 'Contact sales',
-      features: ['Everything in Pro', 'Dedicated support', 'SLA & security review'],
+      features: ['Everything in Pro', 'Dedicated support', 'Custom theming', 'SLA & security review', 'Onboarding assistance'],
     },
   ]}
 />`;
@@ -77,7 +77,7 @@ export default function PricingTableBlockPage() {
                 period: "/month",
                 description: "For solo builders exploring the system.",
                 ctaLabel: "Get started",
-                features: ["Up to 3 projects", "Core components", "Community support"],
+                features: ["Up to 3 projects", "Core components", "Community support", "MIT license"],
               },
               {
                 name: "Pro",
@@ -86,14 +86,14 @@ export default function PricingTableBlockPage() {
                 description: "For teams shipping product.",
                 ctaLabel: "Start free trial",
                 highlighted: true,
-                features: ["Unlimited projects", "All components & blocks", "Priority support"],
+                features: ["Unlimited projects", "All components & blocks", "Priority support", "Figma team library", "Early access to new blocks"],
               },
               {
                 name: "Enterprise",
                 price: "Custom",
                 description: "For organizations with advanced needs.",
                 ctaLabel: "Contact sales",
-                features: ["Everything in Pro", "Dedicated support", "SLA & security review"],
+                features: ["Everything in Pro", "Dedicated support", "Custom theming", "SLA & security review", "Onboarding assistance"],
               },
             ]}
           />

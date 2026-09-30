@@ -55,6 +55,22 @@ function BarDemo() {
   );
 }
 
+/** The applied chip really goes away when removed, as it would in an app. */
+function BasicRow() {
+  const [active, setActive] = useState(true);
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <FilterChip type="default">Status</FilterChip>
+      {active && (
+        <FilterChip type="active" onRemove={() => setActive(false)}>
+          Status: Active
+        </FilterChip>
+      )}
+      <FilterChip type="add">Add filter</FilterChip>
+    </div>
+  );
+}
+
 export default function FilterChipPage() {
   return (
     <article>
@@ -62,13 +78,7 @@ export default function FilterChipPage() {
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
-          <div className="flex flex-wrap items-center gap-2">
-            <FilterChip type="default">Status</FilterChip>
-            <FilterChip type="active" onRemove={() => {}}>
-              Status: Active
-            </FilterChip>
-            <FilterChip type="add">Add filter</FilterChip>
-          </div>
+          <BasicRow />
         </ComponentPreview>
 
         <section>
