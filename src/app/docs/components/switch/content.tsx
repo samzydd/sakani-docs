@@ -21,12 +21,14 @@ const CONTROLLED = `const [on, setOn] = useState(true);
 
 <Switch
   label="Automatic backups"
+  description={on ? 'Backing up nightly' : 'Backups paused'}
   checked={on}
   onChange={(e) => setOn(e.target.checked)}
 />`;
 
 const PROPS = [
   { name: "label", type: "string", description: "Optional text rendered to the right of the switch." },
+  { name: "description", type: "ReactNode", description: "Help text under the label, left-aligned with it." },
   { name: "checked", type: "boolean", description: "Controlled on/off state." },
   { name: "defaultChecked", type: "boolean", description: "Uncontrolled initial state." },
   { name: "disabled", type: "boolean", default: "false", description: "Disables the input." },
@@ -36,14 +38,12 @@ const PROPS = [
 function ControlledDemo() {
   const [on, setOn] = useState(true);
   return (
-    <div className="flex flex-col items-start gap-2">
-      <Switch
-        label="Automatic backups"
-        checked={on}
-        onChange={(e) => setOn(e.target.checked)}
-      />
-      <p className="text-xs text-ink-muted">{on ? "Backing up nightly" : "Backups paused"}</p>
-    </div>
+    <Switch
+      label="Automatic backups"
+      description={on ? "Backing up nightly" : "Backups paused"}
+      checked={on}
+      onChange={(e) => setOn(e.target.checked)}
+    />
   );
 }
 
