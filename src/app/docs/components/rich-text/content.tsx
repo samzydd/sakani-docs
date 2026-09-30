@@ -8,7 +8,7 @@ import {
   BlogFeatureText,
   List,
 } from "@sakaniui/react";
-import { productImage } from "@/lib/placeholder-image";
+import { blogImage } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -104,7 +104,7 @@ export default function RichTextPage() {
           <ComponentPreview code={`${IMAGE}\n\n${FEATURE}`}>
             <div className="flex w-full max-w-lg flex-col gap-6">
               <BlogImage
-                src={productImage}
+                src={blogImage}
                 alt="Token pipeline"
                 size="small"
                 caption="Tokens flow one way: Figma to code."

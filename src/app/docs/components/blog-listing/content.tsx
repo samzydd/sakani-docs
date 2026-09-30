@@ -1,7 +1,7 @@
 "use client";
 
 import { BlogListingCard, BlogListingFeaturedCard } from "@sakaniui/react";
-import { productImage } from "@/lib/placeholder-image";
+import { blogImage, productImage } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -53,7 +53,7 @@ export default function BlogListingPage() {
         <ComponentPreview code={CARD}>
           <div className="w-full max-w-[20rem]">
             <BlogListingCard
-              image={productImage}
+              image={blogImage}
               imageAlt="Cover"
               category="Engineering"
               readTime="11 mins read"

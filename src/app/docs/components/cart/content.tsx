@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CartItem, CheckoutSteps } from "@sakaniui/react";
-import { productImage } from "@/lib/placeholder-image";
+import { productImage, tableRunnerImage } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -54,8 +54,8 @@ const STEPS_PROPS = [
 
 function CartDemo() {
   const [items, setItems] = useState([
-    { id: 1, name: "Ceramic Pour-Over Mug", variant: "Color: Sand", price: 38, qty: 1 },
-    { id: 2, name: "Linen Apron", variant: "Size: M", price: 54, qty: 2 },
+    { id: 1, image: productImage, name: "Ceramic Pour-Over Mug", variant: "Color: Sand", price: 28, qty: 1 },
+    { id: 2, image: tableRunnerImage, name: "Linen Table Runner", variant: "Color: Natural", price: 34, qty: 1 },
   ]);
 
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
@@ -65,7 +65,7 @@ function CartDemo() {
       {items.map((item) => (
         <CartItem
           key={item.id}
-          image={productImage}
+          image={item.image}
           name={item.name}
           variant={item.variant}
           price={item.price}

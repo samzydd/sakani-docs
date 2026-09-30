@@ -135,6 +135,13 @@ export function ComponentPreview({
             // its own corners.
             "rounded-b-xl bg-canvas",
             previewTheme === "dark" ? "dark" : "force-light",
+            // The theme classes swap the color TOKENS, not the inherited
+            // `color` itself -- so anything drawn in currentColor (Spinner,
+            // bare icons) kept the page's text color: a near-white spinner
+            // on the light canvas when the site is dark, and vice versa.
+            // Resolving `color` here, where the preview's tokens live, fixes
+            // every currentColor component at once.
+            "text-[color:var(--color-fg-default)]",
             scaleToFit
               ? "overflow-hidden"
               : fullBleed

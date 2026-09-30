@@ -2,7 +2,7 @@
 
 import { Globe, AtSign } from "lucide-react";
 import { ProfileCard, TeamCard } from "@sakaniui/react";
-import { productImage } from "@/lib/placeholder-image";
+import { teamImage } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -87,7 +87,7 @@ export default function TeamCardsPage() {
           <ComponentPreview code={TEAM}>
             <div className="w-full max-w-[16rem]">
               <TeamCard
-                image={productImage}
+                image={teamImage}
                 name="Amara Chen"
                 role="Head of Design"
                 location="Lagos, NG"

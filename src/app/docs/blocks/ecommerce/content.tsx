@@ -7,7 +7,6 @@ import {
   CheckoutFlowBlock,
   OrderConfirmationBlock,
 } from "@sakaniui/react/blocks";
-import { productImage, galleryImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { BlockSource } from "@/components/docs/block-source";
@@ -16,25 +15,29 @@ import { Pager } from "@/components/docs/pager";
 const DETAIL = `<ProductDetailBlock
   name="Ceramic Pour-Over Mug"
   images={images}
-  rating={4.5}
-  reviewCount={126}
-  stockQuantity={3}
-  price={38}
-  compareAtPrice={48}
-  description="Stoneware, 340ml. Fired twice for a matte finish."
-  colors={[{ label: 'Sand', color: '#d6ccc2' }, { label: 'Slate', color: '#4b5563' }]}
-  sizes={[{ size: 'S' }, { size: 'M' }, { size: 'L', available: false }]}
-  minQuantity={1}
-  maxQuantity={10}
+  rating={4.9}
+  reviewCount={2300}
+  stockQuantity={24}
+  price={28}
+  description="A hand-thrown ceramic mug designed for slow mornings. Wide mouth for easy pouring, comfortable handle, dishwasher safe."
+  colors={[
+    { label: 'Navy', color: '#1B284D' },
+    { label: 'Brown', color: '#6F4E37' },
+    { label: 'Grey', color: '#9CA3AF' },
+  ]}
+  sizes={[{ size: 'S' }, { size: 'M' }, { size: 'L' }]}
+  defaultColor="Navy"
+  defaultSize="M"
   // The block owns the selection; you receive it on add.
   onAddToCart={({ color, size, quantity }) => addToCart({ color, size, quantity })}
 />`;
 
 const GRID = `<ProductGridBlock
-  title="New in"
+  eyebrow="Shop"
+  title="New arrivals"
+  subtitle="Thoughtfully made home goods, restocked every week."
   products={products}
   showFilterBar
-  columns={4}
 />`;
 
 const CART = `<ShoppingCartBlock
@@ -54,28 +57,78 @@ const CHECKOUT = `// The block walks its own steps and collects the fields;
 const CONFIRM = `// estimatedDelivery is what turns on the tracking style --
 // there's no separate variant prop.
 <OrderConfirmationBlock
-  orderNumber="ORD-2481"
+  orderNumber="SK-40218"
   items={items}
-  total={92}
-  estimatedDelivery="Thursday, 18 Sep"
+  total={28}
+  estimatedDelivery="Aug 28–30"
   onTrackOrder={track}
 />`;
 
+// The same photography and copy as the Figma frames (and the Storybook
+// stories), served from /public so the previews match the design exactly.
+const MUG = "/blocks/products/card-mug.jpg";
+const RUNNER = "/blocks/products/card-table-runner.jpg";
+const BOARD = "/blocks/products/card-serving-board.jpg";
+
+const GALLERY = [
+  { src: MUG, alt: "Ceramic Pour-Over Mug" },
+  { src: MUG, alt: "Ceramic Pour-Over Mug, angle 2" },
+  { src: MUG, alt: "Ceramic Pour-Over Mug, angle 3" },
+  { src: MUG, alt: "Ceramic Pour-Over Mug, angle 4" },
+];
+
+const MUG_COLORS = [
+  { label: "Navy", color: "#1B284D" },
+  { label: "Bone", color: "#F5F4F2", selected: true },
+  { label: "Periwinkle", color: "#8E9FE8" },
+  { label: "Magenta", color: "#C6197A" },
+];
+
+const BOARD_COLORS = [
+  { label: "Natural", color: "#DDD0BC" },
+  { label: "Amber", color: "#D2691E", selected: true },
+  { label: "Lilac", color: "#D9CBE8" },
+  { label: "Rose", color: "#E5A0B8" },
+];
+
+const MUG_COPY =
+  "Handcrafted from natural stoneware clay, this minimal pour-over mug features a built-in ceramic dripper for slow, single-cup brewing. Dishwasher safe and made to last.";
+
 const PRODUCTS = [
-  { id: "1", image: productImage, name: "Ceramic Pour-Over Mug", price: 38, rating: 4.5, reviewCount: 126 },
-  { id: "2", image: productImage, name: "Linen Apron", price: 54, compareAtPrice: 68, rating: 4.2, reviewCount: 41 },
-  { id: "3", image: productImage, name: "Walnut Tray", price: 72, rating: 4.8, reviewCount: 88 },
-  { id: "4", image: productImage, name: "Cotton Tea Towel", price: 18, rating: 4.0, reviewCount: 12 },
+  { id: "mug", image: MUG, name: "Ceramic Pour-Over Mug", description: MUG_COPY, price: 28, rating: 5, colors: MUG_COLORS },
+  {
+    id: "runner",
+    image: RUNNER,
+    name: "Linen Table Runner",
+    description:
+      "Woven from 100% European flax linen, this table runner adds effortless texture to any setting. Pre-washed for a soft, lived-in drape. Machine washable and naturally durable.",
+    price: 34,
+    compareAtPrice: 48,
+    rating: 5,
+    colors: MUG_COLORS,
+  },
+  {
+    id: "board",
+    image: BOARD,
+    name: "Oak Serving Board",
+    description: "A brief description of an oak serving board for an e-commerce store",
+    price: 56,
+    rating: 5,
+    inStock: false,
+    colors: BOARD_COLORS,
+  },
+  { id: "mug-2", image: MUG, name: "Ceramic Pour-Over Mug", description: MUG_COPY, price: 28, rating: 5, colors: MUG_COLORS },
 ];
 
 const CART_ITEMS = [
-  { id: "1", image: productImage, name: "Ceramic Pour-Over Mug", variant: "Color: Sand", price: 38, quantity: 1 },
-  { id: "2", image: productImage, name: "Linen Apron", variant: "Size: M", price: 54, compareAtPrice: 68, quantity: 2 },
+  { id: "1", image: MUG, name: "Ceramic Pour-Over Mug", variant: "Color: Sand", price: 28, quantity: 1 },
+  { id: "2", image: RUNNER, name: "Linen Table Runner", variant: "Color: Natural", price: 34, compareAtPrice: 48, quantity: 1 },
 ];
 
+const CHECKOUT_ITEMS = [CART_ITEMS[0]];
+
 const ORDER_ITEMS = [
-  { id: "1", image: productImage, name: "Ceramic Pour-Over Mug", variant: "Color: Sand", price: 38 },
-  { id: "2", image: productImage, name: "Linen Apron", variant: "Size: M", price: 54 },
+  { id: "1", image: MUG, name: "Ceramic Pour-Over Mug", variant: "Color: Sand", price: 28 },
 ];
 
 export default function EcommercePage() {
@@ -97,24 +150,23 @@ export default function EcommercePage() {
       </div>
 
       <div className="space-y-10">
-        <ComponentPreview code={DETAIL} fullBleed>
+        <ComponentPreview code={DETAIL} scaleToFit>
           <ProductDetailBlock
             name="Ceramic Pour-Over Mug"
-            images={galleryImages}
-            rating={4.5}
-            reviewCount={126}
-            stockQuantity={3}
-            price={38}
-            compareAtPrice={48}
-            description="Stoneware, 340ml. Fired twice for a matte finish that hides the inevitable coffee rings."
+            images={GALLERY}
+            rating={4.9}
+            reviewCount={2300}
+            stockQuantity={24}
+            price={28}
+            description="A hand-thrown ceramic mug designed for slow mornings. Wide mouth for easy pouring, comfortable handle, dishwasher safe."
             colors={[
-              { label: "Sand", color: "#d6ccc2" },
-              { label: "Slate", color: "#4b5563" },
-              { label: "Clay", color: "#b45309", available: false },
+              { label: "Navy", color: "#1B284D" },
+              { label: "Brown", color: "#6F4E37" },
+              { label: "Grey", color: "#9CA3AF" },
             ]}
-            sizes={[{ size: "S" }, { size: "M" }, { size: "L", available: false }]}
-            minQuantity={1}
-            maxQuantity={10}
+            sizes={[{ size: "S" }, { size: "M" }, { size: "L" }]}
+            defaultColor="Navy"
+            defaultSize="M"
           />
         </ComponentPreview>
 
@@ -126,8 +178,14 @@ export default function EcommercePage() {
             shouldn&apos;t offer sorting, and only you know which lists are
             curated.
           </p>
-          <ComponentPreview code={GRID} fullBleed>
-            <ProductGridBlock title="New in" products={PRODUCTS} showFilterBar columns={4} />
+          <ComponentPreview code={GRID} scaleToFit>
+            <ProductGridBlock
+              eyebrow="Shop"
+              title="New arrivals"
+              subtitle="Thoughtfully made home goods, restocked every week."
+              products={PRODUCTS}
+              showFilterBar
+            />
           </ComponentPreview>
         </section>
 
@@ -153,14 +211,14 @@ export default function EcommercePage() {
             Track order button — the same derive-don&apos;t-flag pattern the
             product components use.
           </p>
-          <ComponentPreview code={`${CHECKOUT}\n\n${CONFIRM}`} fullBleed>
+          <ComponentPreview code={`${CHECKOUT}\n\n${CONFIRM}`} scaleToFit>
             <div className="flex w-full flex-col gap-8">
-              <CheckoutFlowBlock items={CART_ITEMS} />
+              <CheckoutFlowBlock items={CHECKOUT_ITEMS} />
               <OrderConfirmationBlock
-                orderNumber="ORD-2481"
+                orderNumber="SK-40218"
                 items={ORDER_ITEMS}
-                total={92}
-                estimatedDelivery="Thursday, 18 Sep"
+                total={28}
+                estimatedDelivery="Aug 28–30"
               />
             </div>
           </ComponentPreview>
