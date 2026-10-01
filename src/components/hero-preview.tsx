@@ -25,7 +25,11 @@ const BACK_LAYERS = [
 export function HeroPreview() {
   return (
     <div className="relative mx-auto mt-24 w-full max-w-6xl flex-1 px-4 sm:px-6 lg:px-8">
-      <div className="relative h-full min-h-[280px]">
+      {/* data-light-target: HeroLight aims its beam at this stack's top edge
+          and writes --light-hit-x / --light-strength here, read by the rim
+          glow below and the main frame's .hero-light-border. */}
+      <div data-light-target className="relative h-full min-h-[280px]">
+        <div aria-hidden="true" className="hero-light-rim" />
         {BACK_LAYERS.map((layer) => (
           <div
             key={layer.src}
@@ -47,7 +51,7 @@ export function HeroPreview() {
             read the site's own ambient theme via bg-surface and went dark in
             dark mode while the screenshot inside stayed light, an obviously
             mismatched mockup. */}
-        <div className="force-light absolute inset-x-0 top-0 z-20 h-full overflow-hidden rounded-t-2xl border border-b-0 border-line-subtle shadow-2xl">
+        <div className="hero-light-border force-light absolute inset-x-0 top-0 z-20 h-full overflow-hidden rounded-t-2xl border border-b-0 border-line-subtle shadow-2xl">
           <div className="flex items-center gap-3 border-b border-line-subtle bg-surface px-4 py-3">
             <div className="flex gap-1.5">
               <span className="h-3 w-3 rounded-full bg-danger/60" />

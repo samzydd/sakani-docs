@@ -13,6 +13,7 @@ import { Reveal } from "@/components/reveal";
 import { HeroPreview } from "@/components/hero-preview";
 import { TextReveal } from "@/components/text-reveal";
 import { MaskReveal } from "@/components/mask-reveal";
+import { HeroLight } from "@/components/hero-light";
 
 /** The hero's rise is slower than the section reveals further down (see
  *  --reveal-rise-hero in globals.css); it's the page's first impression
@@ -56,10 +57,12 @@ export default function HomePage() {
     <main>
       {/* Hero — fills the viewport on load; text animates in on mount (not
           scroll-triggered, it's already in view), each element staggered
-          slightly after the last. No background decoration: a plain
-          canvas, left-aligned copy, and a dimmed product preview doing
-          the work instead. */}
+          slightly after the last. The only decoration is HeroLight: a
+          soft beam that falls onto the product preview and follows the
+          pointer, lighting the preview's top edge where it lands. */}
       <section className="relative flex min-h-dvh flex-col overflow-hidden bg-canvas pt-32 sm:pt-40">
+        {/* Light beam falling onto the preview, following the pointer. */}
+        <HeroLight />
         {/* One sequenced cascade rather than four independent fades:
             eyebrow, then each headline line, then subtext, then the CTA
             row -- each waiting on roughly the previous one's midpoint so
