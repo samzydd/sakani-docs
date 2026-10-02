@@ -26,10 +26,10 @@ import { LiquidGlass } from '@sakaniui/react';
   <Card … />
 </LiquidGlass>`;
 
-const RECIPE = `import { LiquidGlass } from '@sakaniui/react';
+const RECIPE = `import { LiquidBackdrop, LiquidGlass } from '@sakaniui/react';
 
 {/* 1 · background  2 · overlay  3 · components */}
-<div style={{ position: 'relative', backgroundImage: 'url(photo.jpg)', backgroundSize: 'cover' }}>
+<LiquidBackdrop src="photo.jpg" style={{ position: 'relative' }}>        {/* every lens refracts this photo */}
   <LiquidGlass variant="regular" tint="subtle" radius={0}
                style={{ position: 'absolute', inset: 0 }} />          {/* the one glass sheet */}
 
@@ -37,7 +37,7 @@ const RECIPE = `import { LiquidGlass } from '@sakaniui/react';
     <Sidebar … />
     <div data-surface="solid"><Card>…</Card></div>                   {/* data stays solid */}
   </div>
-</div>`;
+</LiquidBackdrop>`;
 
 const CUSTOM = `/* A custom element: read the tokens, never glass values */
 .panel {
@@ -57,7 +57,10 @@ const glass = useLiquidGlass(ref);
 
 const PROPS = [
   { name: "variant", type: "'regular' | 'clear'", default: "'regular'", description: "Tint strength. regular carries copy; clear is for icons, large labels and imagery." },
+  { name: "tint", type: "'regular' | 'clear' | 'subtle' | 'none'", default: "the variant's", description: "The fill. subtle is Figma's glass/bg-subtle (5%), for a full-bleed overlay; none draws no tint." },
   { name: "radius", type: "number", default: "20", description: "Corner radius in px. Use 0 for a full-bleed overlay. The lens follows it exactly." },
+  { name: "effect", type: "{ refraction, depth, dispersion, frost, lightIntensity, lightAngle }", default: "the variant's", description: "Any of Figma's Glass properties for this element, in Figma's units." },
+  { name: "source", type: "boolean", default: "true", description: "Inside a LiquidBackdrop: refract its photo (true) or the UI painted below (false: slider knobs, selection droplets)." },
   { name: "refraction", type: "'auto' | 'off'", default: "'auto'", description: "'off' forces the frosted fallback, e.g. to preview Safari or Firefox in Chrome." },
   { name: "interactive", type: "boolean", default: "false", description: "Squishes slightly when pressed (buttons, toolbar pills). No squish with reduced motion." },
   { name: "…rest", type: "HTMLAttributes<HTMLDivElement>", description: "Anything a <div> accepts is forwarded." },
@@ -142,8 +145,11 @@ export default function GlassPage() {
           <h2 className="mb-3 text-lg font-semibold text-ink">LiquidGlass</h2>
           <p className="mb-3 text-sm text-ink-muted">
             The material as a component. Put regular Sakani components inside it; they drop their own fills
-            and sit on the glass. Also exported: <code>useLiquidGlass(ref, {"{ enabled, refraction }"})</code> and{" "}
-            <code>liquidGlassClass(variant)</code> for elements you own (the <code>Modal</code> card uses
+            and sit on the glass. Wrap the screen in <code>{'<LiquidBackdrop src={photo}>'}</code> and every lens
+            inside refracts the photo itself, sharp, the way Figma&apos;s glass does: glass stacked on glass still
+            bends real detail (its <code>veil</code> lays a color over the photo for every lens, such as a dark-mode
+            scrim). Also exported: <code>useLiquidGlass(ref, {"{ enabled, refraction, source }"})</code> and{" "}
+            <code>liquidGlassClass(variant, tint)</code> for elements you own (the <code>Modal</code> card uses
             the hook when it is opened from inside a liquid area).
           </p>
           <PropsTable rows={PROPS} />
@@ -177,13 +183,13 @@ export default function GlassPage() {
             ]}
           />
           <p className="mb-3 mt-6 text-sm text-ink-muted">
-            The liquid material is tuned with <code>--liquid-*</code>. Light values shown; dark mode
-            overrides the tints, rim, depth, shadow and glare. Each variant has its own lens
-            (<code>-regular</code> and <code>-clear</code>, the two Figma effect styles); to change one
-            element, set the unprefixed name (<code>--liquid-frost</code>, <code>--liquid-refraction</code>, …) on it.
-            Pick a tint with <code>{'<LiquidGlass tint="subtle">'}</code> (<code>regular</code>, <code>clear</code>,{" "}
-            <code>subtle</code> or <code>none</code>), and put <code>data-on-photo</code> on any subtree that sits
-            straight on a photo to switch it to light text.
+            The liquid material is Figma&apos;s Glass effect, property for property: the tokens below are the
+            liquid/regular and liquid/clear effect styles in Figma&apos;s own units (refraction, depth, dispersion,
+            frost, light), and LiquidGlass turns them into pixels by rules measured from Figma&apos;s renders. To change
+            one element, pass <code>{'effect={{ refraction: 0.8, depth: 20 }}'}</code> or set the unprefixed name
+            (<code>--liquid-depth</code>, …) on it. Pick a tint with <code>{'<LiquidGlass tint="subtle">'}</code> (<code>regular</code>,{" "}
+            <code>clear</code>, <code>subtle</code> or <code>none</code>), and put <code>data-on-photo</code> on any subtree that
+            sits straight on a photo to switch it to light text.
           </p>
           <DocTable
             headers={["Token", "Default", "Controls"]}
@@ -192,15 +198,13 @@ export default function GlassPage() {
               ["--liquid-tint-regular", "white 66%", "The regular tint"],
               ["--liquid-tint-clear", "white 28%", "The clear tint"],
               ["--liquid-tint-subtle", "5% ink", "The subtle tint: Figma's glass/bg-subtle, for a full-bleed overlay (white 8% in dark)"],
-              ["--liquid-refraction-regular | -clear", "8 | 9.5", "Pixels the rim bends the backdrop, per variant"],
-              ["--liquid-shift-regular | -clear", "-3 | 1.5", "Pixels the lit rim samples toward the light (negative = away)"],
-              ["--liquid-bezel-regular | -clear", "16 | 24", "Pixels of lens width"],
-              ["--liquid-profile-regular | -clear", "0 | 0", "Edge shape: 0 is a circular glass edge, above 0 a power curve"],
-              ["--liquid-dispersion-regular | -clear", "0.2 | 0.75", "Extra shift per color channel (the faint fringe)"],
-              ["--liquid-frost-regular | -clear", "2 | 0.75", "Pixels of blur on top of the refraction"],
-              ["--liquid-saturate-regular | -clear", "1 | 0.6", "Color boost on the refracted backdrop (1 = none)"],
+              ["--liquid-refraction-regular | -clear", "0.55 | 0.8", "Figma Glass · Refraction (0–1): how hard the rim bends"],
+              ["--liquid-depth-regular | -clear", "16 | 20", "Figma Glass · Depth: how far in the bend reaches"],
+              ["--liquid-dispersion-regular | -clear", "0.3 | 0.4", "Figma Glass · Dispersion (0–1): red bends more, blue less"],
+              ["--liquid-frost-regular | -clear", "4 | 1", "Figma Glass · Frost: blur before the bend"],
+              ["--liquid-light-intensity-regular | -clear", "0.7 | 0.8", "Figma Glass · Light intensity (0–1): rim, shade and glow, added"],
               ["--liquid-fallback-blur", "blur(14px) saturate(180%)", "The look in browsers without refraction"],
-              ["--liquid-light-angle", "135deg", "Where the rim light comes from"],
+              ["--liquid-light-angle", "-45", "Figma Glass · Light angle: degrees clockwise from the top"],
               ["--liquid-overlay-tint", "var(--liquid-tint-subtle)", "The dashboard overlay (a 72% scrim in dark)"],
               ["--liquid-panel-tint", "white 76%", "A panel of glass that holds solid cards"],
             ]}

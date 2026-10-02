@@ -39,10 +39,14 @@ export default function LiquidGlassDashboardPage() {
         </p>
         <p>It is built in three layers, in this order:</p>
         <ol>
-          <li><strong>Background:</strong> the photo, a CSS background on the root.</li>
           <li>
-            <strong>Overlay:</strong> one full-size <code>{'<LiquidGlass variant="regular" tint="subtle" radius={0}>'}</code>.
-            It is the only layer that bends the photo, so the whole canvas reads as one sheet of glass.
+            <strong>Background:</strong> the photo, as a <code>{'<LiquidBackdrop>'}</code>. Every lens in the
+            frame refracts the photo itself, so the promo card and the sidebar lenses bend sharp detail, as in
+            the Figma frame.
+          </li>
+          <li>
+            <strong>Overlay:</strong> one full-size <code>{'<LiquidGlass variant="regular" radius={0}>'}</code>: the
+            frosted sheet the chrome sits on.
           </li>
           <li>
             <strong>Product UI:</strong> the sidebar and top bar sit on the overlay with no fills of their
@@ -52,7 +56,7 @@ export default function LiquidGlassDashboardPage() {
         </ol>
         <p>
           The <strong>active</strong> sidebar item has its own clear-glass lens and only moves when you click
-          another item. A second, softer lens follows hover and keyboard focus and never changes what is
+          another item; it springs to the new item and stretches on the way, like a droplet. A second, softer lens follows hover and keyboard focus and never changes what is
           active. Open one of the chart dropdowns to see the frosted menu, and flip the preview to dark: the
           overlay gains a scrim so the light labels stay readable over the bright parts of the photo.
         </p>
