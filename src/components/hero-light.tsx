@@ -4,13 +4,14 @@ import { useEffect, useRef } from "react";
 
 /**
  * HeroLight — a soft wash of light that falls across the hero from beyond its
- * top-left corner, aims at the pointer, and catches the preview's top edge.
+ * top-right corner, aims at the pointer, and catches the preview's top edge.
  *
  * Tuned by measurement, not by eye: the light field below was fitted to the
  * reference (on/off screenshots differenced on a 16px grid, three pointer
  * positions; rmse 6.5 on a 0-255 scale) and its numbers are those of the
  * fit, at a 1440px-wide hero and scaled with the hero's width:
- *   - source fixed at (-513, -163) px, off the top-left corner
+ *   - source fixed off the top-right corner: the fit's (-513, -163) px
+ *     mirrored across the hero's width, (1953, -163) at 1440px
  *   - beam  A · exp(-|θ/w|^q) / (1 + (d/L)^n),  A 70, w 0.343 rad, q 2.5,
  *           L 1107 px, n 4.77  (θ: angle off the source→pointer axis,
  *           d: distance from the source)
@@ -166,7 +167,8 @@ export function HeroLight() {
       last = now;
       const t = (now - t0) / 1000;
       const k = w / REF_W;
-      const sx = FIT.sx * k, sy = FIT.sy * k;
+      // Mirrored: the fit's source is off the top-left; here it's off the top-right.
+      const sx = (REF_W - FIT.sx) * k, sy = FIT.sy * k;
 
       if (!pointerActive || !Number.isFinite(goalX)) {
         goalX = w * 0.5 + Math.sin(t * 0.2) * w * 0.12;

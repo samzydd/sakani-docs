@@ -555,7 +555,7 @@ html.dark .noise-overlay {
       transparent 100%
     ),
     radial-gradient(
-      circle calc(var(--light-r, 480px) * 0.8) at calc(var(--light-hit-x, 50%) + 24px) 14px,
+      circle calc(var(--light-r, 480px) * 0.8) at calc(var(--light-hit-x, 50%) - 24px) 14px,
       rgb(var(--hero-edge-warm) / 0.18) 0%,
       rgb(var(--hero-edge-warm) / 0.1) 22%,
       rgb(var(--hero-edge-warm) / 0.025) 55%,
