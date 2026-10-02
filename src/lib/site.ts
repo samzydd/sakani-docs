@@ -28,14 +28,14 @@ export const SITE_NAME = "Sakani";
 
 /**
  * Leads with what the thing *is*, because that is what gets typed into a
- * search box: "react design system", "react component library". The Figma
- * parity is the differentiator and goes second, where it persuades rather
- * than competes for the first few words that search results truncate to.
+ * search box: "react design system", "react component library". The two
+ * differentiators come next: built-in glass and liquid glass (the thing few
+ * design systems ship as a theme layer), then the Figma parity.
  */
 export const SITE_TAGLINE = "React Design System";
 
 export const SITE_DESCRIPTION =
-  "An open-source React design system: 114+ accessible components and 41 copy-paste blocks exported 1:1 from Figma. Token-driven theming, dark mode and TypeScript types included. MIT licensed.";
+  "Open-source React design system with built-in glass and Apple-style liquid glass. 114+ accessible components, 42 blocks, dark mode and TypeScript, exported 1:1 from Figma.";
 
 /**
  * Emitted as <meta name="keywords">, which Google has ignored since 2009 and
@@ -52,6 +52,12 @@ export const SITE_KEYWORDS = [
   "accessible react components",
   "react dashboard blocks",
   "open source design system",
+  "glassmorphism react",
+  "liquid glass react",
+  "apple liquid glass css",
+  "react glass components",
+  "frosted glass ui",
+  "glass effect design system",
 ];
 
 export const GITHUB_URL = "https://github.com/samzydd/Sakani-design-system";

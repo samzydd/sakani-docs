@@ -17,7 +17,7 @@ const LEFT = `<SectionHeading align="left" title="Browse everything" subtitle="O
 const HERO = `<FirstPageHeading
   badgeLabel="v0.3.3 is out"
   title="Design and engineering, finally on the same page."
-  description="114+ components and 41 blocks, matching your Figma file exactly."
+  description="114+ components and 42 blocks, matching your Figma file exactly."
   primaryCta={{ label: "Get started", onClick: start }}
   secondaryCta={{ label: "View on GitHub", onClick: openRepo }}
   avatars={[{ initials: "AK" }, { initials: "DO" }, { initials: "PR" }]}
@@ -75,7 +75,7 @@ export default function SectionHeadingPage() {
               <SectionHeading
                 align="left"
                 title="Browse everything"
-                subtitle="114+ components and 41 blocks, organized by category."
+                subtitle="114+ components and 42 blocks, organized by category."
               />
             </div>
           </ComponentPreview>
@@ -93,7 +93,7 @@ export default function SectionHeadingPage() {
               <FirstPageHeading
                 badgeLabel="v0.3.3 is out"
                 title="Design and engineering, finally on the same page."
-                description="114+ components and 41 blocks, matching your Figma file exactly."
+                description="114+ components and 42 blocks, matching your Figma file exactly."
                 primaryCta={{ label: "Get started" }}
                 secondaryCta={{ label: "View on GitHub" }}
                 avatars={[{ initials: "AK" }, { initials: "DO" }, { initials: "PR" }]}

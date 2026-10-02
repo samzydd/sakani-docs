@@ -14,6 +14,7 @@ import { HeroPreview } from "@/components/hero-preview";
 import { TextReveal } from "@/components/text-reveal";
 import { MaskReveal } from "@/components/mask-reveal";
 import { HeroLight } from "@/components/hero-light";
+import { GlassShowcase } from "@/components/glass-showcase";
 
 /** The hero's rise is slower than the section reveals further down (see
  *  --reveal-rise-hero in globals.css); it's the page's first impression
@@ -28,7 +29,7 @@ const FEATURES = [
   },
   {
     icon: Blocks,
-    title: "41 ready-made blocks",
+    title: "42 ready-made blocks",
     body: "Full page sections (pricing tables, checkout flows, auth screens) meant to be copied and edited, not configured.",
   },
   {
@@ -73,7 +74,7 @@ export default function HomePage() {
               href="/docs"
               className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
             >
-              Last updated: October 1st <ArrowRight size={12} />
+              Last updated: October 2nd <ArrowRight size={12} />
             </Link>
           </MaskReveal>
           <TextReveal
@@ -103,7 +104,7 @@ export default function HomePage() {
             duration={HERO_RISE}
             className="mt-5 max-w-[680px] text-balance text-lg leading-[1.4] text-ink-muted"
           >
-            114+ components and 41 blocks, matching your Figma file exactly, so
+            114+ components and 42 blocks, matching your Figma file exactly, so
             designers hand off what engineers already have, and your whole team
             ships from one source of truth, not a reinterpretation of it. No
             redlines, no rebuilding it twice.
@@ -136,6 +137,10 @@ export default function HomePage() {
 
       <Reveal>
         <DashboardShowcase />
+      </Reveal>
+
+      <Reveal>
+        <GlassShowcase />
       </Reveal>
 
       {/* Features */}
