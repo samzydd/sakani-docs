@@ -507,7 +507,7 @@ html.dark .noise-overlay {
   --hero-edge-core: 236 128 76;
   --hero-edge-body: 236 150 110;
   --hero-edge-warm: 240 190 160;
-  --hero-edge-opacity: 0.5;
+  --hero-edge-opacity: 0.4;
 }
 .dark {
   --hero-light-rgb: 255 255 255;
@@ -515,7 +515,7 @@ html.dark .noise-overlay {
   --hero-edge-core: 240 240 240;
   --hero-edge-body: 170 170 170;
   --hero-edge-warm: 242 228 214;
-  --hero-edge-opacity: 0.29;
+  --hero-edge-opacity: 0.232;
 }
 
 .hero-light-canvas {
@@ -529,7 +529,7 @@ html.dark .noise-overlay {
   mix-blend-mode: var(--hero-light-blend);
   transition: opacity 1.2s ease;
 }
-.hero-light-canvas[data-ready] { opacity: 1; }
+.hero-light-canvas[data-ready] { opacity: 0.8; }
 
 /* Where the light meets the preview: its 1.2px edge picks up a highlight
    centred on the landing point (radius ~44% of the preview's width), with a

@@ -6,6 +6,10 @@ import { useEffect, useRef } from "react";
  * HeroLight — a soft wash of light that falls across the hero from beyond its
  * top-right corner, aims at the pointer, and catches the preview's top edge.
  *
+ * Narrowed after the fact: beam half-width 0.343 -> 0.13 rad, pool radius
+ * 1277 -> 480 px (strength 11 -> 8), edge highlight radius 44% -> 30% of the preview, and the
+ * whole effect at 80% opacity (the numbers below are the original fit).
+ *
  * Tuned by measurement, not by eye: the light field below was fitted to the
  * reference (on/off screenshots differenced on a 16px grid, three pointer
  * positions; rmse 6.5 on a 0-255 scale) and its numbers are those of the
@@ -34,7 +38,7 @@ const REF_W = 1440;
 // A is the fitted 70 scaled by 255/(255-15): the reference sits on pure
 // black, our dark canvas is rgb(15,14,12), and normal blending adds
 // (255 - bg) · alpha, so the same alpha would land ~6% dimmer here.
-const FIT = { sx: -513, sy: -163, A: 74.4, w: 0.343, q: 2.515, L: 1107, n: 4.77, P: 11, R: 1277, ry: 192 };
+const FIT = { sx: -513, sy: -163, A: 74.4, w: 0.13, q: 2.515, L: 1107, n: 4.77, P: 8, R: 480, ry: 192 };
 const FOLLOW_RATE = 5; // 1/s → 63% of the way in 200 ms
 const SCALE = 0.5;     // render resolution vs CSS px
 
@@ -191,7 +195,7 @@ export function HeroLight() {
         const frac = (hitX - (tr.left - sr.left)) / tr.width;
         target.style.setProperty("--light-hit-x", `${(Math.min(1, Math.max(0, frac)) * 100).toFixed(2)}%`);
         target.style.setProperty("--light-strength", strength.toFixed(3));
-        target.style.setProperty("--light-r", `${Math.round(tr.width * 0.436)}px`); // reference: 576 of 1320
+        target.style.setProperty("--light-r", `${Math.round(tr.width * 0.3)}px`); // narrower than the reference's 576 of 1320
       }
 
       if (gl && prog) {
