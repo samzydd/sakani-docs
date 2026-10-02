@@ -177,13 +177,13 @@ export default function GlassPage() {
             ]}
           />
           <p className="mb-3 mt-6 text-sm text-ink-muted">
-            The liquid material is tuned with <code>--liquid-*</code>. Light values shown; dark mode
-            overrides the tints, rim, depth, shadow and glare. Each variant has its own lens
-            (<code>-regular</code> and <code>-clear</code>, the two Figma effect styles); to change one
-            element, set the unprefixed name (<code>--liquid-frost</code>, <code>--liquid-refraction</code>, …) on it.
-            Pick a tint with <code>{'<LiquidGlass tint="subtle">'}</code> (<code>regular</code>, <code>clear</code>,{" "}
-            <code>subtle</code> or <code>none</code>), and put <code>data-on-photo</code> on any subtree that sits
-            straight on a photo to switch it to light text.
+            The liquid material is Figma&apos;s Glass effect, property for property: the tokens below are the
+            liquid/regular and liquid/clear effect styles in Figma&apos;s own units (refraction, depth, dispersion,
+            frost, light), and LiquidGlass turns them into pixels by rules measured from Figma&apos;s renders. To change
+            one element, pass <code>{'effect={{ refraction: 0.8, depth: 20 }}'}</code> or set the unprefixed name
+            (<code>--liquid-depth</code>, …) on it. Pick a tint with <code>{'<LiquidGlass tint="subtle">'}</code> (<code>regular</code>,{" "}
+            <code>clear</code>, <code>subtle</code> or <code>none</code>), and put <code>data-on-photo</code> on any subtree that
+            sits straight on a photo to switch it to light text.
           </p>
           <DocTable
             headers={["Token", "Default", "Controls"]}
@@ -192,15 +192,13 @@ export default function GlassPage() {
               ["--liquid-tint-regular", "white 66%", "The regular tint"],
               ["--liquid-tint-clear", "white 28%", "The clear tint"],
               ["--liquid-tint-subtle", "5% ink", "The subtle tint: Figma's glass/bg-subtle, for a full-bleed overlay (white 8% in dark)"],
-              ["--liquid-refraction-regular | -clear", "12.6 | 26.2", "Pixels the rim bends the backdrop, measured from Figma"],
-              ["--liquid-shift-regular | -clear", "1.6 | 2.26", "Pixels less bend on the lit edges, more on the far ones"],
-              ["--liquid-bezel-regular | -clear", "14 | 16", "Pixels of lens width"],
-              ["--liquid-profile-regular | -clear", "0 | 0", "Edge shape: 0 is a circular glass edge, above 0 a power curve"],
-              ["--liquid-dispersion-regular | -clear", "0.25 | 0.9", "Extra bend per color channel (the fringe; red bends most)"],
-              ["--liquid-frost-regular | -clear", "1.8 | 0.65", "Pixels of blur on the backdrop before it is bent"],
-              ["--liquid-saturate-regular | -clear", "1 | 1", "Color boost on the refracted backdrop (1 = none, as in Figma)"],
+              ["--liquid-refraction-regular | -clear", "0.55 | 0.8", "Figma Glass · Refraction (0–1): how hard the rim bends"],
+              ["--liquid-depth-regular | -clear", "16 | 20", "Figma Glass · Depth: how far in the bend reaches"],
+              ["--liquid-dispersion-regular | -clear", "0.3 | 0.4", "Figma Glass · Dispersion (0–1): red bends more, blue less"],
+              ["--liquid-frost-regular | -clear", "4 | 1", "Figma Glass · Frost: blur before the bend"],
+              ["--liquid-light-intensity-regular | -clear", "0.7 | 0.8", "Figma Glass · Light intensity (0–1): rim, shade and glow, added"],
               ["--liquid-fallback-blur", "blur(14px) saturate(180%)", "The look in browsers without refraction"],
-              ["--liquid-light-angle", "135deg", "Where the rim light comes from"],
+              ["--liquid-light-angle", "-45", "Figma Glass · Light angle: degrees clockwise from the top"],
               ["--liquid-overlay-tint", "var(--liquid-tint-subtle)", "The dashboard overlay (a 72% scrim in dark)"],
               ["--liquid-panel-tint", "white 76%", "A panel of glass that holds solid cards"],
             ]}
