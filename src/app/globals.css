@@ -11,11 +11,9 @@
    utilities follow the same signal the tokens already do. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* TEMP: vendored copy of tokens.css until @sakaniui/react@0.3.2 is published
-   (the npm-exported ./tokens.css path is currently broken on the registry —
-   see src/styles/README-TEMP.txt). Swap this for the package import once fixed:
-     @import "@sakaniui/react/tokens.css"; */
-@import "../styles/sakani-tokens.css";
+/* Tokens come from the installed package, so the site always matches the
+   version it documents (a vendored copy used to stand in for a broken export). */
+@import "@sakaniui/react/tokens.css";
 @import "@sakaniui/react/style.css";
 
 @theme inline {
@@ -409,6 +407,42 @@ html.dark .noise-overlay {
   --color-info-bg: var(--color-info-50);
   --color-info-border: var(--color-info-200);
   --color-info-solid: var(--color-info-500);
+}
+
+/* Glass / liquid / surface tokens: the same mirror, for the Surface layer. The
+   --surface-* defaults alias the semantic tokens at :root and are inherited
+   as already-resolved values, so inside a .force-light pane on a dark page
+   they would stay dark unless re-declared here, where the light semantic
+   tokens above are in scope. Generated from @sakaniui/react/tokens.css. */
+.force-light {
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-bg-chrome: rgba(255, 255, 255, 0.6);
+  --glass-bg-overlay: rgba(255, 255, 255, 0.82);
+  --glass-bg-subtle: rgba(16, 15, 12, 0.05);
+  --glass-bg-subtle-hover: rgba(16, 15, 12, 0.09);
+  --glass-border: rgba(255, 255, 255, 0.55);
+  --glass-border-strong: rgba(255, 255, 255, 0.75);
+  --glass-fg-muted: var(--color-neutral-600);
+  --glass-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  --liquid-depth: inset 0 1px 1px rgba(255, 255, 255, 0.75), inset 0 -1px 1px rgba(255, 255, 255, 0.25), inset 0 -10px 20px -12px rgba(16, 15, 12, 0.12);
+  --liquid-glare: rgba(255, 255, 255, 0.35);
+  --liquid-overlay-tint: rgba(16, 15, 12, 0.05);
+  --liquid-panel-tint: rgba(255, 255, 255, 0.76);
+  --liquid-rim: rgba(255, 255, 255, 0.95);
+  --liquid-rim-soft: rgba(255, 255, 255, 0.35);
+  --liquid-shadow: 0 12px 32px -8px rgba(16, 15, 12, 0.22), 0 2px 6px rgba(16, 15, 12, 0.08);
+  --liquid-tint-clear: rgba(255, 255, 255, 0.28);
+  --liquid-tint-regular: rgba(255, 255, 255, 0.66);
+  --surface-bg: var(--color-bg-surface);
+  --surface-bg-chrome: transparent;
+  --surface-bg-overlay: var(--color-bg-surface);
+  --surface-bg-subtle: var(--color-bg-subtle);
+  --surface-bg-subtle-hover: var(--color-bg-muted);
+  --surface-blur: none;
+  --surface-blur-overlay: none;
+  --surface-border: var(--color-border-subtle);
+  --surface-border-strong: var(--color-border-default);
+  --surface-highlight: 0 0 #0000;
 }
 
 /* Suppresses every transition inside the "Real dashboards, not mockups"

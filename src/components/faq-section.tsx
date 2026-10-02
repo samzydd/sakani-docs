@@ -11,6 +11,14 @@ const FAQS = [
     a: "Yes. MIT licensed and free to use in personal or commercial projects, no attribution required.",
   },
   {
+    q: "Does Sakani support glassmorphism and liquid glass?",
+    a: "Yes, as a built-in theme layer. Surface has three modes: Solid (the default), Glass (frosted translucency) and Liquid (Apple-style liquid glass that bends the backdrop like a lens). Add data-surface=\"glass\" to any area, or use the LiquidGlass component. It exists in the Figma file as well, and the Liquid Glass Dashboard block shows a full screen built with it.",
+  },
+  {
+    q: "Does liquid glass work in Safari and Firefox?",
+    a: "The refraction itself renders in Chromium browsers (Chrome, Edge). Safari and Firefox get a frosted fallback with the same tint, rim and depth, just without the bending. With prefers-reduced-transparency, glass becomes a plain opaque surface.",
+  },
+  {
     q: "Does it work with Next.js, Vite, or Create React App?",
     a: "Sakani only depends on React 19 as a peer dependency, so there's no framework lock-in. This docs site is itself a Next.js app; the same package works identically in Vite or CRA.",
   },
@@ -32,11 +40,26 @@ const FAQS = [
   },
 ];
 
+const FAQ_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
 export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section className="py-20">
+      <script
+        type="application/ld+json"
+        // Built from the FAQS literal above; no user or remote input.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }}
+      />
       {/* Same max-w-5xl column as the hero's own container, and now the
           accordion below shares it too, so both the title and the
           accordion start flush with the hero headline's left edge. */}

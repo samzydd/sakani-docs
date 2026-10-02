@@ -5,7 +5,7 @@ import { Pager } from "@/components/docs/pager";
 export const metadata = {
   title: "Introduction",
   description:
-    "Sakani is an open-source React design system: 114+ components and 41 copy-paste blocks exported 1:1 from Figma, token-driven, with dark mode and TypeScript types included.",
+    "Sakani is an open-source React design system: 114+ components and 42 copy-paste blocks exported 1:1 from Figma, token-driven, with dark mode and TypeScript types included.",
 };
 
 export default function IntroductionPage() {

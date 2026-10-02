@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: {
     // "React Design System" is in both, because the title is the single
     // strongest on-page signal and every page inherits the template.
-    default: `${SITE_NAME} — ${SITE_TAGLINE} with 114 Components & 41 Blocks`,
+    default: `${SITE_NAME} — ${SITE_TAGLINE} with Glass & Liquid Glass`,
     template: `%s · ${SITE_NAME} ${SITE_TAGLINE}`,
   },
   description: SITE_DESCRIPTION,
@@ -92,6 +92,13 @@ const STRUCTURED_DATA = {
       programmingLanguage: "TypeScript",
       license: "https://opensource.org/licenses/MIT",
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      featureList: [
+        "Built-in glass (glassmorphism) and Apple-style liquid glass surfaces with lens refraction",
+        "114+ accessible React components",
+        "42 copy-paste blocks, including a full liquid glass dashboard",
+        "Light and dark mode from one set of design tokens",
+        "Exported 1:1 from Figma, with TypeScript types",
+      ],
     },
   ],
 };

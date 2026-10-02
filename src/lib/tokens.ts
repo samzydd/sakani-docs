@@ -36,7 +36,7 @@ export interface TokenGroup {
   tokens: Token[];
 }
 
-const TOKENS_FILE = path.join(process.cwd(), "src/styles/sakani-tokens.css");
+const TOKENS_FILE = path.join(process.cwd(), "node_modules/@sakaniui/react/dist/tokens.css");
 
 /** Body of the first `selector { … }` block, by brace matching. */
 function blockBody(css: string, selector: string): string {

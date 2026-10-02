@@ -8,7 +8,7 @@ const CATEGORIES = [
   { title: "Forms", count: "9 components", icon: SlidersHorizontal, href: "/docs/components/input" },
   { title: "Composite", count: "14 components", icon: LayoutGrid, href: "/docs/components/card" },
   { title: "Charts", count: "9 components", icon: LineChartIcon, href: "/docs/components/line-chart" },
-  { title: "Application", count: "13 blocks", icon: LayoutDashboard, href: "/docs/blocks/crm-dashboard" },
+  { title: "Application", count: "14 blocks", icon: LayoutDashboard, href: "/docs/blocks/crm-dashboard" },
   { title: "E-commerce", count: "11 components", icon: ShoppingBag, href: "/docs/components/star-rating" },
   { title: "Marketing", count: "10 blocks", icon: Megaphone, href: "/docs/blocks/pricing-table" },
   { title: "Billing", count: "5 blocks", icon: CreditCard, href: "/docs/blocks/billing-address" },
@@ -28,7 +28,7 @@ export function CategoryGrid() {
           className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
         />
         <MaskReveal as="p" delay={180} className="mt-3 text-ink-muted">
-          114+ components and 41 blocks, organized by category. Jump straight to
+          114+ components and 42 blocks, organized by category. Jump straight to
           the one you need.
         </MaskReveal>
       </div>
