@@ -30,7 +30,7 @@ const RECIPE = `import { LiquidGlass } from '@sakaniui/react';
 
 {/* 1 · background  2 · overlay  3 · components */}
 <div style={{ position: 'relative', backgroundImage: 'url(photo.jpg)', backgroundSize: 'cover' }}>
-  <LiquidGlass variant="clear" radius={0}
+  <LiquidGlass variant="regular" tint="subtle" radius={0}
                style={{ position: 'absolute', inset: 0 }} />          {/* the one glass sheet */}
 
   <div data-surface="liquid" style={{ position: 'relative' }}>         {/* chrome goes transparent */}
@@ -178,7 +178,12 @@ export default function GlassPage() {
           />
           <p className="mb-3 mt-6 text-sm text-ink-muted">
             The liquid material is tuned with <code>--liquid-*</code>. Light values shown; dark mode
-            overrides the tints, rim, depth, shadow and glare.
+            overrides the tints, rim, depth, shadow and glare. Each variant has its own lens
+            (<code>-regular</code> and <code>-clear</code>, the two Figma effect styles); to change one
+            element, set the unprefixed name (<code>--liquid-frost</code>, <code>--liquid-refraction</code>, …) on it.
+            Pick a tint with <code>{'<LiquidGlass tint="subtle">'}</code> (<code>regular</code>, <code>clear</code>,{" "}
+            <code>subtle</code> or <code>none</code>), and put <code>data-on-photo</code> on any subtree that sits
+            straight on a photo to switch it to light text.
           </p>
           <DocTable
             headers={["Token", "Default", "Controls"]}
@@ -186,14 +191,17 @@ export default function GlassPage() {
             rows={[
               ["--liquid-tint-regular", "white 66%", "The regular tint"],
               ["--liquid-tint-clear", "white 28%", "The clear tint"],
-              ["--liquid-refraction", "30", "Pixels the rim bends the backdrop (scaled down on small elements)"],
-              ["--liquid-bezel", "22", "Pixels of lens width"],
-              ["--liquid-dispersion", "3", "Extra shift per color channel (the faint fringe)"],
-              ["--liquid-frost", "1.5", "Pixels of blur on top of the refraction"],
-              ["--liquid-saturate", "1.5", "Color boost on the refracted backdrop (1 = none)"],
+              ["--liquid-tint-subtle", "5% ink", "The subtle tint: Figma's glass/bg-subtle, for a full-bleed overlay (white 8% in dark)"],
+              ["--liquid-refraction-regular | -clear", "8 | 9.5", "Pixels the rim bends the backdrop, per variant"],
+              ["--liquid-shift-regular | -clear", "-3 | 1.5", "Pixels the lit rim samples toward the light (negative = away)"],
+              ["--liquid-bezel-regular | -clear", "16 | 24", "Pixels of lens width"],
+              ["--liquid-profile-regular | -clear", "0 | 0", "Edge shape: 0 is a circular glass edge, above 0 a power curve"],
+              ["--liquid-dispersion-regular | -clear", "0.2 | 0.75", "Extra shift per color channel (the faint fringe)"],
+              ["--liquid-frost-regular | -clear", "2 | 0.75", "Pixels of blur on top of the refraction"],
+              ["--liquid-saturate-regular | -clear", "1 | 0.6", "Color boost on the refracted backdrop (1 = none)"],
               ["--liquid-fallback-blur", "blur(14px) saturate(180%)", "The look in browsers without refraction"],
               ["--liquid-light-angle", "135deg", "Where the rim light comes from"],
-              ["--liquid-overlay-tint", "5% ink", "A full-bleed overlay over a photo (72% scrim in dark)"],
+              ["--liquid-overlay-tint", "var(--liquid-tint-subtle)", "The dashboard overlay (a 72% scrim in dark)"],
               ["--liquid-panel-tint", "white 76%", "A panel of glass that holds solid cards"],
             ]}
           />

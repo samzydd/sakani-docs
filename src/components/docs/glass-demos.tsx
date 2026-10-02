@@ -90,12 +90,12 @@ export function RecipeStages() {
       </Labeled>
       <Labeled label="2 · Overlay — one glass sheet">
         <PhotoStage height={200}>
-          <LiquidGlass variant="clear" radius={0} style={{ position: "absolute", inset: 0 }} />
+          <LiquidGlass variant="regular" tint="subtle" radius={0} style={{ position: "absolute", inset: 0 }} />
         </PhotoStage>
       </Labeled>
       <Labeled label="3 · Components — on top">
         <PhotoStage height={200}>
-          <LiquidGlass variant="clear" radius={0} style={{ position: "absolute", inset: 0 }} />
+          <LiquidGlass variant="regular" tint="subtle" radius={0} style={{ position: "absolute", inset: 0 }} />
           <div data-surface="liquid" className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4">
             <LiquidGlass variant="regular" radius={14} style={{ width: "100%", maxWidth: 210 }}>
               <div className="px-4 py-3 text-sm font-medium text-ink">Card on the glass</div>
