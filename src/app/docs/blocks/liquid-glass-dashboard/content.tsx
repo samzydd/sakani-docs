@@ -41,7 +41,7 @@ export default function LiquidGlassDashboardPage() {
         <ol>
           <li><strong>Background:</strong> the photo, a CSS background on the root.</li>
           <li>
-            <strong>Overlay:</strong> one full-size <code>{'<LiquidGlass variant="clear" radius={0}>'}</code>.
+            <strong>Overlay:</strong> one full-size <code>{'<LiquidGlass variant="regular" tint="subtle" radius={0}>'}</code>.
             It is the only layer that bends the photo, so the whole canvas reads as one sheet of glass.
           </li>
           <li>
