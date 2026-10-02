@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { Button, Card, LiquidGlass } from "@sakaniui/react";
+import { Button, Card, LiquidBackdrop, LiquidGlass } from "@sakaniui/react";
 
 /**
  * Live demos for the glass docs and the home page. Every one is the real
@@ -10,12 +10,6 @@ import { Button, Card, LiquidGlass } from "@sakaniui/react";
  */
 
 export const GLASS_BACKDROP = "/glass/backdrop.jpg";
-
-const photo: CSSProperties = {
-  backgroundImage: `url(${GLASS_BACKDROP})`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-};
 
 export function PhotoStage({
   children,
@@ -27,9 +21,10 @@ export function PhotoStage({
   className?: string;
 }) {
   return (
-    <div className={`relative overflow-hidden rounded-xl ${className}`} style={{ ...photo, height }}>
+    // A LiquidBackdrop: every lens inside refracts the photo itself, sharp, as in Figma.
+    <LiquidBackdrop src={GLASS_BACKDROP} className={`relative overflow-hidden rounded-xl ${className}`} style={{ height } as CSSProperties}>
       {children}
-    </div>
+    </LiquidBackdrop>
   );
 }
 

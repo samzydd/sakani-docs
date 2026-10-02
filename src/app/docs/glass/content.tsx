@@ -26,10 +26,10 @@ import { LiquidGlass } from '@sakaniui/react';
   <Card … />
 </LiquidGlass>`;
 
-const RECIPE = `import { LiquidGlass } from '@sakaniui/react';
+const RECIPE = `import { LiquidBackdrop, LiquidGlass } from '@sakaniui/react';
 
 {/* 1 · background  2 · overlay  3 · components */}
-<div style={{ position: 'relative', backgroundImage: 'url(photo.jpg)', backgroundSize: 'cover' }}>
+<LiquidBackdrop src="photo.jpg" style={{ position: 'relative' }}>        {/* every lens refracts this photo */}
   <LiquidGlass variant="regular" tint="subtle" radius={0}
                style={{ position: 'absolute', inset: 0 }} />          {/* the one glass sheet */}
 
@@ -37,7 +37,7 @@ const RECIPE = `import { LiquidGlass } from '@sakaniui/react';
     <Sidebar … />
     <div data-surface="solid"><Card>…</Card></div>                   {/* data stays solid */}
   </div>
-</div>`;
+</LiquidBackdrop>`;
 
 const CUSTOM = `/* A custom element: read the tokens, never glass values */
 .panel {
@@ -57,7 +57,10 @@ const glass = useLiquidGlass(ref);
 
 const PROPS = [
   { name: "variant", type: "'regular' | 'clear'", default: "'regular'", description: "Tint strength. regular carries copy; clear is for icons, large labels and imagery." },
+  { name: "tint", type: "'regular' | 'clear' | 'subtle' | 'none'", default: "the variant's", description: "The fill. subtle is Figma's glass/bg-subtle (5%), for a full-bleed overlay; none draws no tint." },
   { name: "radius", type: "number", default: "20", description: "Corner radius in px. Use 0 for a full-bleed overlay. The lens follows it exactly." },
+  { name: "effect", type: "{ refraction, depth, dispersion, frost, lightIntensity, lightAngle }", default: "the variant's", description: "Any of Figma's Glass properties for this element, in Figma's units." },
+  { name: "source", type: "boolean", default: "true", description: "Inside a LiquidBackdrop: refract its photo (true) or the UI painted below (false: slider knobs, selection droplets)." },
   { name: "refraction", type: "'auto' | 'off'", default: "'auto'", description: "'off' forces the frosted fallback, e.g. to preview Safari or Firefox in Chrome." },
   { name: "interactive", type: "boolean", default: "false", description: "Squishes slightly when pressed (buttons, toolbar pills). No squish with reduced motion." },
   { name: "…rest", type: "HTMLAttributes<HTMLDivElement>", description: "Anything a <div> accepts is forwarded." },
@@ -142,8 +145,11 @@ export default function GlassPage() {
           <h2 className="mb-3 text-lg font-semibold text-ink">LiquidGlass</h2>
           <p className="mb-3 text-sm text-ink-muted">
             The material as a component. Put regular Sakani components inside it; they drop their own fills
-            and sit on the glass. Also exported: <code>useLiquidGlass(ref, {"{ enabled, refraction }"})</code> and{" "}
-            <code>liquidGlassClass(variant)</code> for elements you own (the <code>Modal</code> card uses
+            and sit on the glass. Wrap the screen in <code>{'<LiquidBackdrop src={photo}>'}</code> and every lens
+            inside refracts the photo itself, sharp, the way Figma&apos;s glass does: glass stacked on glass still
+            bends real detail (its <code>veil</code> lays a color over the photo for every lens, such as a dark-mode
+            scrim). Also exported: <code>useLiquidGlass(ref, {"{ enabled, refraction, source }"})</code> and{" "}
+            <code>liquidGlassClass(variant, tint)</code> for elements you own (the <code>Modal</code> card uses
             the hook when it is opened from inside a liquid area).
           </p>
           <PropsTable rows={PROPS} />
