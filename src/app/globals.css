@@ -495,22 +495,27 @@ html.dark .noise-overlay {
 }
 
 /* ── Hero light (src/components/hero-light.tsx) ──────────────────────────
- * --hero-light-rgb   color of the rays (the canvas)
- * --hero-light-edge  color of the mockup border where the beam lands
- * Dark: a near-white light added on top (screen). Light: a pale warm light
- * multiplied in, so it reads as sunlight on a light page rather than
- * vanishing into it. */
+ * Dark (the site default) matches the reference: neutral white light laid
+ * over the page at its fitted strength. Light mode has no reference; there
+ * the same field is multiplied in as a faint warm tint, since white light
+ * can't brighten a near-white page.
+ * --hero-edge-*: the preview edge highlight, measured from the reference's
+ * own edge gradient (core → body → warm, ~29% overall). */
 :root {
-  --hero-light-rgb: 250 212 188;
-  --hero-light-edge: 236 128 76;
+  --hero-light-rgb: 255 236 220;
   --hero-light-blend: multiply;
-  --hero-light-opacity: 0.45;
+  --hero-edge-core: 236 128 76;
+  --hero-edge-body: 236 150 110;
+  --hero-edge-warm: 240 190 160;
+  --hero-edge-opacity: 0.5;
 }
 .dark {
-  --hero-light-rgb: 255 248 240;
-  --hero-light-edge: 255 255 255;
-  --hero-light-blend: screen;
-  --hero-light-opacity: 0.5;
+  --hero-light-rgb: 255 255 255;
+  --hero-light-blend: normal;
+  --hero-edge-core: 240 240 240;
+  --hero-edge-body: 170 170 170;
+  --hero-edge-warm: 242 228 214;
+  --hero-edge-opacity: 0.29;
 }
 
 .hero-light-canvas {
@@ -524,78 +529,38 @@ html.dark .noise-overlay {
   mix-blend-mode: var(--hero-light-blend);
   transition: opacity 1.2s ease;
 }
-.hero-light-canvas[data-ready] { opacity: var(--hero-light-opacity); }
+.hero-light-canvas[data-ready] { opacity: 1; }
 
-/* The beam "touching" the mockup: its 1px edge lights up around the landing
-   point (masked to the border only), plus a faint wash just inside the top. */
-.hero-light-border::after,
-.hero-light-border::before {
+/* Where the light meets the preview: its 1.2px edge picks up a highlight
+   centred on the landing point (radius ~44% of the preview's width), with a
+   faint warm second gradient just off-centre for dispersion. Masked to the
+   border only. */
+.hero-light-border::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
   z-index: 50;
-  opacity: var(--light-strength, 0);
-}
-.hero-light-border::after {
-  padding: 1px;
-  background: radial-gradient(
-    560px 340px at var(--light-hit-x, 62%) 0,
-    rgb(var(--hero-light-edge) / 1) 0%,
-    rgb(var(--hero-light-edge) / 0.55) 16%,
-    rgb(var(--hero-light-edge) / 0.18) 38%,
-    transparent 65%
-  );
+  padding: 1.2px;
+  opacity: calc(var(--light-strength, 0) * var(--hero-edge-opacity));
+  background:
+    radial-gradient(
+      circle var(--light-r, 480px) at var(--light-hit-x, 50%) 0,
+      rgb(var(--hero-edge-core) / 1) 0%,
+      rgb(var(--hero-edge-core) / 0.86) 6.5%,
+      rgb(var(--hero-edge-body) / 0.52) 18%,
+      rgb(var(--hero-edge-body) / 0.23) 40%,
+      rgb(var(--hero-edge-warm) / 0.06) 70%,
+      transparent 100%
+    ),
+    radial-gradient(
+      circle calc(var(--light-r, 480px) * 0.8) at calc(var(--light-hit-x, 50%) + 24px) 14px,
+      rgb(var(--hero-edge-warm) / 0.18) 0%,
+      rgb(var(--hero-edge-warm) / 0.1) 22%,
+      rgb(var(--hero-edge-warm) / 0.025) 55%,
+      transparent 100%
+    );
   -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-}
-.hero-light-border::before {
-  background: radial-gradient(
-    480px 160px at var(--light-hit-x, 62%) 0,
-    rgb(var(--hero-light-rgb) / 0.22),
-    transparent 70%
-  );
-  mix-blend-mode: var(--hero-light-blend);
-}
-
-/* Where the beam meets the mockup's top edge: a thin bright line with a soft
-   bloom above it. Reads on the white frame in both themes, unlike a 1px
-   border light on its own. */
-.hero-light-rim {
-  position: absolute;
-  inset-inline: 0;
-  top: 0;
-  height: 0;
-  z-index: 30;
-  pointer-events: none;
-  opacity: var(--light-strength, 0);
-}
-.hero-light-rim::before {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  top: -1px;
-  height: 2px;
-  background: radial-gradient(
-    ellipse 380px 2px at var(--light-hit-x, 62%) 50%,
-    rgb(var(--hero-light-edge) / 1) 0%,
-    rgb(var(--hero-light-edge) / 0.45) 40%,
-    transparent 100%
-  );
-}
-.hero-light-rim::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  top: -70px;
-  height: 90px;
-  background: radial-gradient(
-    ellipse 320px 46px at var(--light-hit-x, 62%) 78%,
-    rgb(var(--hero-light-rgb) / 0.42) 0%,
-    rgb(var(--hero-light-rgb) / 0.12) 45%,
-    transparent 75%
-  );
-  filter: blur(4px);
-  mix-blend-mode: var(--hero-light-blend);
 }

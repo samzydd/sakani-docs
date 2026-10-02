@@ -26,10 +26,9 @@ export function HeroPreview() {
   return (
     <div className="relative mx-auto mt-24 w-full max-w-6xl flex-1 px-4 sm:px-6 lg:px-8">
       {/* data-light-target: HeroLight aims its beam at this stack's top edge
-          and writes --light-hit-x / --light-strength here, read by the rim
-          glow below and the main frame's .hero-light-border. */}
+          and writes --light-hit-x / --light-strength / --light-r here, read
+          by the main frame's .hero-light-border edge highlight. */}
       <div data-light-target className="relative h-full min-h-[280px]">
-        <div aria-hidden="true" className="hero-light-rim" />
         {BACK_LAYERS.map((layer) => (
           <div
             key={layer.src}
