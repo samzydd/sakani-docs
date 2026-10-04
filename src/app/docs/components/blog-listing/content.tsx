@@ -97,9 +97,9 @@ export default function BlogListingPage() {
           <h2 className="mb-3 text-lg font-semibold text-ink">Featured card</h2>
           <p className="mb-3 text-sm text-ink-muted">
             The horizontal card is designed for up to 874px: a 400px image beside the text. It
-            measures its own container, not the viewport, and when there isn&apos;t room (under
-            about 640px) it stacks the way the vertical orientation does, instead of squeezing the
-            text.
+            measures its own container, not the viewport, and from 0.4.5, when there
+            isn&apos;t room (under about 640px), it stacks the way the vertical orientation does
+            instead of squeezing the text.
           </p>
           <ComponentPreview code={FEATURED}>
             <div className="w-full max-w-[874px]">
