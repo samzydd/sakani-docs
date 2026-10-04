@@ -8,12 +8,19 @@ import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
-const PROFILE = `<ProfileCard name="Amara Chen" role="Head of Design" />
+const AVATAR = "/blocks/marketing/testimonial-amara-kalu.jpg";
+
+const PROFILE = `<ProfileCard
+  name="Amara Chen"
+  role="Head of Design"
+  avatarSrc="/amara.jpg"
+/>
 
 // Passing bio (and/or socialLinks) switches to the centered detailed layout.
 <ProfileCard
   name="Amara Chen"
   role="Head of Design"
+  avatarSrc="/amara.jpg"
   bio="Ten years turning messy component libraries into systems teams actually use."
   socialLinks={[
     { icon: <AtSign size={16} />, label: "X (Twitter)", href: "#" },
@@ -56,11 +63,12 @@ export default function TeamCardsPage() {
 
       <div className="space-y-10">
         <ComponentPreview code={PROFILE}>
-          <div className="flex w-full max-w-lg flex-col gap-6">
-            <ProfileCard name="Amara Chen" role="Head of Design" />
+          <div className="flex w-full max-w-sm flex-col items-center gap-10">
+            <ProfileCard name="Amara Chen" role="Head of Design" avatarSrc={AVATAR} />
             <ProfileCard
               name="Amara Chen"
               role="Head of Design"
+              avatarSrc={AVATAR}
               bio="Ten years turning messy component libraries into systems teams actually use."
               socialLinks={SOCIALS}
             />
@@ -85,7 +93,7 @@ export default function TeamCardsPage() {
             <a href="/docs/components/marketing-elements" className="font-medium text-ink underline underline-offset-2">LocationDot</a>.
           </p>
           <ComponentPreview code={TEAM}>
-            <div className="w-full max-w-[16rem]">
+            <div className="w-full max-w-xs">
               <TeamCard
                 image={teamImage}
                 name="Amara Chen"
