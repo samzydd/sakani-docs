@@ -1,6 +1,7 @@
 "use client";
 
 import { Table, Badge, Avatar } from "@sakaniui/react";
+import { avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -11,12 +12,13 @@ interface Customer {
   email: string;
   plan: string;
   status: "active" | "trial" | "churned";
+  avatar: string;
 }
 
 const ROWS: Customer[] = [
-  { name: "Amara Kalu", email: "amara@fintra.co", plan: "Pro", status: "active" },
-  { name: "Ravi Menon", email: "ravi@loopline.io", plan: "Team", status: "trial" },
-  { name: "Chidi Duru", email: "chidi@bexa.dev", plan: "Pro", status: "churned" },
+  { name: "Amara Kalu", email: "amara@fintra.co", plan: "Pro", status: "active", avatar: avatarImages.AK },
+  { name: "Ravi Menon", email: "ravi@loopline.io", plan: "Team", status: "trial", avatar: avatarImages.PR },
+  { name: "Chidi Duru", email: "chidi@bexa.dev", plan: "Pro", status: "churned", avatar: avatarImages.DO },
 ];
 
 const statusVariant = { active: "success", trial: "warning", churned: "danger" } as const;
@@ -26,7 +28,7 @@ const BASIC = `import { Table, Badge, Avatar } from '@sakaniui/react';
 const columns = [
   { key: 'name', header: 'Customer', render: (row) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-      <Avatar size="sm" initials={row.name.split(' ').map((n) => n[0]).join('')} />
+      <Avatar size="sm" src={row.avatar} />
       {row.name}
     </div>
   ) },
@@ -62,7 +64,7 @@ export default function TablePage() {
                   header: "Customer",
                   render: (row) => (
                     <div className="flex items-center gap-2">
-                      <Avatar size="sm" initials={row.name.split(" ").map((n) => n[0]).join("")} />
+                      <Avatar size="sm" src={row.avatar} alt="" />
                       {row.name}
                     </div>
                   ),

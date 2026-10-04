@@ -8,7 +8,9 @@ import {
   Badge,
   Checkbox,
   AvatarGroup,
+  Skeleton,
 } from "@sakaniui/react";
+import { avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -26,7 +28,7 @@ const CARD = `<BoardCard
       <CardMetaItem icon={<MessageSquare size={13} />}>4</CardMetaItem>
     </>
   }
-  assignees={<AvatarGroup size="sm" max={3} avatars={[{ initials: "AK" }, { initials: "DO" }]} />}
+  assignees={<AvatarGroup size="sm" max={3} avatars={[{ src: "/amara.jpg" }, { src: "/chidi.jpg" }]} />}
 />`;
 
 const TYPES = `<BoardCard type="compact" title="KYC flow review" leading={<Checkbox />} />
@@ -38,7 +40,10 @@ const COLUMN = `<BoardColumn title="In progress" count={2} dotColor="var(--color
 </BoardColumn>`;
 
 const STATES = `<BoardColumn title="Done" count={0} state="empty" />
-<BoardColumn title="Backlog" state="loading" />`;
+<BoardColumn title="Backlog" state="loading">
+  <BoardCard type="compact" title={<Skeleton width={140} />} />
+  <BoardCard type="default" title={<Skeleton width={180} />} description={<Skeleton width="100%" />} />
+</BoardColumn>`;
 
 const CARD_PROPS = [
   { name: "title", type: "ReactNode", description: "Card title. Required." },
@@ -57,7 +62,7 @@ const COLUMN_PROPS = [
   { name: "title", type: "ReactNode", description: "Column heading." },
   { name: "count", type: "ReactNode", description: "Count beside the title — a number or a Badge." },
   { name: "dotColor", type: "string", default: "var(--color-chart-1)", description: "Status dot colour. Any CSS colour, so prefer a chart token over a literal hex." },
-  { name: "state", type: "'default' | 'empty' | 'loading'", default: "'default'", description: "Empty shows a drop zone; loading shows card skeletons." },
+  { name: "state", type: "'default' | 'empty' | 'loading'", default: "'default'", description: "Empty shows a drop zone; loading styles the column for placeholder cards — pass Skeleton-filled BoardCards as children." },
   { name: "children", type: "ReactNode", description: "BoardCard elements." },
   { name: "onAdd / onMenu", type: "() => void", description: "The + and ⋯ buttons in the header." },
 ];
@@ -92,7 +97,7 @@ export default function BoardCardPage() {
                 </>
               }
               assignees={
-                <AvatarGroup size="sm" max={3} avatars={[{ initials: "AK" }, { initials: "DO" }]} />
+                <AvatarGroup size="sm" max={3} avatars={[{ src: avatarImages.AK }, { src: avatarImages.DO }]} />
               }
             />
           </div>
@@ -127,7 +132,7 @@ export default function BoardCardPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Columns</h2>
           <ComponentPreview code={COLUMN}>
-            <div className="w-full max-w-xs">
+            <div className="w-80 max-w-full">
               <BoardColumn title="In progress" count={2} dotColor="var(--color-chart-2)">
                 <BoardCard type="compact" title="Icon library audit" leading={<Checkbox />} />
                 <BoardCard type="compact" title="Search performance" leading={<Checkbox />} />
@@ -139,12 +144,15 @@ export default function BoardCardPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Empty and loading columns</h2>
           <ComponentPreview code={STATES}>
-            <div className="flex w-full flex-wrap gap-4">
-              <div className="w-full max-w-[16rem]">
+            <div className="flex w-full flex-wrap items-start justify-center gap-6">
+              <div className="w-80 max-w-full shrink-0">
                 <BoardColumn title="Done" count={0} state="empty" />
               </div>
-              <div className="w-full max-w-[16rem]">
-                <BoardColumn title="Backlog" state="loading" />
+              <div className="w-80 max-w-full shrink-0">
+                <BoardColumn title="Backlog" state="loading">
+                  <BoardCard type="compact" title={<Skeleton width={140} />} />
+                  <BoardCard type="default" title={<Skeleton width={180} />} description={<Skeleton width="100%" />} />
+                </BoardColumn>
               </div>
             </div>
           </ComponentPreview>

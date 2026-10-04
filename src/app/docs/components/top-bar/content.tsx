@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import { TopBar, TopBarMobile, Breadcrumb, Input, Avatar } from "@sakaniui/react";
+import { avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -10,19 +11,19 @@ import { Pager } from "@/components/docs/pager";
 const BREADCRUMB = `<TopBar
   type="breadcrumb"
   left={<Breadcrumb items={[{ label: "Database", href: "#" }, { label: "Leads" }]} />}
-  account={<Avatar size="sm" initials="JD" />}
+  account={<Avatar size="sm" src="/jade.jpg" />}
   hasUnread
 />`;
 
 const SEARCH = `<TopBar
   type="search"
   left={<Input size="sm" leadingIcon={<Search size={16} />} placeholder="Search…" />}
-  account={<Avatar size="sm" initials="JD" />}
+  account={<Avatar size="sm" src="/jade.jpg" />}
 />`;
 
 const MINIMAL = `<TopBar type="minimal" showActions={false} left={<strong>Settings</strong>} />`;
 
-const MOBILE = `<TopBarMobile type="title" title="Inbox" trailing={<Avatar size="sm" initials="JD" />} />
+const MOBILE = `<TopBarMobile type="title" title="Inbox" trailing={<Avatar size="sm" src="/jade.jpg" />} />
 <TopBarMobile type="title-centered" title="Profile" />`;
 
 const TOPBAR_PROPS = [
@@ -60,7 +61,7 @@ export default function TopBarPage() {
             <TopBar
               type="breadcrumb"
               left={<Breadcrumb items={[{ label: "Database", href: "#" }, { label: "Leads" }]} />}
-              account={<Avatar size="sm" initials="JD" />}
+              account={<Avatar size="sm" src={avatarImages.JD} />}
               hasUnread
             />
           </div>
@@ -80,7 +81,7 @@ export default function TopBarPage() {
               <TopBar
                 type="search"
                 left={<Input size="sm" leadingIcon={<Search size={16} />} placeholder="Search…" />}
-                account={<Avatar size="sm" initials="JD" />}
+                account={<Avatar size="sm" src={avatarImages.JD} />}
               />
             </div>
           </ComponentPreview>
@@ -104,7 +105,7 @@ export default function TopBarPage() {
           </p>
           <ComponentPreview code={MOBILE}>
             <div className="flex w-full max-w-sm flex-col gap-4">
-              <TopBarMobile type="title" title="Inbox" trailing={<Avatar size="sm" initials="JD" />} />
+              <TopBarMobile type="title" title="Inbox" trailing={<Avatar size="sm" src={avatarImages.JD} />} />
               <TopBarMobile type="title-centered" title="Profile" />
             </div>
           </ComponentPreview>

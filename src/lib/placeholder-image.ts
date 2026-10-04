@@ -19,3 +19,11 @@ export const galleryImages = [
 
 export const teamImage = "/blocks/marketing/team-card-chidi-duru.jpg";
 export const blogImage = "/marketing/blog-image-balloons.jpg";
+
+/** Portrait avatars for demos (400×400), keyed by the initials they replace. */
+export const avatarImages = {
+  AK: "/blocks/marketing/testimonial-amara-kalu.jpg",
+  DO: "/blocks/marketing/testimonial-chidi-duru.jpg",
+  PR: "/blocks/marketing/testimonial-ravi-menon.jpg",
+  JD: "/blocks/marketing/testimonial-jade-silva.jpg",
+} as const;

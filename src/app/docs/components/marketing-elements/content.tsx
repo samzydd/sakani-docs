@@ -113,7 +113,7 @@ export default function MarketingElementsPage() {
           </p>
           <ComponentPreview code={LOGOS}>
             <div className="flex w-full max-w-lg flex-col gap-6">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-center gap-4">
                 <PlaceholderLogo size="sm" label="Acme Inc." />
                 <PlaceholderLogo size="md" label="Globex" />
                 <PlaceholderLogo size="lg" label="Initech" />
@@ -128,7 +128,7 @@ export default function MarketingElementsPage() {
                   <PlaceholderLogo key="4" size="sm" label="Umbrella" />,
                 ]}
               />
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-center gap-4">
                 <LocationDot location="Lagos, NG" status="active" />
                 <LocationDot location="Remote" status="remote" />
               </div>

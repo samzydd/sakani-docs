@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MessageBubble, ConversationItem, ChatComposer, Avatar } from "@sakaniui/react";
+import { avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -9,7 +10,7 @@ import { Pager } from "@/components/docs/pager";
 
 const THREAD = `<MessageBubble
   type="received"
-  avatar={<Avatar size="sm" initials="AK" />}
+  avatar={<Avatar size="sm" src="/amara.jpg" />}
   authorName="Amara Chen"
   timestamp="09:14"
 >
@@ -25,7 +26,7 @@ const THREAD = `<MessageBubble
 const CONTENT = `<MessageBubble type="sent" content="file" fileName="forecast-q3.xlsx" fileSize="248 KB" />`;
 
 const LIST = `<ConversationItem
-  avatar={<Avatar size="md" initials="AK" />}
+  avatar={<Avatar size="md" src="/amara.jpg" />}
   name="Amara Chen"
   timestamp="09:14"
   preview="Can you take a look at the Q3 forecast?"
@@ -33,7 +34,7 @@ const LIST = `<ConversationItem
   unreadCount={3}
 />
 <ConversationItem
-  avatar={<Avatar size="md" initials="DO" />}
+  avatar={<Avatar size="md" src="/chidi.jpg" />}
   name="Daniel Osei"
   state="typing"
 />`;
@@ -114,7 +115,7 @@ export default function ChatPage() {
           <div className="flex w-full max-w-md flex-col gap-3">
             <MessageBubble
               type="received"
-              avatar={<Avatar size="sm" initials="AK" />}
+              avatar={<Avatar size="sm" src={avatarImages.AK} />}
               authorName="Amara Chen"
               timestamp="09:14"
             >
@@ -152,7 +153,7 @@ export default function ChatPage() {
           <ComponentPreview code={LIST}>
             <div className="flex w-full max-w-sm flex-col">
               <ConversationItem
-                avatar={<Avatar size="md" initials="AK" />}
+                avatar={<Avatar size="md" src={avatarImages.AK} />}
                 name="Amara Chen"
                 timestamp="09:14"
                 preview="Can you take a look at the Q3 forecast?"
@@ -160,12 +161,12 @@ export default function ChatPage() {
                 unreadCount={3}
               />
               <ConversationItem
-                avatar={<Avatar size="md" initials="DO" />}
+                avatar={<Avatar size="md" src={avatarImages.DO} />}
                 name="Daniel Osei"
                 state="typing"
               />
               <ConversationItem
-                avatar={<Avatar size="md" initials="PR" />}
+                avatar={<Avatar size="md" src={avatarImages.PR} />}
                 name="Priya Raman"
                 timestamp="Yesterday"
                 preview="Thanks!"

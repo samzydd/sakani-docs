@@ -1,7 +1,7 @@
 "use client";
 
 import { BlogListingCard, BlogListingFeaturedCard } from "@sakaniui/react";
-import { blogImage, productImage } from "@/lib/placeholder-image";
+import { blogImage, productImage, avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -22,7 +22,7 @@ const FEATURED = `<BlogListingFeaturedCard
   image="/post.jpg"
   badgeLabel="Featured"
   title="A year of shipping from one Figma file"
-  author={{ name: "Amara Chen", date: "Aug 12, 2026", initials: "AK" }}
+  author={{ name: "Amara Chen", date: "Aug 12, 2026", src: "/amara.jpg" }}
 />`;
 
 const CARD_PROPS = [
@@ -108,7 +108,7 @@ export default function BlogListingPage() {
                 imageAlt="Cover"
                 title="A year of shipping from one Figma file"
                 excerpt="What we learned exporting 114 components 1:1, and the three places the approach nearly broke."
-                author={{ name: "Amara Chen", date: "Aug 12, 2026", initials: "AK" }}
+                author={{ name: "Amara Chen", date: "Aug 12, 2026", avatarSrc: avatarImages.AK }}
               />
             </div>
           </ComponentPreview>
@@ -124,7 +124,7 @@ export default function BlogListingPage() {
                 imageAlt="Cover"
                 title="A year of shipping from one Figma file"
                 excerpt="What we learned exporting 114 components 1:1, and the three places the approach nearly broke."
-                author={{ name: "Amara Chen", date: "Aug 12, 2026", initials: "AK" }}
+                author={{ name: "Amara Chen", date: "Aug 12, 2026", avatarSrc: avatarImages.AK }}
               />
             </div>
           </ComponentPreview>

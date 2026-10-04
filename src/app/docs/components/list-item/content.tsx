@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronRight, FileText, Folder } from "lucide-react";
 import { ListItem, Avatar, Badge } from "@sakaniui/react";
+import { avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -11,7 +12,7 @@ import { Pager } from "@/components/docs/pager";
 const BASIC = `<ListItem title="Q3 forecast" description="Updated 2 hours ago" />`;
 
 const SLOTS = `<ListItem
-  leading={<Avatar size="sm" initials="AK" />}
+  leading={<Avatar size="sm" src="/amara.jpg" />}
   title="Amara Chen"
   description="amara@sakani.com"
   trailing={<Badge variant="success" emphasis="subtle">Active</Badge>}
@@ -86,7 +87,7 @@ export default function ListItemPage() {
           <ComponentPreview code={SLOTS}>
             <div className="flex w-full max-w-sm flex-col">
               <ListItem
-                leading={<Avatar size="sm" initials="AK" />}
+                leading={<Avatar size="sm" src={avatarImages.AK} />}
                 title="Amara Chen"
                 description="amara@sakani.com"
                 trailing={

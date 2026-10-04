@@ -1,6 +1,7 @@
 "use client";
 
 import { SectionHeading, FirstPageHeading } from "@sakaniui/react";
+import { avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -20,7 +21,7 @@ const HERO = `<FirstPageHeading
   description="114+ components and 42 blocks, matching your Figma file exactly."
   primaryCta={{ label: "Get started", onClick: start }}
   secondaryCta={{ label: "View on GitHub", onClick: openRepo }}
-  avatars={[{ initials: "AK" }, { initials: "DO" }, { initials: "PR" }]}
+  avatars={[{ src: "/amara.jpg" }, { src: "/chidi.jpg" }, { src: "/ravi.jpg" }]}
   avatarsCaption="21.3K happy users"
 />`;
 
@@ -96,7 +97,7 @@ export default function SectionHeadingPage() {
                 description="114+ components and 42 blocks, matching your Figma file exactly."
                 primaryCta={{ label: "Get started" }}
                 secondaryCta={{ label: "View on GitHub" }}
-                avatars={[{ initials: "AK" }, { initials: "DO" }, { initials: "PR" }]}
+                avatars={[{ src: avatarImages.AK }, { src: avatarImages.DO }, { src: avatarImages.PR }]}
                 avatarsCaption="21.3K happy users"
               />
             </div>
