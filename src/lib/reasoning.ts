@@ -296,4 +296,202 @@ export const reasoning: Record<string, Reasoning> = {
     why: ["The numeric label is independent of the stars, so a compact row can show stars alone while the stars still convey the rating."],
     dont: ["Don't show stars without an accessible text value when the rating matters."],
   },
+  /* ---- Application, marketing, e-commerce ---- */
+  finance: {
+    why: [
+      "Balance takes a pre-formatted string because a headline figure is often abbreviated (\"$2.44M\") in ways no formatter should guess. The list components take raw numbers plus a formatAmount callback, so every row in a list is formatted identically.",
+      "In Transactions the sign of amount picks income or expense styling, so there is no separate type flag that could contradict the number.",
+    ],
+    dont: ["Don't pass absolute values with a separate income/expense flag to Transactions. Pass signed numbers.", "Don't pass a raw number to Balance and expect abbreviation. Format it first."],
+  },
+  "section-heading": {
+    why: [
+      "titleAs changes only which tag renders. The title always looks like a section heading, so you can set the tag to keep the page's heading levels nesting correctly without changing the look.",
+      "FirstPageHeading is the bigger, once-per-page version. Its CTAs and avatar stack are opt-in by presence rather than by toggle.",
+    ],
+    dont: ["Don't pick titleAs by how big you want it to look. A section inside an h2 should use h3.", "Don't use FirstPageHeading more than once per page."],
+  },
+  "rich-text": {
+    why: ["These exist to render article bodies from a CMS or MDX pipeline at a consistent measure and rhythm."],
+    dont: ["Don't use them for headings that are part of the page's own furniture. Use SectionHeading."],
+  },
+  "blog-listing": {
+    why: [
+      "Dates and read times are strings. Neither card parses a Date or counts words, because \"11 mins read\" versus \"~10 min\" is an editorial choice made upstream, where the locale is known.",
+      "The horizontal featured card measures its own container, not the viewport, and stacks when there isn't room (under about 640px) instead of squeezing the text.",
+    ],
+    dont: ["Don't pass a Date object or expect a read time to be computed. Format both first.", "Don't size the featured card with viewport media queries. It already responds to its container."],
+  },
+  "marketing-elements": {
+    why: [
+      "Metric's value is a string so \"21.3K\" and \"99.98%\" render exactly as written; trend is a signed number and drives the chip's direction and colour.",
+      "Marquee's gap has no default on purpose. Logo strips and text strips want very different spacing, so it is better to state it than inherit a wrong guess.",
+    ],
+    dont: ["Don't rely on a Marquee gap default. There isn't one."],
+  },
+  "mobile-navigation": {
+    why: ["Uncontrolled works for a static page. In a client-routed app the menu can't know a link changed the route, so you control open and close it on route change."],
+    dont: [
+      "Don't leave it uncontrolled in a client-routed app. It will stay open over the page it just navigated to.",
+      "Don't use it as the app sidebar. This is marketing-site navigation; for an application shell use Sidebar and TopBarMobile.",
+    ],
+  },
+  "product-options": {
+    why: [
+      "ColorSwatch and SizeSelector take available rather than expecting you to filter the list. A greyed-out XL tells someone the size exists and is sold out; omitting it leaves them wondering whether you stock it.",
+      "StockStatus wording and colour come from the number, so the three states can't drift out of sync with the inventory count.",
+    ],
+    dont: ["Don't remove sold-out options from the list. Mark them unavailable.", "Don't set stock wording separately from the count that drives it."],
+  },
+  "product-gallery": {
+    why: ["Uncontrolled is fine for a plain gallery. Pass activeIndex when something else should move it, such as picking a colour swatch jumping to that variant's photo."],
+    dont: ["Don't leave it uncontrolled if other inputs on the page need to change the image."],
+  },
+  cart: {
+    why: [
+      "CartItem renders one line and reports quantity changes; it never sums anything. Subtotals, tax, shipping and discounts stay in your own state, the only place they can be computed consistently with the server.",
+      "CheckoutSteps, like Stepper, is driven by a single index, so no combination of flags can contradict itself.",
+    ],
+    dont: ["Don't expect CartItem to compute totals. If you want a block that does, use ShoppingCartBlock.", "Don't drive CheckoutSteps with per-step flags."],
+  },
+
+  /* ---- Charts ---- */
+  "line-chart": {
+    why: [
+      "A single series is drawn in chart/2, not chart/1. It looks like an off-by-one but is deliberate: Figma's default line is chart/2 and the second line added by multiple is chart/1, so the two-series case matches the design file.",
+      "step is the honest choice for values that hold and jump, such as a plan tier or headcount, where a smooth curve would imply readings that never happened.",
+      "Point markers suit charts where individual readings matter, which is usually true with six points and rarely with sixty.",
+    ],
+    dont: ["Don't use a smooth curve for values that jump. Use step.", "Don't show markers on a dense series. They turn into noise."],
+  },
+  "area-chart": {
+    why: ["The fill implies the area under the curve means something, such as a total accumulating."],
+    dont: ["Don't use it to compare the shape of several series. Overlapping fills turn to mud; an unfilled Line Chart stays readable.", "Don't use a smooth curve for values that hold and jump. Use step."],
+  },
+  "bar-chart": {
+    why: [
+      "Grouped compares series against each other; stacked compares each series against the total.",
+      "active keeps one bar emphasised at rest, for a chart that exists to make a point about one period.",
+    ],
+    dont: ["Don't stack when the segments need comparing. Stacking makes the first series easy to read and every one above it hard, so put the series people care about most at the bottom."],
+  },
+  "pie-chart": {
+    why: [
+      "It covers both pie and donut; the donut variants are the same data with a hole. Use the dedicated Donut Chart when the centre figure is the point.",
+      "No variant puts an angular gap between slices, because Figma's always touch. The separator is a thin stroke on the shared edge, which is why pie-no-separator is its own variant rather than a spacing prop.",
+      "label-list writes the category name inside each slice, so it needs slices big enough to hold the text.",
+    ],
+    dont: ["Don't use label-list with many small slices. The text won't fit.", "Don't use a pie for more than a few slices. See Bar Chart."],
+  },
+  "donut-chart": {
+    why: ["The centre is the donut's advantage over a pie: it can state the total the slices divide up."],
+    dont: ["Don't leave the centre empty. Without it you have a pie with a hole in it.", "Don't use more than five or six slices. Group the tail into \"Other\", or use a Bar Chart."],
+  },
+  "radial-chart": {
+    why: [
+      "max is what makes a ring mean \"800 out of 1,000\" rather than \"800, bigger than the other one\". On the gauge arcs, whatever is left over is drawn as track.",
+      "The gauge arcs stack rows along a single 240° band, so they take two or three rows, not five.",
+    ],
+    dont: ["Don't omit max for a quota or target. Leave it off only when rings are meant to be compared with each other.", "Don't put five rows on a gauge arc."],
+  },
+  "radar-chart": {
+    why: [
+      "The shape only means something if every spoke is measured the same way, so all axes must share a scale. Spoke order matters too, because rearranging the spokes changes the shape without changing the data.",
+      "A second shape is derived from the data: any row carrying value2 gets one, rather than the variant switching it on.",
+    ],
+    dont: ["Don't mix units across spokes. The enclosed area becomes meaningless even though it still looks like a chart.", "Don't reorder spokes casually."],
+  },
+  "funnel-chart": {
+    why: ["A funnel claims everyone at each stage also passed the previous one, so the narrowing shape only makes sense for nested stages."],
+    dont: ["Don't use it for stages that are merely sequential, where people can skip one or enter halfway. The shape asserts something untrue; use a Bar Chart."],
+  },
+  "heatmap-chart": {
+    why: [
+      "A heatmap is for finding where something concentrates. It is deliberately bad at exact values, because nobody reads a precise number off a shade.",
+      "data is row-major, data[row][col]. Rows shorter than colLabels leave gaps.",
+    ],
+    dont: ["Don't use it when the specific figures matter more than the pattern. Use a Table.", "Don't leave entries out of sparse data. Pad with zeroes."],
+  },
+
+  /* ---- Blocks ---- */
+  "crm-dashboard": {
+    why: ["It is the flagship example of what the system is for: a real application shell where the sidebar, filters, table, avatars and badges are all live components, not a screenshot."],
+    dont: ["Don't treat it as a configurable component. Copy the source in and swap the sample leads for your own data."],
+  },
+  "liquid-glass-dashboard": {
+    why: [
+      "It is built in three layers, in order, because glass needs something colourful and detailed behind it to bend. The photograph is not bundled; which photo is your call.",
+      "The active sidebar item has its own lens that only moves when you click another item, while a second, softer lens follows hover and focus and never changes what is active.",
+      "In dark mode the overlay gains a scrim so light labels stay readable over the bright parts of the photo.",
+    ],
+    dont: ["Don't expect refraction outside Chromium. Safari and Firefox get the frosted fallback with the same rim and depth.", "Don't put it over a flat colour. There is nothing to bend."],
+  },
+  "data-table": {
+    why: ["It ships a state prop (default, filtered, bulk, loading, empty, error) so every state of a real table is designed, not just the happy path."],
+    dont: ["Don't treat it as configurable. Copy the source in and swap the columns and rows."],
+  },
+  "kanban-board": {
+    why: ["Its state prop (default, loading, empty-column, dragging) shows each state a board passes through, including a lifted card."],
+    dont: ["Don't expect working drag-and-drop. Copy the source and wire your own."],
+  },
+  "app-shell": {
+    why: [
+      "These sit inside an application layout rather than replacing it. Sidebar and TopBar handle the navigation around them.",
+      "In AppHeaderBlock the last action renders as primary and the rest as secondary, so the common case needs no variant at all.",
+    ],
+    dont: ["Don't use them as a replacement for Sidebar and TopBar.", "Don't set action variants unless you want to break the last-is-primary order."],
+  },
+  panels: {
+    why: [
+      "The two modal blocks are controlled, so nothing renders until you pass open. They reuse Modal's portal and focus trap rather than reimplementing them.",
+      "The file upload panel selects files and reports them back, like the FileUpload it wraps.",
+    ],
+    dont: ["Don't expect the modal blocks to manage their own open state.", "Don't expect the upload panel to send files. That is your app's job."],
+  },
+  authentication: {
+    why: [
+      "These blocks hold their own form state and validation so they drop into a route and demo immediately, but they never talk to an auth provider. Everything real happens in the callbacks you pass.",
+      "initialStatus covers the states an auth screen actually passes through, including skeleton for the gap before your provider has initialised.",
+    ],
+    dont: ["Don't expect them to authenticate anyone. Wire onSubmit, onResend and onVerify.", "Don't treat initialStatus as live state. The block manages status itself afterwards."],
+  },
+  "marketing-sections": {
+    why: [
+      "They are whole page sections meant to be stacked into a landing page, and the blocks most worth copying rather than configuring: marketing layouts diverge fast, and a prop for every variation would be worse than editing the file.",
+      "Each carries its Figma frame width as a fixed width, so they don't reflow into a narrower container. The previews scale them to fit rather than cropping.",
+    ],
+    dont: ["Don't expect them to reflow in a narrow container. Give them room or scale them.", "Don't add props for every variation. Edit the file."],
+  },
+  "content-sections": {
+    why: [
+      "Where the marketing sections are mostly layout, these are data-driven: each takes an array and renders the matching component per entry, so they map onto whatever a CMS returns.",
+      "One testimonial renders the large single-quote style; two or more switch to the grid, so the layout follows the data.",
+      "Item types extend the underlying component's props, so anything you can pass the component you can pass through the block.",
+    ],
+    dont: ["Don't set defaultOpen on a FAQ long enough that an open item hides the rest."],
+  },
+  ecommerce: {
+    why: [
+      "Money arrives as raw numbers and is formatted through formatPrice, so one override changes every figure on the screen.",
+      "showFilterBar is a real prop rather than inferred from the product count, because only you know which lists are curated.",
+      "Passing estimatedDelivery to OrderConfirmationBlock is what adds the delivery row and Track order button.",
+    ],
+    dont: ["Don't pre-format prices. Pass numbers.", "Don't offer sorting on a short curated collection."],
+  },
+  "pricing-table": {
+    why: ["It shows two or three plans with one highlighted as recommended. Blocks are composition examples, meant to be copied and edited."],
+    dont: ["Don't treat it as a configurable component. Copy the source to restyle a card or add a fourth plan."],
+  },
+  billing: {
+    why: [
+      "The four blocks are self-contained, so adopt the pieces you need.",
+      "Plan status changes more than the badge: the usage row only renders for active, because a past-due or cancelling plan wants attention on the problem rather than on seat counts.",
+      "The payment blocks render card UI only and never handle a card number in a way that puts you in PCI scope.",
+    ],
+    dont: ["Don't post raw card fields to your own server. Wire the form to your payment provider's tokenisation (Stripe Elements or equivalent)."],
+  },
+  "billing-address": {
+    why: ["It carries a small real state machine (idle, invalid, server-error, loading) so the form actually works in the preview, including validation of an incomplete postal code."],
+    dont: ["Don't expect it to save anywhere. Wire onSave to your real endpoint."],
+  },
 };
