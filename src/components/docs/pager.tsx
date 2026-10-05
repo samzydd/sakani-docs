@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { flatNav } from "@/lib/nav";
+import { WhyDont } from "@/components/docs/why-dont";
 
 export function Pager({ current }: { current: string }) {
   const idx = flatNav.findIndex((i) => i.href === current);
@@ -10,6 +11,8 @@ export function Pager({ current }: { current: string }) {
   if (!prev && !next) return null;
 
   return (
+    <>
+    <WhyDont href={current} />
     <div className="mt-12 flex items-center justify-between border-t border-line-subtle pt-6">
       {prev ? (
         <Link href={prev.href} className="group flex items-center gap-2 text-sm text-ink-muted hover:text-ink">
@@ -34,5 +37,6 @@ export function Pager({ current }: { current: string }) {
         <span />
       )}
     </div>
+    </>
   );
 }

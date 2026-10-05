@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { docsNav } from "@/lib/nav";
 import { SITE_URL } from "@/lib/site";
+import { reasoning } from "@/lib/reasoning";
 
 /**
  * Builds the agent-facing text for /llms.txt and /llms-full.txt.
@@ -64,6 +65,14 @@ export function llmsFull(): string {
       parts.push(`- ${item.title} — ${SITE_URL}${item.href}${description ? `\n  ${description}` : ""}`);
     }
     parts.push("");
+  }
+  parts.push("---", "", "# Per-component reasoning (why it works this way, and when not to use it)", "");
+  for (const group of docsNav) {
+    for (const item of group.items) {
+      const r = reasoning[item.href.split("/").pop() ?? ""];
+      if (!r) continue;
+      parts.push(`## ${item.title}`, ...r.why.map((t) => `- Why: ${t}`), ...r.dont.map((t) => `- Don't: ${t}`), "");
+    }
   }
   return parts.join("\n");
 }
