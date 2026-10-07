@@ -209,7 +209,9 @@ export const reasoning: Record<string, Reasoning> = {
     dont: ["Don't use it for data people need to compare across rows. Use Table."],
   },
   "progress-steps": {
-    why: ["Completed is derived from state rather than a content prop, because people think in \"is this step done?\", not in which glyph renders."],
+    why: ["Completed is derived from state rather than a content prop, because people think in \"is this step done?\", not in which glyph renders.",
+      "In the vertical layout a title with no description is centred on the number circle; with a description the pair stays top-aligned and reads as one block. The horizontal layout is left-aligned: the label starts at the circle's left edge.",
+    ],
     dont: ["Don't use it as a form wizard that needs navigation between steps. Use Stepper."],
   },
   "code-snippet": {
