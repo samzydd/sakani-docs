@@ -28,12 +28,31 @@ const PROFILE = `<ProfileCard
   ]}
 />`;
 
-const TEAM = `<TeamCard
+const TEAM = `// Style: Card
+<TeamCard
   image="/amara.jpg"
   name="Amara Chen"
   role="Head of Design"
   location="Lagos, NG"
   locationStatus="active"
+  socialLinks={[
+    { icon: <AtSign size={16} />, label: "X (Twitter)", href: "#" },
+    { icon: <Globe size={16} />, label: "LinkedIn", href: "#" },
+  ]}
+/>
+
+// Style: Card details — a bio switches it on
+<TeamCard
+  image="/amara.jpg"
+  name="Amara Chen"
+  role="Head of Design"
+  location="Lagos, NG"
+  locationStatus="active"
+  bio="Leads the design vision and strategy, guiding the team to craft cohesive, user-centered experiences from concept to launch."
+  socialLinks={[
+    { icon: <AtSign size={16} />, label: "X (Twitter)", href: "#" },
+    { icon: <Globe size={16} />, label: "LinkedIn", href: "#" },
+  ]}
 />`;
 
 const SOCIALS = [
@@ -53,6 +72,7 @@ const TEAM_PROPS = [
   { name: "name / role", type: "string", description: "Who they are and what they do." },
   { name: "location", type: "string", description: "Rendered through LocationDot." },
   { name: "locationStatus", type: "'active' | 'remote'", description: "Colours that dot." },
+  { name: "bio", type: "string", description: "Its presence switches to the Card details style, adding this paragraph beneath the name, role and social links." },
   { name: "socialLinks", type: "TeamCardSocialLink[]", description: "Same shape as ProfileCard's." },
 ];
 
@@ -91,17 +111,32 @@ export default function TeamCardsPage() {
           <p className="mb-3 text-sm text-ink-muted">
             Leads with a portrait and carries a location, rendered through{" "}
             <a href="/docs/components/marketing-elements" className="font-medium text-ink underline underline-offset-2">LocationDot</a>.
+            It has two styles, as in Figma: <strong>Card</strong>, and{" "}
+            <strong>Card details</strong>, which you get by passing a <code>bio</code>.
           </p>
           <ComponentPreview code={TEAM}>
-            <div className="w-full max-w-xs">
-              <TeamCard
-                image={teamImage}
-                name="Amara Chen"
-                role="Head of Design"
-                location="Lagos, NG"
-                locationStatus="active"
-                socialLinks={SOCIALS}
-              />
+            <div className="flex w-full flex-wrap items-start justify-center gap-6">
+              <div className="w-full max-w-[404px]">
+                <TeamCard
+                  image={teamImage}
+                  name="Amara Chen"
+                  role="Head of Design"
+                  location="Lagos, NG"
+                  locationStatus="active"
+                  socialLinks={SOCIALS}
+                />
+              </div>
+              <div className="w-full max-w-[404px]">
+                <TeamCard
+                  image={teamImage}
+                  name="Amara Chen"
+                  role="Head of Design"
+                  location="Lagos, NG"
+                  locationStatus="active"
+                  bio="Leads the design vision and strategy, guiding the team to craft cohesive, user-centered experiences from concept to launch."
+                  socialLinks={SOCIALS}
+                />
+              </div>
             </div>
           </ComponentPreview>
         </section>
