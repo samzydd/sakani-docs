@@ -8,7 +8,7 @@ const CATEGORIES = [
   { title: "Forms", count: "9 components", icon: SlidersHorizontal, href: "/docs/components/input" },
   { title: "Composite", count: "14 components", icon: LayoutGrid, href: "/docs/components/card" },
   { title: "Charts", count: "9 components", icon: LineChartIcon, href: "/docs/components/line-chart" },
-  { title: "Application", count: "14 blocks", icon: LayoutDashboard, href: "/docs/blocks/crm-dashboard" },
+  { title: "Application", count: "14 blocks", icon: LayoutDashboard, href: "/docs/blocks/data-table" },
   { title: "E-commerce", count: "11 components", icon: ShoppingBag, href: "/docs/components/star-rating" },
   { title: "Marketing", count: "10 blocks", icon: Megaphone, href: "/docs/blocks/pricing-table" },
   { title: "Billing", count: "5 blocks", icon: CreditCard, href: "/docs/blocks/billing-address" },

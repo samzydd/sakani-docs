@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
     return [
       // The Liquid Glass dashboard moved into the home page showcase.
       { source: "/docs/blocks/liquid-glass-dashboard", destination: "/#showcase", permanent: true },
+      // The CRM dashboard is a demo, not a block: it lives in the showcase too.
+      { source: "/docs/blocks/crm-dashboard", destination: "/#showcase", permanent: true },
     ];
   },
 };

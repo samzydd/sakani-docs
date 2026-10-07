@@ -182,8 +182,8 @@ export default function SidebarPage() {
             them in the{" "}
             <a href="/docs/components/tooltip" className="font-medium text-ink underline underline-offset-2">Tooltip</a>{" "}
             component instead, set <code>nativeTooltip={"{false}"}</code> so both
-            don&apos;t fire at once — that&apos;s exactly what the CRM Dashboard
-            block does.
+            don&apos;t fire at once — that&apos;s exactly what the live CRM
+            dashboard <a href="/#showcase" className="font-medium text-ink underline underline-offset-2">on the home page</a> does.
           </p>
           <ComponentPreview code={COLLAPSED}>
             <Sidebar collapsed>
