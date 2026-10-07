@@ -1,20 +1,31 @@
 "use client";
 
 import { ProductCard } from "@sakaniui/react";
-import { productImage } from "@/lib/placeholder-image";
+import { productImage, tableRunnerImage, servingBoardImage } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
-const BASIC = `<ProductCard
+const BASIC = `// Default, Sale (compareAtPrice) and Out of stock (inStock={false}),
+// the three styles in the Figma Product Card set.
+<ProductCard
   image="/mug.jpg"
   name="Ceramic Pour-Over Mug"
-  description="Stoneware, 340ml"
-  price={38}
-  rating={4.5}
-  reviewCount={126}
-/>`;
+  description="Handcrafted from natural stoneware clay, this minimal pour-over mug…"
+  price={28}
+  rating={5}
+  colors={[
+    { id: "navy", color: "#1b284d", label: "Navy" },
+    { id: "sand", color: "#e0d8d1", label: "Sand", selected: true },
+    { id: "periwinkle", color: "#7e7aff", label: "Periwinkle" },
+    { id: "magenta", color: "#d200af", label: "Magenta" },
+  ]}
+/>
+
+<ProductCard image="/runner.jpg" name="Linen Table Runner" price={34} compareAtPrice={48} rating={5} />
+
+<ProductCard image="/board.jpg" name="Oak Serving Board" price={56} rating={5} inStock={false} />`;
 
 const SALE = `// compareAtPrice is what turns on the sale treatment:
 // a badge, the original struck through, the current price in danger.
@@ -33,6 +44,20 @@ const COLORS = `<ProductCard
 />`;
 
 const OUT_OF_STOCK = `<ProductCard image="/mug.jpg" name="Ceramic Pour-Over Mug" price={38} inStock={false} />`;
+
+/** The swatches and copy from the Figma "Product Card" frames. */
+const FIGMA_COLORS = [
+  { id: "navy", color: "#1b284d", label: "Navy" },
+  { id: "sand", color: "#e0d8d1", label: "Sand", selected: true },
+  { id: "periwinkle", color: "#7e7aff", label: "Periwinkle" },
+  { id: "magenta", color: "#d200af", label: "Magenta" },
+];
+const BOARD_COLORS = [
+  { id: "oat", color: "#e6d4c1", label: "Oat" },
+  { id: "orange", color: "#fe7700", label: "Orange", selected: true },
+  { id: "periwinkle", color: "#7e7aff", label: "Periwinkle", available: false },
+  { id: "magenta", color: "#d200af", label: "Magenta", available: false },
+];
 
 const COLORS_DATA = [
   { id: "sand", color: "#d6ccc2", label: "Sand" },
@@ -60,16 +85,45 @@ export default function ProductCardPage() {
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
-          <div className="w-full max-w-[16rem]">
-            <ProductCard
-              image={productImage}
-              imageAlt="Ceramic pour-over mug"
-              name="Ceramic Pour-Over Mug"
-              description="Stoneware, 340ml"
-              price={38}
-              rating={4.5}
-              reviewCount={126}
-            />
+          <div className="flex w-full flex-wrap items-start justify-center gap-6">
+            <div className="w-full max-w-xs">
+              <ProductCard
+                image={productImage}
+                imageAlt="Ceramic pour-over mug"
+                name="Ceramic Pour-Over Mug"
+                description="Handcrafted from natural stoneware clay, this minimal pour-over mug features a built-in ceramic dripper for slow, single-cup brewing. Dishwasher safe and made to last."
+                price={28}
+                rating={5}
+                colors={FIGMA_COLORS}
+                onColorSelect={() => {}}
+              />
+            </div>
+            <div className="w-full max-w-xs">
+              <ProductCard
+                image={tableRunnerImage}
+                imageAlt="Linen table runner"
+                name="Linen Table Runner"
+                description="Woven from 100% European flax linen, this table runner adds effortless texture to any setting. Pre-washed for a soft, lived-in drape. Machine washable and naturally durable."
+                price={34}
+                compareAtPrice={48}
+                rating={5}
+                colors={FIGMA_COLORS}
+                onColorSelect={() => {}}
+              />
+            </div>
+            <div className="w-full max-w-xs">
+              <ProductCard
+                image={servingBoardImage}
+                imageAlt="Oak serving board"
+                name="Oak Serving Board"
+                description="A brief description of an oak serving board for an e-commerce store"
+                price={56}
+                rating={5}
+                colors={BOARD_COLORS}
+                onColorSelect={() => {}}
+                inStock={false}
+              />
+            </div>
           </div>
         </ComponentPreview>
 
@@ -82,7 +136,7 @@ export default function ProductCardPage() {
             the two numbers, so it can&apos;t contradict them.
           </p>
           <ComponentPreview code={SALE}>
-            <div className="w-full max-w-[16rem]">
+            <div className="w-full max-w-xs">
               <ProductCard
                 image={productImage}
                 name="Ceramic Pour-Over Mug"
@@ -96,7 +150,7 @@ export default function ProductCardPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Colour options</h2>
           <ComponentPreview code={COLORS}>
-            <div className="w-full max-w-[16rem]">
+            <div className="w-full max-w-xs">
               <ProductCard
                 image={productImage}
                 name="Ceramic Pour-Over Mug"
@@ -111,7 +165,7 @@ export default function ProductCardPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Out of stock</h2>
           <ComponentPreview code={OUT_OF_STOCK}>
-            <div className="w-full max-w-[16rem]">
+            <div className="w-full max-w-xs">
               <ProductCard
                 image={productImage}
                 name="Ceramic Pour-Over Mug"
