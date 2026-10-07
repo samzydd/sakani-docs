@@ -1,6 +1,6 @@
 "use client";
 
-import { Car, Coffee, Home, ShoppingBag, ArrowDownLeft, ArrowUpRight } from "lucide-react";
+import { Car, Coffee, Home, ShoppingBag, ArrowDownLeft } from "lucide-react";
 import {
   Balance,
   Expenses,
@@ -37,12 +37,34 @@ const TRANSACTIONS = `<Expenses
   ]}
 />`;
 
-const STOCK = `<StockMarket
-  logo={<span>◆</span>}
+const STOCK = `// Compact quote — direction comes from the sign of change.amount
+<StockMarket
+  logo={<CompanyMark letter="A" />}
   symbol="ACME"
   name="Acme Corp"
   price={184.22}
   change={{ amount: 3.14, percent: 1.73 }}
+/>
+<StockMarket
+  logo={<CompanyMark letter="G" />}
+  symbol="GLOB"
+  name="Globex"
+  price={92.4}
+  change={{ amount: -1.86, percent: -1.97 }}
+/>
+
+// Passing chart data expands it into the full card
+<StockMarket
+  logo={<CompanyMark letter="A" />}
+  symbol="ACME"
+  name="Acme Corp"
+  price={184.22}
+  change={{ amount: 3.14, percent: 1.73 }}
+  chart={[
+    { label: "May", value: 152 },
+    { label: "Jun", value: 161 },
+    // …
+  ]}
 />`;
 
 const TICKER = `<Ticker
@@ -87,6 +109,28 @@ const OTHER_PROPS = [
   { name: "Transactions", type: "transactions, formatAmount, emptyTitle, emptyDescription", description: "Positive amounts render as income, negative as expense. Has its own empty state." },
   { name: "StockMarket", type: "logo, symbol, name, price, change, chart, periodLabel, formatAmount", description: "Quote card. Passing chart data expands it into the full card with a bar chart." },
   { name: "Ticker", type: "items, speed, formatChange", description: "Scrolling symbol strip. speed is px/second, default 40." },
+];
+
+/**
+ * A demo company mark. StockMarket's `logo` slot takes any node and fills a
+ * 32px (compact) or 40px (full) box, so a real logo should be a square image
+ * or an element that fills its parent. This stand-in does the same.
+ */
+function CompanyMark({ letter }: { letter: string }) {
+  return (
+    <span className="flex h-full w-full items-center justify-center rounded-full bg-ink text-sm font-semibold text-surface">
+      {letter}
+    </span>
+  );
+}
+
+const STOCK_CHART = [
+  { label: "May", value: 152 },
+  { label: "Jun", value: 161 },
+  { label: "Jul", value: 158 },
+  { label: "Aug", value: 170 },
+  { label: "Sep", value: 176 },
+  { label: "Oct", value: 184 },
 ];
 
 export default function FinancePage() {
@@ -155,13 +199,28 @@ export default function FinancePage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Markets</h2>
           <ComponentPreview code={STOCK}>
-            <div className="flex w-full max-w-sm flex-col gap-4">
+            <div className="mx-auto flex w-full max-w-md flex-col gap-4">
               <StockMarket
-                logo={<ArrowUpRight size={16} />}
+                logo={<CompanyMark letter="A" />}
                 symbol="ACME"
                 name="Acme Corp"
                 price={184.22}
                 change={{ amount: 3.14, percent: 1.73 }}
+              />
+              <StockMarket
+                logo={<CompanyMark letter="G" />}
+                symbol="GLOB"
+                name="Globex"
+                price={92.4}
+                change={{ amount: -1.86, percent: -1.97 }}
+              />
+              <StockMarket
+                logo={<CompanyMark letter="A" />}
+                symbol="ACME"
+                name="Acme Corp"
+                price={184.22}
+                change={{ amount: 3.14, percent: 1.73 }}
+                chart={STOCK_CHART}
               />
             </div>
           </ComponentPreview>
