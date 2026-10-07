@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+// Geist is the design system's typeface (tokens.css names "Geist Variable" and
+// "Geist Mono Variable"). The tokens only *name* it: the font files have to be
+// loaded by the consuming app, and this site wasn't loading them, so visitors
+// without Geist installed saw their system font instead of Figma's typography.
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
