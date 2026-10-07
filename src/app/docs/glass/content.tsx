@@ -87,8 +87,8 @@ export default function GlassPage() {
         </p>
         <p>
           The same system exists in the Figma file (a <em>Surface</em> variable collection plus effect styles),
-          so a design and its code use the same modes. For a complete screen, see the{" "}
-          <Link href="/docs/blocks/liquid-glass-dashboard">Liquid Glass Dashboard</Link> block.
+          so a design and its code use the same modes. For a complete screen, try the live{" "}
+          <Link href="/#showcase">Liquid Glass dashboard</Link> on the home page.
         </p>
       </div>
 

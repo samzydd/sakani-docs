@@ -31,7 +31,7 @@ const POINTS = [
  */
 export function GlassShowcase() {
   return (
-    <section className="py-20">
+    <section className="py-12 sm:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <TextReveal
           as="h2"
@@ -64,7 +64,7 @@ export function GlassShowcase() {
         <Link href="/docs/glass" className="inline-flex items-center gap-1.5 text-ink hover:underline">
           Read the glass guide <ArrowRight size={14} />
         </Link>
-        <Link href="/docs/blocks/liquid-glass-dashboard" className="inline-flex items-center gap-1.5 text-ink hover:underline">
+        <Link href="/#showcase" className="inline-flex items-center gap-1.5 text-ink hover:underline">
           See the liquid glass dashboard <ArrowRight size={14} />
         </Link>
       </div>

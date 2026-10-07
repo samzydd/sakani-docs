@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     q: "Does Sakani support glassmorphism and liquid glass?",
-    a: "Yes, as a built-in theme layer. Surface has three modes: Solid (the default), Glass (frosted translucency) and Liquid (Apple-style liquid glass that bends the backdrop like a lens). Add data-surface=\"glass\" to any area, or use the LiquidGlass component. It exists in the Figma file as well, and the Liquid Glass Dashboard block shows a full screen built with it.",
+    a: "Yes, as a built-in theme layer. Surface has three modes: Solid (the default), Glass (frosted translucency) and Liquid (Apple-style liquid glass that bends the backdrop like a lens). Add data-surface=\"glass\" to any area, or use the LiquidGlass component. It exists in the Figma file as well, and the live Liquid Glass dashboard in the showcase above is a full screen built with it.",
   },
   {
     q: "Does liquid glass work in Safari and Firefox?",
@@ -54,7 +54,7 @@ export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="py-20">
+    <section className="py-12 sm:py-20">
       <script
         type="application/ld+json"
         // Built from the FAQS literal above; no user or remote input.

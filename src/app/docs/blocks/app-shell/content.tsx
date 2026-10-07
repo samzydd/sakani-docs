@@ -61,7 +61,7 @@ export default function AppShellPage() {
       </div>
 
       <div className="space-y-10">
-        <ComponentPreview code={HEADER} fullBleed>
+        <ComponentPreview code={HEADER} fullBleed center>
           <AppHeaderBlock
             breadcrumbs={[{ label: "Database", href: "#" }, { label: "Leads" }]}
             title="Leads"
@@ -85,15 +85,15 @@ export default function AppShellPage() {
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Notifications</h2>
-          <ComponentPreview code={NOTIFICATIONS} fullBleed>
+          <ComponentPreview code={NOTIFICATIONS} fullBleed center>
             <NotificationPanelBlock items={ITEMS} />
           </ComponentPreview>
         </section>
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Account and activity</h2>
-          <ComponentPreview code={OVERVIEW} fullBleed>
-            <div className="flex w-full flex-col gap-6">
+          <ComponentPreview code={OVERVIEW} fullBleed center>
+            <div className="flex flex-col items-center gap-6">
               <AccountOverviewBlock />
               <ActivityLogBlock />
             </div>
@@ -102,7 +102,7 @@ export default function AppShellPage() {
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Profile settings</h2>
-          <ComponentPreview code={PROFILE} fullBleed>
+          <ComponentPreview code={PROFILE} fullBleed center>
             <ProfileSettingsBlock name="Jamie Doe" email="jamie@acme.com" />
           </ComponentPreview>
         </section>

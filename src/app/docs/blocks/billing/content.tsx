@@ -51,7 +51,7 @@ export default function BillingPage() {
       </div>
 
       <div className="space-y-10">
-        <ComponentPreview code={PLAN} fullBleed>
+        <ComponentPreview code={PLAN} fullBleed center>
           <CurrentPlanBlock
             planName="Pro plan"
             price="$29"
@@ -69,8 +69,8 @@ export default function BillingPage() {
             renders for <code>active</code>, because a past-due or cancelling
             plan wants attention on the problem rather than on seat counts.
           </p>
-          <ComponentPreview code={STATUSES} fullBleed>
-            <div className="flex w-full flex-col gap-4">
+          <ComponentPreview code={STATUSES} fullBleed center>
+            <div className="flex flex-col items-center gap-6">
               <CurrentPlanBlock
                 planName="Pro trial"
                 price="$0"
@@ -85,7 +85,7 @@ export default function BillingPage() {
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Invoice history</h2>
-          <ComponentPreview code={HISTORY} fullBleed>
+          <ComponentPreview code={HISTORY} fullBleed center>
             <BillingHistoryBlock />
           </ComponentPreview>
         </section>
@@ -98,8 +98,8 @@ export default function BillingPage() {
             provider&apos;s tokenisation (Stripe Elements or equivalent) rather
             than posting raw fields to your own server.
           </p>
-          <ComponentPreview code={PAYMENT} fullBleed>
-            <div className="flex w-full flex-col gap-6">
+          <ComponentPreview code={PAYMENT} fullBleed center>
+            <div className="flex flex-col items-center gap-6">
               <PaymentMethodBlock />
               <AddCardFormBlock />
             </div>

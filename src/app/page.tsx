@@ -145,7 +145,7 @@ export default function HomePage() {
 
       {/* Features */}
       <Reveal>
-        <section className="py-20">
+        <section className="py-12 sm:py-20">
           {/* Matches the hero's own container exactly (mx-auto max-w-5xl
               px-4 sm:px-6 lg:px-8) so this heading's left edge lines up
               with the hero headline's, rather than the wider max-w-7xl
@@ -180,7 +180,7 @@ export default function HomePage() {
 
       {/* Usage */}
       <Reveal>
-        <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-20 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
               <TextReveal

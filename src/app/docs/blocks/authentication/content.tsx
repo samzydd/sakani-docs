@@ -62,7 +62,7 @@ export default function AuthenticationPage() {
       </div>
 
       <div className="space-y-10">
-        <ComponentPreview code={LOGIN} fullBleed>
+        <ComponentPreview code={LOGIN} fullBleed center>
           <LoginBlock socialProviders={PROVIDERS} />
         </ComponentPreview>
 
@@ -76,8 +76,8 @@ export default function AuthenticationPage() {
             failures by re-mounting with a new status or by owning the form
             yourself.
           </p>
-          <ComponentPreview code={STATES} fullBleed>
-            <div className="flex w-full flex-col gap-6">
+          <ComponentPreview code={STATES} fullBleed center>
+            <div className="flex flex-col items-center gap-6">
               <LoginBlock initialStatus="validation-error" />
               <LoginBlock initialStatus="skeleton" />
             </div>
@@ -86,15 +86,15 @@ export default function AuthenticationPage() {
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Sign up</h2>
-          <ComponentPreview code={`<SignUpBlock onSubmit={createAccount} onSignIn={goToSignIn} />`} fullBleed>
+          <ComponentPreview code={`<SignUpBlock onSubmit={createAccount} onSignIn={goToSignIn} />`} fullBleed center>
             <SignUpBlock socialProviders={PROVIDERS} />
           </ComponentPreview>
         </section>
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Recovery and verification</h2>
-          <ComponentPreview code={RECOVERY} fullBleed>
-            <div className="flex w-full flex-col gap-6">
+          <ComponentPreview code={RECOVERY} fullBleed center>
+            <div className="flex flex-col items-center gap-6">
               <ForgotPasswordBlock />
               <ResetPasswordBlock />
               <EmailVerificationBlock />

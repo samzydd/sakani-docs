@@ -145,13 +145,20 @@ export function DashboardGallery() {
     const draw = () => {
       frame = 0;
       const rect = section.getBoundingClientRect();
-      const scrollable = rect.height - window.innerHeight;
+      // The sticky frame is full-height and pinned at the top from sm up. On
+      // phones it hugs its content and pins centred (see the section below), so
+      // read its real height and offset rather than assuming the viewport's.
+      const pin = section.firstElementChild as HTMLElement | null;
+      const stickyTop = pin ? parseFloat(getComputedStyle(pin).top) || 0 : 0;
+      const stickyHeight = pin ? pin.offsetHeight : window.innerHeight;
+      const scrollable = rect.height - stickyHeight;
       if (scrollable <= 0) return;
 
-      // 0 at the moment the section's top reaches the viewport top, 1 when
-      // its bottom does. Clamped so the cards hold their end positions
-      // rather than flying off while the section is still partly on screen.
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+      // 0 at the moment the frame pins (the section's top reaches the frame's
+      // `top` offset), 1 when it unpins. Clamped so the cards hold their end
+      // positions rather than flying off while the section is still partly on
+      // screen.
+      const progress = Math.min(1, Math.max(0, (stickyTop - rect.top) / scrollable));
       const focus = progress * (SHOTS.length - 1);
       const stageWidth = section.offsetWidth;
 
@@ -232,7 +239,7 @@ export function DashboardGallery() {
   // section that hijacks the scrollbar.
   if (reduced) {
     return (
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         {heading}
         <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8">
           {SHOTS.map((shot) => (
@@ -253,16 +260,31 @@ export function DashboardGallery() {
        stays the same whatever the count -- a fixed height tuned for one
        number of cards silently speeds the run up or slows it down when that
        number changes. Six cards: 100 + 5 x 50. */
-    <section ref={sectionRef} className="relative h-[350vh]">
+    <section
+      ref={sectionRef}
+      /* Phones: the frame is only as tall as its content (--stage-h, an
+         estimate of heading + card stage + labels), plus the same 250vh of
+         travel the 350vh version gives (100 + 5 x 50, minus the frame's own
+         100vh). A full-screen frame left half a screen of blank page above and
+         below the content, and that blank was still there when the pin
+         released into the next section. */
+      className="relative h-[calc(var(--stage-h)+250vh)] [--stage-h:calc(86vw*0.74+14.5rem)] sm:h-[350vh]"
+    >
       {/* Sticky, not fixed: the stage releases the page naturally at the end
           of the section instead of needing a scroll listener to unpin it. */}
-      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
+      <div className="sticky top-[max(4rem,calc((100svh-var(--stage-h))/2))] flex flex-col justify-center overflow-hidden sm:top-0 sm:h-screen">
         {/* 80px, matching the py-20 the reduced-motion variant and the rest
             of the landing sections use. */}
-        <div className="pt-20">{heading}</div>
+        <div className="sm:pt-20">{heading}</div>
 
         <div
-          className="relative mt-8 flex flex-1 items-center justify-center"
+          /* Below the sm breakpoint the stage hugs its cards instead of filling
+             the screen. Cards are 86vw wide (about 335px on a phone, 238px
+             tall), so a flex-1 stage left them floating in ~600px of empty
+             space above and below. 0.74 is the tallest shot's height/width
+             ratio, plus room for the arc each side card drops by. From sm up
+             the stage fills the sticky frame as before. */
+          className="relative mt-8 flex h-[calc(86vw*0.74+2rem)] flex-none items-center justify-center sm:h-auto sm:flex-1"
           style={{ perspective: "1600px", perspectiveOrigin: "50% 50%" }}
           aria-hidden="true"
         >
@@ -336,7 +358,7 @@ export function DashboardGallery() {
         {/* The gallery itself is aria-hidden (it's a scroll-driven visual),
             so the real content lives here: a readable list where the current
             item is marked, rather than seven decorative images. */}
-        <div className="pb-12">
+        <div className="sm:pb-12">
           <ol className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-2 gap-y-2 px-4 sm:px-6 lg:px-8">
             {SHOTS.map((shot, i) => (
               <li key={shot.src}>

@@ -4,6 +4,7 @@ import { CRMDashboardBlock } from "@sakaniui/react/blocks";
 import { ExternalLink } from "lucide-react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { ResponsiveDemo } from "@/components/docs/responsive-demo";
 import { Pager } from "@/components/docs/pager";
 
 const CODE = `import { CRMDashboardBlock } from '@sakaniui/react/blocks';
@@ -34,7 +35,11 @@ export default function CRMDashboardBlockPage() {
       </div>
 
       <ComponentPreview code={CODE} fullBleed>
-        <CRMDashboardBlock />
+        <ResponsiveDemo designWidth={1440} designHeight={900} nativeHeight={780}>
+          <div style={{ height: "100%", ["--crm-block-height" as string]: "100%" }}>
+            <CRMDashboardBlock />
+          </div>
+        </ResponsiveDemo>
       </ComponentPreview>
 
       <Pager current="/docs/blocks/crm-dashboard" />

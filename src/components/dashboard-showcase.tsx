@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MousePointerClick, Sun, Moon } from "lucide-react";
-import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock } from "@sakaniui/react/blocks";
+import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock, LiquidDashboardBlock } from "@sakaniui/react/blocks";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";
 import { TextReveal } from "@/components/text-reveal";
@@ -19,6 +19,22 @@ import { MaskReveal } from "@/components/mask-reveal";
  */
 type BlockComponent = React.ComponentType<{ fillPlaceholders?: boolean }>;
 
+/**
+ * Liquid Glass needs a photograph behind it to refract, so unlike the other
+ * blocks it takes image props. Wrapped here so it fits the same slot shape.
+ */
+const LiquidGlassDemo: BlockComponent = () => (
+  <LiquidDashboardBlock
+    backgroundImage="/glass/backdrop.jpg"
+    accountAvatar="/glass/account.png"
+    people={{
+      emily: "/glass/emily-johnson.png",
+      michael: "/glass/michael-evans.png",
+      sarah: "/glass/sarah-williams.png",
+    }}
+  />
+);
+
 type Tab =
   | { key: string; label: string; path: string; kind: "block"; Block: BlockComponent }
   | { key: string; label: string; path: string; kind: "iframe"; url: string };
@@ -32,6 +48,7 @@ const TABS: Tab[] = [
     url: "https://saas-crm-sakani-ds.vercel.app/",
   },
   { key: "crm-demo-2", label: "CRM demo 2", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock as BlockComponent },
+  { key: "liquid-glass", label: "Liquid Glass", path: "app.yourcompany.com/dashboard", kind: "block", Block: LiquidGlassDemo },
   { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock as BlockComponent },
   { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", kind: "block", Block: DataTableBlock as BlockComponent },
 ];
@@ -114,7 +131,7 @@ export function DashboardShowcase() {
   }, [tab, dashboardTheme]);
 
   return (
-    <section id="showcase" className="py-20">
+    <section id="showcase" className="py-12 sm:py-20">
       {/* Matches the hero's own container exactly (mx-auto max-w-5xl px-4
           sm:px-6 lg:px-8) so this heading's left edge lines up with the
           hero headline's, rather than the wider max-w-7xl the tabs row

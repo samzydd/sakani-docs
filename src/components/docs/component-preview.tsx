@@ -65,6 +65,7 @@ export function ComponentPreview({
   lang = "tsx",
   fullBleed = false,
   scaleToFit = false,
+  center = false,
 }: {
   children: ReactNode;
   code: string;
@@ -77,6 +78,12 @@ export function ComponentPreview({
    * composition down to fit the column rather than clipping it. See
    * ScaleToFit. Implies fullBleed's edge-to-edge treatment. */
   scaleToFit?: boolean;
+  /** Centres the content on both axes while keeping fullBleed's scroll behaviour.
+   * The content is wrapped in an `m-auto` box inside a flex canvas, which is
+   * "safe" centring: if it is wider than the canvas the margins collapse to 0 and
+   * it scrolls from its left edge, instead of being clipped on both sides the
+   * way justify-center would. Use it for blocks narrower than the canvas. */
+  center?: boolean;
 }) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
   // Independent of the site's own light/dark toggle -- lets you check a
@@ -145,11 +152,17 @@ export function ComponentPreview({
             scaleToFit
               ? "overflow-hidden"
               : fullBleed
-                ? "max-h-[980px] overflow-auto"
+                ? cn("max-h-[980px] overflow-auto", center && "flex")
                 : "flex min-h-52 items-center justify-center p-10"
           )}
         >
-          {scaleToFit ? <ScaleToFit>{children}</ScaleToFit> : children}
+          {scaleToFit ? (
+            <ScaleToFit>{children}</ScaleToFit>
+          ) : center ? (
+            <div className="m-auto p-8">{children}</div>
+          ) : (
+            children
+          )}
         </div>
       ) : (
         <div className="group relative overflow-hidden rounded-b-xl bg-surface">

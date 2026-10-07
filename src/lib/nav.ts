@@ -138,7 +138,6 @@ export const docsNav: NavGroup[] = [
     title: "Blocks",
     items: [
       { title: "CRM Dashboard", href: "/docs/blocks/crm-dashboard" },
-      { title: "Liquid Glass Dashboard", href: "/docs/blocks/liquid-glass-dashboard" },
       { title: "Data Table", href: "/docs/blocks/data-table" },
       { title: "Kanban Board", href: "/docs/blocks/kanban-board" },
       { title: "App Shell", href: "/docs/blocks/app-shell" },

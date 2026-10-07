@@ -73,7 +73,7 @@ export default function PanelsPage() {
       </div>
 
       <div className="space-y-10">
-        <ComponentPreview code={ONBOARDING} fullBleed>
+        <ComponentPreview code={ONBOARDING} fullBleed center>
           <OnboardingProgressBlock items={STEPS} />
         </ComponentPreview>
 
@@ -85,14 +85,14 @@ export default function PanelsPage() {
             component it wraps, this selects files and reports them back —
             sending them is still your app&apos;s job.
           </p>
-          <ComponentPreview code={UPLOAD} fullBleed>
+          <ComponentPreview code={UPLOAD} fullBleed center>
             <FileUploadPanelBlock />
           </ComponentPreview>
         </section>
 
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Chat interface</h2>
-          <ComponentPreview code={CHAT} fullBleed>
+          <ComponentPreview code={CHAT} scaleToFit>
             <ChatInterfaceBlock />
           </ComponentPreview>
         </section>
@@ -105,7 +105,7 @@ export default function PanelsPage() {
             portal and focus trap rather than reimplementing them, which is why
             they take the same <code>open</code>/<code>onClose</code> pair.
           </p>
-          <ComponentPreview code={MODALS} fullBleed>
+          <ComponentPreview code={MODALS} fullBleed center>
             <ModalDemo />
           </ComponentPreview>
         </section>

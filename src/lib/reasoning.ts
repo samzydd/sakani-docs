@@ -420,14 +420,6 @@ export const reasoning: Record<string, Reasoning> = {
     why: ["It is the flagship example of what the system is for: a real application shell where the sidebar, filters, table, avatars and badges are all live components, not a screenshot."],
     dont: ["Don't treat it as a configurable component. Copy the source in and swap the sample leads for your own data."],
   },
-  "liquid-glass-dashboard": {
-    why: [
-      "It is built in three layers, in order, because glass needs something colourful and detailed behind it to bend. The photograph is not bundled; which photo is your call.",
-      "The active sidebar item has its own lens that only moves when you click another item, while a second, softer lens follows hover and focus and never changes what is active.",
-      "In dark mode the overlay gains a scrim so light labels stay readable over the bright parts of the photo.",
-    ],
-    dont: ["Don't expect refraction outside Chromium. Safari and Firefox get the frosted fallback with the same rim and depth.", "Don't put it over a flat colour. There is nothing to bend."],
-  },
   "data-table": {
     why: ["It ships a state prop (default, filtered, bulk, loading, empty, error) so every state of a real table is designed, not just the happy path."],
     dont: ["Don't treat it as configurable. Copy the source in and swap the columns and rows."],
