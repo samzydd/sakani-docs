@@ -3,7 +3,7 @@
 import { HeatmapChart } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
-import { ChartFrame, CHART_WIDTH } from "@/components/docs/chart-frame";
+import { ChartFrame } from "@/components/docs/chart-frame";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 

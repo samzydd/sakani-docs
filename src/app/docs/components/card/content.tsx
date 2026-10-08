@@ -119,7 +119,7 @@ export default function CardPage() {
                   </>
                 }
               >
-                Connect your team's tools to get the most out of your workspace.
+                Connect your team&apos;s tools to get the most out of your workspace.
               </Card>
             </div>
           </ComponentPreview>

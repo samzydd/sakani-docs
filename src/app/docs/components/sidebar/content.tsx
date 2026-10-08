@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { LayoutGrid, Mail, Users, Settings, Sparkles } from "lucide-react";
 import {
   Sidebar,
@@ -183,7 +184,7 @@ export default function SidebarPage() {
             <a href="/docs/components/tooltip" className="font-medium text-ink underline underline-offset-2">Tooltip</a>{" "}
             component instead, set <code>nativeTooltip={"{false}"}</code> so both
             don&apos;t fire at once — that&apos;s exactly what the live CRM
-            dashboard <a href="/#showcase" className="font-medium text-ink underline underline-offset-2">on the home page</a> does.
+            dashboard <Link href="/#showcase" className="font-medium text-ink underline underline-offset-2">on the home page</Link> does.
           </p>
           <ComponentPreview code={COLLAPSED}>
             <Sidebar collapsed>
