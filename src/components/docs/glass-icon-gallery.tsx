@@ -3,23 +3,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check } from "lucide-react";
 import * as GlassIcons from "@sakaniui/react/glass-icons";
-import {
-  GLASS_ICON_TONES,
-  glassIconNames,
-  type GlassIconComponent,
-  type GlassIconTone,
-  type GlassIconVariant,
-} from "@sakaniui/react/glass-icons";
+import { glassIconNames, type GlassIconComponent } from "@sakaniui/react/glass-icons";
 import { cn } from "@/lib/utils";
 
 const all = GlassIcons as unknown as Record<string, GlassIconComponent>;
 const toComponentName = (name: string) =>
   "Glass" + name.split("-").map((p) => p[0].toUpperCase() + p.slice(1)).join("");
-const TONES = Object.keys(GLASS_ICON_TONES) as GlassIconTone[];
+const SIZES = [24, 32, 48] as const;
 
 /**
  * Mounts its icon only once it nears the viewport. Each glass icon carries its
- * own blur filter, so painting all 1,626 up front stalls the page for seconds;
+ * own blur filters, so painting all 1,626 up front stalls the page for seconds;
  * mounting on approach keeps the first paint to the few dozen on screen. Once
  * mounted an icon stays mounted, so scrolling back is free.
  */
@@ -41,8 +35,7 @@ function LazyCell({ children, size }: { children: React.ReactNode; size: number 
 
 export function GlassIconGallery() {
   const [query, setQuery] = useState("");
-  const [tone, setTone] = useState<GlassIconTone>("violet");
-  const [variant, setVariant] = useState<GlassIconVariant>("frosted");
+  const [size, setSize] = useState<(typeof SIZES)[number]>(32);
   const [copied, setCopied] = useState<string | null>(null);
 
   const shown = useMemo(() => {
@@ -51,7 +44,7 @@ export function GlassIconGallery() {
   }, [query]);
 
   const copy = async (name: string) => {
-    const snippet = `<${toComponentName(name)} tone="${tone}"${variant === "tile" ? ' variant="tile"' : ""} />`;
+    const snippet = `<${toComponentName(name)}${size === 24 ? "" : ` size={${size}}`} />`;
     try { await navigator.clipboard.writeText(snippet); } catch { /* clipboard unavailable */ }
     setCopied(name);
     window.setTimeout(() => setCopied((c) => (c === name ? null : c)), 1400);
@@ -67,24 +60,16 @@ export function GlassIconGallery() {
           aria-label="Search glass icons"
           className="h-9 w-full max-w-xs rounded-md border border-line-subtle bg-surface px-3 text-sm text-ink outline-none placeholder:text-ink-muted focus:border-line-strong"
         />
-        <select
-          value={tone}
-          onChange={(e) => setTone(e.target.value as GlassIconTone)}
-          aria-label="Tone"
-          className="h-9 rounded-md border border-line-subtle bg-surface px-2 text-sm text-ink"
-        >
-          {TONES.map((t) => <option key={t} value={t}>{t}</option>)}
-        </select>
-        <div className="flex rounded-md border border-line-subtle p-0.5 text-sm" role="group" aria-label="Variant">
-          {(["frosted", "tile"] as const).map((v) => (
+        <div className="flex rounded-md border border-line-subtle p-0.5 text-sm" role="group" aria-label="Size">
+          {SIZES.map((v) => (
             <button
               key={v}
               type="button"
-              onClick={() => setVariant(v)}
-              aria-pressed={variant === v}
-              className={cn("rounded px-3 py-1 capitalize", variant === v ? "bg-subtle font-medium text-ink" : "text-ink-muted hover:text-ink")}
+              onClick={() => setSize(v)}
+              aria-pressed={size === v}
+              className={cn("rounded px-3 py-1 tabular-nums", size === v ? "bg-subtle font-medium text-ink" : "text-ink-muted hover:text-ink")}
             >
-              {v}
+              {v}px
             </button>
           ))}
         </div>
@@ -102,7 +87,9 @@ export function GlassIconGallery() {
               title={`Copy <${toComponentName(name)} />`}
               className="group flex flex-col items-center gap-2 rounded-lg px-1 py-3 transition-colors hover:bg-subtle"
             >
-              <LazyCell size={48}>{Icon && <Icon size={48} tone={tone} variant={variant} />}</LazyCell>
+              <LazyCell size={48}>
+                <div className="flex size-12 items-center justify-center">{Icon && <Icon size={size} />}</div>
+              </LazyCell>
               <span className="flex max-w-full items-center gap-1 truncate text-[11px] text-ink-muted group-hover:text-ink">
                 {copied === name ? <><Check size={11} /> Copied</> : name}
               </span>
