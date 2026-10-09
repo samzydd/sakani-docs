@@ -16,6 +16,19 @@ export interface Reasoning {
 }
 
 export const reasoning: Record<string, Reasoning> = {
+  "glass-icons": {
+    why: [
+      "Each icon is a solid shape behind, frosted glass in front and a crisp line drawing on top. The line drawing is what keeps icons with interior detail readable: a plain filled silhouette turns a calendar into a square.",
+      "Only closed shapes are filled. Which parts are closed is worked out per shape when the package is built, because filling an open stroke (a checkmark, an arrow) paints a chord across it.",
+      "They are a separate entry, one component per icon, so an app ships only the icons it imports.",
+      "It is plain SVG (gradients, a mask and a blur), not backdrop-filter, so it renders the same in every browser.",
+    ],
+    dont: [
+      "Don't use them for dense UI at 16px, such as table rows and buttons. Use the regular Lucide icons; glass needs room to read, from about 24px.",
+      "Don't mix many tones in one row without a reason. Pick a tone per meaning (category, status) so colour carries information.",
+      "Don't reach for GlassIcon when a generated Glass* component exists: GlassIcon can't fill closed shapes.",
+    ],
+  },
   button: {
     why: [
       "Five variants mirror the Figma set one-to-one, so a designer's choice maps to a prop with no translation.",

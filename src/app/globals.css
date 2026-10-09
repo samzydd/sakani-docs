@@ -407,6 +407,14 @@ html.dark .noise-overlay {
   --color-info-bg: var(--color-info-50);
   --color-info-border: var(--color-info-200);
   --color-info-solid: var(--color-info-500);
+  /* glass icons (tokens.css :root values) */
+  --glass-icon-frost: rgba(255, 255, 255, 0.66);
+  --glass-icon-haze: 0.85;
+  --glass-icon-shine: 0.6;
+  --glass-icon-rim: rgba(255, 255, 255, 0.95);
+  --glass-icon-whiten: 0%;
+  --glass-icon-detail-opacity: 0.9;
+  --glass-icon-plate: rgba(255, 255, 255, 0.55);
 }
 
 /* Glass / liquid / surface tokens: the same mirror, for the Surface layer. The
