@@ -16,6 +16,20 @@ export interface Reasoning {
 }
 
 export const reasoning: Record<string, Reasoning> = {
+  "glass-icons": {
+    why: [
+      "They are monochrome charcoal so they fit any product without fighting its brand colours; colour stays free to carry meaning elsewhere in the UI.",
+      "Each icon's main shape becomes one frosted-glass solid and a disc behind it shows through blurred. That glow is what reads as glass; a translucent shape on its own just looks grey.",
+      "Inner lines are white on the glass and solid off it, and each line is drawn whole. Splitting a line at the glass edge leaves broken half-white strokes.",
+      "Which parts are glass and which are lines is decided when the package is built, with the same rules the Figma set was built with, so code and Figma match.",
+      "They are plain SVG on a 24x24 grid in a separate entry, one component per icon: sharp at any size, the same in every browser, and an app ships only what it imports.",
+    ],
+    dont: [
+      "Don't use them in dense UI such as table rows and buttons. Use the regular Lucide icons there; glass needs room to read and works best from 24px up.",
+      "Don't recolour them per icon to signal status. Keep status in text, badges or the regular icons; the glass set is meant to stay neutral.",
+      "Don't reach for GlassIcon when a generated Glass* component exists: GlassIcon draws the whole icon as one glass stroke.",
+    ],
+  },
   button: {
     why: [
       "Five variants mirror the Figma set one-to-one, so a designer's choice maps to a prop with no translation.",
