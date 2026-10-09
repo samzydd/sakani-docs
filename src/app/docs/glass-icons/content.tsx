@@ -15,8 +15,8 @@ import { GlassIconGallery } from "@/components/docs/glass-icon-gallery";
 
 const SAMPLE: [GlassIconComponent, GlassIconTone][] = [
   [GlassHeart, "pink"], [GlassFolder, "blue"], [GlassBookmark, "violet"], [GlassHouse, "orange"],
-  [GlassStar, "amber"], [GlassMessageCircle, "green"], [GlassBell, "red"], [GlassCalendar, "sky"],
-  [GlassCamera, "teal"], [GlassRocket, "indigo"], [GlassMail, "slate"], [GlassSettings, "iridescent"],
+  [GlassStar, "orange"], [GlassMessageCircle, "green"], [GlassBell, "red"], [GlassCalendar, "sky"],
+  [GlassCamera, "teal"], [GlassRocket, "brand"], [GlassMail, "violet"], [GlassSettings, "iridescent"],
 ];
 
 const BASIC = `import { GlassHeart, GlassCalendar } from '@sakaniui/react/glass-icons';
@@ -36,7 +36,7 @@ const CUSTOM = `<GlassRocket colors={['#ffd36e', '#ff5f6d']} />`;
 
 const PROPS = [
   { name: "size", type: "number | string", default: "48", description: "Rendered size: px or any CSS length." },
-  { name: "tone", type: "'violet' | 'indigo' | 'blue' | 'sky' | 'teal' | 'green' | 'lime' | 'amber' | 'orange' | 'red' | 'pink' | 'slate' | 'brand' | 'iridescent'", default: "'violet'", description: "Colour family. 'brand' follows your --color-brand tokens." },
+  { name: "tone", type: "'violet' | 'brand' | 'iridescent' | 'blue' | 'sky' | 'teal' | 'green' | 'orange' | 'red' | 'pink'", default: "'violet'", description: "Colour family, one of the 10 modes of the Figma 'Glass icon' variables. 'brand' follows your --color-primary tokens." },
   { name: "colors", type: "string[]", description: "Custom gradient, light to deep (two or more CSS colours). Overrides tone." },
   { name: "variant", type: "'frosted' | 'tile'", default: "'frosted'", description: "frosted: solid shape behind frosted glass. tile: the icon on a rounded glass plate." },
   { name: "detail", type: "boolean", default: "true", description: "The crisp line drawing on the glass. Turn off for a pure silhouette." },
@@ -63,6 +63,11 @@ export default function GlassIconsPage() {
           They live in their own entry, <code>@sakaniui/react/glass-icons</code>, one component per icon, so an app
           ships only the icons it imports (one icon is about 5 kB). Everything is plain SVG, so they look the same in
           every browser.
+        </p>
+        <p>
+          The Figma file has the same set: the <em>Glass Icons</em> component set, one variant per icon. Its tones
+          are the modes of the <em>Glass icon</em> variable collection, so a designer switches tone by changing the
+          mode, and the colours match the <code>tone</code> prop exactly.
         </p>
       </div>
 
