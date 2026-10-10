@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { IconExternalLink as ExternalLink } from "@sakaniui/react/icons";
 
 const REPO = "https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks";
 

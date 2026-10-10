@@ -1,7 +1,7 @@
 "use client";
 
 import { BillingAddressBlock } from "@sakaniui/react/blocks";
-import { ExternalLink } from "lucide-react";
+import { IconExternalLink as ExternalLink } from "@sakaniui/react/icons";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { Pager } from "@/components/docs/pager";

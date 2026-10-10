@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { IconSearch as Search } from "@sakaniui/react/icons";
 import { TopBar, TopBarMobile, Breadcrumb, Input, Avatar } from "@sakaniui/react";
 import { avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";

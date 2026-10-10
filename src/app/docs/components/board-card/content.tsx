@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Flag, MessageSquare } from "lucide-react";
+import { IconCalendar as Calendar, IconFlag as Flag, IconMessage as MessageSquare } from "@sakaniui/react/icons";
 import {
   BoardCard,
   BoardColumn,

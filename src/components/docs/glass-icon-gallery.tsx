@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check } from "lucide-react";
+import { IconCheck as Check } from "@sakaniui/react/icons";
 import * as GlassIcons from "@sakaniui/react/glass-icons";
 import { glassIconNames, type GlassIconComponent } from "@sakaniui/react/glass-icons";
 import { cn } from "@/lib/utils";

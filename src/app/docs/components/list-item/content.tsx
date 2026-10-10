@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, FileText, Folder } from "lucide-react";
+import { IconChevronRight as ChevronRight, IconFileText as FileText, IconFolder as Folder } from "@sakaniui/react/icons";
 import { ListItem, Avatar, Badge } from "@sakaniui/react";
 import { avatarImages } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart } from "lucide-react";
+import { IconHeart as Heart } from "@sakaniui/react/icons";
 import {
   GlassIcon,
   GlassHeart, GlassFolder, GlassCalendar, GlassCamera, GlassSettings, GlassBell,
@@ -24,7 +24,7 @@ const BASIC = `import { GlassHeart, GlassCalendar } from '@sakaniui/react/glass-
 <GlassCalendar size={48} title="Calendar" />
 <GlassMail size="1em" />           {/* follows the text size */}`;
 
-const ANY = `import { Heart } from 'lucide-react';
+const ANY = `import { IconHeart as Heart } from "@sakaniui/react/icons";
 import { GlassIcon } from '@sakaniui/react/glass-icons';
 
 // Any Lucide component, including icons added after this release.

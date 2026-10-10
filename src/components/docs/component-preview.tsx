@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Sun, Moon } from "lucide-react";
+import { IconSun as Sun, IconMoon as Moon } from "@sakaniui/react/icons";
 import { CopyButton } from "@/components/copy-button";
 import { useHighlightedCode } from "@/lib/use-highlighted-code";
 import { cn } from "@/lib/utils";

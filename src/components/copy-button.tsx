@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy } from "lucide-react";
+import { IconCheck as Check, IconCopy as Copy } from "@sakaniui/react/icons";
 
 export function CopyButton({ text, compact = false }: { text: string; compact?: boolean }) {
   const [copied, setCopied] = useState(false);

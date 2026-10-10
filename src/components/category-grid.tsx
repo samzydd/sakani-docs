@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Component, SlidersHorizontal, LayoutGrid, LineChart as LineChartIcon, LayoutDashboard, ShoppingBag, Megaphone, CreditCard } from "lucide-react";
+import { IconComponents as Component, IconAdjustmentsHorizontal as SlidersHorizontal, IconLayoutGrid as LayoutGrid, IconChartLine as LineChartIcon, IconLayoutDashboard as LayoutDashboard, IconShoppingBag as ShoppingBag, IconSpeakerphone as Megaphone, IconCreditCard as CreditCard } from "@sakaniui/react/icons";
 import { TextReveal } from "@/components/text-reveal";
 import { MaskReveal } from "@/components/mask-reveal";
 

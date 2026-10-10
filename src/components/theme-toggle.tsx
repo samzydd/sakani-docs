@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+import { IconMoon as Moon, IconSun as Sun } from "@sakaniui/react/icons";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();

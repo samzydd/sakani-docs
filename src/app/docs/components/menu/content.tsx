@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy, Download, Pencil, Trash, Check } from "lucide-react";
+import { IconCopy as Copy, IconDownload as Download, IconPencil as Pencil, IconTrash as Trash, IconCheck as Check } from "@sakaniui/react/icons";
 import { Menu, MenuItem, Popover, Button } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";

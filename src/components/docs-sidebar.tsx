@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, X } from "lucide-react";
+import { IconSearch as Search, IconX as X } from "@sakaniui/react/icons";
 import { docsNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 

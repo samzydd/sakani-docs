@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, GitPullRequest, Plus } from "lucide-react";
+import { IconBell as Bell, IconGitPullRequest as GitPullRequest, IconPlus as Plus } from "@sakaniui/react/icons";
 import {
   AppHeaderBlock,
   AccountOverviewBlock,

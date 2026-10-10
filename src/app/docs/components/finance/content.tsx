@@ -1,6 +1,6 @@
 "use client";
 
-import { Car, Coffee, Home, ShoppingBag, ArrowDownLeft } from "lucide-react";
+import { IconCar as Car, IconCoffee as Coffee, IconHome as Home, IconShoppingBag as ShoppingBag, IconArrowDownLeft as ArrowDownLeft } from "@sakaniui/react/icons";
 import {
   Balance,
   Expenses,

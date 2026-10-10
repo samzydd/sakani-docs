@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { IconChevronDown as ChevronDown } from "@sakaniui/react/icons";
 import { cn } from "@/lib/utils";
 import { TextReveal } from "@/components/text-reveal";
 

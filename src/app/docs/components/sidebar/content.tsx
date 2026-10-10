@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LayoutGrid, Mail, Users, Settings, Sparkles } from "lucide-react";
+import { IconLayoutGrid as LayoutGrid, IconMail as Mail, IconUsers as Users, IconSettings as Settings, IconSparkles as Sparkles } from "@sakaniui/react/icons";
 import {
   Sidebar,
   SidebarHeader,

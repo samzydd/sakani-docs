@@ -1,7 +1,7 @@
 "use client";
 
 import { StatCard } from "@sakaniui/react";
-import { Users, DollarSign } from "lucide-react";
+import { IconUsers as Users, IconCurrencyDollar as DollarSign } from "@sakaniui/react/icons";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";

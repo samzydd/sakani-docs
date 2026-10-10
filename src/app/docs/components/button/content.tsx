@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@sakaniui/react";
-import { ArrowRight, Download } from "lucide-react";
+import { IconArrowRight as ArrowRight, IconDownload as Download } from "@sakaniui/react/icons";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { IconArrowLeft as ArrowLeft, IconArrowRight as ArrowRight } from "@sakaniui/react/icons";
 import { flatNav } from "@/lib/nav";
 import { WhyDont } from "@/components/docs/why-dont";
 

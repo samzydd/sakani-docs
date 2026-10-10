@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { IconMenu as Menu, IconX as X } from "@sakaniui/react/icons";
 import { SakaniLogo } from "./icons/sakani-logo";
 import { docsNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";

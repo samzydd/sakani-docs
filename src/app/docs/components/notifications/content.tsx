@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, GitPullRequest } from "lucide-react";
+import { IconBell as Bell, IconGitPullRequest as GitPullRequest } from "@sakaniui/react/icons";
 import { Announcement, NotificationItem, InlineHint } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";

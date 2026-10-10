@@ -1,6 +1,6 @@
 "use client";
 
-import { Info, Settings, Trash } from "lucide-react";
+import { IconInfoCircle as Info, IconSettings as Settings, IconTrash as Trash } from "@sakaniui/react/icons";
 import { Tooltip, IconButton, Button } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";

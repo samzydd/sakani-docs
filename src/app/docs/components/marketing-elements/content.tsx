@@ -1,6 +1,6 @@
 "use client";
 
-import { Shield, Zap, Layers } from "lucide-react";
+import { IconShield as Shield, IconBolt as Zap, IconStack2 as Layers } from "@sakaniui/react/icons";
 import {
   FeaturedIcon,
   Metric,

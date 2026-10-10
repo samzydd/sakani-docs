@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe } from "lucide-react";
+import { IconGlobe as Globe } from "@sakaniui/react/icons";
 // lucide dropped its brand icons, so the site carries its own GitHub mark.
 import { GithubIcon } from "@/components/icons/github-icon";
 import {

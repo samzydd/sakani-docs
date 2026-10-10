@@ -1,13 +1,13 @@
 "use client";
 
-import { Bell, Plus, Search, Settings, Trash } from "lucide-react";
+import { IconBell as Bell, IconPlus as Plus, IconSearch as Search, IconSettings as Settings, IconTrash as Trash } from "@sakaniui/react/icons";
 import { IconButton } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 
-const BASIC = `import { Settings } from "lucide-react";
+const BASIC = `import { IconSettings as Settings } from "@sakaniui/react/icons";
 
 <IconButton icon={Settings} aria-label="Settings" />`;
 

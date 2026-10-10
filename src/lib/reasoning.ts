@@ -16,16 +16,16 @@ export interface Reasoning {
 }
 
 export const reasoning: Record<string, Reasoning> = {
-  sicons: {
+  icons: {
     why: [
-      "They are the same icons as the Figma Sicons set, so a designer's icon maps to a component with no guessing: same shapes, same 1.5 stroke, same softened corners.",
-      "The corners are rounded in the path data at build time, with the rule the Figma set uses (4px, or 3.7px where an icon's short corners can't take 4), so the icons look the same in every browser and cost nothing at runtime.",
-      "Props follow lucide-react, so moving existing Lucide icons over is a find-and-replace.",
-      "Each icon is its own module, so an app ships only the icons it imports (under 1 kB each).",
+      "The icon set is Tabler Icons, the same icons as the Figma Icons (Tabler) page, so a designer's icon maps to a component by name with no guessing.",
+      "Names follow Tabler (IconHome, IconHomeFilled), so tabler.io/icons works as the search for both designers and developers.",
+      "Props follow lucide-react and the default stroke is 1.5, the Figma icon stroke, so swapping existing Lucide icons is a find-and-replace and the weight matches the file.",
+      "Each icon is its own module, so an app ships only the icons it imports (about 1 kB each).",
     ],
     dont: [
-      "Don't mix Sicons and plain Lucide icons in the same view. The corners differ and the mismatch shows side by side.",
-      "Don't change strokeWidth per icon to create emphasis. Keep the 1.5 weight and use colour, size or a container for emphasis.",
+      "Don't mix Tabler and Lucide icons in the same view. Their shapes and proportions differ, and the mismatch shows side by side.",
+      "Don't use filled icons for decoration. Filled means on: a selected nav item, a liked heart, an active filter.",
       "Don't give a meaningful standalone icon no label: pass title, or put visible text next to it.",
     ],
   },
@@ -38,7 +38,7 @@ export const reasoning: Record<string, Reasoning> = {
       "They are plain SVG on a 24x24 grid in a separate entry, one component per icon: sharp at any size, the same in every browser, and an app ships only what it imports.",
     ],
     dont: [
-      "Don't use them in dense UI such as table rows and buttons. Use Sicons there; glass needs room to read and works best from 24px up.",
+      "Don't use them in dense UI such as table rows and buttons. Use the regular icons there; glass needs room to read and works best from 24px up.",
       "Don't recolour them per icon to signal status. Keep status in text, badges or the regular icons; the glass set is meant to stay neutral.",
       "Don't reach for GlassIcon when a generated Glass* component exists: GlassIcon draws the whole icon as one glass stroke.",
     ],

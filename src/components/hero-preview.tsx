@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { IconArrowUpRight as ArrowUpRight } from "@sakaniui/react/icons";
 import Image from "next/image";
 
 /**

@@ -1,6 +1,6 @@
 "use client";
 
-import { GitCommit, MessageSquare, UserPlus } from "lucide-react";
+import { IconGitCommit as GitCommit, IconMessage as MessageSquare, IconUserPlus as UserPlus } from "@sakaniui/react/icons";
 import { ActivityFeed, ActivityFeedHighlight } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";

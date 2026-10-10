@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { MousePointerClick, Sun, Moon } from "lucide-react";
+import { IconClick as MousePointerClick, IconSun as Sun, IconMoon as Moon } from "@sakaniui/react/icons";
 import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock, LiquidDashboardBlock } from "@sakaniui/react/blocks";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";

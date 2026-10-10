@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@sakaniui/react";
-import { Mail } from "lucide-react";
+import { IconMail as Mail } from "@sakaniui/react/icons";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";

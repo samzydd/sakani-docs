@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Layers, Aperture, EyeOff } from "lucide-react";
+import { IconArrowRight as ArrowRight, IconStack2 as Layers, IconAperture as Aperture, IconEyeOff as EyeOff } from "@sakaniui/react/icons";
 import { TextReveal } from "@/components/text-reveal";
 import { MaskReveal } from "@/components/mask-reveal";
 import { SurfaceTrio } from "@/components/docs/glass-demos";

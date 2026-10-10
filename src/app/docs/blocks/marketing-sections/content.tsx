@@ -1,6 +1,6 @@
 "use client";
 
-import { Layers, Palette, ShieldCheck, Zap } from "lucide-react";
+import { IconStack2 as Layers, IconPalette as Palette, IconShieldCheck as ShieldCheck, IconBolt as Zap } from "@sakaniui/react/icons";
 import {
   HeroBlock,
   FeatureGridBlock,

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { IconArrowUpRight as ArrowUpRight } from "@sakaniui/react/icons";
 import { ThemeToggle } from "./theme-toggle";
 import { CommandMenu } from "./command-menu";
 import { MobileNav } from "./mobile-nav";

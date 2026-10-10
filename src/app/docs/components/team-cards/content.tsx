@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe, AtSign } from "lucide-react";
+import { IconGlobe as Globe, IconAt as AtSign } from "@sakaniui/react/icons";
 import { ProfileCard, TeamCard } from "@sakaniui/react";
 import { teamImage } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";

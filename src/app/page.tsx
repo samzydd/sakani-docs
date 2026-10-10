@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Moon, Blocks, Palette, Component } from "lucide-react";
+import { IconArrowRight as ArrowRight, IconMoon as Moon, IconBlocks as Blocks, IconPalette as Palette, IconComponents as Component } from "@sakaniui/react/icons";
 import { Button, Alert } from "@sakaniui/react";
 import { CodeBlock } from "@/components/code-block";
 import { DashboardShowcase } from "@/components/dashboard-showcase";
@@ -74,7 +74,7 @@ export default function HomePage() {
               href="/docs"
               className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
             >
-              Last updated: October 9th <ArrowRight size={12} />
+              Last updated: October 10th <ArrowRight size={12} />
             </Link>
           </MaskReveal>
           <TextReveal

@@ -1,4 +1,4 @@
-import { Check, X } from "lucide-react";
+import { IconCheck as Check, IconX as X } from "@sakaniui/react/icons";
 import { reasoning } from "@/lib/reasoning";
 
 /**

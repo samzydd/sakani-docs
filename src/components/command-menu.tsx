@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { IconSearch as Search } from "@sakaniui/react/icons";
 import { docsNav } from "@/lib/nav";
 
 export function CommandMenu() {
