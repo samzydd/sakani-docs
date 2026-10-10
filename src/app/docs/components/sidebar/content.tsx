@@ -71,7 +71,7 @@ const SIDEBAR_PROPS = [
 
 const ITEM_PROPS = [
   { name: "label", type: "string", description: "Item text. Still required when collapsed, since it becomes the tooltip and accessible name." },
-  { name: "icon", type: "LucideIcon", description: "The icon component itself, not an element." },
+  { name: "icon", type: "IconComponent", description: "The icon component itself, not an element." },
   { name: "active", type: "boolean", default: "false", description: "Marks the current page." },
   { name: "activeIndicator", type: "boolean", default: "true", description: "Active styling: true is the raised card with a left accent bar, false is a flat tint. Ignored when collapsed." },
   { name: "badge", type: "string", description: "Trailing count or status pill." },
@@ -89,7 +89,7 @@ const HEADER_PROPS = [
   { name: "subtitle", type: "string", description: "Second line, e.g. the plan." },
   { name: "logo", type: "ReactNode", description: "Mark beside the title." },
   { name: "onToggle", type: "() => void", description: "Fires from the collapse button on brand-toggle." },
-  { name: "toggleIcon", type: "LucideIcon", default: "PanelLeftClose", description: "Icon for that button." },
+  { name: "toggleIcon", type: "IconComponent", default: "PanelLeftClose", description: "Icon for that button." },
   { name: "collapsed", type: "boolean", default: "false", description: "Icon-only layout." },
 ];
 

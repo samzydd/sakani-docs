@@ -24,7 +24,7 @@ const BASIC = `const items = [
 const FILL = `<Tabs items={items} defaultValue="overview" fill />`;
 
 const PROPS = [
-  { name: "items", type: "{ value: string; label: string; icon?: LucideIcon; disabled?: boolean }[]", description: "The tabs to render." },
+  { name: "items", type: "{ value: string; label: string; icon?: IconComponent; disabled?: boolean }[]", description: "The tabs to render." },
   { name: "value", type: "string", description: "Controlled active tab value." },
   { name: "defaultValue", type: "string", description: "Uncontrolled initial active value." },
   { name: "onChange", type: "(value: string) => void", description: "Fires when the active tab changes." },

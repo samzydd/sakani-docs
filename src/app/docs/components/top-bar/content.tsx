@@ -32,7 +32,7 @@ const TOPBAR_PROPS = [
   { name: "density", type: "'md' | 'sm'", default: "'md'", description: "Bar height." },
   { name: "showToggle", type: "boolean", default: "true", description: "Shows the sidebar toggle button." },
   { name: "onToggle", type: "() => void", description: "Fires from that toggle." },
-  { name: "toggleIcon", type: "LucideIcon", default: "PanelLeft", description: "Icon for the toggle." },
+  { name: "toggleIcon", type: "IconComponent", default: "PanelLeft", description: "Icon for the toggle." },
   { name: "showActions", type: "boolean", default: "true", description: "Shows the built-in help and notification icons." },
   { name: "showHelp", type: "boolean", default: "true", description: "Shows the help icon within that group." },
   { name: "hasUnread", type: "boolean", default: "false", description: "Puts the unread dot on the notification icon." },

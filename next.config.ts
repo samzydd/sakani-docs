@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { source: "/docs/blocks/crm-dashboard", destination: "/#showcase", permanent: true },
       // Sicons (0.6) was replaced by the Tabler icon set in 0.7.
       { source: "/docs/sicons", destination: "/docs/icons", permanent: true },
+      { source: "/docs/glass-icons", destination: "/docs/icons", permanent: true },
     ];
   },
 };

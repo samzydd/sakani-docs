@@ -28,7 +28,7 @@ const PROPS = [
   { name: "trend", type: "'up' | 'down' | 'flat'", description: "Drives the delta's color and arrow." },
   { name: "sparkline", type: "number[]", description: "Data points for an inline sparkline." },
   { name: "variant", type: "'minimal' | 'icon' | 'featured'", default: "'minimal'", description: "Visual density." },
-  { name: "icon", type: "LucideIcon", description: "Leading icon, shown for icon/featured variants." },
+  { name: "icon", type: "IconComponent", description: "Leading icon, shown for icon/featured variants." },
 ];
 
 export default function StatCardPage() {

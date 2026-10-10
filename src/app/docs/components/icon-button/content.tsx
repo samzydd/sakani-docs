@@ -24,7 +24,7 @@ const SIZES = `<IconButton icon={Search} size="sm" aria-label="Search" />
 const DISABLED = `<IconButton icon={Bell} variant="outline" aria-label="Notifications" disabled />`;
 
 const PROPS = [
-  { name: "icon", type: "LucideIcon", description: "The icon component itself, not an element: pass Settings, not <Settings />." },
+  { name: "icon", type: "IconComponent", description: "The icon component itself, not an element: pass Settings, not <Settings />." },
   { name: "aria-label", type: "string", description: "Required. There's no visible text, so this is the only name the control has." },
   { name: "variant", type: "'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive'", default: "'secondary'", description: "Visual weight, matching Button's variants." },
   { name: "size", type: "'sm' | 'md' | 'lg'", default: "'md'", description: "Square dimensions." },

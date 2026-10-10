@@ -17,7 +17,6 @@ export const docsNav: NavGroup[] = [
       { title: "Theming", href: "/docs/theming" },
       { title: "Glass & Liquid Glass", href: "/docs/glass" },
       { title: "Icons", href: "/docs/icons" },
-      { title: "Glass Icons", href: "/docs/glass-icons" },
       { title: "Tokens", href: "/docs/tokens" },
     ],
   },
