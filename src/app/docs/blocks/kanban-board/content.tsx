@@ -13,7 +13,7 @@ const CODE = `import { KanbanBoardBlock } from '@sakaniui/react/blocks';
 export default function KanbanBoardBlockPage() {
   return (
     <article>
-      <PageHeader title="Kanban Board" description="A project-management board with columns, cards, and drag states: the Data & Content category's block." />
+      <PageHeader title="Kanban Board" description="A project-management board with columns, cards and smooth drag and drop: the Data & Content category's block." />
 
       <div className="doc-prose mb-8">
         <p>
@@ -27,7 +27,13 @@ export default function KanbanBoardBlockPage() {
           >
             the source <ExternalLink size={13} />
           </a>{" "}
-          in to wire real drag-and-drop and your own columns.
+          in to use your own columns and data.
+        </p>
+        <p>
+          Drag a card in the preview: it lifts and swings with your movement, a dashed ghost of the card opens
+          exactly where it will land while the other cards slide out of the way, and on release it glides into
+          place. Mouse, pen and touch (press and hold) all work; the board scrolls at its edges, a card dropped
+          outside a column springs back, and reduced motion turns the swing off.
         </p>
       </div>
 
