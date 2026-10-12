@@ -52,7 +52,7 @@ export default function PricingTableBlockPage() {
           components: this page shows it running with realistic props, but the
           intent is to copy{" "}
           <a
-            href="https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks/PricingTableBlock/PricingTableBlock.tsx"
+            href="https://github.com/samzydd/Sakaniui/blob/main/src/blocks/PricingTableBlock/PricingTableBlock.tsx"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1 font-medium text-ink underline underline-offset-2"

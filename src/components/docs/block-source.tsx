@@ -1,6 +1,6 @@
 import { IconExternalLink as ExternalLink } from "@sakaniui/react/icons";
 
-const REPO = "https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks";
+const REPO = "https://github.com/samzydd/Sakaniui/blob/main/src/blocks";
 
 /**
  * The "copy this, don't configure it" footer every block page ends with.

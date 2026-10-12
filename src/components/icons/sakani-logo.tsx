@@ -28,7 +28,7 @@ export function SakaniLogo({ size = 28, className }: { size?: number; className?
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       role="img"
-      aria-label="Sakani"
+      aria-label="SakaniUI"
     >
       <path
         d="M0 8C0 3.58172 3.58172 0 8 0H20C24.4183 0 28 3.58172 28 8V20C28 24.4183 24.4183 28 20 28H8C3.58172 28 0 24.4183 0 20V8Z"

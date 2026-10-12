@@ -74,7 +74,7 @@ export default function HomePage() {
               href="/docs"
               className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
             >
-              Last updated: October 11th <ArrowRight size={12} />
+              Last updated: October 12th <ArrowRight size={12} />
             </Link>
           </MaskReveal>
           <TextReveal
@@ -116,7 +116,7 @@ export default function HomePage() {
                   Get started
                 </Button>
               </Link>
-              <a href="https://github.com/samzydd/Sakani-design-system" target="_blank" rel="noreferrer">
+              <a href="https://github.com/samzydd/Sakaniui" target="_blank" rel="noreferrer">
                 <Button variant="outline" size="lg" leftIcon={<GithubIcon size={16} />}>
                   View on GitHub
                 </Button>

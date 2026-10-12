@@ -34,7 +34,7 @@ export function MobileNav() {
           <div className="flex h-16 items-center justify-between border-b border-line-subtle px-4">
             <span className="flex items-center gap-2">
               <SakaniLogo size={28} />
-              <span className="text-[15px] font-semibold text-ink">Sakani</span>
+              <span className="text-[15px] font-semibold text-ink">SakaniUI</span>
             </span>
             <button
               type="button"

@@ -8,7 +8,7 @@ import { Pager } from "@/components/docs/pager";
 
 const BASIC = `<Link href="/pricing">See pricing</Link>`;
 
-const EXTERNAL = `<Link href="https://github.com/samzydd/Sakani-design-system" external>
+const EXTERNAL = `<Link href="https://github.com/samzydd/Sakaniui" external>
   View the source
 </Link>`;
 
@@ -50,7 +50,7 @@ export default function LinkPage() {
             the opened page from reaching back into yours.
           </p>
           <ComponentPreview code={EXTERNAL}>
-            <Link href="https://github.com/samzydd/Sakani-design-system" external>
+            <Link href="https://github.com/samzydd/Sakaniui" external>
               View the source
             </Link>
           </ComponentPreview>

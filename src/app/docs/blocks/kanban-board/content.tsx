@@ -20,7 +20,7 @@ export default function KanbanBoardBlockPage() {
           Ships with a <code>state</code> prop demonstrating{" "}
           <code>default | loading | empty-column | dragging</code>. Copy{" "}
           <a
-            href="https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks/KanbanBoardBlock/KanbanBoardBlock.tsx"
+            href="https://github.com/samzydd/Sakaniui/blob/main/src/blocks/KanbanBoardBlock/KanbanBoardBlock.tsx"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1 font-medium text-ink underline underline-offset-2"

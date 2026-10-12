@@ -29,7 +29,7 @@ export function SiteHeader() {
 
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <SakaniLogo size={32} />
-          <span className="text-[15px] font-semibold tracking-tight text-ink">Sakani</span>
+          <span className="text-[15px] font-semibold tracking-tight text-ink">SakaniUI</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -58,7 +58,7 @@ export function SiteHeader() {
             <ArrowUpRight size={14} />
           </a>
           <a
-            href="https://github.com/samzydd/Sakani-design-system"
+            href="https://github.com/samzydd/Sakaniui"
             target="_blank"
             rel="noreferrer"
             className="flex h-9 w-9 items-center justify-center rounded-md border border-line-subtle text-ink-muted transition-colors hover:bg-subtle hover:text-ink"

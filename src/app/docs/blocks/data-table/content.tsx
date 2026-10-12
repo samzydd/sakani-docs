@@ -20,7 +20,7 @@ export default function DataTableBlockPage() {
           Ships with a <code>state</code> prop demonstrating{" "}
           <code>default | filtered | bulk | loading | empty | error</code>. Copy{" "}
           <a
-            href="https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks/DataTableBlock/DataTableBlock.tsx"
+            href="https://github.com/samzydd/Sakaniui/blob/main/src/blocks/DataTableBlock/DataTableBlock.tsx"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1 font-medium text-ink underline underline-offset-2"

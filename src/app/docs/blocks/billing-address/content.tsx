@@ -28,7 +28,7 @@ export default function BillingAddressBlockPage() {
           works in this preview: try submitting with an incomplete postal code.
           Copy{" "}
           <a
-            href="https://github.com/samzydd/Sakani-design-system/blob/main/src/blocks/Billing/BillingAddressBlock/BillingAddressBlock.tsx"
+            href="https://github.com/samzydd/Sakaniui/blob/main/src/blocks/Billing/BillingAddressBlock/BillingAddressBlock.tsx"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1 font-medium text-ink underline underline-offset-2"

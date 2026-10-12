@@ -15,7 +15,7 @@ export function SiteFooter() {
           <a href="https://www.npmjs.com/package/@sakaniui/react" target="_blank" rel="noreferrer" className="hover:text-ink">
             npm
           </a>
-          <a href="https://github.com/samzydd/Sakani-design-system" target="_blank" rel="noreferrer" className="hover:text-ink">
+          <a href="https://github.com/samzydd/Sakaniui" target="_blank" rel="noreferrer" className="hover:text-ink">
             GitHub
           </a>
           <Link href="/docs" className="hover:text-ink">

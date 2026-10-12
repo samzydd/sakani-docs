@@ -24,7 +24,7 @@ export const SITE_URL = (
       : "http://localhost:3000")
 ).replace(/\/$/, "");
 
-export const SITE_NAME = "Sakani";
+export const SITE_NAME = "SakaniUI";
 
 /**
  * Leads with what the thing *is*, because that is what gets typed into a
@@ -60,4 +60,4 @@ export const SITE_KEYWORDS = [
   "glass effect design system",
 ];
 
-export const GITHUB_URL = "https://github.com/samzydd/Sakani-design-system";
+export const GITHUB_URL = "https://github.com/samzydd/Sakaniui";
