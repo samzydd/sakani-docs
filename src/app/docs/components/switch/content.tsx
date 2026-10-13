@@ -14,6 +14,9 @@ const STATES = `<Switch label="Off" />
 <Switch label="Disabled" disabled />
 <Switch label="Disabled, on" disabled defaultChecked />`;
 
+const VARIANTS = `<Switch label="Default" defaultChecked />
+<Switch variant="stretch" label="Stretch" defaultChecked />`;
+
 const BARE = `// No label: pair with your own text and pass an aria-label.
 <Switch aria-label="Enable notifications" defaultChecked />`;
 
@@ -29,6 +32,7 @@ const CONTROLLED = `const [on, setOn] = useState(true);
 const PROPS = [
   { name: "label", type: "string", description: "Optional text rendered to the right of the switch." },
   { name: "description", type: "ReactNode", description: "Help text under the label, left-aligned with it." },
+  { name: "variant", type: '"default" | "stretch"', default: '"default"', description: "stretch adds a liquid motion: the thumb stretches as it travels, then settles to a circle. Matches the Type axis of the Figma Switch." },
   { name: "checked", type: "boolean", description: "Controlled on/off state." },
   { name: "defaultChecked", type: "boolean", description: "Uncontrolled initial state." },
   { name: "disabled", type: "boolean", default: "false", description: "Disables the input." },
@@ -75,6 +79,24 @@ export default function SwitchPage() {
               <Switch label="On" defaultChecked />
               <Switch label="Disabled" disabled />
               <Switch label="Disabled, on" disabled defaultChecked />
+            </div>
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Variants</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            <code>stretch</code> is an opt-in liquid motion. On every toggle the
+            thumb stretches as it slides across: the edge it is heading toward
+            moves first and the tail follows a beat later, then it relaxes back
+            to a circle. It is one smooth motion with no bounce, it stays inside
+            the track, and reduced motion turns it off. The default switch is
+            unchanged.
+          </p>
+          <ComponentPreview code={VARIANTS}>
+            <div className="flex flex-col gap-3">
+              <Switch label="Default" defaultChecked />
+              <Switch variant="stretch" label="Stretch" defaultChecked />
             </div>
           </ComponentPreview>
         </section>
