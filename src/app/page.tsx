@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { IconArrowRight as ArrowRight, IconMoon as Moon, IconBlocks as Blocks, IconPalette as Palette, IconComponents as Component } from "@sakaniui/react/icons";
+import { IconArrowRight as ArrowRight, IconMoon as Moon, IconBlocks as Blocks, IconPalette as Palette, IconComponents as Component, IconBrandFigma as FigmaIcon } from "@sakaniui/react/icons";
 import { Button, Alert } from "@sakaniui/react";
 import { CodeBlock } from "@/components/code-block";
 import { DashboardShowcase } from "@/components/dashboard-showcase";
@@ -119,6 +119,15 @@ export default function HomePage() {
               <a href="https://github.com/samzydd/Sakaniui" target="_blank" rel="noreferrer">
                 <Button variant="outline" size="lg" leftIcon={<GithubIcon size={16} />}>
                   View on GitHub
+                </Button>
+              </a>
+              <a
+                href="https://www.figma.com/community/file/1661001585975776295/sakaniui-v2-0"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button variant="outline" size="lg" leftIcon={<FigmaIcon size={16} />}>
+                  Figma file
                 </Button>
               </a>
               <CodeBlock code={INSTALL_CODE} lang="bash" compact className="h-[42px] w-fit" />
