@@ -15,6 +15,7 @@ import { TextReveal } from "@/components/text-reveal";
 import { MaskReveal } from "@/components/mask-reveal";
 import { HeroLight } from "@/components/hero-light";
 import { GlassShowcase } from "@/components/glass-showcase";
+import { AiShowcase } from "@/components/ai-showcase";
 
 /** The hero's rise is slower than the section reveals further down (see
  *  --reveal-rise-hero in globals.css); it's the page's first impression
@@ -150,6 +151,10 @@ export default function HomePage() {
 
       <Reveal>
         <GlassShowcase />
+      </Reveal>
+
+      <Reveal>
+        <AiShowcase />
       </Reveal>
 
       {/* Features */}
