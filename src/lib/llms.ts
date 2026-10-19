@@ -42,7 +42,9 @@ const HEAD = `# Sakani UI
 
 > Sakani UI (\`@sakaniui/react\`) is an open-source, token-driven React design system with Figma parity and a Liquid Glass surface layer. Components are accessible, themed with CSS variables, and re-theme for dark mode and glass surfaces without per-component code.
 
-Install: \`npm install @sakaniui/react\`, then import \`@sakaniui/react/tokens.css\` and \`@sakaniui/react/style.css\` once. Read the agent guide first: it explains why components behave as they do and what to do when nothing fits.`;
+Install: \`npm install @sakaniui/react\`, then import \`@sakaniui/react/tokens.css\` and \`@sakaniui/react/style.css\` once. Read the agent guide first: it explains why components behave as they do and what to do when nothing fits.
+
+Machine-readable contract (every component, prop, required prop, enum value and token): ${SITE_URL}/manifest.json, also shipped as \`@sakaniui/react/manifest.json\`. MCP server: \`npx -y -p @sakaniui/react sakaniui-mcp\` (tools: search_components, get_component, list_components, get_tokens, check_usage, get_guide). See ${SITE_URL}/docs/ai.`;
 
 export function llmsIndex(): string {
   const lines = [HEAD, "", `- [Agent guide — the why behind the system](${SITE_URL}/llms-full.txt): principles, per-component use/don't, glass rules, recipes for AI-product moments`];
