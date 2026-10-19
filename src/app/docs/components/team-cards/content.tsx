@@ -1,7 +1,6 @@
 "use client";
 
-import { IconGlobe as Globe, IconAt as AtSign } from "@sakaniui/react/icons";
-import { ProfileCard, TeamCard } from "@sakaniui/react";
+import { ProfileCard, TeamCard, XIcon, GithubIcon, InstagramIcon, FacebookIcon, LinkedinIcon } from "@sakaniui/react";
 import { teamImage } from "@/lib/placeholder-image";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
@@ -23,8 +22,8 @@ const PROFILE = `<ProfileCard
   avatarSrc="/amara.jpg"
   bio="Ten years turning messy component libraries into systems teams actually use."
   socialLinks={[
-    { icon: <AtSign size={16} />, label: "X (Twitter)", href: "#" },
-    { icon: <Globe size={16} />, label: "LinkedIn", href: "#" },
+    { icon: <XIcon />, label: "X (Twitter)", href: "#" },
+    { icon: <GithubIcon />, label: "GitHub", href: "#" },
   ]}
 />`;
 
@@ -36,8 +35,9 @@ const TEAM = `// Style: Card
   location="Lagos, NG"
   locationStatus="active"
   socialLinks={[
-    { icon: <AtSign size={16} />, label: "X (Twitter)", href: "#" },
-    { icon: <Globe size={16} />, label: "LinkedIn", href: "#" },
+    { icon: <InstagramIcon />, label: "Instagram", href: "#" },
+    { icon: <FacebookIcon />, label: "Facebook", href: "#" },
+    { icon: <LinkedinIcon />, label: "LinkedIn", href: "#" },
   ]}
 />
 
@@ -50,14 +50,21 @@ const TEAM = `// Style: Card
   locationStatus="active"
   bio="Leads the design vision and strategy, guiding the team to craft cohesive, user-centered experiences from concept to launch."
   socialLinks={[
-    { icon: <AtSign size={16} />, label: "X (Twitter)", href: "#" },
-    { icon: <Globe size={16} />, label: "LinkedIn", href: "#" },
+    { icon: <InstagramIcon />, label: "Instagram", href: "#" },
+    { icon: <FacebookIcon />, label: "Facebook", href: "#" },
+    { icon: <LinkedinIcon />, label: "LinkedIn", href: "#" },
   ]}
 />`;
 
-const SOCIALS = [
-  { icon: <AtSign size={16} />, label: "X (Twitter)", href: "#" },
-  { icon: <Globe size={16} />, label: "LinkedIn", href: "#" },
+// The same glyphs the Figma cards use, exported from the library.
+const PROFILE_SOCIALS = [
+  { icon: <XIcon />, label: "X (Twitter)", href: "#" },
+  { icon: <GithubIcon />, label: "GitHub", href: "#" },
+];
+const TEAM_SOCIALS = [
+  { icon: <InstagramIcon />, label: "Instagram", href: "#" },
+  { icon: <FacebookIcon />, label: "Facebook", href: "#" },
+  { icon: <LinkedinIcon />, label: "LinkedIn", href: "#" },
 ];
 
 const PROFILE_PROPS = [
@@ -90,7 +97,7 @@ export default function TeamCardsPage() {
               role="Head of Design"
               avatarSrc={AVATAR}
               bio="Ten years turning messy component libraries into systems teams actually use."
-              socialLinks={SOCIALS}
+              socialLinks={PROFILE_SOCIALS}
             />
           </div>
         </ComponentPreview>
@@ -123,7 +130,7 @@ export default function TeamCardsPage() {
                   role="Head of Design"
                   location="Lagos, NG"
                   locationStatus="active"
-                  socialLinks={SOCIALS}
+                  socialLinks={TEAM_SOCIALS}
                 />
               </div>
               <div className="w-full max-w-[404px]">
@@ -134,7 +141,7 @@ export default function TeamCardsPage() {
                   location="Lagos, NG"
                   locationStatus="active"
                   bio="Leads the design vision and strategy, guiding the team to craft cohesive, user-centered experiences from concept to launch."
-                  socialLinks={SOCIALS}
+                  socialLinks={TEAM_SOCIALS}
                 />
               </div>
             </div>

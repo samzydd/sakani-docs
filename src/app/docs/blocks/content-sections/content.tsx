@@ -7,7 +7,7 @@ import {
   CareersBlock,
   BlogListingBlock,
 } from "@sakaniui/react/blocks";
-import { InstagramIcon, FacebookIcon, LinkedinIcon } from "@/components/docs/social-icons";
+import { InstagramIcon, FacebookIcon, LinkedinIcon } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { BlockSource } from "@/components/docs/block-source";
