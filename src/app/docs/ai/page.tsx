@@ -36,6 +36,7 @@ const MANIFEST_SHAPE = `{
     { "name": "variant", "type": "\\"destructive\\" | \\"primary\\" | ...", "values": ["destructive", "primary"], "default": "primary", "required": false },
     { "name": "aria-label", "type": "string", "required": true }
   ],
+  "since": "0.1.0",
   "contract": { "requiredProps": ["icon", "aria-label"], "requiresAccessibleName": true }
 }`;
 
@@ -96,7 +97,34 @@ export default function AiPage() {
           <li><code>get_tokens</code>: the design tokens that exist, filtered by group.</li>
           <li><code>check_usage</code>: validates the props you are about to use: missing required props, values outside an enum, props that do not exist.</li>
           <li><code>get_guide</code>: sections of the AGENTS.md guide, such as &ldquo;When nothing fits&rdquo;.</li>
+          <li><code>check_compatibility</code>: compares the version the reference describes with the one installed in your project, and lists the components your version does not have yet.</li>
+          <li><code>get_changelog</code>: the release notes for a version, or for every release since the one you have.</li>
         </ul>
+      </div>
+
+      <div className="doc-prose">
+        <h2>It matches your version</h2>
+        <p>
+          <code>npx</code> may fetch a newer release than the one your project uses, so the server finds the
+          <code> @sakaniui/react</code> installed in your project (from the folder it runs in, or{" "}
+          <code>--project &lt;dir&gt;</code>) and answers for that version. Every component carries{" "}
+          <code>since</code>, the first release that contained it, so a component your version does not have
+          is flagged <code>availableInInstalled: false</code> and <code>check_usage</code> rejects it, instead
+          of an assistant suggesting something that is not there yet.
+        </p>
+        <h2>It is read-only</h2>
+        <p>
+          The server reads four fixed files from an install (<code>package.json</code>, the manifest,{" "}
+          <code>AGENTS.md</code> and <code>CHANGELOG.md</code>). It writes nothing, runs nothing, opens no
+          network connection and takes no file paths, and every tool is marked read-only. Every tool argument is
+          type- and length-checked.
+        </p>
+        <h2>It is checked against the build</h2>
+        <p>
+          The build fails, and so does <code>npm publish</code>, if the manifest disagrees with the library: an
+          export that is not described, a prop that is not in the type definitions, a token that is not defined
+          in <code>tokens.css</code>, or anything that looks like a private reference.
+        </p>
       </div>
 
       <div className="doc-prose">
