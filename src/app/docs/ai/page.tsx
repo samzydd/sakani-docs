@@ -102,9 +102,9 @@ export default function AiPage() {
         <h3>Tools</h3>
         <ul>
           <li><code>search_components</code>: find a component or block by what you need, e.g. &ldquo;date picker&rdquo;.</li>
-          <li><code>get_component</code>: the full contract for one component, with a ready-to-paste <code>example</code> that is type-checked against the release.</li>
+          <li><code>get_component</code>: the full contract for one component: every prop, the fields of object props (<code>shape</code>), a ready-to-paste <code>example</code> that is type-checked against the release, and <code>recipes</code> for patterns the types alone do not teach.</li>
           <li><code>search_icons</code>: finds real icon names by meaning (&ldquo;delete&rdquo; gives <code>IconTrash</code>), so an assistant never guesses one.</li>
-          <li><code>check_code</code>: checks a whole snippet before it is shown to you: imports, required props, allowed values, and icon props passed as <code>icon=&#123;IconTrash&#125;</code>. The code is read as text, never run.</li>
+          <li><code>check_code</code>: checks a whole snippet before it is shown to you: imports, required props, allowed values, icon props passed as <code>icon=&#123;IconTrash&#125;</code>, and the field names inside inline object props such as table columns. The code is read as text, never run.</li>
           <li><code>list_components</code>: browse everything, filtered by kind or category.</li>
           <li><code>get_tokens</code>: the design tokens that exist, filtered by group.</li>
           <li><code>check_usage</code>: validates the props you are about to use: missing required props, values outside an enum, props that do not exist.</li>
