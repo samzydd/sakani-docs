@@ -75,7 +75,7 @@ export default function HomePage() {
               href="/docs"
               className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
             >
-              Last updated: October 20th <ArrowRight size={12} />
+              Last updated: October 21st <ArrowRight size={12} />
             </Link>
           </MaskReveal>
           <TextReveal

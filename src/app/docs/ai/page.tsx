@@ -92,7 +92,9 @@ export default function AiPage() {
         <h3>Tools</h3>
         <ul>
           <li><code>search_components</code>: find a component or block by what you need, e.g. &ldquo;date picker&rdquo;.</li>
-          <li><code>get_component</code>: the full contract for one component before writing JSX.</li>
+          <li><code>get_component</code>: the full contract for one component, with a ready-to-paste <code>example</code> that is type-checked against the release.</li>
+          <li><code>search_icons</code>: finds real icon names by meaning (&ldquo;delete&rdquo; gives <code>IconTrash</code>), so an assistant never guesses one.</li>
+          <li><code>check_code</code>: checks a whole snippet before it is shown to you: imports, required props, allowed values, and icon props passed as <code>icon=&#123;IconTrash&#125;</code>. The code is read as text, never run.</li>
           <li><code>list_components</code>: browse everything, filtered by kind or category.</li>
           <li><code>get_tokens</code>: the design tokens that exist, filtered by group.</li>
           <li><code>check_usage</code>: validates the props you are about to use: missing required props, values outside an enum, props that do not exist.</li>
@@ -114,16 +116,17 @@ export default function AiPage() {
         </p>
         <h2>It is read-only</h2>
         <p>
-          The server reads four fixed files from an install (<code>package.json</code>, the manifest,{" "}
-          <code>AGENTS.md</code> and <code>CHANGELOG.md</code>). It writes nothing, runs nothing, opens no
+          The server reads five fixed files from an install (<code>package.json</code>, the manifest, the icon
+          index, <code>AGENTS.md</code> and <code>CHANGELOG.md</code>). It writes nothing, runs nothing, opens no
           network connection and takes no file paths, and every tool is marked read-only. Every tool argument is
           type- and length-checked.
         </p>
         <h2>It is checked against the build</h2>
         <p>
           The build fails, and so does <code>npm publish</code>, if the manifest disagrees with the library: an
-          export that is not described, a prop that is not in the type definitions, a token that is not defined
-          in <code>tokens.css</code>, or anything that looks like a private reference.
+          export that is not described, a prop that is not in the type definitions, an example that does not
+          type-check, an icon name that does not exist, a token that is not defined in <code>tokens.css</code>, or
+          anything that looks like a private reference.
         </p>
       </div>
 

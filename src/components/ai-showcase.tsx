@@ -20,7 +20,7 @@ const POINTS = [
   {
     icon: Plug,
     title: "An MCP server that checks the work",
-    body: "Search components, read a contract, and validate the props you are about to write with check_usage. It runs locally with no dependencies.",
+    body: "Search components and icons, start from a type-checked example, and check every snippet with check_code before it ships. It runs locally with no dependencies.",
   },
   {
     icon: Book,
