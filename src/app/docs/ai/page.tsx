@@ -12,12 +12,12 @@ const MCP_CONFIG = `{
   "mcpServers": {
     "sakaniui": {
       "command": "npx",
-      "args": ["-y", "-p", "@sakaniui/react", "sakaniui-mcp"]
+      "args": ["-y", "@sakaniui/mcp"]
     }
   }
 }`;
 
-const CLAUDE_CODE = `claude mcp add sakaniui -- npx -y -p @sakaniui/react sakaniui-mcp`;
+const CLAUDE_CODE = `claude mcp add sakaniui -- npx -y @sakaniui/mcp`;
 
 const MANIFEST_USE = `import manifest from '@sakaniui/react/manifest.json';
 
@@ -74,9 +74,10 @@ export default function AiPage() {
       <div className="doc-prose">
         <h2>The MCP server</h2>
         <p>
-          The package includes a small Model Context Protocol server. It runs locally, has no
-          dependencies and answers from the installed version. Add it to your editor&apos;s MCP config
-          (Cursor, Windsurf, Claude Desktop, ...):
+          <code>@sakaniui/mcp</code> is a small Model Context Protocol server. It is its own package (about
+          200 kB, no dependencies), so it starts in a couple of seconds and does not install the component
+          library. It runs locally and answers for the version installed in your project. Add it to your
+          editor&apos;s MCP config (Cursor, Windsurf, Claude Desktop, ...):
         </p>
       </div>
       <div className="mt-4">
@@ -87,6 +88,15 @@ export default function AiPage() {
       </div>
       <div className="mt-4">
         <CodeBlock code={CLAUDE_CODE} lang="bash" />
+      </div>
+      <div className="doc-prose">
+        <p>
+          On Windows, <code>npx</code> is a <code>.cmd</code> script, so launch it through{" "}
+          <code>cmd /c</code>: use <code>&quot;command&quot;: &quot;cmd&quot;, &quot;args&quot;: [&quot;/c&quot;, &quot;npx&quot;, &quot;-y&quot;, &quot;@sakaniui/mcp&quot;]</code>, or in
+          Claude Code <code>claude mcp add sakaniui -- cmd /c npx -y @sakaniui/mcp</code>. It needs Node.js 18
+          or later. To check it is connected, open your editor&apos;s MCP list (<code>/mcp</code> in Claude Code):{" "}
+          <code>sakaniui</code> should show 10 tools.
+        </p>
       </div>
       <div className="doc-prose">
         <h3>Tools</h3>

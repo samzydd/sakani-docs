@@ -5,13 +5,19 @@ import { Pager } from "@/components/docs/pager";
 export const metadata = {
   title: "Installation",
   description:
-    "Install @sakaniui/react with npm, import the token stylesheet once, and render your first component. Works with Next.js App Router, Vite and any React 19 setup.",
+    "Install @sakaniui/react with npm, import its two stylesheets once, and render your first component. Works with Next.js App Router, Vite and any React 19 setup.",
 };
 
 const INSTALL = `npm install @sakaniui/react`;
 
 const TOKENS_IMPORT = `// app/layout.tsx (or your app's single entry point)
-import '@sakaniui/react/tokens.css';`;
+import '@sakaniui/react/tokens.css';
+import '@sakaniui/react/style.css';`;
+
+const FONT = `npm install @fontsource-variable/geist
+
+// next to the two imports above
+import '@fontsource-variable/geist';`;
 
 const USAGE = `import { Button } from '@sakaniui/react';
 
@@ -39,15 +45,27 @@ export default function InstallationPage() {
       </div>
 
       <div className="doc-prose">
-        <h2>2. Import the tokens once</h2>
+        <h2>2. Import the two stylesheets once</h2>
         <p>
           Every component references CSS variables for color, spacing, radius, and
-          shadow; <code>tokens.css</code> is what actually defines them. Import it
-          exactly once, at your app&apos;s root, before any component renders.
+          shadow; <code>tokens.css</code> is what actually defines them, and{" "}
+          <code>style.css</code> holds the component styles. Both are required: import
+          them once, at your app&apos;s root, before any component renders.
         </p>
       </div>
       <div className="mt-4">
         <CodeBlock code={TOKENS_IMPORT} lang="tsx" />
+      </div>
+
+      <div className="doc-prose">
+        <h3>Optional: the Geist font</h3>
+        <p>
+          Typography is set in Geist. The package does not load fonts, so without it the
+          system font is used. To match the design exactly, install and import it once:
+        </p>
+      </div>
+      <div className="mt-4">
+        <CodeBlock code={FONT} lang="tsx" />
       </div>
 
       <div className="doc-prose">

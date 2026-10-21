@@ -34,8 +34,7 @@ const MCP_CONFIG = `{
     "sakaniui": {
       "command": "npx",
       "args": [
-        "-y", "-p", "@sakaniui/react",
-        "sakaniui-mcp"
+        "-y", "@sakaniui/mcp"
       ]
     }
   }
@@ -77,7 +76,7 @@ export function AiShowcase() {
           <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink-muted">Add it to your editor</p>
           <CodeBlock code={MCP_CONFIG} lang="json" />
           <p className="mt-2 text-xs text-ink-muted">
-            Claude Code: <code>claude mcp add sakaniui -- npx -y -p @sakaniui/react sakaniui-mcp</code>
+            Claude Code: <code>claude mcp add sakaniui -- npx -y @sakaniui/mcp</code>
           </p>
         </div>
         <div className="min-w-0">

@@ -48,6 +48,7 @@ const FEATURES = [
 const INSTALL_CODE = `npm install @sakaniui/react`;
 
 const USAGE_CODE = `import '@sakaniui/react/tokens.css';
+import '@sakaniui/react/style.css';
 import { Button } from '@sakaniui/react';
 
 export function Example() {
@@ -203,14 +204,14 @@ export default function HomePage() {
                 className="text-2xl font-semibold tracking-tight text-ink"
               />
               <MaskReveal as="p" delay={180} className="mt-3 text-ink-muted">
-                Install the package, import the tokens once at your app root, then
+                Install the package, import its two stylesheets once at your app root, then
                 import any component like you would from any other library.
               </MaskReveal>
               <Alert
                 className="mt-5"
                 color="info"
-                title="Don't forget the tokens"
-                description="Component styles reference CSS variables; tokens.css supplies the values."
+                title="Import both stylesheets"
+                description="tokens.css defines the design tokens and style.css styles the components. Import both once."
               />
               <Link href="/docs/installation" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:underline">
                 Full installation guide <ArrowRight size={14} />
