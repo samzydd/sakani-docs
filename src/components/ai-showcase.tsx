@@ -107,6 +107,9 @@ export function AiShowcase() {
         <a href="/llms.txt" className="inline-flex items-center gap-1.5 text-ink hover:underline">
           llms.txt <ArrowRight size={14} />
         </a>
+        <Link href="/docs/ai#troubleshooting" className="inline-flex items-center gap-1.5 text-ink hover:underline">
+          Not working? Troubleshooting <ArrowRight size={14} />
+        </Link>
       </div>
     </section>
   );

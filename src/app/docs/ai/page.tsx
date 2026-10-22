@@ -17,6 +17,17 @@ const MCP_CONFIG = `{
   }
 }`;
 
+const DOCTOR = `npx -y @sakaniui/mcp --doctor`;
+
+const WINDOWS_CONFIG = `{
+  "mcpServers": {
+    "sakaniui": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@sakaniui/mcp"]
+    }
+  }
+}`;
+
 const CLAUDE_CODE = `claude mcp add sakaniui -- npx -y @sakaniui/mcp`;
 
 const MANIFEST_USE = `import manifest from '@sakaniui/react/manifest.json';
@@ -145,6 +156,67 @@ export default function AiPage() {
         <p>
           The manifest says what exists; <code>AGENTS.md</code> says why and when not to use it. Read it at{" "}
           <a href="/llms-full.txt">/llms-full.txt</a>, or index everything from <a href="/llms.txt">/llms.txt</a>.
+        </p>
+      </div>
+
+      <div className="doc-prose" id="troubleshooting">
+        <h2>Troubleshooting</h2>
+        <p>
+          Run this in a terminal first. It checks Node, the data, the tools and your project, and prints a report
+          you can paste when asking for help:
+        </p>
+      </div>
+      <div className="mt-4">
+        <CodeBlock code={DOCTOR} lang="bash" />
+      </div>
+      <div className="doc-prose">
+        <ul>
+          <li>
+            <strong><code>spawn npx ENOENT</code>, or the editor cannot start it.</strong> Desktop editors often start
+            with a smaller <code>PATH</code> than your terminal (common with nvm and Homebrew). Use the full path: run{" "}
+            <code>which npx</code> (macOS and Linux) or <code>where npx</code> (Windows) and put that in{" "}
+            <code>&quot;command&quot;</code>, for example <code>/opt/homebrew/bin/npx</code>.
+          </li>
+          <li>
+            <strong>Windows.</strong> <code>npx</code> is a <code>.cmd</code> script, so launch it through <code>cmd /c</code>:
+          </li>
+        </ul>
+      </div>
+      <div className="mt-4">
+        <CodeBlock code={WINDOWS_CONFIG} lang="json" />
+      </div>
+      <div className="doc-prose">
+        <ul>
+          <li>
+            <strong>It connects, but tool calls fail.</strong> Node older than 16.9 (fixed in 0.8.13). Node 18 or later is
+            supported; check with <code>node --version</code> and update from nodejs.org.
+          </li>
+          <li>
+            <strong>Times out on the first start.</strong> The first run downloads about 200 kB. Run{" "}
+            <code>npx -y @sakaniui/mcp --version</code> once in a terminal to warm the cache, then restart the editor.
+          </li>
+          <li>
+            <strong>Behind a company proxy or private npm registry.</strong> The machine must reach{" "}
+            <code>registry.npmjs.org</code> (see <code>npm config get registry</code>), and <code>@sakaniui/*</code> packages
+            must be allowed.
+          </li>
+          <li>
+            <strong>Odd <code>npx</code> errors, or an old version keeps running.</strong> Delete the <code>_npx</code> folder
+            inside your npm cache (find it with <code>npm config get cache</code>) and restart the editor.
+          </li>
+          <li>
+            <strong>Added it but no tools appear.</strong> Restart the editor. In Claude Code run <code>/mcp</code> and look
+            for <code>sakaniui</code> with 10 tools.
+          </li>
+          <li>
+            <strong><code>Failed to connect</code> after typing the command by hand.</strong> Check the package name for a
+            full-width <code>＠</code> or other stray characters; copy the command from this page instead.
+          </li>
+        </ul>
+        <p>
+          Still stuck? Open an issue at{" "}
+          <a href="https://github.com/samzydd/Sakaniui/issues">github.com/samzydd/Sakaniui/issues</a> and paste the output
+          of <code>--doctor</code>, your editor, and your operating system.
         </p>
       </div>
 
