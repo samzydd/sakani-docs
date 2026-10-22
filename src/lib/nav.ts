@@ -103,6 +103,7 @@ export const docsNav: NavGroup[] = [
     title: "Feedback",
     items: [
       { title: "Toast", href: "/docs/components/toast" },
+      { title: "Sonner", href: "/docs/components/sonner" },
       { title: "Tooltip", href: "/docs/components/tooltip" },
       { title: "Progress", href: "/docs/components/progress" },
       { title: "Spinner", href: "/docs/components/spinner" },
