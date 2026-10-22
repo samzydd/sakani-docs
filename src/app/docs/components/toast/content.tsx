@@ -109,10 +109,10 @@ export default function ToastPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Building a queue</h2>
           <p className="mb-3 text-sm text-ink-muted">
-            There&apos;s no provider or <code>toast()</code> function here on
-            purpose: stacking rules, timers, and where they appear differ enough
-            per app that owning the list yourself is simpler than configuring
-            someone else&apos;s.
+            <code>Toast</code> is the static card, so stacking rules, timers, and where
+            it appears are yours. If you would rather not own that, use{" "}
+            <a href="/docs/components/sonner" className="font-medium text-ink underline underline-offset-2">Sonner</a>:
+            mount one <code>Toaster</code> and call <code>toast()</code> from anywhere.
           </p>
           <ComponentPreview code={QUEUE}>
             <QueueDemo />

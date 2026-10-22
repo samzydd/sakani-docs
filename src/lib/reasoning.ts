@@ -239,6 +239,17 @@ export const reasoning: Record<string, Reasoning> = {
     why: ["It is presentational only, so queueing and positioning are the app's job and it fits any notification system."],
     dont: ["Don't use a toast for anything people must act on. It disappears.", "Don't expect it to queue or position itself."],
   },
+  sonner: {
+    why: [
+      "It owns the queue, position, timers and stacking, so the app only says what happened. toast() works from handlers, hooks and plain modules without passing state around.",
+      "Toasts pile up behind the newest and spread on hover, so a burst of notifications takes the room of one until you look at them.",
+    ],
+    dont: [
+      "Don't use a toast for anything people must act on. It disappears after 4 seconds. Use Alert or Modal.",
+      "Don't mount more than one Toaster. Every toast would show in all of them.",
+      "Don't render Toast yourself for this. Toast is the static card; Toaster and toast() manage a stack of them.",
+    ],
+  },
   tooltip: {
     why: ["It is pure CSS on hover and focus, so keyboard users get it too, and it adds a caret in eight pointer positions."],
     dont: [
