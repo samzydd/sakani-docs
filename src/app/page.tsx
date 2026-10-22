@@ -25,7 +25,7 @@ const HERO_RISE = 1500;
 const FEATURES = [
   {
     icon: Component,
-    title: "114+ components",
+    title: "120+ components",
     body: "Every atom, molecule, and pattern in the Sakani Figma file, exported 1:1, not reinterpreted.",
   },
   {
@@ -72,12 +72,22 @@ export default function HomePage() {
             the whole hero resolves as a single movement. */}
         <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
           <MaskReveal trigger="mount" delay={0} duration={HERO_RISE} className="w-fit">
-            <Link
-              href="/docs"
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
-            >
-              Last updated: October 21st <ArrowRight size={12} />
-            </Link>
+            <span className="flex flex-wrap items-center gap-2">
+              <Link
+                href="/docs/ai"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#b93a0a]/30 bg-[#ff4700]/10 py-1 pl-1 pr-3 text-xs font-medium text-[#b93a0a] transition-colors hover:border-[#b93a0a]/60 hover:bg-[#ff4700]/15 dark:border-[#ff7d4d]/40 dark:text-[#ff7d4d] dark:hover:border-[#ff7d4d]/70"
+              >
+                {/* #d93c00, not the brand #ff4700: white 10px text needs 4.5:1 (this is 4.57:1; #ff4700 is 3.4:1) */}
+                <span className="rounded-full bg-[#d93c00] px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white">NEW</span>
+                MCP server for AI assistants <ArrowRight size={12} />
+              </Link>
+              <Link
+                href="/docs"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
+              >
+                Last updated: October 22nd <ArrowRight size={12} />
+              </Link>
+            </span>
           </MaskReveal>
           <TextReveal
             as="h1"
@@ -106,10 +116,10 @@ export default function HomePage() {
             duration={HERO_RISE}
             className="mt-5 max-w-[680px] text-balance text-lg leading-[1.4] text-ink-muted"
           >
-            114+ components and 42 blocks, matching your Figma file exactly, so
-            designers hand off what engineers already have, and your whole team
-            ships from one source of truth, not a reinterpretation of it. No
-            redlines, no rebuilding it twice.
+            120+ components and 42 blocks, matching your Figma file exactly, so
+            designers hand off what engineers already have. And with the SakaniUI
+            MCP server, your AI assistant builds from that same source of truth
+            instead of guessing at it.
           </MaskReveal>
           <MaskReveal trigger="mount" delay={620} duration={HERO_RISE} className="mt-8">
             <span className="flex flex-wrap items-center gap-3">

@@ -100,7 +100,7 @@ const STRUCTURED_DATA = {
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
       featureList: [
         "Built-in glass (glassmorphism) and Apple-style liquid glass surfaces with lens refraction",
-        "114+ accessible React components",
+        "120+ accessible React components",
         "42 copy-paste blocks, including a full liquid glass dashboard",
         "Light and dark mode from one set of design tokens",
         "Exported 1:1 from Figma, with TypeScript types",

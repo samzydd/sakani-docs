@@ -35,7 +35,7 @@ export const SITE_NAME = "SakaniUI";
 export const SITE_TAGLINE = "React Design System";
 
 export const SITE_DESCRIPTION =
-  "Open-source React design system with built-in glass and Apple-style liquid glass. 114+ accessible components, 42 blocks, dark mode and TypeScript, exported 1:1 from Figma.";
+  "Open-source React design system with built-in glass and Apple-style liquid glass. 120+ accessible components, 42 blocks, dark mode and TypeScript, exported 1:1 from Figma.";
 
 /**
  * Emitted as <meta name="keywords">, which Google has ignored since 2009 and

@@ -15,7 +15,7 @@ const POINTS = [
   {
     icon: FileCode,
     title: "A contract, not a guess",
-    body: "manifest.json lists all 123 components and 42 blocks with props, allowed values, defaults and required props, plus every token. Generated from the source on each build.",
+    body: "manifest.json lists all 126 components and 42 blocks with props, allowed values, defaults and required props, plus every token. Generated from the source on each build.",
   },
   {
     icon: Plug,
@@ -58,7 +58,7 @@ ok: false
  */
 export function AiShowcase() {
   return (
-    <section className="py-12 sm:py-20">
+    <section id="ai" className="scroll-mt-20 py-12 sm:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <TextReveal
           as="h2"

@@ -59,7 +59,7 @@ export default function OpengraphImage() {
             {SITE_TAGLINE}
           </div>
           <div style={{ fontSize: 32, color: "#57534E", lineHeight: 1.35, maxWidth: 900 }}>
-            With built-in glass and liquid glass. 114+ components, 42 blocks, exported 1:1 from Figma.
+            With built-in glass and liquid glass. 120+ components, 42 blocks, exported 1:1 from Figma.
           </div>
         </div>
 

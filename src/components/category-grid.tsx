@@ -28,7 +28,7 @@ export function CategoryGrid() {
           className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
         />
         <MaskReveal as="p" delay={180} className="mt-3 text-ink-muted">
-          114+ components and 42 blocks, organized by category. Jump straight to
+          120+ components and 42 blocks, organized by category. Jump straight to
           the one you need.
         </MaskReveal>
       </div>

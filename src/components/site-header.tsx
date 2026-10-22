@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { title: "Docs", href: "/docs" },
   { title: "Components", href: "/docs/components/button" },
   { title: "Blocks", href: "/docs/blocks/pricing-table" },
+  { title: "AI & MCP", href: "/docs/ai" },
 ];
 
 /**
