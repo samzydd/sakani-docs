@@ -75,10 +75,10 @@ export default function HomePage() {
             <span className="flex flex-wrap items-center gap-2">
               <Link
                 href="/docs/ai"
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#b93a0a]/30 bg-[#ff4700]/10 py-1 pl-1 pr-3 text-xs font-medium text-[#b93a0a] transition-colors hover:border-[#b93a0a]/60 hover:bg-[#ff4700]/15 dark:border-[#ff7d4d]/40 dark:text-[#ff7d4d] dark:hover:border-[#ff7d4d]/70"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#16a34a]/35 bg-[#22c55e]/12 py-1 pl-1 pr-3 text-xs font-medium text-[#166534] transition-colors hover:border-[#16a34a]/60 hover:bg-[#22c55e]/18 dark:border-[#39e75f]/40 dark:bg-[#39e75f]/10 dark:text-[#5bf08c] dark:hover:border-[#39e75f]/70 dark:hover:bg-[#39e75f]/15"
               >
-                {/* #d93c00, not the brand #ff4700: white 10px text needs 4.5:1 (this is 4.57:1; #ff4700 is 3.4:1) */}
-                <span className="rounded-full bg-[#d93c00] px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white">NEW</span>
+                {/* bright green tag with dark text (9:1); white on this green would be ~1.6:1 */}
+                <span className="rounded-full bg-[#39e75f] px-2 py-0.5 text-[10px] font-bold tracking-wide text-[#052e16] shadow-[0_0_12px_rgba(57,231,95,0.45)]">NEW</span>
                 MCP server for AI assistants <ArrowRight size={12} />
               </Link>
               <Link
