@@ -4,6 +4,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { CommandMenu } from "./command-menu";
 import { MobileNav } from "./mobile-nav";
 import { GithubIcon } from "./icons/github-icon";
+import { GithubStars } from "./github-stars";
 import { SakaniLogo } from "./icons/sakani-logo";
 
 const NAV_LINKS = [
@@ -62,10 +63,11 @@ export function SiteHeader() {
             href="https://github.com/samzydd/Sakaniui"
             target="_blank"
             rel="noreferrer"
-            className="flex h-9 w-9 items-center justify-center rounded-md border border-line-subtle text-ink-muted transition-colors hover:bg-subtle hover:text-ink"
+            className="flex h-9 items-center justify-center gap-2 rounded-md border border-line-subtle px-[9px] text-ink-muted transition-colors hover:bg-subtle hover:text-ink"
             aria-label="GitHub repository"
           >
             <GithubIcon size={16} />
+            <GithubStars className="hidden text-xs font-medium sm:inline-flex" />
           </a>
           <ThemeToggle />
         </div>

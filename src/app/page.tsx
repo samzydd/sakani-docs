@@ -9,6 +9,7 @@ import { CategoryGrid } from "@/components/category-grid";
 import { FaqSection } from "@/components/faq-section";
 import { DashboardGallery } from "@/components/dashboard-gallery";
 import { GithubIcon } from "@/components/icons/github-icon";
+import { GithubStars } from "@/components/github-stars";
 import { Reveal } from "@/components/reveal";
 import { HeroPreview } from "@/components/hero-preview";
 import { TextReveal } from "@/components/text-reveal";
@@ -129,6 +130,7 @@ export default function HomePage() {
               <a href="https://github.com/samzydd/Sakaniui" target="_blank" rel="noreferrer">
                 <Button variant="outline" size="lg" leftIcon={<GithubIcon size={16} />}>
                   View on GitHub
+                  <GithubStars className="ml-1 border-l border-line-default pl-2 text-xs text-ink-muted" />
                 </Button>
               </a>
               <a
