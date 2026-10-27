@@ -1,6 +1,6 @@
 # Sakani Docs
 
-Documentation site for the [SakaniUI](https://github.com/samzydd/Sakaniui) — Next.js 16 (App Router) + Tailwind v4, styled entirely from Sakani's own `tokens.css`, with live, interactive previews of real `@sakaniui/react` components and blocks.
+Documentation site for [SakaniUI](https://github.com/samzydd/Sakaniui), the open-source React design system with 1500+ components and variants. Built with Next.js 16 (App Router) + Tailwind v4, styled entirely from Sakani's own `tokens.css`, with live, interactive previews of real `@sakaniui/react` components and blocks.
 
 ## Stack
 
