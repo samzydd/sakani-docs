@@ -7,11 +7,17 @@ import {
   IconHomeFilled, IconHeartFilled, IconStarFilled, IconBellFilled, IconBookmarkFilled, IconFolderFilled,
   type SakaniIcon,
 } from "@sakaniui/react/icons";
+import {
+  EmojiRocket, EmojiSparkles, EmojiFire, EmojiPartyPopper, EmojiRedHeart, EmojiThumbsUp, EmojiWavingHand, EmojiBrain,
+  EmojiGlobeShowingEuropeAfrica, EmojiLightBulb, EmojiTrophy, EmojiCrown,
+  type SakaniEmoji, type EmojiTone,
+} from "@sakaniui/react/emoji";
 import { PageHeader } from "@/components/docs/page-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
 import { IconGallery } from "@/components/docs/icon-gallery";
+import { EmojiGallery } from "@/components/docs/emoji-gallery";
 
 const SAMPLE: SakaniIcon[] = [
   IconHome, IconSearch, IconBell, IconSettings, IconUser, IconMail, IconCalendar, IconFolder,
@@ -36,6 +42,38 @@ import { House, Bell } from 'lucide-react';
 // after
 import { IconHome as House, IconBell as Bell } from '@sakaniui/react/icons';`;
 
+const EMOJI_SAMPLE: SakaniEmoji[] = [
+  EmojiRocket, EmojiSparkles, EmojiFire, EmojiPartyPopper, EmojiRedHeart, EmojiThumbsUp,
+  EmojiBrain, EmojiGlobeShowingEuropeAfrica, EmojiLightBulb, EmojiTrophy, EmojiCrown,
+];
+const TONES: EmojiTone[] = ["light", "medium-light", "medium", "medium-dark", "dark"];
+
+const EMOJI_BASIC = `import { EmojiRocket, EmojiPartyPopper } from '@sakaniui/react/emoji';
+
+<EmojiRocket />                    {/* 24px, full colour */}
+<EmojiPartyPopper size={32} />
+<EmojiRocket size="1em" />         {/* follows the text size */}`;
+
+const EMOJI_TONE = `import { EmojiWavingHand } from '@sakaniui/react/emoji';
+
+<EmojiWavingHand />                          {/* the yellow default */}
+<EmojiWavingHand tone="light" />
+<EmojiWavingHand tone="medium-dark" />`;
+
+const EMOJI_CATALOG = `import { emojiCatalog, emojiCategories } from '@sakaniui/react/emoji';
+
+emojiCatalog[0];
+// { name: '1st-place-medal', label: '1st place medal', char: '🥇', category: 'Activities', tones: false }
+
+// a picker: filter by category, render by name
+const people = emojiCatalog.filter((e) => e.category === 'People & Body');`;
+
+const EMOJI_PROPS = [
+  { name: "size", type: "number | string", default: "24", description: "Rendered size: px or any CSS length. '1em' follows the surrounding text." },
+  { name: "tone", type: "'light' | 'medium-light' | 'medium' | 'medium-dark' | 'dark'", description: "Skin tone, for the 311 people and hand emoji that have one (the catalog marks them with tones: true). Other emoji ignore it. Without it you get the yellow default." },
+  { name: "title", type: "string", description: "Accessible name. Without it the emoji is decorative (aria-hidden)." },
+];
+
 const PROPS = [
   { name: "size", type: "number | string", default: "24", description: "Rendered size: px or any CSS length. '1em' follows the surrounding text." },
   { name: "color", type: "string", default: "'currentColor'", description: "Icon colour. By default the icon takes the text colour around it." },
@@ -47,8 +85,14 @@ const PROPS = [
 export default function IconsPage() {
   return (
     <article>
-      <PageHeader title="Icons" description="The icon set is Tabler Icons: 5,184 outline icons and 1,054 filled ones." />
+      <PageHeader title="Icons & emoji" description="Two sets: 5,184 outline and 1,054 filled Tabler icons for interface chrome, and 1,594 full-colour Fluent emoji for expression." />
 
+      <nav aria-label="On this page" className="mb-8 flex gap-2 text-sm">
+        <a href="#icons" className="rounded-full border border-line-subtle px-3 py-1 text-ink hover:bg-subtle">Icons</a>
+        <a href="#emoji" className="rounded-full border border-line-subtle px-3 py-1 text-ink hover:bg-subtle">Emoji</a>
+      </nav>
+
+      <h2 id="icons" className="mb-3 scroll-mt-24 text-2xl font-semibold tracking-tight text-ink">Icons</h2>
       <div className="doc-prose mb-8">
         <p>
           Sakani uses <a href="https://tabler.io/icons" target="_blank" rel="noreferrer">Tabler Icons</a>, the same set
@@ -116,6 +160,80 @@ export default function IconsPage() {
         <p className="text-sm text-ink-muted">
           Icons by <a className="underline" href="https://tabler.io/icons" target="_blank" rel="noreferrer">Tabler</a> (MIT
           licence). The package ships the licence notice in <code>THIRD_PARTY_NOTICES.md</code>.
+        </p>
+      </div>
+
+      <h2 id="emoji" className="mb-3 mt-16 scroll-mt-24 border-t border-line-subtle pt-10 text-2xl font-semibold tracking-tight text-ink">Emoji</h2>
+      <div className="doc-prose mb-8">
+        <p>
+          The emoji set is <a href="https://github.com/microsoft/fluentui-emoji" target="_blank" rel="noreferrer">Fluent Emoji</a> by
+          Microsoft, in the flat style: 1,594 full-colour vector emoji, the same as the Figma <em>Emoji</em> page, where they are
+          grouped by Unicode category and the skin-tone versions have their own set.
+        </p>
+        <p>
+          They live in <code>@sakaniui/react/emoji</code>, one component per emoji and tree-shaken, so an app ships only what it
+          imports (about 2 kB each). Names are <code>Emoji</code> plus the Unicode name in PascalCase
+          (<code>EmojiRocket</code>, <code>EmojiPartyPopper</code>); the gallery below is the search. Emoji are pictures, not
+          icons: they keep their own colours, so render them as elements and never pass them to a component&apos;s
+          <code> icon</code> prop. Use an icon for interface chrome and an emoji for expression: reactions, empty states,
+          celebration, labels people choose.
+        </p>
+      </div>
+
+      <div className="space-y-10">
+        <ComponentPreview code={EMOJI_BASIC}>
+          <div className="space-y-6">
+            {[24, 32, 48].map((size) => (
+              <div key={size} className="flex flex-wrap items-center gap-5">
+                {EMOJI_SAMPLE.map((E) => <E key={E.emojiName} size={size} />)}
+              </div>
+            ))}
+            <p className="text-lg text-ink">
+              Ship it <EmojiRocket size="1em" style={{ verticalAlign: "-0.15em" }} /> and celebrate <EmojiPartyPopper size="1em" style={{ verticalAlign: "-0.15em" }} />, sized with the text.
+            </p>
+          </div>
+        </ComponentPreview>
+
+        <section>
+          <h3 className="mb-3 text-lg font-semibold text-ink">Skin tones</h3>
+          <p className="mb-3 text-sm text-ink-muted">
+            311 people and hand emoji take a <code>tone</code>. All six versions ship in that emoji&apos;s module, so a toned emoji
+            weighs about 16 kB instead of 2 kB; the rest are unaffected.
+          </p>
+          <ComponentPreview code={EMOJI_TONE}>
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              <EmojiWavingHand size={48} />
+              {TONES.map((t) => <EmojiWavingHand key={t} size={48} tone={t} />)}
+              <EmojiThumbsUp size={48} tone="medium-dark" />
+            </div>
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h3 className="mb-3 text-lg font-semibold text-ink">All emoji</h3>
+          <p className="mb-4 text-sm text-ink-muted">Search, filter by category, pick a skin tone, then copy the JSX or the character.</p>
+          <EmojiGallery />
+        </section>
+
+        <section>
+          <h3 className="mb-3 text-lg font-semibold text-ink">The catalog</h3>
+          <p className="mb-3 text-sm text-ink-muted">
+            <code>emojiCatalog</code> lists every emoji with its label, Unicode character and category, for pickers and search.
+            It is a separate export, so it only costs bytes where you import it.
+          </p>
+          <ComponentPreview code={EMOJI_CATALOG}>
+            <div className="text-center text-sm text-ink-muted">1,594 entries in 9 categories</div>
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h3 className="mb-3 text-lg font-semibold text-ink">Emoji props</h3>
+          <PropsTable rows={EMOJI_PROPS} />
+        </section>
+
+        <p className="text-sm text-ink-muted">
+          Emoji by <a className="underline" href="https://github.com/microsoft/fluentui-emoji" target="_blank" rel="noreferrer">Microsoft Fluent Emoji</a> (MIT
+          licence), also listed in <code>THIRD_PARTY_NOTICES.md</code>.
         </p>
       </div>
 

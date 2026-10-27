@@ -22,11 +22,13 @@ export const reasoning: Record<string, Reasoning> = {
       "Names follow Tabler (IconHome, IconHomeFilled), so tabler.io/icons works as the search for both designers and developers.",
       "Props follow lucide-react and the default stroke is 1.5, the Figma icon stroke, so swapping existing Lucide icons is a find-and-replace and the weight matches the file.",
       "Each icon is its own module, so an app ships only the icons it imports (about 1 kB each).",
+      "Emoji are a separate set (Fluent Emoji, @sakaniui/react/emoji) so full-colour pictures never get mixed up with themeable icons: icons follow the text colour, emoji keep their own.",
     ],
     dont: [
       "Don't mix Tabler and Lucide icons in the same view. Their shapes and proportions differ, and the mismatch shows side by side.",
       "Don't use filled icons for decoration. Filled means on: a selected nav item, a liked heart, an active filter.",
       "Don't give a meaningful standalone icon no label: pass title, or put visible text next to it.",
+      "Don't pass an emoji to an icon prop or expect it to take the text colour. Render it as an element, and use an icon for interface chrome.",
     ],
   },
   button: {
