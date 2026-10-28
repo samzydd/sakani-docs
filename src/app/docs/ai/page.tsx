@@ -169,6 +169,16 @@ export default function AiPage() {
 
       <div className="doc-prose" id="skill">
         <h2>The skill</h2>
+        <video
+          className="my-6 w-full rounded-xl border border-line-subtle"
+          src="/marketing/sakaniui-skill-terminal.mp4"
+          poster="/marketing/sakaniui-skill-terminal-poster.png"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-label="A terminal adds the SakaniUI MCP server, copies the skill into .claude/skills, and ends with: Claude now builds with SakaniUI."
+        />
         <p>
           The MCP server answers questions; a skill is what makes an assistant ask them. It is one short file,{" "}
           <code>SKILL.md</code>, that Claude loads when you ask for an interface in a project that uses

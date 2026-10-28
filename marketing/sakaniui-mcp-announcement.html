@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0f;
+    --panel: #19191a;
+    --line: #2c2c2e;
+    --ink: #fafaf9;
+    --muted: #8a8a90;
+    --dim: #5c5c62;
+    --brand: #ff4700;
+    --accent: #ff7d4d;
+    --ok: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 675px; background: var(--bg); overflow: hidden; }
+  body { font-family: 'Geist', system-ui, sans-serif; color: var(--ink); position: relative; -webkit-font-smoothing: antialiased; }
+
+  /* atmosphere: a warm glow and a faint dot grid */
+  .glow { position: absolute; width: 900px; height: 900px; right: -260px; top: -380px;
+          background: radial-gradient(closest-side, rgba(255,71,0,0.28), rgba(255,71,0,0.08) 55%, transparent 72%); }
+  .glow2 { position: absolute; width: 600px; height: 600px; left: -260px; bottom: -340px;
+           background: radial-gradient(closest-side, rgba(255,125,77,0.10), transparent 70%); }
+  .dots { position: absolute; inset: 0; opacity: 0.35;
+          background-image: radial-gradient(rgba(255,255,255,0.10) 1px, transparent 1.2px);
+          background-size: 22px 22px;
+          mask-image: radial-gradient(ellipse 80% 70% at 70% 40%, #000 30%, transparent 75%); }
+
+  .wrap { position: absolute; inset: 0; padding: 56px 60px; display: grid; grid-template-columns: 492px 1fr; gap: 44px; }
+
+  /* left column */
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 21px; letter-spacing: -0.01em; }
+  .brand img { width: 34px; height: 34px; }
+  .pill { margin-top: 40px; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 8px;
+          border: 1px solid rgba(255,125,77,0.35); background: rgba(255,71,0,0.10); border-radius: 999px;
+          font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.01em; }
+  .pill b { background: var(--brand); color: #fff; font-weight: 600; font-size: 11px; padding: 2px 7px; border-radius: 999px; letter-spacing: 0.06em; }
+  h1 { margin-top: 18px; font-size: 52px; line-height: 1.04; font-weight: 600; letter-spacing: -0.035em; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .sub { margin-top: 18px; font-size: 18px; line-height: 1.45; color: var(--muted); max-width: 470px; }
+  .cmd { margin-top: 28px; display: flex; align-items: center; gap: 10px; padding: 13px 16px; border-radius: 12px;
+         background: #151516; border: 1px solid var(--line); font-family: 'Geist Mono', monospace; font-size: 14px; color: var(--ink); white-space: nowrap; }
+  .cmd .p { color: var(--accent); }
+  .stats { margin-top: 26px; display: flex; gap: 26px; }
+  .stat .n { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat .l { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  /* right column: a terminal session */
+  .term { align-self: center; border-radius: 16px; background: linear-gradient(180deg, #1c1c1e, #161617);
+          border: 1px solid var(--line); box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.02) inset; overflow: hidden; }
+  .bar { display: flex; align-items: center; gap: 8px; padding: 13px 16px; border-bottom: 1px solid var(--line); }
+  .bar i { width: 11px; height: 11px; border-radius: 50%; background: #3a3a3d; display: inline-block; }
+  .bar span { margin-left: 10px; font-size: 12.5px; color: var(--dim); font-family: 'Geist Mono', monospace; }
+  .body { padding: 18px 20px 20px; font-family: 'Geist Mono', monospace; font-size: 13px; line-height: 1.6; }
+  .ask { color: var(--ink); }
+  .ask .c { color: var(--accent); }
+  .tool { margin-top: 12px; color: var(--dim); }
+  .tool b { color: var(--muted); font-weight: 500; }
+  .err { margin-top: 8px; padding: 10px 12px; border-radius: 10px; background: rgba(255,90,60,0.08); border: 1px solid rgba(255,90,60,0.22); }
+  .err .row { display: grid; grid-template-columns: 16px 1fr; gap: 6px; color: #ffb59a; }
+  .err .row + .row { margin-top: 6px; }
+  .err .x { color: #ff6a4d; font-weight: 600; }
+  .err code { color: var(--ink); }
+  .fix { margin-top: 14px; color: var(--muted); }
+  .code { margin-top: 8px; padding: 12px 14px; border-radius: 10px; background: #121213; border: 1px solid var(--line); color: #d4d4d8; white-space: pre; }
+  .tg { color: #f0abfc; } .at { color: #93c5fd; } .st { color: #fdba74; } .pu { color: #71717a; }
+  .pass { margin-top: 12px; display: flex; align-items: center; gap: 8px; color: var(--ok); }
+  .pass .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px rgba(74,222,128,0.7); }
+
+  .foot { position: absolute; left: 60px; right: 60px; bottom: 26px; display: flex; justify-content: space-between;
+          font-size: 13px; color: var(--dim); }
+  .foot b { color: var(--muted); font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="glow"></div><div class="glow2"></div><div class="dots"></div>
+
+  <div class="wrap">
+    <div>
+      <div class="brand"><img src="logo.svg" alt="">SakaniUI</div>
+      <div class="pill"><b>NEW</b> MCP server · @sakaniui/mcp</div>
+      <h1>Your AI assistant<br>now <em>knows</em> SakaniUI.</h1>
+      <p class="sub">Real components, props, icons and tokens instead of guesses, and a check on every snippet it writes.</p>
+      <div class="cmd"><span class="p">$</span>claude mcp add sakaniui -- npx -y @sakaniui/mcp</div>
+      <div class="stats">
+        <div class="stat"><div class="n">168</div><div class="l">components &amp; blocks</div></div>
+        <div class="stat"><div class="n">5,184</div><div class="l">icons</div></div>
+        <div class="stat"><div class="n">231</div><div class="l">design tokens</div></div>
+        <div class="stat"><div class="n">10</div><div class="l">read-only tools</div></div>
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="bar"><i></i><i></i><i></i><span>claude · CRM Dashboard</span></div>
+      <div class="body">
+        <div class="ask"><span class="c">❯</span> Add a delete button that asks for confirmation in a Dialog</div>
+        <div class="tool">⏺ <b>sakaniui</b> · check_code</div>
+        <div class="err">
+          <div class="row"><span class="x">✕</span><span><code>Dialog</code> is not exported by @sakaniui/react. In SakaniUI that is <code>Modal</code>.</span></div>
+          <div class="row"><span class="x">✕</span><span>write <code>icon={IconTrash}</code>, not <code>icon={&lt;TrashIcon /&gt;}</code>. TrashIcon is not a SakaniUI icon either.</span></div>
+        </div>
+        <div class="fix">⏺ Fixed with the real components:</div>
+        <div class="code"><span class="pu">&lt;</span><span class="tg">IconButton</span> <span class="at">icon</span><span class="pu">={</span>IconTrash<span class="pu">}</span> <span class="at">variant</span><span class="pu">=</span><span class="st">"destructive"</span>
+  <span class="at">aria-label</span><span class="pu">=</span><span class="st">"Delete row"</span> <span class="pu">/&gt;</span>
+<span class="pu">&lt;</span><span class="tg">Modal</span> <span class="at">open</span><span class="pu">={</span>open<span class="pu">}</span> <span class="at">onClose</span><span class="pu">={</span>close<span class="pu">}</span> <span class="at">title</span><span class="pu">=</span><span class="st">"Delete customer?"</span>
+  <span class="at">variant</span><span class="pu">=</span><span class="st">"destructive"</span> <span class="at">confirmLabel</span><span class="pu">=</span><span class="st">"Delete"</span> <span class="pu">/&gt;</span></div>
+        <div class="pass"><span class="dot"></span>check_code · ok · 0 errors</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>For Claude Code and any MCP-compatible editor · free under MIT</span><b>sakaniui.com/docs/ai</b></div>
+</body>
+</html>

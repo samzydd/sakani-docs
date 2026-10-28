@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SakaniUI skill + MCP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@500&display=block" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1000px; height: 380px; overflow: hidden; background: #0b0b0c; }
+  body { display: flex; align-items: center; justify-content: center; -webkit-font-smoothing: antialiased; }
+
+  .win { width: 896px; border-radius: 18px; background: #1d1d20; border: 1px solid #2a2a2e;
+         box-shadow: 0 30px 70px -20px rgba(0,0,0,0.8); overflow: hidden; }
+  .bar { position: relative; height: 46px; display: flex; align-items: center; padding: 0 18px; gap: 9px;
+         border-bottom: 1px solid #2a2a2e; }
+  .bar i { width: 13px; height: 13px; border-radius: 50%; display: inline-block; }
+  .bar i:nth-child(1) { background: #ff5f57; }
+  .bar i:nth-child(2) { background: #febc2e; }
+  .bar i:nth-child(3) { background: #28c840; }
+  .bar span { position: absolute; left: 0; right: 0; text-align: center; font: 500 14px 'Inter', system-ui, sans-serif; color: #8e8e93; }
+
+  /* Fixed height for all five lines, so the window does not grow while it types. */
+  .body { height: 214px; padding: 30px 30px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; line-height: 1; color: #f4f4f5; }
+  .l { white-space: nowrap; height: 14px; }
+  .l + .l { margin-top: 20px; }
+  .ar { color: #5eead4; font-weight: 700; }
+  .dir { color: #67e8f9; font-weight: 700; }
+  .git { color: #a5b4fc; font-weight: 700; }
+  .cmd { font-weight: 700; }
+  .pkg { color: #c084fc; font-weight: 700; }
+  .out { color: #a1a1aa; }
+  .ok { color: #4ade80; font-weight: 700; }
+  .msg { color: #d4d4d8; }
+  .cur { display: inline-block; width: 9px; height: 17px; background: #a78bfa; vertical-align: -3px; margin-left: 1px; }
+  .cur.off { visibility: hidden; }
+</style>
+</head>
+<body>
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>zsh — my-app</span></div>
+    <div class="body" id="body"></div>
+  </div>
+
+<script>
+  // Each line is a list of [class, text] parts. `typed` lines are typed after the prompt;
+  // output lines appear at once, the way a shell prints them.
+  const PROMPT = [['ar', '➜'], ['', ' '], ['dir', 'my-app'], ['', ' '], ['git', 'git:(main)'], ['', ' ']];
+  const LINES = [
+    { typed: [['cmd', 'claude mcp add sakaniui -- npx -y '], ['pkg', '@sakaniui/mcp']] },
+    { out: [['out', 'Added stdio MCP server sakaniui with command: npx -y @sakaniui/mcp to local config']] },
+    { typed: [['cmd', 'mkdir -p .claude/skills']] },
+    { typed: [['cmd', 'cp -r '], ['pkg', 'node_modules/@sakaniui/react/skills/sakaniui'], ['cmd', ' .claude/skills/']] },
+    { typed: [['ok', '✔'], ['msg', ' Claude now builds with SakaniUI']], last: true },
+  ];
+
+  const CHAR = 34;      // ms per typed character
+  const THINK = 650;    // pause at a fresh prompt before typing starts
+  const ENTER = 380;    // pause after typing, before Enter
+  const RUN = 420;      // how long a command takes to print
+  const HOLD = 3200;    // hold on the final frame before looping
+
+  // Small, repeatable jitter so the typing does not look mechanical.
+  const jitter = (i) => ((Math.sin(i * 12.9898) * 43758.5453) % 1 + 1) % 1;
+
+  // Build the timeline once: when each line starts, and when each typed character lands.
+  let t = 0, k = 0;
+  const plan = LINES.map((line) => {
+    const p = { line, start: t };
+    if (line.out) { p.charTimes = []; t += RUN; return p; }
+    t += THINK;
+    const text = line.typed.map(([, s]) => s).join('');
+    p.charTimes = [...text].map(() => (t += CHAR * (0.55 + jitter(k++) * 0.9)));
+    p.typedEnd = t;
+    if (!line.last) t += ENTER + (LINES[LINES.indexOf(line) + 1]?.out ? 0 : 120);
+    return p;
+  });
+  const DURATION = t + HOLD;
+
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const spans = (parts, n = Infinity) => {
+    let html = '';
+    for (const [cls, s] of parts) {
+      if (n <= 0) break;
+      const chars = [...s];
+      const take = chars.slice(0, n).join('');
+      n -= chars.length;
+      html += cls ? `<span class="${cls}">${esc(take)}</span>` : esc(take);
+    }
+    return html;
+  };
+
+  // Draws the frame at time `ms`. Exposed so a recorder can step through it frame by frame.
+  window.render = function render(ms) {
+    let html = '', active = null;
+    for (const p of plan) {
+      if (ms < p.start) { html += '<div class="l"></div>'; continue; }
+      if (p.line.out) {
+        // The output prints when the previous command "finishes".
+        html += `<div class="l">${spans(p.line.out)}</div>`;
+        active = null;
+        continue;
+      }
+      const shown = p.charTimes.filter((c) => c <= ms).length;
+      html += `<div class="l">${spans(PROMPT)}${spans(p.line.typed, shown)}{CUR}</div>`;
+      active = { typing: shown < p.charTimes.length && ms >= p.start + THINK, since: shown ? p.charTimes[shown - 1] : p.start };
+      html = html.replace(/\{CUR\}(?=[\s\S]*\{CUR\})/g, '');
+    }
+    // One cursor, on the newest prompt: solid while typing, blinking while idle.
+    const blinkOn = active && (active.typing || Math.floor((ms - active.since) / 530) % 2 === 0);
+    html = html.replace('{CUR}', active ? `<span class="cur${blinkOn ? '' : ' off'}"></span>` : '');
+    document.getElementById('body').innerHTML = html;
+  };
+  window.DURATION = DURATION;
+
+  // Live preview: loop in real time. A recorder sets ?static to drive render() itself.
+  if (!new URLSearchParams(location.search).has('static')) {
+    // Fit the 1000x380 card to whatever window it is previewed in.
+    const fit = () => {
+      Object.assign(document.documentElement.style, { width: '100vw', height: '100vh', display: 'grid', placeItems: 'center' });
+      document.body.style.zoom = Math.min(innerWidth / 1000, innerHeight / 380);
+    };
+    fit(); addEventListener('resize', fit);
+    document.fonts.ready.then(() => {
+      const t0 = performance.now();
+      const tick = (now) => { render((now - t0) % DURATION); requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    });
+  } else {
+    render(0);
+  }
+</script>
+</body>
+</html>
