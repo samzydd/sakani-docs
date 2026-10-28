@@ -18,6 +18,8 @@ import {
   GITHUB_URL,
 } from "@/lib/site";
 
+const OG_IMAGE = "/og/sakaniui-dark-v2.png";
+
 export const metadata: Metadata = {
   // Everything relative below (canonicals, og:image) resolves against this.
   // Without it Next emits relative og:image URLs, which crawlers and social
@@ -52,11 +54,16 @@ export const metadata: Metadata = {
     // homepage in the preview card.
     url: "./",
     locale: "en_US",
+    // A plain file in /public with a version in its name, not the opengraph-image
+    // file convention. Social platforms cache by image URL, so a new image ships
+    // as -v3, -v4... and every crawler sees a URL it has never fetched.
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME} — ${SITE_TAGLINE}` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME} — ${SITE_TAGLINE}` }],
   },
   robots: {
     index: true,
