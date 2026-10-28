@@ -181,15 +181,19 @@ export default function AiPage() {
         />
         <p>
           The MCP server answers questions; a skill is what makes an assistant ask them. It is one short file,{" "}
-          <code>SKILL.md</code>, that Claude loads when you ask for an interface in a project that uses
-          SakaniUI. It does not repeat any component facts, so it cannot go stale. It tells the assistant to
+          <code>SKILL.md</code>, that your assistant loads when you ask for an interface in a project that uses
+          SakaniUI. The format is the open <a href="https://agentskills.io" target="_blank" rel="noreferrer">Agent Skills</a>{" "}
+          standard, so it is not tied to one product: Claude Code, Cursor and other skills-compatible agents
+          read the same file. It does not repeat any component facts, so it cannot go stale. It tells the assistant to
           check your installed version, import both stylesheets, look components, icons and emoji up
           instead of guessing, style with tokens, and run <code>check_code</code> before answering, and it points at the
           server, the manifest and <code>AGENTS.md</code> as the sources of truth.
         </p>
         <p>
-          Install it for one project (Claude Code and the Claude app read <code>.claude/skills/</code>; use{" "}
-          <code>~/.claude/skills/</code> to have it in every project):
+          Install it for one project (Claude Code and the Claude app read <code>.claude/skills/</code>, and Cursor
+          documents that it reads that folder too; use <code>~/.claude/skills/</code> to have it in every project). Other
+          tools keep skills in their own folder, so copy the same <code>sakaniui</code> folder to wherever your tool
+          looks:
         </p>
         <CodeBlock code={SKILL_INSTALL} lang="bash" />
         <p>
