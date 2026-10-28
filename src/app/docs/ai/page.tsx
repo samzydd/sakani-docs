@@ -32,7 +32,8 @@ const SKILL_INSTALL = `mkdir -p .claude/skills/sakaniui
 curl -fsSL https://raw.githubusercontent.com/samzydd/Sakaniui/main/skills/sakaniui/SKILL.md \\
   -o .claude/skills/sakaniui/SKILL.md`;
 
-const SKILL_FROM_PACKAGE = `cp -r node_modules/@sakaniui/react/skills/sakaniui .claude/skills/`;
+const SKILL_FROM_PACKAGE = `mkdir -p .claude/skills
+cp -r node_modules/@sakaniui/react/skills/sakaniui .claude/skills/`;
 
 const CLAUDE_CODE = `claude mcp add sakaniui -- npx -y @sakaniui/mcp`;
 
