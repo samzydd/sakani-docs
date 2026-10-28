@@ -28,6 +28,12 @@ const WINDOWS_CONFIG = `{
   }
 }`;
 
+const SKILL_INSTALL = `mkdir -p .claude/skills/sakaniui
+curl -fsSL https://raw.githubusercontent.com/samzydd/Sakaniui/main/skills/sakaniui/SKILL.md \\
+  -o .claude/skills/sakaniui/SKILL.md`;
+
+const SKILL_FROM_PACKAGE = `cp -r node_modules/@sakaniui/react/skills/sakaniui .claude/skills/`;
+
 const CLAUDE_CODE = `claude mcp add sakaniui -- npx -y @sakaniui/mcp`;
 
 const MANIFEST_USE = `import manifest from '@sakaniui/react/manifest.json';
@@ -157,6 +163,31 @@ export default function AiPage() {
         <p>
           The manifest says what exists; <code>AGENTS.md</code> says why and when not to use it. Read it at{" "}
           <a href="/llms-full.txt">/llms-full.txt</a>, or index everything from <a href="/llms.txt">/llms.txt</a>.
+        </p>
+      </div>
+
+      <div className="doc-prose" id="skill">
+        <h2>The skill</h2>
+        <p>
+          The MCP server answers questions; a skill is what makes an assistant ask them. It is one short file,{" "}
+          <code>SKILL.md</code>, that Claude loads when you ask for an interface in a project that uses
+          SakaniUI. It does not repeat any component facts, so it cannot go stale. It tells the assistant to
+          check your installed version, import both stylesheets, look components, icons and emoji up
+          instead of guessing, style with tokens, and run <code>check_code</code> before answering, and it points at the
+          server, the manifest and <code>AGENTS.md</code> as the sources of truth.
+        </p>
+        <p>
+          Install it for one project (Claude Code and the Claude app read <code>.claude/skills/</code>; use{" "}
+          <code>~/.claude/skills/</code> to have it in every project):
+        </p>
+        <CodeBlock code={SKILL_INSTALL} lang="bash" />
+        <p>
+          From 0.10.1 it also ships inside the package, so it versions with the library:
+        </p>
+        <CodeBlock code={SKILL_FROM_PACKAGE} lang="bash" />
+        <p>
+          It is optional. The server and <code>AGENTS.md</code> work without it; the skill only saves you from
+          having to say &ldquo;use SakaniUI&rsquo;s tools&rdquo; in every prompt.
         </p>
       </div>
 
