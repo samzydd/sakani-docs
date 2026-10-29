@@ -18,7 +18,7 @@ import {
   GITHUB_URL,
 } from "@/lib/site";
 
-const OG_IMAGE = "/og/sakaniui-dark-v3.png";
+const OG_IMAGE = "/og/sakaniui-dark-v4.png";
 
 export const metadata: Metadata = {
   // Everything relative below (canonicals, og:image) resolves against this.
