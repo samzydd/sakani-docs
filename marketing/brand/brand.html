@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SakaniUI brand renders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=block" rel="stylesheet">
+<!--
+  Source for every raster copy of the SakaniUI arc mark (Figma "Logo / SakaniUI
+  arc mark", 64x64 grid). Render with ../../scratch render script, e.g.
+    ?kind=tile&size=180            apple-icon.png (full bleed; iOS rounds it)
+    ?kind=tile&size=48&radius=11   favicon.ico frames (rounded tile)
+    ?kind=tile&size=400            LinkedIn logo
+    ?kind=banner&w=1128&h=191      LinkedIn company page cover
+    ?kind=banner&w=1584&h=396      LinkedIn profile background
+-->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: transparent; overflow: hidden; -webkit-font-smoothing: antialiased; }
+  .tile { display: grid; place-items: center; background: #141414; }
+  .tile svg path { fill: #FAFAF9; }
+  .banner { position: relative; background: #0e0e0f; color: #fafaf9; font-family: 'Geist', system-ui, sans-serif; display: flex; align-items: center; overflow: hidden; }
+  .banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 120% at 85% 50%, rgba(250,250,249,0.06), transparent 70%); }
+  .lockup { display: flex; align-items: center; }
+  .lockup svg path { fill: #FAFAF9; }
+  .word { font-weight: 500; letter-spacing: -0.01em; white-space: nowrap; }
+  .word span { color: #a8a29b; }
+  .tag { color: #a8a29b; font-weight: 400; margin-top: 0.35em; }
+  .url { position: absolute; color: #78716a; font-weight: 500; letter-spacing: 0.01em; }
+</style>
+</head>
+<body>
+<script>
+  const MARK = '<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">'
+    + '<path d="M1.42578 22.5264C23.2117 23.2619 40.7366 40.7874 41.4727 62.5732C38.4791 63.4997 35.298 64 32 64C31.158 64 30.3237 63.9662 29.498 63.9023C29.4455 47.6871 16.3121 34.553 0.0966797 34.501C0.0328793 33.6757 0 32.8417 0 32C0 28.7018 0.499182 25.5201 1.42578 22.5264Z"/>'
+    + '<path d="M0.889648 39.5176C13.7129 39.9753 24.0232 50.2863 24.4814 63.1094C12.8474 60.3077 3.69089 51.1518 0.889648 39.5176Z"/>'
+    + '<path d="M32 0C49.6731 0 64 14.3269 64 32C64 44.5026 56.8286 55.3282 46.376 60.5938C44.7132 37.6274 26.3718 19.2853 3.40527 17.623C8.6709 7.17063 19.4975 0 32 0Z"/></svg>';
+  const q = new URLSearchParams(location.search);
+  const kind = q.get('kind') || 'tile';
+  const el = document.createElement('div');
+  if (kind === 'tile') {
+    const size = +(q.get('size') || 180);
+    // Figma "App icon tile": the mark at 40 of 64 units, centred.
+    Object.assign(el.style, { width: size + 'px', height: size + 'px', borderRadius: (q.get('radius') || 0) + 'px' });
+    el.className = 'tile';
+    el.innerHTML = `<div style="width:${size * 0.625}px;height:${size * 0.625}px">${MARK}</div>`;
+  } else {
+    const w = +(q.get('w') || 1128), h = +(q.get('h') || 191);
+    const u = h / 191; // everything scales from the company-cover height
+    Object.assign(el.style, { width: w + 'px', height: h + 'px', paddingLeft: Math.round(w * 0.36) + 'px' });
+    el.className = 'banner';
+    el.innerHTML = `
+      <div style="position:relative">
+        <div class="lockup" style="gap:${14 * u}px">
+          <div style="width:${44 * u}px;height:${44 * u}px">${MARK}</div>
+          <div class="word" style="font-size:${34 * u}px">SakaniUI <span>Components</span></div>
+        </div>
+        <div class="tag" style="font-size:${15 * u}px;margin-left:${58 * u}px">React components and blocks that match your Figma file, light and dark.</div>
+      </div>
+      <div class="url" style="right:${28 * u}px;bottom:${20 * u}px;font-size:${12 * u}px">sakaniui.com</div>`;
+  }
+  document.body.appendChild(el);
+</script>
+</body>
+</html>
