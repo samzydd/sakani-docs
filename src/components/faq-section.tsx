@@ -35,8 +35,8 @@ const FAQS = [
     a: "Not through props: blocks intentionally ship a small, fixed set of states (loading, empty, error, etc.) rather than a large configuration API. To go further, copy the block's source file from GitHub into your project and edit it directly.",
   },
   {
-    q: "Does Sakani work with AI assistants? Is there an MCP server?",
-    a: "Yes. The package ships manifest.json, a generated machine-readable contract of every component, block, prop, required prop and design token, and an MCP server (npx -y @sakaniui/mcp) with tools to search components, read a contract, list tokens and validate props with check_usage. It also ships AGENTS.md, a guide explaining why components behave as they do and what to do when nothing fits. Setup is on the AI & MCP page.",
+    q: "Does Sakani work with AI assistants? Is there an MCP server or a skill?",
+    a: "Yes. The package ships manifest.json, a generated machine-readable contract of every component, block, prop, required prop and design token, and an MCP server (npx -y @sakaniui/mcp) with tools to search components, read a contract, list tokens and validate props with check_usage. It also ships AGENTS.md, a guide explaining why components behave as they do and what to do when nothing fits, and an agent skill (skills/sakaniui/SKILL.md, the open Agent Skills format) that makes Claude Code, Cursor and other skills-compatible agents use the server and the manifest on their own whenever you ask for an interface. Setup for both is on the AI & MCP page.",
   },
   {
     q: "Is there a CLI, like shadcn add?",

@@ -5,6 +5,7 @@ import {
   IconArrowRight as ArrowRight,
   IconFileCode as FileCode,
   IconPlugConnected as Plug,
+  IconSparkles as Sparkles,
   IconBook2 as Book,
 } from "@sakaniui/react/icons";
 import { CodeBlock } from "@/components/code-block";
@@ -23,6 +24,11 @@ const POINTS = [
     body: "Search components and icons, start from a type-checked example, and check every snippet with check_code before it ships. It runs locally with no dependencies.",
   },
   {
+    icon: Sparkles,
+    title: "A skill that makes it ask",
+    body: "A short SKILL.md in the open Agent Skills format. Claude Code, Cursor and other skills-compatible agents load it when you ask for an interface, then use the server and manifest without being told to.",
+  },
+  {
     icon: Book,
     title: "The reasoning behind it",
     body: "AGENTS.md says why each piece behaves as it does, when not to use it, and what to do when nothing fits. Served at /llms-full.txt.",
@@ -39,6 +45,11 @@ const MCP_CONFIG = `{
     }
   }
 }`;
+
+const SKILL_INSTALL = `mkdir -p .claude/skills
+cp -r \\
+  node_modules/@sakaniui/react/skills/sakaniui \\
+  .claude/skills/`;
 
 const CHECK_USAGE = `// the assistant calls check_usage before it ships
 check_usage("IconButton", { variant: "danger" })
@@ -66,8 +77,8 @@ export function AiShowcase() {
           className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
         />
         <MaskReveal as="p" delay={180} className="mt-3 max-w-[680px] text-ink-muted">
-          Sakani ships a machine-readable contract and an MCP server, so Claude Code, Cursor and other assistants
-          look components up instead of inventing props, and get told when something is wrong.
+          Sakani ships a machine-readable contract, an MCP server and an agent skill, so Claude Code, Cursor and
+          other assistants look components up instead of inventing props, and get told when something is wrong.
         </MaskReveal>
       </div>
 
@@ -78,6 +89,11 @@ export function AiShowcase() {
           <p className="mt-2 text-xs text-ink-muted">
             Claude Code: <code>claude mcp add sakaniui -- npx -y @sakaniui/mcp</code>
           </p>
+          <p className="mb-2 mt-6 text-xs font-medium uppercase tracking-wide text-ink-muted">Add the skill</p>
+          <CodeBlock code={SKILL_INSTALL} lang="bash" />
+          <p className="mt-2 text-xs text-ink-muted">
+            Use <code>~/.claude/skills/</code> instead to have it in every project. Ships with 0.10.1 and later.
+          </p>
         </div>
         <div className="min-w-0">
           <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink-muted">What it catches</p>
@@ -85,7 +101,7 @@ export function AiShowcase() {
         </div>
       </div>
 
-      <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-6 px-4 sm:px-6 md:grid-cols-3 lg:px-8">
+      <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-6 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         {POINTS.map((p) => (
           <div key={p.title} className="rounded-xl border border-line-subtle bg-surface p-5">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-subtle text-ink">
@@ -100,6 +116,9 @@ export function AiShowcase() {
       <div className="mx-auto mt-8 flex max-w-5xl flex-wrap items-center gap-x-6 gap-y-3 px-4 text-sm font-medium sm:px-6 lg:px-8">
         <Link href="/docs/ai" className="inline-flex items-center gap-1.5 text-ink hover:underline">
           Set up the MCP server <ArrowRight size={14} />
+        </Link>
+        <Link href="/docs/ai#skill" className="inline-flex items-center gap-1.5 text-ink hover:underline">
+          Install the skill <ArrowRight size={14} />
         </Link>
         <a href="/manifest.json" className="inline-flex items-center gap-1.5 text-ink hover:underline">
           View manifest.json <ArrowRight size={14} />

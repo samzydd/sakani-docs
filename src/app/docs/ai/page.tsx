@@ -5,7 +5,7 @@ import { Pager } from "@/components/docs/pager";
 export const metadata = {
   title: "AI & MCP",
   description:
-    "Use Sakani UI with AI assistants: a generated machine-readable manifest of every component, prop and token, an AGENTS.md guide, and a local MCP server for Claude Code, Cursor and other editors.",
+    "Use Sakani UI with AI assistants: a generated machine-readable manifest of every component, prop and token, an AGENTS.md guide, a local MCP server, and an agent skill for Claude Code, Cursor and other editors.",
 };
 
 const MCP_CONFIG = `{

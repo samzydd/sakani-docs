@@ -77,7 +77,7 @@ export default function HomePage() {
                 href="/docs/ai"
                 className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#16a34a]/35 bg-[#22c55e]/12 px-3 py-1 text-xs font-medium text-[#166534] transition-colors hover:border-[#16a34a]/60 hover:bg-[#22c55e]/18 dark:border-[#39e75f]/40 dark:bg-[#39e75f]/10 dark:text-[#5bf08c] dark:hover:border-[#39e75f]/70 dark:hover:bg-[#39e75f]/15"
               >
-                MCP server for AI assistants <ArrowRight size={12} />
+                MCP server and agent skill for AI <ArrowRight size={12} />
               </Link>
               <Link
                 href="/docs"
@@ -115,9 +115,9 @@ export default function HomePage() {
             className="mt-5 max-w-[680px] text-balance text-lg leading-[1.4] text-ink-muted"
           >
             120+ components and 42 blocks, matching your Figma file exactly, so
-            designers hand off what engineers already have. And with the SakaniUI
-            MCP server, your AI assistant builds from that same source of truth
-            instead of guessing at it.
+            designers hand off what engineers already have. With the SakaniUI
+            MCP server and agent skill, your AI assistant builds from that same
+            source of truth instead of guessing.
           </MaskReveal>
           <MaskReveal trigger="mount" delay={620} duration={HERO_RISE} className="mt-8">
             <span className="flex flex-wrap items-center gap-3">
