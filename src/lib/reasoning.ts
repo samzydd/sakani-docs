@@ -241,6 +241,18 @@ export const reasoning: Record<string, Reasoning> = {
     why: ["It is presentational only, so queueing and positioning are the app's job and it fits any notification system."],
     dont: ["Don't use a toast for anything people must act on. It disappears.", "Don't expect it to queue or position itself."],
   },
+  map: {
+    why: [
+      "There is no map library underneath. Tiles are plain images on a Web Mercator grid, so it adds nothing to your bundle, and every marker, control and popup is drawn with the same tokens as the rest of the system, in light, dark and glass.",
+      "Places are given as latitude and longitude and the markers follow the map. For live data, glide slides them to each new position; for many places, MapClusterLayer groups them and draws only what is in view.",
+    ],
+    dont: [
+      "Don't ship the default OpenStreetMap tiles to heavy production traffic. Give tileUrl your own provider (and its attribution).",
+      "Don't map thousands of MapMarkers yourself. Use MapClusterLayer.",
+      "Don't expect routing, geocoding or place search. It draws a map; bring your own data and services.",
+      "Don't rely on the map alone. It is hard to use without a pointer, so show the places in a list or table beside it.",
+    ],
+  },
   sonner: {
     why: [
       "It owns the queue, position, timers and stacking, so the app only says what happened. toast() works from handlers, hooks and plain modules without passing state around.",

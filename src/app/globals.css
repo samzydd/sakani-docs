@@ -421,6 +421,16 @@ html.dark .noise-overlay {
    as already-resolved values, so inside a .force-light pane on a dark page
    they would stay dark unless re-declared here, where the light semantic
    tokens above are in scope. Generated from @sakaniui/react/tokens.css. */
+/* Map tiles: the library darkens them under any .dark ancestor, so a pane that forces light inside a dark page
+   has to say so (the library falls back to its own filter when this is unset). */
+.force-light {
+  --map-tile-filter: saturate(0.45) contrast(0.96) brightness(1.02);
+}
+/* ...except a map that is itself dark (theme="dark"): it keeps the library's dark filter. */
+.force-light .dark {
+  --map-tile-filter: initial;
+}
+
 .force-light {
   --glass-bg: rgba(255, 255, 255, 0.72);
   --glass-bg-chrome: rgba(255, 255, 255, 0.6);
