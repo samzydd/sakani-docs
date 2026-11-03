@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import {
   AreaChart, Calendar, DonutChart, Map, MapClusterLayer, MapGlobe, MapMarker, Menu, MenuItem, Progress, SegmentedControl,
   Slider, StatCard, Stepper, Switch, Tabs, Toast, type DateRange,
@@ -9,7 +9,7 @@ import {
 import { KanbanBoardBlock, ChatInterfaceBlock } from "@sakaniui/react/blocks";
 import {
   IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconCurrencyDollar as Dollar, IconPencil as Pencil,
-  IconCopy as Copy, IconDownload as Download, IconTrash as Trash, IconCheck as Check,
+  IconCopy as Copy, IconDownload as Download, IconTrash as Trash,
 } from "@sakaniui/react/icons";
 import { TextReveal } from "@/components/text-reveal";
 import { MaskReveal } from "@/components/mask-reveal";
@@ -26,6 +26,8 @@ function useInView<T extends HTMLElement>(margin = "120px") {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Very old browser with no IntersectionObserver: run the demos rather than leave them frozen.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (typeof IntersectionObserver === "undefined") { setInView(true); return; }
     const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { rootMargin: margin });
     io.observe(el);
@@ -34,16 +36,13 @@ function useInView<T extends HTMLElement>(margin = "120px") {
   return [ref, inView] as const;
 }
 
+const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const on = () => setReduced(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
-  return reduced;
+  return useSyncExternalStore(
+    (on) => { const mq = window.matchMedia(REDUCED_QUERY); mq.addEventListener("change", on); return () => mq.removeEventListener("change", on); },
+    () => window.matchMedia(REDUCED_QUERY).matches,
+    () => false,
+  );
 }
 
 /**
@@ -148,8 +147,9 @@ function scatter(n: number, seed: number) {
 
 function MapDemo({ inView }: { inView: boolean }) {
   const points = useMemo(() => scatter(160, 7), []);
+  // mounted the first time it scrolls near, then kept (a map should not reload its tiles on every scroll past)
   const [seen, setSeen] = useState(false);
-  useEffect(() => { if (inView) setSeen(true); }, [inView]);
+  if (inView && !seen) setSeen(true);
   return (
     <div className="absolute inset-0">
       {seen ? (
