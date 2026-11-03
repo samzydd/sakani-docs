@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import {
-  AreaChart, Calendar, DonutChart, Map, MapClusterLayer, MapGlobe, MapMarker, Menu, MenuItem, Progress, SegmentedControl,
+  AreaChart, Calendar, DonutChart, MapGlobe, Menu, MenuItem, Progress, SegmentedControl,
   Slider, StatCard, Stepper, Switch, Tabs, Toast, type DateRange,
 } from "@sakaniui/react";
-import { KanbanBoardBlock, ChatInterfaceBlock } from "@sakaniui/react/blocks";
+import { KanbanBoardBlock, ChatInterfaceBlock, DataTableBlock } from "@sakaniui/react/blocks";
 import {
   IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconCurrencyDollar as Dollar, IconPencil as Pencil,
   IconCopy as Copy, IconDownload as Download, IconTrash as Trash,
@@ -129,34 +129,7 @@ function GlobeDemo({ inView }: { inView: boolean }) {
   const arcs = useMemo(() => Object.values(CITIES).map((to) => ({ from: HQ, to })), []);
   return (
     <div className="aspect-square w-full max-w-[420px]">
-      {inView ? <MapGlobe markers={markers} arcs={arcs} center={[14, 20]} rotationSpeed={5} aria-label="Offices around the world" /> : null}
-    </div>
-  );
-}
-
-/** A deterministic scatter, so server and client agree. */
-function scatter(n: number, seed: number) {
-  let s = seed;
-  const rnd = () => ((s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296);
-  const hubs: [number, number][] = [[51.5, -0.1], [48.9, 2.3], [52.5, 13.4], [41.9, 12.5], [40.4, -3.7], [59.3, 18.1], [50.1, 14.4], [47.5, 19]];
-  return Array.from({ length: n }, (_, id) => {
-    const [la, lo] = hubs[Math.floor(rnd() * hubs.length)];
-    return { id, position: [la + (rnd() - 0.5) * 6, lo + (rnd() - 0.5) * 9] as [number, number] };
-  });
-}
-
-function MapDemo({ inView }: { inView: boolean }) {
-  const points = useMemo(() => scatter(160, 7), []);
-  // mounted the first time it scrolls near, then kept (a map should not reload its tiles on every scroll past)
-  const [seen, setSeen] = useState(false);
-  if (inView && !seen) setSeen(true);
-  return (
-    <div className="absolute inset-0">
-      {seen ? (
-        <Map center={[49.5, 9]} zoom={4} height="100%" aria-label="Offices across Europe" controls>
-          <MapClusterLayer points={points} renderPoint={(p) => <MapMarker key={p.id} position={p.position} variant="dot" />} />
-        </Map>
-      ) : null}
+      {inView ? <MapGlobe markers={markers} arcs={arcs} center={[14, 20]} rotationSpeed={8} aria-label="Offices around the world" /> : null}
     </div>
   );
 }
@@ -169,7 +142,7 @@ const REVENUE = [
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function ChartsDemo({ inView }: { inView: boolean }) {
-  const [i] = useLoop(REVENUE.length, 3200, inView);
+  const [i] = useLoop(REVENUE.length, 2300, inView);
   const data = MONTHS.map((label, k) => ({ label, value: REVENUE[i][k] }));
   const total = REVENUE[i].reduce((a, b) => a + b, 0);
   return (
@@ -219,12 +192,12 @@ function ScaledBlock({ width, height, scale, children }: { width: number; height
 
 function TabsDemo({ inView }: { inView: boolean }) {
   const items = [{ value: "overview", label: "Overview" }, { value: "activity", label: "Activity" }, { value: "settings", label: "Settings" }];
-  const [i, take] = useLoop(items.length, 2200, inView);
+  const [i, take] = useLoop(items.length, 1500, inView);
   return <div className="w-full max-w-[340px]"><Tabs items={items} value={items[i].value} onChange={(v) => take(items.findIndex((x) => x.value === v))} /></div>;
 }
 
 function SwitchDemo({ inView }: { inView: boolean }) {
-  const [i, take] = useLoop(4, 1500, inView);
+  const [i, take] = useLoop(4, 1000, inView);
   const states = [i % 2 === 1, i >= 2 ? i % 2 === 0 : false, i === 1 || i === 2];
   return (
     <div className="flex w-full max-w-[280px] flex-col gap-4">
@@ -244,7 +217,7 @@ function SliderDemo({ inView }: { inView: boolean }) {
     let raf = 0;
     const t0 = performance.now();
     const frame = (now: number) => {
-      if (Date.now() > paused) setV(Math.round(50 + 42 * Math.sin((now - t0) / 1100)));
+      if (Date.now() > paused) setV(Math.round(50 + 42 * Math.sin((now - t0) / 700)));
       raf = requestAnimationFrame(frame);
     };
     raf = requestAnimationFrame(frame);
@@ -259,12 +232,12 @@ function SliderDemo({ inView }: { inView: boolean }) {
 
 function SegmentedDemo({ inView }: { inView: boolean }) {
   const options = [{ value: "day", label: "Day" }, { value: "week", label: "Week" }, { value: "month", label: "Month" }, { value: "year", label: "Year" }];
-  const [i, take] = useLoop(options.length, 1800, inView);
+  const [i, take] = useLoop(options.length, 1200, inView);
   return <SegmentedControl options={options} value={options[i].value} onChange={(v) => take(options.findIndex((o) => o.value === v))} />;
 }
 
 function StepperDemo({ inView }: { inView: boolean }) {
-  const [i, take] = useLoop(5, 1700, inView);
+  const [i, take] = useLoop(5, 1150, inView);
   const steps = [{ label: "Account" }, { label: "Workspace" }, { label: "Invite team" }, { label: "Launch" }];
   return (
     <button type="button" className="w-full max-w-[420px] cursor-pointer text-left" onClick={() => take((i + 1) % 5)} aria-label="Advance the stepper">
@@ -281,7 +254,7 @@ const TOASTS = [
 ] as const;
 
 function ToastDemo({ inView }: { inView: boolean }) {
-  const [i, take] = useLoop(TOASTS.length, 2100, inView);
+  const [i, take] = useLoop(TOASTS.length, 1500, inView);
   // the newest sits in front; the two before it peek out behind, smaller and fainter
   const stack = [0, 1, 2].map((age) => ({ age, toast: TOASTS[(i - age + TOASTS.length * 3) % TOASTS.length], key: i - age }));
   return (
@@ -300,7 +273,7 @@ function ToastDemo({ inView }: { inView: boolean }) {
 }
 
 function CalendarDemo({ inView }: { inView: boolean }) {
-  const [i, take] = useLoop(4, 1400, inView);
+  const [i, take] = useLoop(4, 950, inView);
   const [range, setRange] = useState<DateRange>({});
   const month = useMemo(() => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); }, []);
   const day = (n: number) => new Date(month.getFullYear(), month.getMonth(), n);
@@ -314,7 +287,7 @@ function CalendarDemo({ inView }: { inView: boolean }) {
 }
 
 function ProgressDemo({ inView }: { inView: boolean }) {
-  const [i] = useLoop(5, 1100, inView);
+  const [i] = useLoop(5, 750, inView);
   const v = [18, 42, 67, 86, 100][i];
   const rows = [["Uploading assets", v], ["Building tokens", Math.max(8, v - 30)], ["Publishing", Math.min(100, v + 12)]] as const;
   return (
@@ -336,22 +309,32 @@ const MENU = [
   { label: "Delete", icon: Trash, destructive: true },
 ] as const;
 
-/** A dropdown menu whose picked row walks down the list, as if someone were arrowing through it. */
+/**
+ * A dropdown menu whose hover highlight walks down the list, as if someone were arrowing through it.
+ * It is the Menu's own flowing highlight (the one that glides between rows on a real hover): the loop
+ * sends the same mouseover a pointer would, so the demo and a real hover look identical.
+ */
 function MenuDemo({ inView }: { inView: boolean }) {
-  const [i, take] = useLoop(MENU.length + 1, 1100, inView);
+  const root = useRef<HTMLDivElement>(null);
+  const [i] = useLoop(MENU.length, 900, inView);
+  useEffect(() => {
+    if (!inView) return;
+    const items = root.current?.querySelectorAll<HTMLElement>("[data-hover-item]");
+    items?.[i]?.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
+  }, [i, inView]);
   return (
-    <Menu aria-label="Row actions" minWidth={220}>
-      {MENU.map((m, k) => {
-        const Icon = m.icon;
-        return (
-          <div key={m.label} className={cn("rounded-lg transition-colors duration-200", i === k && "bg-accent-subtle")} onMouseEnter={() => take(k)}>
-            <MenuItem icon={<Icon size={16} />} state={"destructive" in m ? "destructive" : i === k ? "checked" : "default"} shortcut={"shortcut" in m ? m.shortcut : undefined}>
+    <div ref={root}>
+      <Menu aria-label="Row actions" minWidth={220}>
+        {MENU.map((m) => {
+          const Icon = m.icon;
+          return (
+            <MenuItem key={m.label} icon={<Icon size={16} />} state={"destructive" in m ? "destructive" : "default"} shortcut={"shortcut" in m ? m.shortcut : undefined}>
               {m.label}
             </MenuItem>
-          </div>
-        );
-      })}
-    </Menu>
+          );
+        })}
+      </Menu>
+    </div>
   );
 }
 
@@ -386,8 +369,8 @@ export function ComponentWall() {
         <WallCard title="Globe" kind="Map" href="/docs/components/map#globe" description="A dotted globe where live payments arc home to headquarters." stageClassName="min-h-[420px]">
           {(v) => <GlobeDemo inView={v} />}
         </WallCard>
-        <WallCard title="Clustered map" kind="Map" href="/docs/components/map" description="Thousands of places grouped into counted clusters that open as you zoom." stageClassName="min-h-[420px]" padded={false} reveal={90}>
-          {(v) => <MapDemo inView={v} />}
+        <WallCard title="Data table" kind="Block" href="/docs/blocks/data-table" description="Sortable columns, status badges, row actions and pagination, ready to wire to your data." stageClassName="min-h-[420px]" padded={false} reveal={90}>
+          {() => <ScaledBlock width={1040} height={640} scale={0.5}><DataTableBlock /></ScaledBlock>}
         </WallCard>
         <WallCard title="Revenue charts" kind="Chart" href="/docs/components/area-chart" description="Stat cards, sparklines, area and donut charts that tween as the data changes." className="md:col-span-2" stageClassName="min-h-[380px]">
           {(v) => <ChartsDemo inView={v} />}
