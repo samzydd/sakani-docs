@@ -209,9 +209,10 @@ function GlassDemo({ inView }: { inView: boolean }) {
         variant="clear"
         tint="none"
         radius={LENS / 2}
+        source={false}
         bake={false}
         effect={{ refraction: 1, depth: 34, dispersion: 0.6, frost: 0 }}
-        aria-label="A glass lens: drag it over the photo"
+        aria-label="A glass lens: drag it over the card"
         className="cursor-grab touch-none active:cursor-grabbing"
         style={{ position: "absolute", left: 0, top: 0, width: LENS, height: LENS }}
         onPointerDown={(e) => {

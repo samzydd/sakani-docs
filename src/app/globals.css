@@ -634,4 +634,9 @@ html.dark .noise-overlay {
   --color-fg-muted: rgba(255, 255, 255, 0.78);
   --shadow-sm: inset 0 0 0 1px rgba(255, 255, 255, 0.28), 0 1px 6px rgba(0, 0, 0, 0.12);
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  /* The glass pill around it is fully round, so every layer inside is too: an inner radius is the outer one
+     minus the padding between them, which for a full radius stays full (the thumb is concentric with the pill). */
+  border-radius: 9999px;
 }
+.wall-glass-seg > span[aria-hidden],
+.wall-glass-seg > button[role="tab"] { border-radius: 9999px; }
