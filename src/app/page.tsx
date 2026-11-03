@@ -16,6 +16,7 @@ import { MaskReveal } from "@/components/mask-reveal";
 import { HeroLight } from "@/components/hero-light";
 import { GlassShowcase } from "@/components/glass-showcase";
 import { AiShowcase } from "@/components/ai-showcase";
+import { ComponentWall } from "@/components/component-wall";
 
 /** The hero's rise is slower than the section reveals further down (see
  *  --reveal-rise-hero in globals.css); it's the page's first impression
@@ -25,7 +26,7 @@ const HERO_RISE = 1500;
 const FEATURES = [
   {
     icon: Component,
-    title: "120+ components",
+    title: "130+ components",
     body: "Every atom, molecule, and pattern in the Sakani Figma file, exported 1:1, not reinterpreted.",
   },
   {
@@ -83,7 +84,7 @@ export default function HomePage() {
                 href="/docs"
                 className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line-subtle px-3 py-1 text-xs font-medium text-ink-muted transition-colors hover:border-line-default hover:text-ink"
               >
-                Last updated: October 30th <ArrowRight size={12} />
+                Last updated: November 3rd <ArrowRight size={12} />
               </Link>
             </span>
           </MaskReveal>
@@ -114,7 +115,7 @@ export default function HomePage() {
             duration={HERO_RISE}
             className="mt-5 max-w-[680px] text-balance text-lg leading-[1.4] text-ink-muted"
           >
-            120+ components and 42 blocks, matching your Figma file exactly, so
+            130+ components and 42 blocks, matching your Figma file exactly, so
             designers hand off what engineers already have. With the SakaniUI
             MCP server and agent skill, your AI assistant builds from that same
             source of truth instead of guessing.
@@ -147,6 +148,10 @@ export default function HomePage() {
 
         <HeroPreview />
       </section>
+
+      {/* The wall of live samples: the component wall right under the fold, so
+          the page shows what the library is before it explains it. */}
+      <ComponentWall />
 
       {/* Deliberately not wrapped in <Reveal>: it animates with a
           transform, and a transformed ancestor becomes the containing
