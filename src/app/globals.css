@@ -507,6 +507,22 @@ html.dark .noise-overlay {
   height: 100% !important;
 }
 
+/* The Kanban demo's columns are a fixed 320px, so in a wide frame the four of them stop short and leave an empty
+   strip on the right. Inside this embed they share the row instead, ending flush with the toolbar's right edge;
+   320px stays their minimum, so a narrow frame scrolls sideways as before. (Matches the column only: the
+   column__body--fill and columns--fill classes do not contain "column--fill".) */
+.dashboard-embed [class*="column--fill"] {
+  flex: 1 1 320px;
+  width: auto;
+  min-width: 320px;
+}
+/* ...and the cards fill their (now wider) column instead of sitting at their own fixed 296px. */
+.dashboard-embed [class*="column__body"] > *,
+.dashboard-embed [class*="_draggable_"] > * {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* Accordion collapse: grid-template-rows 0fr -> 1fr animates smoothly even
    though the panel's content height is dynamic (a fixed max-height can't do
    that without guessing). Same technique Sakani's own Accordion component
