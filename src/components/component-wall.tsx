@@ -186,8 +186,16 @@ function GlassDemo({ inView }: { inView: boolean }) {
 
   return (
     <LiquidBackdrop ref={stage} src="/glass/backdrop.jpg" className="absolute inset-0 overflow-hidden">
-      <LiquidGlass variant="regular" radius={999} className="p-1" style={{ position: "absolute", left: 20, top: 20 }}>
+      <LiquidGlass
+        variant="clear"
+        tint="none"
+        radius={999}
+        effect={{ refraction: 0.85, depth: 20, dispersion: 0.4, frost: 0.4 }}
+        className="p-0.5"
+        style={{ position: "absolute", left: 20, top: 20 }}
+      >
         <SegmentedControl
+          className="wall-glass-seg"
           options={[{ value: "day", label: "Day" }, { value: "week", label: "Week" }, { value: "month", label: "Month" }]}
           value={["day", "week", "month"][seg]}
           onChange={(v) => takeSeg(["day", "week", "month"].indexOf(v))}

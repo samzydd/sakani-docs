@@ -624,3 +624,14 @@ html.dark .noise-overlay {
 .wall-stage { background-image: radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg-default) 7%, transparent) 1px, transparent 0); background-size: 18px 18px; }
 @media (prefers-reduced-motion: reduce) { .wall-card { animation: none; } }
 .wall-fade { -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent); mask-image: linear-gradient(to bottom, #000 72%, transparent); }
+
+/* The wall's glass control: a SegmentedControl with no track of its own, so the liquid glass pill around it shows,
+   and a translucent white thumb. Re-points the colours it reads rather than restyling its parts. */
+.wall-glass-seg {
+  background: transparent;
+  --color-bg-surface: rgba(255, 255, 255, 0.24);
+  --color-fg-default: #fff;
+  --color-fg-muted: rgba(255, 255, 255, 0.78);
+  --shadow-sm: inset 0 0 0 1px rgba(255, 255, 255, 0.28), 0 1px 6px rgba(0, 0, 0, 0.12);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
