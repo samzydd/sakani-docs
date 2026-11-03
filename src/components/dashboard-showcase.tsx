@@ -40,6 +40,7 @@ type Tab =
   | { key: string; label: string; path: string; kind: "iframe"; url: string };
 
 const TABS: Tab[] = [
+  { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock as BlockComponent },
   {
     key: "crm-demo-1",
     label: "CRM demo 1",
@@ -49,7 +50,6 @@ const TABS: Tab[] = [
   },
   { key: "crm-demo-2", label: "CRM demo 2", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock as BlockComponent },
   { key: "liquid-glass", label: "Liquid Glass", path: "app.yourcompany.com/dashboard", kind: "block", Block: LiquidGlassDemo },
-  { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock as BlockComponent },
   { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", kind: "block", Block: DataTableBlock as BlockComponent },
 ];
 
