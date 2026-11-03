@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import {
-  AreaChart, Calendar, DonutChart, MapGlobe, Menu, MenuItem, Progress, SegmentedControl,
-  Slider, StatCard, Stepper, Switch, Tabs, Toast, type DateRange,
+  AreaChart, Button, Calendar, Card, DonutChart, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, SegmentedControl,
+  Slider, StatCard, Stepper, Switch, Tabs, Toast, syncLiquidBackdrop, type DateRange,
 } from "@sakaniui/react";
-import { KanbanBoardBlock, ChatInterfaceBlock, DataTableBlock } from "@sakaniui/react/blocks";
+import { KanbanBoardBlock, ChatInterfaceBlock } from "@sakaniui/react/blocks";
 import {
   IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconCurrencyDollar as Dollar, IconPencil as Pencil,
   IconCopy as Copy, IconDownload as Download, IconTrash as Trash,
@@ -66,7 +66,7 @@ function useLoop(length: number, ms: number, active: boolean) {
 /* Card                                                                */
 /* ------------------------------------------------------------------ */
 
-type Kind = "Map" | "Chart" | "Block" | "Form" | "Navigation" | "Feedback" | "Data entry" | "Data display";
+type Kind = "Map" | "Surface" | "Chart" | "Block" | "Form" | "Navigation" | "Feedback" | "Data entry" | "Data display";
 
 /**
  * One sample: a stage with the live component on it, then its name, kind and a line about it.
@@ -131,6 +131,94 @@ function GlobeDemo({ inView }: { inView: boolean }) {
     <div className="aspect-square w-full max-w-[420px]">
       {inView ? <MapGlobe markers={markers} arcs={arcs} center={[14, 20]} rotationSpeed={8} aria-label="Offices around the world" /> : null}
     </div>
+  );
+}
+
+const LENS = 170;
+
+/**
+ * Liquid glass over a photograph: a lens drifts across the picture bending it at the edge (refraction,
+ * dispersion, rim light), a glass card and a glass control sit on top. Pick the lens up and it follows
+ * the pointer; let go and it carries on. The library keeps the photo inside each lens aligned, as long as
+ * a lens moved from JavaScript calls syncLiquidBackdrop() in the same frame.
+ */
+function GlassDemo({ inView }: { inView: boolean }) {
+  const stage = useRef<HTMLDivElement>(null);
+  const lens = useRef<HTMLDivElement>(null);
+  const pos = useRef({ x: 0.62, y: 0.36 });
+  const grab = useRef<{ dx: number; dy: number } | null>(null);
+  const resumeAt = useRef(0);
+  const reduced = usePrefersReducedMotion();
+  const [seg, takeSeg] = useLoop(3, 1700, inView);
+
+  useEffect(() => {
+    const place = () => {
+      const st = stage.current, ln = lens.current;
+      if (!st || !ln) return;
+      const w = st.clientWidth, h = st.clientHeight;
+      const x = Math.min(Math.max(pos.current.x * w - LENS / 2, 0), w - LENS);
+      const y = Math.min(Math.max(pos.current.y * h - LENS / 2, 0), h - LENS);
+      ln.style.transform = `translate(${x}px, ${y}px)`;
+      syncLiquidBackdrop();
+    };
+    place();
+    if (!inView || reduced) return;
+    let raf = 0;
+    const t0 = performance.now();
+    const frame = (now: number) => {
+      if (!grab.current && Date.now() > resumeAt.current) {
+        const t = (now - t0) / 1000;
+        pos.current = { x: 0.5 + 0.36 * Math.sin(t * 0.8), y: 0.5 + 0.3 * Math.sin(t * 1.15 + 1.2) };
+      }
+      place();
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, reduced]);
+
+  const move = (e: React.PointerEvent) => {
+    const st = stage.current;
+    if (!grab.current || !st) return;
+    const r = st.getBoundingClientRect();
+    pos.current = { x: (e.clientX - r.left - grab.current.dx) / r.width, y: (e.clientY - r.top - grab.current.dy) / r.height };
+  };
+
+  return (
+    <LiquidBackdrop ref={stage} src="/glass/backdrop.jpg" className="absolute inset-0 overflow-hidden">
+      <LiquidGlass variant="regular" radius={999} className="p-1" style={{ position: "absolute", left: 20, top: 20 }}>
+        <SegmentedControl
+          options={[{ value: "day", label: "Day" }, { value: "week", label: "Week" }, { value: "month", label: "Month" }]}
+          value={["day", "week", "month"][seg]}
+          onChange={(v) => takeSeg(["day", "week", "month"].indexOf(v))}
+        />
+      </LiquidGlass>
+      <LiquidGlass variant="regular" radius={16} style={{ position: "absolute", left: 20, bottom: 20, width: "min(250px, calc(100% - 40px))" }}>
+        <Card title="Revenue" description="Last 30 days" actions={<Button size="sm">View report</Button>} />
+      </LiquidGlass>
+      <LiquidGlass
+        ref={lens}
+        variant="clear"
+        tint="none"
+        radius={LENS / 2}
+        bake={false}
+        effect={{ refraction: 1, depth: 34, dispersion: 0.6, frost: 0 }}
+        aria-label="A glass lens: drag it over the photo"
+        className="cursor-grab touch-none active:cursor-grabbing"
+        style={{ position: "absolute", left: 0, top: 0, width: LENS, height: LENS }}
+        onPointerDown={(e) => {
+          const ln = lens.current;
+          if (!ln) return;
+          const r = ln.getBoundingClientRect();
+          // the grab point, relative to the lens centre, so the lens does not jump under the pointer
+          grab.current = { dx: e.clientX - (r.left + r.width / 2), dy: e.clientY - (r.top + r.height / 2) };
+          ln.setPointerCapture(e.pointerId);
+        }}
+        onPointerMove={move}
+        onPointerUp={() => { grab.current = null; resumeAt.current = Date.now() + 4000; }}
+        onPointerCancel={() => { grab.current = null; resumeAt.current = Date.now() + 4000; }}
+      />
+    </LiquidBackdrop>
   );
 }
 
@@ -360,7 +448,7 @@ export function ComponentWall() {
   return (
     <section id="components" className="py-16 sm:py-24">
       <WallHeading
-        title={["Maps, charts and", "full product screens"]}
+        title={["Maps, glass, charts and", "full product screens"]}
         body="Live, not screenshots. Real SakaniUI components wired to real data, each one a single import."
         href="/docs/components/map"
         cta="Explore the components"
@@ -369,8 +457,8 @@ export function ComponentWall() {
         <WallCard title="Globe" kind="Map" href="/docs/components/map#globe" description="A dotted globe where live payments arc home to headquarters." stageClassName="min-h-[420px]">
           {(v) => <GlobeDemo inView={v} />}
         </WallCard>
-        <WallCard title="Data table" kind="Block" href="/docs/blocks/data-table" description="Sortable columns, status badges, row actions and pagination, ready to wire to your data." stageClassName="min-h-[420px]" padded={false} reveal={90}>
-          {() => <ScaledBlock width={1040} height={640} scale={0.5}><DataTableBlock /></ScaledBlock>}
+        <WallCard title="Liquid glass" kind="Surface" href="/docs/glass" description="Apple-style glass that bends the photo behind it. Pick the lens up and drag it." stageClassName="min-h-[420px]" padded={false} reveal={90}>
+          {(v) => <GlassDemo inView={v} />}
         </WallCard>
         <WallCard title="Revenue charts" kind="Chart" href="/docs/components/area-chart" description="Stat cards, sparklines, area and donut charts that tween as the data changes." className="md:col-span-2" stageClassName="min-h-[380px]">
           {(v) => <ChartsDemo inView={v} />}
