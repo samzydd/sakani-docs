@@ -143,7 +143,7 @@ const CITIES: Record<string, [number, number]> = {
   "New York": [40.7, -74], "Sao Paulo": [-23.5, -46.6], Sydney: [-33.9, 151.2], Mumbai: [19.1, 72.9],
 };
 
-function GlobeDemo({ inView }: { inView: boolean }) {
+function GlobeDemo({ inView, dark }: { inView: boolean; dark: boolean }) {
   const markers = useMemo(() => [
     { position: HQ, active: true, label: "Lagos HQ" },
     ...Object.entries(CITIES).map(([label, position]) => ({ position, label })),
@@ -151,7 +151,10 @@ function GlobeDemo({ inView }: { inView: boolean }) {
   const arcs = useMemo(() => Object.values(CITIES).map((to) => ({ from: HQ, to })), []);
   return (
     <div className="aspect-square w-full max-w-[420px]">
-      {inView ? <MapGlobe markers={markers} arcs={arcs} center={[14, 20]} rotationSpeed={8} aria-label="Offices around the world" /> : null}
+      {/* keyed by the card's theme: the globe reads its dot colour into JS when the page's root theme class changes, and
+          this card flips a class on a nested element instead, so a globe flipped in place would keep its old colour
+          (light dots on a light card: invisible). A fresh one reads it again. */}
+      {inView ? <MapGlobe key={String(dark)} markers={markers} arcs={arcs} center={[14, 20]} rotationSpeed={8} aria-label="Offices around the world" /> : null}
     </div>
   );
 }
@@ -502,7 +505,7 @@ export function ComponentWall() {
       />
       <div className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-x-5 gap-y-10 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
         <WallCard title="Globe" kind="Map" href="/docs/components/map#globe" description="A dotted globe where live payments arc home to headquarters." stageClassName="min-h-[420px]">
-          {(v) => <GlobeDemo inView={v} />}
+          {(v, d) => <GlobeDemo inView={v} dark={d} />}
         </WallCard>
         <WallCard title="Liquid glass" kind="Surface" href="/docs/glass" description="Apple-style glass that bends the photo behind it. Pick the lens up and drag it." stageClassName="min-h-[420px]" padded={false} reveal={90}>
           {(v) => <GlassDemo inView={v} />}
