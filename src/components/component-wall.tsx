@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import {
-  AreaChart, Button, Calendar, Card, DonutChart, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, SegmentedControl,
-  Slider, StatCard, Stepper, Switch, Tabs, Toast, syncLiquidBackdrop, type DateRange,
+  BarChart, Button, Calendar, Card, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, RadarChart, RadialChart, SegmentedControl,
+  Slider, Stepper, Switch, Tabs, Toast, syncLiquidBackdrop, type DateRange,
 } from "@sakaniui/react";
 import { KanbanBoardBlock, ChatInterfaceBlock } from "@sakaniui/react/blocks";
 import {
-  IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconCurrencyDollar as Dollar, IconPencil as Pencil,
+  IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconPencil as Pencil,
   IconCopy as Copy, IconDownload as Download, IconTrash as Trash,
 } from "@sakaniui/react/icons";
 import { TextReveal } from "@/components/text-reveal";
@@ -231,34 +231,48 @@ function GlassDemo({ inView }: { inView: boolean }) {
   );
 }
 
-const REVENUE = [
-  [32, 38, 35, 46, 52, 49, 61, 68, 64, 76, 83, 91],
-  [48, 44, 52, 50, 58, 66, 62, 70, 79, 74, 88, 97],
-  [28, 36, 44, 41, 55, 60, 72, 69, 81, 86, 90, 104],
+/* Three frames of data per chart; the demo walks through them and each chart tweens between them. */
+const RINGS = [
+  [78, 64, 52, 36],
+  [58, 82, 40, 60],
+  [90, 48, 70, 28],
 ];
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const RING_LABELS = ["Revenue", "Growth", "Retention", "Referrals"];
+const AXES = ["Speed", "Quality", "Support", "Price", "Docs", "Design"];
+const RADAR_NOW = [[82, 70, 90, 55, 76, 88], [60, 92, 68, 80, 58, 72], [88, 64, 74, 90, 84, 60]];
+const RADAR_PREV = [[58, 52, 64, 70, 48, 60], [48, 66, 50, 58, 62, 44], [64, 50, 58, 62, 54, 68]];
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const BARS = [[42, 68, 54, 88, 72, 36, 48], [66, 50, 82, 60, 94, 52, 40], [38, 76, 62, 70, 58, 84, 66]];
 
-function ChartsDemo({ inView }: { inView: boolean }) {
-  const [i] = useLoop(REVENUE.length, 2300, inView);
-  const data = MONTHS.map((label, k) => ({ label, value: REVENUE[i][k] }));
-  const total = REVENUE[i].reduce((a, b) => a + b, 0);
+function Panel({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="grid w-full gap-4 sm:grid-cols-[1fr_1.7fr]">
-      <div className="flex flex-col gap-4">
-        <StatCard
-          title="Revenue" value={`$${(total * 1.84 / 100).toFixed(2)}M`} delta={`+${(6 + i * 3.4).toFixed(1)}%`} trend="up"
-          badgeVariant="success" variant="icon" icon={Dollar} sparkline={REVENUE[i]}
+    <div className="flex min-w-0 flex-col rounded-xl border border-line-subtle p-4">
+      <p className="mb-2 text-xs font-medium text-ink-muted">{label}</p>
+      <div className="flex min-h-0 flex-1 items-center justify-center">{children}</div>
+    </div>
+  );
+}
+
+/** A radial, a radar and a bar chart: the real library charts, their data stepping through three frames. */
+function ChartsDemo({ inView }: { inView: boolean }) {
+  const [i] = useLoop(3, 2300, inView);
+  return (
+    <div className="grid w-full gap-4 sm:grid-cols-3">
+      <Panel label="Quarter goals">
+        <RadialChart
+          size="lg" variant="multi" centerValue={`${Math.round(RINGS[i].reduce((a, b) => a + b, 0) / 4)}%`} centerCaption="On track"
+          data={RING_LABELS.map((label, k) => ({ label, value: RINGS[i][k], max: 100 }))}
         />
-        <div className="rounded-xl border border-line-subtle p-3">
-          <DonutChart
-            size="sm" height={120} centerValue={`${62 + i * 7}%`} centerCaption="Repeat"
-            data={[{ label: "Repeat", value: 62 + i * 7 }, { label: "New", value: 38 - i * 7 }]}
-          />
-        </div>
-      </div>
-      <div className="min-w-0 rounded-xl border border-line-subtle p-3">
-        <AreaChart data={data} height={250} />
-      </div>
+      </Panel>
+      <Panel label="Product scorecard">
+        <RadarChart
+          size="lg" variant="multiple" seriesLabels={["This year", "Last year"]}
+          data={AXES.map((label, k) => ({ label, value: RADAR_NOW[i][k], value2: RADAR_PREV[i][k] }))}
+        />
+      </Panel>
+      <Panel label="Signups this week">
+        <BarChart size="lg" data={DAYS.map((label, k) => ({ label, value: BARS[i][k] }))} />
+      </Panel>
     </div>
   );
 }
@@ -469,7 +483,7 @@ export function ComponentWall() {
         <WallCard title="Liquid glass" kind="Surface" href="/docs/glass" description="Apple-style glass that bends the photo behind it. Pick the lens up and drag it." stageClassName="min-h-[420px]" padded={false} reveal={90}>
           {(v) => <GlassDemo inView={v} />}
         </WallCard>
-        <WallCard title="Revenue charts" kind="Chart" href="/docs/components/area-chart" description="Stat cards, sparklines, area and donut charts that tween as the data changes." className="md:col-span-2" stageClassName="min-h-[380px]">
+        <WallCard title="Charts" kind="Chart" href="/docs/components/radial-chart" description="Radial, radar and bar charts that tween as the data changes." className="md:col-span-2" stageClassName="min-h-[380px]">
           {(v) => <ChartsDemo inView={v} />}
         </WallCard>
         <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards, labels and a drag state." stageClassName="min-h-[360px]" padded={false}>
