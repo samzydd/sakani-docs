@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import {
   BarChart, Button, Calendar, Card, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, RadarChart, RadialChart, SegmentedControl,
@@ -8,7 +9,7 @@ import {
 } from "@sakaniui/react";
 import { KanbanBoardBlock, ChatInterfaceBlock } from "@sakaniui/react/blocks";
 import {
-  IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconPencil as Pencil,
+  IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconMoon as Moon, IconPencil as Pencil, IconSun as Sun,
   IconCopy as Copy, IconDownload as Download, IconTrash as Trash,
 } from "@sakaniui/react/icons";
 import { TextReveal } from "@/components/text-reveal";
@@ -79,13 +80,21 @@ function WallCard({
   kind: Kind;
   description: string;
   href: string;
-  children: (inView: boolean) => ReactNode;
+  children: (inView: boolean, dark: boolean) => ReactNode;
   className?: string;
   stageClassName?: string;
   reveal?: number;
   padded?: boolean;
 }) {
   const [ref, inView] = useInView<HTMLDivElement>();
+  // Each card can be flipped to light or dark on its own, whatever the site is set to: the stage carries `dark` or
+  // `force-light` (the same pair the dashboard frame uses), so everything on it re-themes through the tokens.
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { setMounted(true); }, []);
+  const [mode, setMode] = useState<"light" | "dark" | null>(null);
+  const isDark = mode ? mode === "dark" : mounted && resolvedTheme === "dark";
   return (
     <div className={cn("wall-card group flex min-w-0 flex-col", className)} style={{ ["--wall-delay" as string]: `${reveal}ms` }}>
       <div
@@ -94,10 +103,23 @@ function WallCard({
           "wall-stage relative flex min-h-[240px] flex-1 items-center justify-center overflow-hidden rounded-2xl border border-line-subtle bg-surface",
           "transition-[border-color,box-shadow] duration-300 group-hover:border-line-default group-hover:shadow-lg",
           padded && "p-6",
+          mode === "dark" && "dark",
+          mode === "light" && "force-light",
           stageClassName,
         )}
       >
-        {children(inView)}
+        {children(inView, isDark)}
+        <button
+          type="button"
+          onClick={() => setMode(isDark ? "light" : "dark")}
+          aria-label={isDark ? `Show ${title} in light mode` : `Show ${title} in dark mode`}
+          className={cn(
+            "absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-lg border border-line-subtle bg-surface/80 text-ink-muted backdrop-blur-sm",
+            "opacity-0 transition-[opacity,color] duration-200 hover:text-ink focus-visible:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100",
+          )}
+        >
+          {isDark ? <Sun size={15} strokeWidth={1.75} /> : <Moon size={15} strokeWidth={1.75} />}
+        </button>
       </div>
       <Link href={href} className="mt-3.5 block rounded-md outline-offset-4">
         <span className="flex items-center gap-2">
@@ -425,17 +447,19 @@ const MENU = [
  * It is the Menu's own flowing highlight (the one that glides between rows on a real hover): the loop
  * sends the same mouseover a pointer would, so the demo and a real hover look identical.
  */
-function MenuDemo({ inView }: { inView: boolean }) {
+function MenuDemo({ inView, dark }: { inView: boolean; dark: boolean }) {
   const root = useRef<HTMLDivElement>(null);
   const [i] = useLoop(MENU.length, 900, inView);
   useEffect(() => {
     if (!inView) return;
     const items = root.current?.querySelectorAll<HTMLElement>("[data-hover-item]");
     items?.[i]?.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
-  }, [i, inView]);
+  }, [i, inView, dark]);
   return (
     <div ref={root}>
-      <Menu aria-label="Row actions" minWidth={220}>
+      {/* keyed by the theme: the gliding highlight reads its colour when it lands on a row, so a menu flipped
+          in place would keep the old tone until it moved; a fresh one measures it again */}
+      <Menu key={String(dark)} aria-label="Row actions" minWidth={220}>
         {MENU.map((m) => {
           const Icon = m.icon;
           return (
@@ -510,7 +534,7 @@ export function ComponentWall() {
           <WallCard title="Segmented control" kind="Form" href="/docs/components/segmented-control" description="Choose one of a few options, with a thumb that glides." reveal={140}>{(v) => <SegmentedDemo inView={v} />}</WallCard>
           <WallCard title="Stepper" kind="Navigation" href="/docs/components/stepper" description="Show where someone is in a flow, and what is left.">{(v) => <StepperDemo inView={v} />}</WallCard>
           <WallCard title="Progress" kind="Feedback" href="/docs/components/progress" description="Linear progress for uploads, builds and publishing." reveal={70}>{(v) => <ProgressDemo inView={v} />}</WallCard>
-          <WallCard title="Menu" kind="Navigation" href="/docs/components/menu" description="A focused list of actions with icons, shortcuts and a destructive state." reveal={140}>{(v) => <MenuDemo inView={v} />}</WallCard>
+          <WallCard title="Menu" kind="Navigation" href="/docs/components/menu" description="A focused list of actions with icons, shortcuts and a destructive state." reveal={140}>{(v, d) => <MenuDemo inView={v} dark={d} />}</WallCard>
         </div>
         <p className="mx-auto mt-12 max-w-7xl px-4 text-center text-sm text-ink-muted sm:px-6 lg:px-8">
           130+ components and 42 blocks, MIT licensed and free, no account needed.
