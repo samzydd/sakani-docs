@@ -656,3 +656,17 @@ html.dark .noise-overlay {
 }
 .wall-glass-seg > span[aria-hidden],
 .wall-glass-seg > button[role="tab"] { border-radius: 9999px; }
+
+/* ---- theme switch: the page blinks from one theme to the other ----
+   The toggle wraps the change in a View Transition (see theme-toggle.tsx); these set how it blends. The default
+   cross-fade is 250ms and linear-ish; a touch longer with an ease reads as a smooth blink rather than a flash. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
