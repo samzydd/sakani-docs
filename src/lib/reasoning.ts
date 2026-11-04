@@ -241,6 +241,18 @@ export const reasoning: Record<string, Reasoning> = {
     why: ["It is presentational only, so queueing and positioning are the app's job and it fits any notification system."],
     dont: ["Don't use a toast for anything people must act on. It disappears.", "Don't expect it to queue or position itself."],
   },
+  "chain-of-thought": {
+    why: [
+      "It is built for an agent that streams: append a step when a tool call starts, give it a count when the results land, and the rail, counts and source chips animate in by themselves. It only displays, so you keep the run's state.",
+      "Each step can carry the real logo of the site it searched, in its brand colour, or an emoji, so a long run is scannable at a glance. The Working line and the finishing check are part of it.",
+    ],
+    dont: [
+      "Don't use Stepper for an agent run. A Stepper is a progress bar for a known sequence; a Chain of Thought grows as the agent works.",
+      "Don't use ActivityFeed for it. That is a log of past events.",
+      "Don't mark several steps active. Only the step in progress reads in full.",
+      "Don't use a generic magnifier on every step. Give each step its site's logo or an emoji.",
+    ],
+  },
   map: {
     why: [
       "There is no map library underneath. Tiles are plain images on a Web Mercator grid, so it adds nothing to your bundle, and every marker, control and popup is drawn with the same tokens as the rest of the system, in light, dark and glass.",

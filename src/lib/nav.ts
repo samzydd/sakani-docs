@@ -120,6 +120,7 @@ export const docsNav: NavGroup[] = [
       { title: "List Item", href: "/docs/components/list-item" },
       { title: "Board Card", href: "/docs/components/board-card" },
       { title: "Chat", href: "/docs/components/chat" },
+      { title: "Chain of Thought", href: "/docs/components/chain-of-thought" },
       { title: "Calendar", href: "/docs/components/calendar" },
       { title: "Map", href: "/docs/components/map" },
     ],

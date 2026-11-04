@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import {
-  BarChart, Button, Calendar, Card, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, RadarChart, RadialChart, SegmentedControl,
-  Slider, Stepper, Switch, Tabs, Toast, syncLiquidBackdrop, type DateRange,
+  BarChart, Button, Calendar, Card, ChainOfThought, ChainOfThoughtStep, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, RadarChart, RadialChart, SegmentedControl,
+  Slider, SourceStack, Stepper, Switch, Tabs, Toast, sourceLogo, syncLiquidBackdrop, type DateRange,
 } from "@sakaniui/react";
 import { KanbanBoardBlock, ChatInterfaceBlock } from "@sakaniui/react/blocks";
+import { EmojiLightBulb, EmojiMagnifyingGlassTiltedLeft, EmojiPageFacingUp } from "@sakaniui/react/emoji";
 import {
   IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconMoon as Moon, IconPencil as Pencil, IconSun as Sun,
   IconCopy as Copy, IconDownload as Download, IconTrash as Trash,
@@ -67,7 +68,7 @@ function useLoop(length: number, ms: number, active: boolean) {
 /* Card                                                                */
 /* ------------------------------------------------------------------ */
 
-type Kind = "Map" | "Surface" | "Chart" | "Block" | "Form" | "Navigation" | "Feedback" | "Data entry" | "Data display";
+type Kind = "Map" | "Surface" | "AI" | "Chart" | "Block" | "Form" | "Navigation" | "Feedback" | "Data entry" | "Data display";
 
 /**
  * One sample: a stage with the live component on it, then its name, kind and a line about it.
@@ -302,6 +303,70 @@ function ChartsDemo({ inView }: { inView: boolean }) {
   );
 }
 
+const G = sourceLogo("google"), XL = sourceLogo("x"), RD = sourceLogo("reddit"), HN = sourceLogo("hackernews");
+const RUN = [
+  { icon: EmojiLightBulb, label: "Planning the search", count: "3 angles", ms: 900 },
+  { icon: G, label: "Searched Google for", query: "design system pricing", count: "10 results", ms: 1300,
+    sources: [{ label: "Google", icon: G }, { label: "Product Hunt", icon: sourceLogo("producthunt") }, { label: "Medium", icon: sourceLogo("medium") }, { label: "Wikipedia", icon: sourceLogo("wikipedia") }] },
+  { icon: XL, label: "Searched X for", query: "paid design systems", count: "7 posts", ms: 1200 },
+  { icon: RD, label: "Searched Reddit for", query: "r/reactjs worth paying for", count: "12 threads", ms: 1500,
+    sources: [{ label: "Reddit", icon: RD }, { label: "Hacker News", icon: HN }, { label: "Stack Overflow", icon: sourceLogo("stackoverflow") }] },
+  { icon: EmojiPageFacingUp, label: "Reading the strongest three threads", ms: 1600 },
+];
+
+/** An agent run that plays on a loop while it is on screen: each step arrives, works, lands its results, then it finishes. */
+function ChainDemo({ inView }: { inView: boolean }) {
+  const [run, setRun] = useState(0);
+  const [shown, setShown] = useState(0);
+  const [landed, setLanded] = useState(0);
+  const [startedAt, setStartedAt] = useState(() => Date.now());
+  const [finishedIn, setFinishedIn] = useState<number | undefined>();
+  const reduced = usePrefersReducedMotion();
+  useEffect(() => {
+    if (!inView) return;
+    const start = Date.now();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setShown(0); setLanded(0); setFinishedIn(undefined); setStartedAt(start);
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let at = 500;
+    RUN.forEach((r, i) => {
+      timers.push(setTimeout(() => setShown(i + 1), at));
+      at += r.ms;
+      timers.push(setTimeout(() => setLanded(i + 1), at));
+      at += 300;
+    });
+    timers.push(setTimeout(() => setFinishedIn((Date.now() - start) / 1000), at - 100));
+    // hold the finished run for a moment, then play it again (not under reduced motion: it stays finished)
+    if (!reduced) timers.push(setTimeout(() => setRun((n) => n + 1), at + 3800));
+    return () => timers.forEach(clearTimeout);
+  }, [run, inView, reduced]);
+  const done = finishedIn != null;
+  return (
+    <div className="w-full max-w-[520px]">
+      <ChainOfThought
+        title={done ? `Ran ${RUN.filter((r) => r.query).length} searches` : "Researching"}
+        icon={EmojiMagnifyingGlassTiltedLeft}
+        status={done ? "done" : "working"}
+        startedAt={startedAt}
+        elapsed={finishedIn}
+      >
+        {RUN.slice(0, shown).map((r, i) => (
+          <ChainOfThoughtStep
+            key={`${run}-${r.label}`}
+            status={!done && i === shown - 1 && landed < shown ? "active" : "done"}
+            icon={r.icon}
+            label={r.label}
+            query={r.query}
+            count={i < landed ? r.count : undefined}
+            sources={i < landed && r.sources ? <SourceStack sources={r.sources} /> : undefined}
+            onSourcesClick={r.sources ? () => {} : undefined}
+          />
+        ))}
+      </ChainOfThought>
+    </div>
+  );
+}
+
 /** A real block, scaled down to sit in a card: a visual sample, not a control (the docs page has the live one). */
 function ScaledBlock({ width, height, scale, children }: { width: number; height: number; scale: number; children: ReactNode }) {
   const outer = useRef<HTMLDivElement>(null);
@@ -518,6 +583,9 @@ export function ComponentWall() {
         </WallCard>
         <WallCard title="AI chat" kind="Block" href="/docs/blocks/panels" description="A full chat screen with a conversation list, messages and a composer." stageClassName="min-h-[360px]" padded={false} reveal={90}>
           {() => <ScaledBlock width={1040} height={640} scale={0.5}><ChatInterfaceBlock /></ScaledBlock>}
+        </WallCard>
+        <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." className="md:col-span-2" stageClassName="min-h-[400px]">
+          {(v) => <ChainDemo inView={v} />}
         </WallCard>
       </div>
 
