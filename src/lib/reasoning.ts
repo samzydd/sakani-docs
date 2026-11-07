@@ -253,6 +253,18 @@ export const reasoning: Record<string, Reasoning> = {
       "Don't use a generic magnifier on every step. Give each step its site's logo or an emoji.",
     ],
   },
+  "command-menu": {
+    why: [
+      "You own the data and the actions: pass groups of items and handle onSelect. It filters as you type, moves over one gliding highlight, and covers the states a real search needs (loading, error, no results with a way out) so you do not rebuild them.",
+      "Ask AI is built in as a slot, not a service. Hand it a Chain of Thought and a CommandMenuAnswer and it thinks, folds shut and writes the answer in the way a chat reply arrives. Nothing is answered until the person asks.",
+    ],
+    dont: [
+      "Don't use it for a form field that picks one value. Use Select or Combobox.",
+      "Don't use Menu for it. A Menu is a short list of actions on a button; the Command Menu is a searchable palette over the whole app.",
+      "Don't fake the thinking. Show the Chain of Thought only while your agent really works, and answer only the question in the box.",
+      "Don't leave a dead end. Give an empty search suggestions or fallbackGroups, and an error a retry.",
+    ],
+  },
   map: {
     why: [
       "There is no map library underneath. Tiles are plain images on a Web Mercator grid, so it adds nothing to your bundle, and every marker, control and popup is drawn with the same tokens as the rest of the system, in light, dark and glass.",
