@@ -1,120 +1,51 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { IconSearch as Search } from "@sakaniui/react/icons";
+import { CommandMenu as SakaniCommandMenu, CommandMenuTrigger, type CommandMenuGroup } from "@sakaniui/react";
 import { docsNav } from "@/lib/nav";
 
+/**
+ * The site's ⌘K search. It is SakaniUI's own CommandMenu, fed from the docs navigation:
+ * each nav group becomes a group of page results, and a result's description is its group
+ * ("Forms", "Navigation"), so searching a group name finds its pages too.
+ *
+ * The library menu opens with ⌘K / Ctrl K, filters as you type, moves with the arrow keys
+ * over one gliding highlight, and closes with esc, so none of that is wired up here.
+ */
 export function CommandMenu() {
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
   const router = useRouter();
 
-  const close = () => {
-    setOpen(false);
-    setQuery("");
-  };
-
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        setOpen((o) => {
-          if (o) setQuery("");
-          return !o;
-        });
-      }
-      if (e.key === "Escape") close();
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, []);
-
-  const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return docsNav
-      .map((group) => ({
-        title: group.title,
-        items: group.items.filter((i) => !q || i.title.toLowerCase().includes(q)),
-      }))
-      .filter((g) => g.items.length > 0);
-  }, [query]);
-
-  const go = (href: string) => {
-    close();
-    router.push(href);
-  };
+  const groups = useMemo<CommandMenuGroup[]>(
+    () =>
+      docsNav.map((group) => ({
+        id: group.title,
+        label: group.title,
+        items: group.items.map((item) => ({
+          id: item.href,
+          type: "page" as const,
+          label: item.title,
+          description: group.title,
+        })),
+      })),
+    [],
+  );
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="flex h-9 w-full max-w-64 items-center gap-2 rounded-md border border-line-subtle bg-surface px-3 text-sm text-ink-muted transition-colors hover:border-line-default"
-      >
-        <Search size={14} strokeWidth={1.75} />
-        <span className="flex-1 text-left">Search docs…</span>
-        {/* text-ink, not text-ink-muted: muted on bg-subtle measures 4.37:1,
-            just under AA, and at 11px this is the smallest text on the page. */}
-        <kbd className="rounded border border-line-subtle bg-subtle px-1.5 py-0.5 font-mono text-[11px] text-ink">
-          ⌘K
-        </kbd>
-      </button>
-
-      {/*
-       * Portaled to <body> rather than rendered in place. This overlay sits
-       * inside <SiteHeader>, and the header carries backdrop-blur -- a
-       * backdrop-filter (like a filter, transform, or perspective) makes its
-       * element the containing block for any `fixed` descendant, per the
-       * Filter Effects spec. Left in place, `fixed inset-0` here resolved
-       * against the header's own ~65px box instead of the viewport: the
-       * scrim covered only that strip, and everything below it, including
-       * the panel most of the time, sat on plain white. Moving the overlay
-       * out from under the blurred ancestor is what lets `fixed` reach the
-       * viewport as it's meant to.
-       */}
-      {open && createPortal(
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 pt-[15vh]" onClick={close}>
-          <div
-            className="w-full max-w-lg animate-fade-in overflow-hidden rounded-xl border border-line-subtle bg-surface shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-2 border-b border-line-subtle px-4 py-3">
-              <Search size={16} className="text-ink-muted" />
-              <input
-                autoFocus
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search components, blocks, guides…"
-                className="flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-ink-muted"
-              />
-            </div>
-            <div className="max-h-80 overflow-y-auto p-2">
-              {results.length === 0 && (
-                <p className="px-3 py-6 text-center text-sm text-ink-muted">No results.</p>
-              )}
-              {results.map((group) => (
-                <div key={group.title} className="mb-2 last:mb-0">
-                  <p className="px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-ink-muted">
-                    {group.title}
-                  </p>
-                  {group.items.map((item) => (
-                    <button
-                      key={item.href}
-                      onClick={() => go(item.href)}
-                      className="flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-ink transition-colors hover:bg-subtle"
-                    >
-                      {item.title}
-                    </button>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>,
-        document.body
-      )}
+      <CommandMenuTrigger placeholder="Search docs…" onClick={() => setOpen(true)} />
+      <SakaniCommandMenu
+        open={open}
+        onOpenChange={setOpen}
+        variant="simple"
+        groups={groups}
+        placeholder="Search components, blocks, guides…"
+        emptyTitle="No results"
+        emptyDescription="Try a component name, like Button or Table."
+        onSelect={(item) => router.push(item.id)}
+        aria-label="Search the docs"
+      />
     </>
   );
 }
