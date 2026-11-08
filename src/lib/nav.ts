@@ -58,6 +58,7 @@ export const docsNav: NavGroup[] = [
       { title: "Sidebar", href: "/docs/components/sidebar" },
       { title: "Top Bar", href: "/docs/components/top-bar" },
       { title: "Menu", href: "/docs/components/menu" },
+      { title: "Command Menu", href: "/docs/components/command-menu" },
       { title: "Breadcrumb", href: "/docs/components/breadcrumb" },
       { title: "Pagination", href: "/docs/components/pagination" },
       { title: "Stepper", href: "/docs/components/stepper" },
