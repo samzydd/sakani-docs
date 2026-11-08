@@ -9,6 +9,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ChromeGate } from "@/components/chrome-gate";
 import {
   SITE_URL,
   SITE_NAME,
@@ -134,9 +135,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             whatever the OS prefers; an explicit choice is still remembered. */}
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <div aria-hidden className="noise-overlay" />
-          <SiteHeader />
+          <ChromeGate><SiteHeader /></ChromeGate>
           <div className="flex-1">{children}</div>
-          <SiteFooter />
+          <ChromeGate><SiteFooter /></ChromeGate>
         </ThemeProvider>
       </body>
     </html>

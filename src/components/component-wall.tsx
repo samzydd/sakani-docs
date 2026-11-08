@@ -68,7 +68,7 @@ function useLoop(length: number, ms: number, active: boolean) {
 /* Card                                                                */
 /* ------------------------------------------------------------------ */
 
-type Kind = "Map" | "Surface" | "AI" | "Chart" | "Block" | "Form" | "Navigation" | "Feedback" | "Data entry" | "Data display";
+type Kind = "Map" | "Search" | "Surface" | "AI" | "Chart" | "Block" | "Form" | "Navigation" | "Feedback" | "Data entry" | "Data display";
 
 /**
  * One sample: a stage with the live component on it, then its name, kind and a line about it.
@@ -367,6 +367,26 @@ function ChainDemo({ inView }: { inView: boolean }) {
   );
 }
 
+/**
+ * The real CommandMenu, running in a frame. The menu is drawn in a layer over the whole page, so the card frames a small
+ * page of its own (/embed/command-menu) where it is open and typing for itself until someone touches it. The frame is
+ * created when the card first scrolls into view and kept after that, and it follows the card's own light/dark switch.
+ */
+function CommandMenuDemo({ inView, dark }: { inView: boolean; dark: boolean }) {
+  const [seen, setSeen] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { if (inView) setSeen(true); }, [inView]);
+  if (!seen) return null;
+  return (
+    <iframe
+      key={dark ? "dark" : "light"}
+      src={`/embed/command-menu?theme=${dark ? "dark" : "light"}`}
+      title="Command menu: a live search that types a few queries, then lets you try it"
+      className="absolute inset-0 h-full w-full border-0"
+    />
+  );
+}
+
 /** A real block, scaled down to sit in a card: a visual sample, not a control (the docs page has the live one). */
 function ScaledBlock({ width, height, scale, children }: { width: number; height: number; scale: number; children: ReactNode }) {
   const outer = useRef<HTMLDivElement>(null);
@@ -586,6 +606,9 @@ export function ComponentWall() {
         </WallCard>
         <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." className="md:col-span-2" stageClassName="min-h-[400px]">
           {(v) => <ChainDemo inView={v} />}
+        </WallCard>
+        <WallCard title="Command Menu" kind="Search" href="/docs/components/command-menu" description="A ⌘K search and command palette with scopes, filter tokens, a preview pane and an Ask AI mode. It is the one this site uses. Click in and try it." className="md:col-span-2" stageClassName="min-h-[560px]" padded={false} reveal={90}>
+          {(v, d) => <CommandMenuDemo inView={v} dark={d} />}
         </WallCard>
       </div>
 
