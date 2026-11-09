@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Textarea } from "@sakaniui/react";
 import { PageHeader } from "@/components/docs/page-header";
+import { PromptTextareaDemo } from "@/components/docs/ai-prompt-demos";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
 import { Pager } from "@/components/docs/pager";
@@ -37,6 +38,26 @@ const max = 140;
   description={\`\${value.length}/\${max}\`}
 />`;
 
+const AI = `import { Textarea, IconButton } from '@sakaniui/react';
+import { IconArrowUp, IconMicrophone, IconPlus } from '@sakaniui/react/icons';
+
+const round = { borderRadius: 999 };
+
+<Textarea
+  variant="ai"
+  aria-label="Ask anything"
+  placeholder="Ask anything"
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+  maxRows={8}
+  leading={<IconButton icon={IconPlus} variant="secondary" aria-label="Add" style={{ ...round, background: 'var(--color-bg-muted)' }} />}
+  trailing={value.trim()
+    ? <IconButton icon={IconArrowUp} aria-label="Send" style={round} />
+    : <IconButton icon={IconMicrophone} variant="ghost" aria-label="Use the microphone" style={round} />}
+/>`;
+
+const AI_GROW = `<Textarea variant="ai" maxRows={5} … />   // grows to five lines, then scrolls`;
+
 const PROPS = [
   { name: "label", type: "string", description: "Field label above the textarea." },
   { name: "description", type: "string", description: "Helper line under the field." },
@@ -45,6 +66,11 @@ const PROPS = [
   { name: "placeholder", type: "string", description: "Placeholder text." },
   { name: "value", type: "string", description: "Controlled value." },
   { name: "disabled", type: "boolean", default: "false", description: "Disables the field." },
+  { name: "variant", type: "'default' | 'ai'", default: "'default'", description: '"ai" is the prompt box of an AI product: a 16px-radius box, a 16px field that grows with the text, an actions row and a light round the border.' },
+  { name: "glow", type: "'pulse' | 'focus' | 'off'", default: "'pulse'", description: 'variant="ai" only. The light that sweeps round the border: "pulse" every 2.5s while idle and once on focus, "focus" only on focus, "off" none. Reduced motion draws none.' },
+  { name: "leading", type: "ReactNode", description: 'variant="ai" only. Actions on the left of the row under the field, such as an attach button.' },
+  { name: "trailing", type: "ReactNode", description: 'variant="ai" only. Actions on the right of that row, such as a mic and a send button.' },
+  { name: "maxRows", type: "number", default: "8", description: 'variant="ai" only. The most lines the field grows to before it scrolls.' },
   { name: "onChange", type: "(e: ChangeEvent<HTMLTextAreaElement>) => void", description: "Fires on input." },
 ];
 
@@ -68,7 +94,7 @@ function CounterDemo() {
 export default function TextareaPage() {
   return (
     <article>
-      <PageHeader title="Textarea" description="Multi-line text input, with the same label, description, and error treatment as Input." />
+      <PageHeader title="Textarea" description="Multi-line text input, with the same label, description, and error treatment as Input, plus an AI prompt box variant." />
 
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
@@ -139,6 +165,31 @@ export default function TextareaPage() {
           </p>
           <ComponentPreview code={COUNTER}>
             <CounterDemo />
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">AI prompt box</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            <code>variant=&quot;ai&quot;</code> is the &quot;Ask anything&quot; box of an AI product: a rounded box with the field on top and a row of buttons
+            underneath, <code>leading</code> on the left (an attach button) and <code>trailing</code> on the right (a mic, then a send button once there is text).
+            A thin light, in an ember gradient from a cool indigo tail to a hot gold head, sweeps once round the border every 2.5 seconds while the box
+            is idle. Focus swaps the plain border for a static ember gradient. The error and disabled states keep their own borders. It reads the theme
+            tokens, so light, dark and glass need nothing extra. Give it an <code>aria-label</code> when there is no visible label.
+          </p>
+          <ComponentPreview code={AI}>
+            <PromptTextareaDemo />
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">AI box that grows</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            The field starts at one line and grows with what you type, up to <code>maxRows</code> lines (8 by default), then scrolls. The buttons stay
+            pinned underneath.
+          </p>
+          <ComponentPreview code={AI_GROW}>
+            <PromptTextareaDemo maxRows={5} glow="focus" initial={"Plan a three day trip to Lisbon.\nI like food markets and old trams.\nKeep the budget modest, and tell me what to book ahead."} />
           </ComponentPreview>
         </section>
 
