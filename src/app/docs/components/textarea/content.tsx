@@ -97,6 +97,15 @@ export default function TextareaPage() {
       <PageHeader title="Textarea" description="Multi-line text input, with the same label, description, and error treatment as Input, plus an AI prompt box variant." />
 
       <div className="space-y-10">
+        <a
+          href="#ai-prompt-box"
+          className="flex w-fit items-center gap-2 rounded-full border border-line-subtle bg-surface px-3.5 py-1.5 text-sm text-ink transition-colors hover:border-line-default"
+        >
+          <span className="rounded-full bg-ink px-2 py-0.5 text-[11px] font-medium leading-none text-surface">New</span>
+          Textarea AI: the prompt box with a light round the border
+          <span aria-hidden="true">↓</span>
+        </a>
+
         <ComponentPreview code={BASIC}>
           <div className="w-full max-w-md">
             <Textarea label="Release notes" placeholder="What changed in this version?" />
@@ -168,7 +177,7 @@ export default function TextareaPage() {
           </ComponentPreview>
         </section>
 
-        <section>
+        <section id="ai-prompt-box" className="scroll-mt-24">
           <h2 className="mb-3 text-lg font-semibold text-ink">AI prompt box</h2>
           <p className="mb-3 text-sm text-ink-muted">
             <code>variant=&quot;ai&quot;</code> is the &quot;Ask anything&quot; box of an AI product: a rounded box with the field on top and a row of buttons

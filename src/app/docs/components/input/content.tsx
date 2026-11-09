@@ -62,6 +62,15 @@ export default function InputPage() {
       <PageHeader title="Input" description="Text input with optional label, help text, and icon slots, plus an AI prompt box variant." />
 
       <div className="space-y-10">
+        <a
+          href="#ai-prompt-box"
+          className="flex w-fit items-center gap-2 rounded-full border border-line-subtle bg-surface px-3.5 py-1.5 text-sm text-ink transition-colors hover:border-line-default"
+        >
+          <span className="rounded-full bg-ink px-2 py-0.5 text-[11px] font-medium leading-none text-surface">New</span>
+          Input AI: the prompt box with a light round the border
+          <span aria-hidden="true">↓</span>
+        </a>
+
         <ComponentPreview code={BASIC}>
           <div className="w-72">
             <Input label="Email" placeholder="you@example.com" />
@@ -99,7 +108,7 @@ export default function InputPage() {
           </ComponentPreview>
         </section>
 
-        <section>
+        <section id="ai-prompt-box" className="scroll-mt-24">
           <h2 className="mb-3 text-lg font-semibold text-ink">AI prompt box</h2>
           <p className="mb-3 text-sm text-ink-muted">
             <code>variant=&quot;ai&quot;</code> turns the input into the &quot;Ask anything&quot; box of an AI product: a pill with a larger 16px
