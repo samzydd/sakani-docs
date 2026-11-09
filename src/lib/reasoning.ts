@@ -113,11 +113,12 @@ export const reasoning: Record<string, Reasoning> = {
     dont: [
       "Don't use it for a choice from a fixed list. Use Select, or Combobox for long lists.",
       "Don't drop the label to save space. Use size sm or an icon, and keep the label.",
+      "Don't use variant=\"ai\" for an ordinary form field. It is the prompt box of an AI product, with buttons and a light that sweeps its border; give it an aria-label.",
     ],
   },
   textarea: {
-    why: ["It matches Input's states exactly (focus, error, disabled), so a form mixing both feels like one system."],
-    dont: ["Don't use it for short single-line values. Use Input."],
+    why: ["It matches Input's states exactly (focus, error, disabled), so a form mixing both feels like one system.", "variant=\"ai\" makes it the prompt box of an AI product: it grows with the text up to maxRows and takes the attach, mic and send buttons in its actions row."],
+    dont: ["Don't use it for short single-line values. Use Input.", "Don't use variant=\"ai\" for an ordinary form field, and give it an aria-label when it has no visible label."],
   },
   select: {
     why: [
