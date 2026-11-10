@@ -653,8 +653,8 @@ html.dark .noise-overlay {
     --color-bg-surface: var(--color-bg-muted);
     text-shadow: none;
   }
+  /* The library already keeps a bare lens see-through (0.14.1); over a photo, a white ring reads better than its grey one. */
   .wall-glass-lens.wall-glass-lens[data-surface] {
-    background: transparent;
     box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85), 0 2px 14px rgba(0, 0, 0, 0.28);
   }
 }
