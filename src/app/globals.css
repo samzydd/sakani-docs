@@ -642,6 +642,23 @@ html.dark .noise-overlay {
 .wall-glass-seg > span[aria-hidden],
 .wall-glass-seg > button[role="tab"] { border-radius: 9999px; }
 
+/* Reduce transparency (macOS "Reduce transparency", Windows "Transparency effects" off): the library turns every glass
+   surface into a plain opaque one. The pill then needs the page's own text colours (white on an opaque light pill
+   vanishes), and the content-less lens, which would become a solid disc, is drawn as a ring so it still reads as glass. */
+@media (prefers-reduced-transparency: reduce) {
+  .wall-glass-seg {
+    --color-fg-default: unset;
+    --color-fg-muted: unset;
+    --shadow-sm: unset;
+    --color-bg-surface: var(--color-bg-muted);
+    text-shadow: none;
+  }
+  .wall-glass-lens.wall-glass-lens[data-surface] {
+    background: transparent;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85), 0 2px 14px rgba(0, 0, 0, 0.28);
+  }
+}
+
 /* ---- theme switch: the page blinks from one theme to the other ----
    The toggle wraps the change in a View Transition (see theme-toggle.tsx); these set how it blends. The default
    cross-fade is 250ms and linear-ish; a touch longer with an ease reads as a smooth blink rather than a flash. */
