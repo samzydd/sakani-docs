@@ -16,7 +16,7 @@ const FAQS = [
   },
   {
     q: "Does liquid glass work in Safari and Firefox?",
-    a: "The refraction itself renders in Chromium browsers (Chrome, Edge). Safari and Firefox get a frosted fallback with the same tint, rim and depth, just without the bending. With prefers-reduced-transparency, glass becomes a plain opaque surface.",
+    a: "The refraction itself renders in Chromium browsers (Chrome, Edge). Safari and Firefox get a frosted fallback with the same tint, rim and depth, just without the bending. With prefers-reduced-transparency, glass becomes a plain opaque surface, unless a decorative showcase opts out with reducedTransparency=\"ignore\".",
   },
   {
     q: "Does it work with Next.js, Vite, or Create React App?",

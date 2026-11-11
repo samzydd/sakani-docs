@@ -223,8 +223,12 @@ export default function GlassPage() {
                 switched on glass in code).
               </li>
               <li>
-                <strong>Reduced transparency.</strong> With <code>prefers-reduced-transparency</code>, glass
-                and liquid surfaces render as plain opaque surfaces, with no tint, blur or refraction.
+                <strong>Reduced transparency.</strong> With <code>prefers-reduced-transparency</code> (macOS
+                &ldquo;Reduce transparency&rdquo;, Windows &ldquo;Transparency effects&rdquo; off, which battery saver
+                also does), glass and liquid surfaces render as plain opaque surfaces, with no tint, blur or
+                refraction. A purely decorative showcase that means nothing as a plain surface, such as a demo over a
+                photo, can keep the glass with <code>{'<LiquidGlass reducedTransparency="ignore">'}</code>. Never use
+                that on a surface that holds the user&rsquo;s content.
               </li>
               <li>
                 <strong>Reduced motion.</strong> The pointer-following glare and the press squish are turned off.

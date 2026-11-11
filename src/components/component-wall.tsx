@@ -216,6 +216,7 @@ function GlassDemo({ inView }: { inView: boolean }) {
         variant="clear"
         tint="none"
         radius={999}
+        reducedTransparency="ignore"
         effect={{ refraction: 0.85, depth: 20, dispersion: 0.4, frost: 0.4 }}
         className="p-0.5"
         style={{ position: "absolute", left: 20, top: 20 }}
@@ -227,7 +228,7 @@ function GlassDemo({ inView }: { inView: boolean }) {
           onChange={(v) => takeSeg(["day", "week", "month"].indexOf(v))}
         />
       </LiquidGlass>
-      <LiquidGlass variant="regular" radius={16} style={{ position: "absolute", left: 20, bottom: 20, width: "min(250px, calc(100% - 40px))" }}>
+      <LiquidGlass variant="regular" radius={16} reducedTransparency="ignore" style={{ position: "absolute", left: 20, bottom: 20, width: "min(250px, calc(100% - 40px))" }}>
         <Card title="Revenue" description="Last 30 days" actions={<Button size="sm">View report</Button>} />
       </LiquidGlass>
       <LiquidGlass
@@ -237,9 +238,10 @@ function GlassDemo({ inView }: { inView: boolean }) {
         radius={LENS / 2}
         source={false}
         bake={false}
+        reducedTransparency="ignore"
         effect={{ refraction: 1, depth: 34, dispersion: 0.6, frost: 0 }}
         aria-label="A glass lens: drag it over the card"
-        className="wall-glass-lens cursor-grab touch-none active:cursor-grabbing"
+        className="cursor-grab touch-none active:cursor-grabbing"
         style={{ position: "absolute", left: 0, top: 0, width: LENS, height: LENS }}
         onPointerDown={(e) => {
           const ln = lens.current;
@@ -247,7 +249,7 @@ function GlassDemo({ inView }: { inView: boolean }) {
           const r = ln.getBoundingClientRect();
           // the grab point, relative to the lens centre, so the lens does not jump under the pointer
           grab.current = { dx: e.clientX - (r.left + r.width / 2), dy: e.clientY - (r.top + r.height / 2) };
-          ln.setPointerCapture(e.pointerId);
+          try { ln.setPointerCapture(e.pointerId); } catch { /* the pointer ended before capture: dragging still follows the stage's own moves */ }
         }}
         onPointerMove={move}
         onPointerUp={() => { grab.current = null; resumeAt.current = Date.now() + 4000; }}
