@@ -32,6 +32,8 @@ export function MaskReveal({
 }) {
   const { ref, visible } = useRevealTrigger<HTMLDivElement>(trigger);
   const [settled, setSettled] = useState(false);
+  // "mount" runs as a CSS animation from the server HTML (see .is-paint in globals.css), so it doesn't wait for hydration.
+  const paint = trigger === "mount";
 
   // transitionend alone isn't enough to drop the mask: it never fires if
   // the transition doesn't actually run (a backgrounded tab, an element
@@ -50,14 +52,18 @@ export function MaskReveal({
       className={cn("mask-reveal", visible && "is-visible", settled && "is-settled", className)}
     >
       <span
-        className="mask-reveal__inner"
-        style={{
+        className={cn("mask-reveal__inner", paint && "is-paint")}
+        style={paint ? {
+          animationDelay: `${delay}ms`,
+          ...(duration ? { animationDuration: `${duration}ms` } : null),
+        } : {
           transitionDelay: visible ? `${delay}ms` : "0ms",
           ...(duration ? { transitionDuration: `${duration}ms` } : null),
         }}
         onTransitionEnd={(e) => {
           if (e.propertyName === "transform") setSettled(true);
         }}
+        onAnimationEnd={() => setSettled(true)}
       >
         {children}
       </span>

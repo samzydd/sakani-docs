@@ -345,6 +345,20 @@ html.dark .noise-overlay {
   opacity: 1;
 }
 
+/* trigger="mount" (the hero): the same rise, as a CSS animation in the server-rendered HTML rather than a transition
+   started by JavaScript after hydration. On a slow connection hydration can take ten seconds or more (3G), and the
+   hero used to stay blank until then; now it rises in on first paint, before any script has run. `both` keeps each
+   piece hidden through its delay and in place after. The delay and duration come from inline style. */
+@keyframes reveal-rise {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.text-reveal-line > span.is-paint,
+.mask-reveal__inner.is-paint {
+  transition: none;
+  animation: reveal-rise var(--reveal-rise) var(--ease-reveal) both;
+}
+
 /* Sakani's tokens.css only ever defines a .dark override -- there's no
    .light counterpart, because normally you'd never need one: the page is
    either themed or it isn't, and :root's own defaults are already "light".
@@ -539,6 +553,7 @@ html.dark .noise-overlay {
     opacity: 1;
     transform: none;
     transition: none !important;
+    animation: none !important;
   }
   /* Nothing is animating in, so the clipping mask would only ever clip. */
   .mask-reveal {

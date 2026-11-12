@@ -35,14 +35,19 @@ export function TextReveal({
   className?: string;
 }) {
   const { ref, visible } = useRevealTrigger<HTMLHeadingElement>(trigger);
+  // "mount" runs as a CSS animation from the server HTML (see .is-paint in globals.css), so it doesn't wait for hydration.
+  const paint = trigger === "mount";
 
   return (
     <Tag ref={ref} className={cn("text-reveal", className)}>
       {lines.map((line, i) => (
         <span key={line} className="text-reveal-line">
           <span
-            className={cn(visible && "is-visible")}
-            style={{
+            className={cn(paint ? "is-paint" : visible && "is-visible")}
+            style={paint ? {
+              animationDelay: `${startDelay + i * lineDelay}ms`,
+              ...(duration ? { animationDuration: `${duration}ms` } : null),
+            } : {
               transitionDelay: visible ? `${startDelay + i * lineDelay}ms` : "0ms",
               ...(duration ? { transitionDuration: `${duration}ms` } : null),
             }}
