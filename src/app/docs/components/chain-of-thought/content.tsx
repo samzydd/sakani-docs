@@ -101,7 +101,7 @@ const SOURCES_CODE = `<ChainOfThoughtStep
   onSourcesClick={() => openSources()}   // makes the row a button with a chevron
 />`;
 
-const WORKING_CODE = `<WorkingIndicator status="working" startedAt={startedAt} />   // sparkle, shimmering label, time counts up
+const WORKING_CODE = `<WorkingIndicator status="working" startedAt={startedAt} />   // orb, shimmering label, time counts up
 <WorkingIndicator status="done" elapsed={11.2} />            // check and "Worked for 11.2s"
 <WorkingIndicator status="working" label="Reading" elapsed={4.2} />`;
 
@@ -286,7 +286,7 @@ const COT_PROPS = [
   { name: "icon", type: "IconComponent", default: "search icon", description: "The header icon, drawn at 16px. An icon, an emoji or a logo." },
   { name: "open / defaultOpen", type: "boolean", default: "true", description: "Controlled or initial open state. The header toggles it." },
   { name: "onOpenChange", type: "(open) => void", description: "Called with the new state when the header is clicked." },
-  { name: "status", type: '"working" | "done"', description: 'Adds the working line under the steps: "working" (sparkle, shimmer) or "done" ("Worked for 11.2s"). Omit it for no line.' },
+  { name: "status", type: '"working" | "done"', description: 'Adds the working line under the steps: "working" (the orb, shimmer) or "done" ("Worked for 11.2s"). Omit it for no line.' },
   { name: "elapsed", type: "number", description: "Elapsed seconds for the working line." },
   { name: "startedAt", type: "number", description: "Epoch ms when the work started; the working line then counts up on its own." },
   { name: "children", type: "ReactNode", description: "ChainOfThoughtStep elements." },
@@ -309,7 +309,7 @@ const STACK_PROPS = [
 ];
 
 const WORKING_PROPS = [
-  { name: "status", type: '"working" | "done"', default: "working", description: '"working" shows the sparkle and a shimmering label; "done" shows a check.' },
+  { name: "status", type: '"working" | "done"', default: "working", description: '"working" shows the orb and a shimmering label; "done" shows a check.' },
   { name: "label", type: "string", description: 'Replaces the default label ("Working" / "Worked for").' },
   { name: "elapsed", type: "number", description: "Elapsed seconds. Takes precedence over startedAt." },
   { name: "startedAt", type: "number", description: 'Epoch ms when the work started; while "working" the time ticks on its own.' },
@@ -325,7 +325,7 @@ const MOTION = [
   ["A step arrives", "Its row opens while the previous rail flows down into it and turns the corner; the icon lands, the label is written in, the query types itself, the count ticks up and the source chips fan out."],
   ["The active step", "A spark runs down the rail into it (in the logo's brand colour) and its icon beats as it lands."],
   ["Pending to active", "A pending step's icon is grey; it fades into colour when the step starts."],
-  ["Working", "The label shimmers while the sparkle beside it, in the brand colour, turns and twinkles on the same beat."],
+  ["Working", "The label shimmers while the orb beside it watches each new line of thought: its eyes turn to the newest step, sweep along the text and rest."],
   ["Finished", "One sweep runs down the rail lighting each icon, then the check is drawn."],
   ["Open and close", "The chevron turns with a spring and the steps rise in turn."],
   ["Reduced motion", "Everything is instant: no spark, shimmer, sweep or tick-up."],
@@ -400,7 +400,7 @@ export default function ChainOfThoughtPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Working indicator</h2>
           <p className="mb-3 text-sm text-ink-muted">
-            The line under the steps: a sparkle and a shimmering &quot;Working&quot; with the elapsed time, or a check and &quot;Worked for&quot;. It
+            The line under the steps: the orb and a shimmering &quot;Working&quot; with the elapsed time, or a check and &quot;Worked for&quot;. It
             is also exported on its own. Pass <code>startedAt</code> and the time counts up by itself.
           </p>
           <ComponentPreview code={WORKING_CODE}>
