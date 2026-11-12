@@ -9,7 +9,7 @@ const ROUND = { borderRadius: 999, boxShadow: "none" } as const;
 const MUTED = { ...ROUND, background: "var(--color-bg-muted)", borderColor: "transparent" } as const;
 
 /** One-line prompt box: a "+" on the left, a mic on the right that becomes a send button once there is text. */
-export function PromptInputDemo({ glow, placeholder = "Ask anything" }: { glow?: "pulse" | "focus" | "off"; placeholder?: string }) {
+export function PromptInputDemo({ glow, placeholder = "Ask anything" }: { glow?: "once" | "pulse" | "focus" | "off"; placeholder?: string }) {
   const [value, setValue] = useState("");
   return (
     <div className="w-full max-w-xl">
@@ -30,7 +30,7 @@ export function PromptInputDemo({ glow, placeholder = "Ask anything" }: { glow?:
 }
 
 /** Multi-line prompt box: the field grows with the text, the buttons sit underneath. */
-export function PromptTextareaDemo({ glow, maxRows, initial = "" }: { glow?: "pulse" | "focus" | "off"; maxRows?: number; initial?: string }) {
+export function PromptTextareaDemo({ glow, maxRows, initial = "" }: { glow?: "once" | "pulse" | "focus" | "off"; maxRows?: number; initial?: string }) {
   const [value, setValue] = useState(initial);
   return (
     <div className="w-full max-w-xl">

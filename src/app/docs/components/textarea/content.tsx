@@ -67,7 +67,7 @@ const PROPS = [
   { name: "value", type: "string", description: "Controlled value." },
   { name: "disabled", type: "boolean", default: "false", description: "Disables the field." },
   { name: "variant", type: "'default' | 'ai'", default: "'default'", description: '"ai" is the prompt box of an AI product: a 16px-radius box, a 16px field that grows with the text, an actions row and a light round the border.' },
-  { name: "glow", type: "'pulse' | 'focus' | 'off'", default: "'pulse'", description: 'variant="ai" only. The light that sweeps round the border: "pulse" every 2.5s while idle and once on focus, "focus" only on focus, "off" none. Reduced motion draws none.' },
+  { name: "glow", type: "'once' | 'pulse' | 'focus' | 'off'", default: "'once'", description: 'variant="ai" only. The light that sweeps round the border: "once" sweeps one lap shortly after the box appears, then rests for good (focus does not set it off again); "pulse" sweeps every 2.5s while idle and once on focus; "focus" only on focus; "off" none. Reduced motion draws none.' },
   { name: "leading", type: "ReactNode", description: 'variant="ai" only. Actions on the left of the row under the field, such as an attach button.' },
   { name: "trailing", type: "ReactNode", description: 'variant="ai" only. Actions on the right of that row, such as a mic and a send button.' },
   { name: "maxRows", type: "number", default: "8", description: 'variant="ai" only. The most lines the field grows to before it scrolls.' },
@@ -182,8 +182,8 @@ export default function TextareaPage() {
           <p className="mb-3 text-sm text-ink-muted">
             <code>variant=&quot;ai&quot;</code> is the &quot;Ask anything&quot; box of an AI product: a rounded box with the field on top and a row of buttons
             underneath, <code>leading</code> on the left (an attach button) and <code>trailing</code> on the right (a mic, then a send button once there is text).
-            A thin light, in an ember gradient from a cool indigo tail to a hot gold head, sweeps once round the border every 2.5 seconds while the box
-            is idle. Focus swaps the plain border for a static ember gradient. The error and disabled states keep their own borders. It reads the theme
+            A thin light, in an ember gradient from a cool indigo tail to a hot gold head, sweeps once round the border shortly after the box appears,
+            then rests; it never keeps moving. Focus swaps the plain border for a static ember gradient. The error and disabled states keep their own borders. It reads the theme
             tokens, so light, dark and glass need nothing extra. Give it an <code>aria-label</code> when there is no visible label.
           </p>
           <ComponentPreview code={AI}>

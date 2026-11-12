@@ -38,7 +38,8 @@ const round = { borderRadius: 999 };
     : <IconButton icon={IconMicrophone} variant="ghost" aria-label="Use the microphone" style={round} />}
 />`;
 
-const AI_GLOW = `<Input variant="ai" glow="pulse" … />   // sweeps every 2.5s while idle, and once on focus (default)
+const AI_GLOW = `<Input variant="ai" glow="once" … />    // one lap shortly after it appears, then still (default)
+<Input variant="ai" glow="pulse" … />   // sweeps every 2.5s while idle, and once on focus
 <Input variant="ai" glow="focus" … />   // only on focus
 <Input variant="ai" glow="off" … />     // none`;
 
@@ -50,7 +51,7 @@ const PROPS = [
   { name: "leadingIcon", type: "ReactNode", description: "Icon inside the field, before the text." },
   { name: "trailingIcon", type: "ReactNode", description: "Icon inside the field, after the text." },
   { name: "variant", type: "'default' | 'ai'", default: "'default'", description: '"ai" is the prompt box of an AI product: a pill with a 16px field, action slots and a light round the border.' },
-  { name: "glow", type: "'pulse' | 'focus' | 'off'", default: "'pulse'", description: 'variant="ai" only. The light that sweeps round the border: "pulse" every 2.5s while idle and once on focus, "focus" only on focus, "off" none. Reduced motion draws none.' },
+  { name: "glow", type: "'once' | 'pulse' | 'focus' | 'off'", default: "'once'", description: 'variant="ai" only. The light that sweeps round the border: "once" sweeps one lap shortly after the box appears, then rests for good (focus does not set it off again); "pulse" sweeps every 2.5s while idle and once on focus; "focus" only on focus; "off" none. Reduced motion draws none.' },
   { name: "leading", type: "ReactNode", description: 'variant="ai" only. Actions before the field, such as an attach button. Unlike leadingIcon, interactive content is fine here.' },
   { name: "trailing", type: "ReactNode", description: 'variant="ai" only. Actions after the field, such as a mic and a send button.' },
   { name: "...rest", type: "InputHTMLAttributes<HTMLInputElement>", description: "Every native <input> attribute." },
@@ -114,7 +115,7 @@ export default function InputPage() {
             <code>variant=&quot;ai&quot;</code> turns the input into the &quot;Ask anything&quot; box of an AI product: a pill with a larger 16px
             field and room for buttons on either side. Put them in <code>leading</code> and <code>trailing</code> (an attach button, a mic, and a send
             button that replaces the mic once there is text). A thin light, in an ember gradient from a cool indigo tail to a hot gold head, sweeps
-            once round the border every 2.5 seconds while the box is idle, and once each time you click in. It follows the border&apos;s own path, so
+            once round the border shortly after the box appears, then rests; it never keeps moving, and focus only draws a static ember border. It follows the border&apos;s own path, so
             it works at every size. It reads the theme tokens, so light, dark and glass need nothing extra. Give it an <code>aria-label</code> when
             there is no visible label.
           </p>
@@ -126,12 +127,14 @@ export default function InputPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">AI glow</h2>
           <p className="mb-3 text-sm text-ink-muted">
-            <code>glow</code> picks when the light runs. Under <code>prefers-reduced-motion</code> it draws none, and nothing else changes. The
-            light is quiet by design: use <code>&quot;focus&quot;</code> where an idle pulse would compete with other motion on the page.
+            <code>glow</code> picks when the light runs. By default it sweeps one lap and rests, so it never competes with the rest of the page.
+            <code>&quot;pulse&quot;</code> repeats every 2.5s while idle, which is usually too much motion, so reach for it only on a screen
+            with nothing else going on. Under <code>prefers-reduced-motion</code> it draws none, and nothing else changes.
           </p>
           <ComponentPreview code={AI_GLOW}>
             <div className="flex w-full max-w-xl flex-col gap-4">
-              <PromptInputDemo glow="pulse" placeholder="glow=pulse (default)" />
+              <PromptInputDemo glow="once" placeholder="glow=once (default)" />
+              <PromptInputDemo glow="pulse" placeholder="glow=pulse" />
               <PromptInputDemo glow="focus" placeholder="glow=focus" />
               <PromptInputDemo glow="off" placeholder="glow=off" />
             </div>

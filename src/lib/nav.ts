@@ -121,9 +121,22 @@ export const docsNav: NavGroup[] = [
       { title: "List Item", href: "/docs/components/list-item" },
       { title: "Board Card", href: "/docs/components/board-card" },
       { title: "Chat", href: "/docs/components/chat" },
-      { title: "Chain of Thought", href: "/docs/components/chain-of-thought" },
       { title: "Calendar", href: "/docs/components/calendar" },
       { title: "Map", href: "/docs/components/map" },
+    ],
+  },
+  {
+    title: "AI",
+    items: [
+      { title: "AI Message", href: "/docs/components/ai-message" },
+      { title: "Chat Orb", href: "/docs/components/chat-orb" },
+      { title: "Prompt Composer", href: "/docs/components/prompt-composer" },
+      { title: "Reasoning Trace", href: "/docs/components/reasoning-trace" },
+      { title: "Tool Call", href: "/docs/components/tool-call" },
+      { title: "Thinking Loader", href: "/docs/components/thinking-loader" },
+      { title: "Suggestion Chip", href: "/docs/components/suggestion-chip" },
+      { title: "Attachment Chip", href: "/docs/components/attachment-chip" },
+      { title: "Chain of Thought", href: "/docs/components/chain-of-thought" },
     ],
   },
   {
@@ -154,6 +167,7 @@ export const docsNav: NavGroup[] = [
       { title: "Pricing Table", href: "/docs/blocks/pricing-table" },
       { title: "Billing", href: "/docs/blocks/billing" },
       { title: "Billing Address", href: "/docs/blocks/billing-address" },
+      { title: "AI Chat", href: "/docs/blocks/ai-chat" },
     ],
   },
 ];
