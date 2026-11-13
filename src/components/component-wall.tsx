@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import {
   BarChart, Button, Calendar, Card, ChainOfThought, ChainOfThoughtStep, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, RadarChart, RadialChart, SegmentedControl,
   Slider, SourceStack, Stepper, Switch, Tabs, Toast, sourceLogo, syncLiquidBackdrop, type DateRange,
@@ -389,19 +389,247 @@ function CommandMenuDemo({ inView, dark }: { inView: boolean; dark: boolean }) {
   );
 }
 
-/** A real block at its natural size, fully interactive: nothing is scaled (a drag measures the page, and a transform
- *  would skew it). Mounted the first time it scrolls into view and kept; the stage is as tall as the block either way,
- *  so nothing jumps. Narrower than the block, the stage scrolls sideways. */
-function LiveBlock({ inView, width, height, children }: { inView: boolean; width: number; height: number; children: ReactNode }) {
+/* ------------------------------------------------------------------ */
+/* Self-playing block demos                                            */
+/* ------------------------------------------------------------------ */
+
+type Pt = { x: number; y: number };
+
+/** What a demo script can do. Points are in the stage's own coordinates, so a page scroll mid-gesture changes nothing. */
+interface Hand {
+  stage: HTMLElement;
+  wait: (ms: number) => Promise<void>;
+  /** Glide the cursor to a point (a function, so it can follow a target that moves). */
+  move: (to: () => Pt, ms?: number) => Promise<void>;
+  /** A point on an element: fx and fy are fractions of its width and height. */
+  at: (el: Element, fx?: number, fy?: number) => Pt;
+  /** Press on an element: the cursor dips, and from here the cursor's moves also reach the page as a held-down drag. */
+  press: (el: Element) => void;
+  release: () => void;
+  /** A click: the ripple, then the element's own click. */
+  click: (el: HTMLElement) => void;
+}
+
+type Play = (hand: Hand, root: HTMLElement, round: number) => Promise<"reset" | void>;
+
+const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+/**
+ * A real block, played by a cursor: it moves, presses, drags, types and clicks the block's own controls, which answer
+ * as they do for anyone (the card lifts, the reply arrives), on a loop. Not interactive itself: pointer events are off,
+ * the page's own focus and scroll are never touched, and the docs page has the block to use. It plays only while on
+ * screen, mounts the first time it is, and stands still for prefers-reduced-motion.
+ *
+ * "scale" shrinks a fixed-size block to the stage (fine for a script that only clicks and types); "fluid" keeps a
+ * block at its real size and lets the stage crop it, as a window would, because a drag measures the page and a
+ * transform would skew it.
+ */
+function AutoDemo({ inView, mode, width = 1040, height = 640, play, children }: {
+  inView: boolean; mode: "scale" | "fluid"; width?: number; height?: number; play: Play; children: ReactNode;
+}) {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const rippleRef = useRef<HTMLSpanElement>(null);
   const [shown, setShown] = useState(false);
+  const [scale, setScale] = useState(0.5);
+  const [epoch, setEpoch] = useState(0);
+  const [faded, setFaded] = useState(false);
+  const round = useRef(0);
+
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { if (inView) setShown(true); }, [inView]);
+
+  useEffect(() => {
+    if (mode !== "scale") return;
+    const el = stageRef.current;
+    if (!el) return;
+    const fit = () => setScale(el.clientWidth / width);
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [mode, width]);
+
+  useEffect(() => {
+    const stage = stageRef.current, root = rootRef.current, cursor = cursorRef.current, ripple = rippleRef.current;
+    if (!inView || !shown || !stage || !root || !cursor || !ripple) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const ac = new AbortController();
+    const stop = () => new Error("stop"); // how a cancelled wait or glide ends the script
+    let raf = 0, dragging = false, bow = 1;
+    let pos: Pt = { x: stage.clientWidth * 0.82, y: stage.clientHeight * 0.88 };
+
+    const client = (p: Pt) => { const r = stage.getBoundingClientRect(); return { x: r.left + p.x, y: r.top + p.y }; };
+    const draw = () => {
+      cursor.style.transform = `translate(${pos.x.toFixed(1)}px, ${pos.y.toFixed(1)}px)`;
+      if (dragging) { const c = client(pos); window.dispatchEvent(new PointerEvent("pointermove", { clientX: c.x, clientY: c.y, pointerType: "mouse", bubbles: true })); }
+    };
+    const wait = (ms: number) => new Promise<void>((res, rej) => {
+      const t = setTimeout(res, ms);
+      ac.signal.addEventListener("abort", () => { clearTimeout(t); rej(stop()); }, { once: true });
+    });
+    const move = (to: () => Pt, ms?: number) => new Promise<void>((res, rej) => {
+      const from = { ...pos }, t0 = performance.now(), first = to();
+      const dist = Math.hypot(first.x - from.x, first.y - from.y);
+      const dur = ms ?? Math.min(1100, 380 + dist * 0.8);
+      const arc = Math.min(36, dist * 0.07) * (bow = -bow);   // each glide bows the other way, as a hand does
+      const tick = (now: number) => {
+        if (ac.signal.aborted) { rej(stop()); return; }
+        const k = Math.min(1, (now - t0) / dur), e = easeInOut(k), end = to();
+        const dx = end.x - from.x, dy = end.y - from.y, len = Math.hypot(dx, dy) || 1, bend = Math.sin(Math.PI * e) * arc;
+        pos = { x: from.x + dx * e - (dy / len) * bend, y: from.y + dy * e + (dx / len) * bend };
+        draw();
+        if (k < 1) raf = requestAnimationFrame(tick); else res();
+      };
+      raf = requestAnimationFrame(tick);
+    });
+    const hand: Hand = {
+      stage, wait, move,
+      at: (el, fx = 0.5, fy = 0.5) => { const r = el.getBoundingClientRect(), s = stage.getBoundingClientRect(); return { x: r.left - s.left + r.width * fx, y: r.top - s.top + r.height * fy }; },
+      press: (el) => {
+        const c = client(pos);
+        cursor.dataset.down = "1";
+        el.dispatchEvent(new PointerEvent("pointerdown", { clientX: c.x, clientY: c.y, button: 0, pointerType: "mouse", bubbles: true }));
+        dragging = true;
+      },
+      release: () => {
+        const c = client(pos);
+        dragging = false;
+        delete cursor.dataset.down;
+        window.dispatchEvent(new PointerEvent("pointerup", { clientX: c.x, clientY: c.y, pointerType: "mouse", bubbles: true }));
+      },
+      click: (el) => {
+        ripple.animate([{ transform: "scale(0.2)", opacity: 0.55 }, { transform: "scale(1.7)", opacity: 0 }], { duration: 480, easing: "ease-out" });
+        el.click();
+      },
+    };
+
+    draw();
+    cursor.style.opacity = "1";
+    (async () => {
+      await wait(900);
+      for (;;) {
+        const out = await play(hand, root, round.current++);
+        if (out === "reset") {
+          setFaded(true); await wait(380);
+          setEpoch((n) => n + 1); await wait(160);
+          setFaded(false); await wait(700);
+        }
+      }
+    })().catch((e: unknown) => { if (!(e instanceof Error && e.message === "stop")) console.error("demo script stopped:", e); });
+
+    return () => {
+      ac.abort();
+      cancelAnimationFrame(raf);
+      if (dragging) window.dispatchEvent(new PointerEvent("pointerup", { pointerType: "mouse", bubbles: true }));
+      delete cursor.dataset.down;
+      cursor.style.opacity = "0";
+    };
+  }, [inView, shown, play]);
+
   return (
-    <div className="absolute inset-0 overflow-x-auto overflow-y-hidden overscroll-x-contain">
-      <div className="mx-auto" style={{ width, minWidth: width, height }}>{shown ? children : null}</div>
+    <div ref={stageRef} className="pointer-events-none absolute inset-0 select-none overflow-hidden" aria-hidden="true">
+      <div
+        ref={rootRef}
+        className={cn("origin-top-left transition-opacity duration-300", faded && "opacity-0")}
+        style={mode === "scale" ? { width, height, transform: `scale(${scale})` } : { width, height: "100%" }}
+      >
+        {shown ? <Fragment key={epoch}>{children}</Fragment> : null}
+      </div>
+      <div ref={cursorRef} className="absolute left-0 top-0 z-30 opacity-0 transition-opacity duration-300 [&[data-down]_svg]:scale-[0.86]" style={{ willChange: "transform" }}>
+        <span ref={rippleRef} className="absolute -left-3 -top-3 h-6 w-6 rounded-full bg-ink/40 opacity-0" />
+        <svg width="20" height="22" viewBox="0 0 20 22" className="relative origin-top-left transition-transform duration-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
+          <path d="M2 1.5 2 16.2 5.6 12.9 8.2 18.8 10.9 17.6 8.3 11.8 13.4 11.6Z" fill="#fff" stroke="#0b0b0b" strokeWidth="1.4" strokeLinejoin="round" />
+        </svg>
+      </div>
     </div>
   );
 }
+
+/** Kanban: one card travels the board. To the second column and back; on a narrow stage, where only one column shows,
+ *  down the column and back up. */
+const playKanban: Play = async (h, root, round) => {
+  const cards = [...root.querySelectorAll<HTMLElement>("[data-kanban-card]")];
+  const bodies: HTMLElement[] = [], cols: HTMLElement[][] = [];
+  for (const c of cards) {
+    const b = c.parentElement as HTMLElement;
+    let i = bodies.indexOf(b);
+    if (i < 0) { bodies.push(b); cols.push([]); i = bodies.length - 1; }
+    cols[i].push(c);
+  }
+  if (!cols[0]?.length) return;
+  const back = round % 2 === 1;
+  const twoColumns = bodies[1] && h.at(bodies[1], 0, 0).x < h.stage.clientWidth - 90;
+  let card: HTMLElement, drop: Pt;
+  if (twoColumns) {
+    const [from, to] = back ? [1, 0] : [0, 1];
+    card = cols[from][0];
+    drop = cols[to][0] ? { x: h.at(cols[to][0]).x, y: h.at(cols[to][0], 0.5, 0).y + 8 } : { x: h.at(bodies[to]).x, y: h.at(bodies[to], 0.5, 0).y + 40 };
+  } else if (back) {
+    card = cols[0][Math.min(2, cols[0].length - 1)];
+    drop = { x: h.at(cols[0][0]).x, y: h.at(cols[0][0], 0.5, 0).y + 8 };
+  } else {
+    const third = cols[0][Math.min(2, cols[0].length - 1)];
+    card = cols[0][0];
+    drop = { x: h.at(third).x, y: h.at(third, 0.5, 1).y - 6 };
+  }
+  await h.move(() => h.at(card, 0.5, 0.2));
+  await h.wait(280);
+  h.press(card);
+  await h.wait(140);
+  await h.move(() => drop, 1250);
+  await h.wait(240);
+  h.release();
+  await h.wait(1100);
+  await h.move(() => ({ x: h.stage.clientWidth * (0.62 + 0.1 * (round % 2)), y: h.stage.clientHeight * 0.78 }), 800);
+  await h.wait(1400);
+};
+
+/** The chat block keeps its conversations in localStorage. The demo sends messages on a loop, so it starts from the block's
+ *  own sample thread every time it mounts and leaves nothing behind, instead of piling messages up across visits. */
+const clearChatStorage = () => {
+  try { Object.keys(localStorage).filter((k) => k.startsWith("chat_messages_")).forEach((k) => localStorage.removeItem(k)); } catch { /* storage blocked: nothing to clear */ }
+};
+function ChatDemoBlock() {
+  useState(() => { clearChatStorage(); return null; });
+  useEffect(() => clearChatStorage, []);
+  return <ChatInterfaceBlock className="!h-full !w-full" />;
+}
+
+const CHAT_SCRIPT: Array<[string, string]> = [
+  ["Design guild", "Love the new spacing, merging today"],
+  ["Daniel Osei", "Can we ship the dashboard on Friday?"],
+  ["Priya Raman", "Thanks, sending the handoff notes now"],
+];
+
+/** AI chat: open a conversation, type a message, send it, let the reply arrive; three conversations, then start over. */
+const playChat: Play = async (h, root, round) => {
+  const [name, text] = CHAT_SCRIPT[round % CHAT_SCRIPT.length];
+  const row = [...root.querySelectorAll<HTMLElement>('[role="button"][data-hover-item]')].find((el) => el.textContent?.includes(name));
+  if (!row) return;
+  await h.move(() => h.at(row, 0.5, 0.5));
+  await h.wait(220);
+  h.click(row);
+  await h.wait(700);
+  const input = root.querySelector<HTMLInputElement>('input[placeholder*="essage"]');
+  if (!input) return;
+  await h.move(() => h.at(input, 0.3, 0.5));
+  await h.wait(200);
+  h.click(input);
+  const setValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!;
+  for (let i = 1; i <= text.length; i++) {
+    setValue.call(input, text.slice(0, i));
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    await h.wait(38 + ((i * 37) % 46));
+  }
+  await h.wait(380);
+  const send = root.querySelector<HTMLButtonElement>('button[aria-label="Send message"]');
+  if (send) { await h.move(() => h.at(send)); await h.wait(160); h.click(send); }
+  await h.wait(3400);
+  if (round % CHAT_SCRIPT.length === CHAT_SCRIPT.length - 1) return "reset";
+};
 
 /* ------------------------------------------------------------------ */
 /* Everyday demos                                                      */
@@ -594,11 +822,11 @@ export function ComponentWall() {
         <WallCard title="Charts" kind="Chart" href="/docs/components/radial-chart" description="Radial, radar and bar charts that tween as the data changes." className="md:col-span-2" stageClassName="min-h-[380px]">
           {(v) => <ChartsDemo inView={v} />}
         </WallCard>
-        <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards and labels. It's live: drag a card to another column, or reorder within one." className="md:col-span-2" stageClassName="h-[640px] flex-none" padded={false}>
-          {(v) => <LiveBlock inView={v} width={1040} height={640}><KanbanBoardBlock /></LiveBlock>}
+        <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards, labels and a drag state." stageClassName="aspect-[1040/640] flex-none max-md:aspect-auto max-md:h-[360px]" padded={false}>
+          {(v) => <AutoDemo inView={v} mode="fluid" play={playKanban}><KanbanBoardBlock /></AutoDemo>}
         </WallCard>
-        <WallCard title="AI chat" kind="Block" href="/docs/blocks/panels" description="A full chat screen with a conversation list, messages and a composer. It's live: pick a conversation and send a message." className="md:col-span-2" stageClassName="h-[640px] flex-none" padded={false}>
-          {(v) => <LiveBlock inView={v} width={1040} height={640}><ChatInterfaceBlock className="!h-full !w-full" /></LiveBlock>}
+        <WallCard title="AI chat" kind="Block" href="/docs/blocks/panels" description="A full chat screen with a conversation list, messages and a composer." stageClassName="aspect-[1040/640] flex-none" padded={false} reveal={90}>
+          {(v) => <AutoDemo inView={v} mode="scale" play={playChat}><ChatDemoBlock /></AutoDemo>}
         </WallCard>
         <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." className="md:col-span-2" stageClassName="min-h-[400px]">
           {(v) => <ChainDemo inView={v} />}

@@ -71,8 +71,6 @@ export function EmbedCommandMenu({ theme }: { theme: "light" | "dark" }) {
   return (
     <div
       className={`min-h-screen bg-surface ${theme === "dark" ? "dark" : "force-light"}`}
-      // a faint dot grid under the menu's scrim, so it reads as a menu over a page rather than over a flat colour
-      style={{ backgroundImage: "radial-gradient(var(--color-border-default) 1px, transparent 1.2px)", backgroundSize: "22px 22px" }}
       onPointerDownCapture={take}
       onKeyDownCapture={take}
     >
