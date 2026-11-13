@@ -66,6 +66,9 @@ const PROPS = [
   { name: "variant", type: "'default' | 'dots' | 'dots-grid-none' | 'lines-only' | 'circle-grid' | 'circle-grid-no-lines' | 'grid-custom' | 'grid-filled' | 'circle-grid-filled' | 'multiple' | 'custom-label'", default: "'default'", description: "Grid and fill treatment." },
   { name: "seriesLabels", type: "[string, string?]", description: "Names for value and value2." },
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Preset diameter." },
+  { name: "loading", type: "boolean", default: "false", description: "Draws the chart's own silhouette instead of the chart, breathing quietly, at the chart's height so nothing below it moves when the data arrives. Announced as a busy status." },
+  { name: "appearance", type: "'default' | 'rich'", default: "'default'", description: "default is the Figma look. rich adds an entrance when the chart appears (played once, never on hover), a soft lift and glow on hover, and a frosted tooltip. Off for reduced motion." },
+  { name: "interactive", type: "boolean", default: "true", description: "appearance=\"rich\" only: hover a spoke for a crosshair, a dot on each series and a card with the values and the gap between two series." },
 ];
 
 export default function RadarChartPage() {
@@ -139,6 +142,28 @@ export default function RadarChartPage() {
                 { label: "custom-label", note: "restyled spoke labels, two series", chart: <RadarChart data={TWO_SERIES} variant="custom-label" /> },
               ]}
             />
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Loading and the rich look</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>loading</code> while the data is on its way: the chart draws its own silhouette, breathing
+            quietly, at the same height, so nothing below it moves when the data arrives. Pass{" "}
+            <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
+            hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
+            reduced motion turns the motion off.
+          </p>
+          <ComponentPreview code={`<RadarChart data={data} appearance="rich" />`}>
+            <ChartFrame kind="radar">
+              <RadarChart data={DATA} appearance="rich" />
+            </ChartFrame>
+          </ComponentPreview>
+          <div className="mt-4" />
+          <ComponentPreview code={`<RadarChart data={data} loading />`}>
+            <ChartFrame kind="radar">
+              <RadarChart data={DATA} loading />
+            </ChartFrame>
           </ComponentPreview>
         </section>
 

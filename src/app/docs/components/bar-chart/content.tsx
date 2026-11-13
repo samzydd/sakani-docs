@@ -48,6 +48,8 @@ const PROPS = [
   { name: "variant", type: "'default' | 'active' | 'multiple' | 'stacked' | 'negative' | 'horizontal'", default: "'default'", description: "Multiple puts series side by side, stacked puts them on top of each other, negative draws a zero line, horizontal flips the axes." },
   { name: "seriesLabels", type: "[string, string?]", description: "Names for value and value2, shown for multiple and stacked." },
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Preset height." },
+  { name: "loading", type: "boolean", default: "false", description: "Draws the chart's own silhouette instead of the chart, breathing quietly, at the chart's height so nothing below it moves when the data arrives. Announced as a busy status." },
+  { name: "appearance", type: "'default' | 'rich'", default: "'default'", description: "default is the Figma look. rich adds an entrance when the chart appears (played once, never on hover), a soft lift and glow on hover, and a frosted tooltip. Off for reduced motion." },
 ];
 
 export default function BarChartPage() {
@@ -107,6 +109,28 @@ export default function BarChartPage() {
           <ComponentPreview code={NEGATIVE_CODE}>
             <ChartFrame kind="bar">
               <BarChart data={NEGATIVE} variant="negative" />
+            </ChartFrame>
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Loading and the rich look</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>loading</code> while the data is on its way: the chart draws its own silhouette, breathing
+            quietly, at the same height, so nothing below it moves when the data arrives. Pass{" "}
+            <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
+            hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
+            reduced motion turns the motion off.
+          </p>
+          <ComponentPreview code={`<BarChart data={data} appearance="rich" />`}>
+            <ChartFrame kind="bar">
+              <BarChart data={DATA} appearance="rich" />
+            </ChartFrame>
+          </ComponentPreview>
+          <div className="mt-4" />
+          <ComponentPreview code={`<BarChart data={data} loading />`}>
+            <ChartFrame kind="bar">
+              <BarChart data={DATA} loading />
             </ChartFrame>
           </ComponentPreview>
         </section>

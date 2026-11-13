@@ -42,6 +42,8 @@ const PROPS = [
   { name: "seriesLabels", type: "[string, string?]", description: "Names for value and value2, used in the tooltip and legend." },
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Preset height." },
   { name: "height", type: "number", description: "Pixel height override; takes precedence over size." },
+  { name: "loading", type: "boolean", default: "false", description: "Draws the chart's own silhouette instead of the chart, breathing quietly, at the chart's height so nothing below it moves when the data arrives. Announced as a busy status." },
+  { name: "appearance", type: "'default' | 'rich'", default: "'default'", description: "default is the Figma look. rich adds an entrance when the chart appears (played once, never on hover), a soft lift and glow on hover, and a frosted tooltip. Off for reduced motion." },
 ];
 
 export default function AreaChartPage() {
@@ -89,6 +91,28 @@ export default function AreaChartPage() {
               <AreaChart data={DATA} variant="linear" height={160} />
               <AreaChart data={DATA} variant="step" height={160} />
             </div>
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Loading and the rich look</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>loading</code> while the data is on its way: the chart draws its own silhouette, breathing
+            quietly, at the same height, so nothing below it moves when the data arrives. Pass{" "}
+            <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
+            hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
+            reduced motion turns the motion off.
+          </p>
+          <ComponentPreview code={`<AreaChart data={data} height={240} appearance="rich" />`}>
+            <ChartFrame kind="area">
+              <AreaChart data={DATA} height={240} appearance="rich" />
+            </ChartFrame>
+          </ComponentPreview>
+          <div className="mt-4" />
+          <ComponentPreview code={`<AreaChart data={data} height={240} loading />`}>
+            <ChartFrame kind="area">
+              <AreaChart data={DATA} height={240} loading />
+            </ChartFrame>
           </ComponentPreview>
         </section>
 

@@ -37,6 +37,8 @@ const PROPS = [
   { name: "colLabels", type: "string[]", description: "Labels across the top, one per column." },
   { name: "valueLabel", type: "string", description: "What a cell's number counts, used in the tooltip." },
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Preset cell size." },
+  { name: "loading", type: "boolean", default: "false", description: "Draws the chart's own silhouette instead of the chart, breathing quietly, at the chart's height so nothing below it moves when the data arrives. Announced as a busy status." },
+  { name: "appearance", type: "'default' | 'rich'", default: "'default'", description: "default is the Figma look. rich adds an entrance when the chart appears (played once, never on hover), a soft lift and glow on hover, and a frosted tooltip. Off for reduced motion." },
 ];
 
 export default function HeatmapChartPage() {
@@ -69,6 +71,28 @@ export default function HeatmapChartPage() {
             shorter than <code>colLabels</code> leave gaps, so pad sparse data
             with zeroes rather than leaving entries out.
           </p>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Loading and the rich look</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>loading</code> while the data is on its way: the chart draws its own silhouette, breathing
+            quietly, at the same height, so nothing below it moves when the data arrives. Pass{" "}
+            <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
+            hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
+            reduced motion turns the motion off.
+          </p>
+          <ComponentPreview code={`<HeatmapChart data={data} rowLabels={rows} colLabels={cols} valueLabel="sessions" appearance="rich" />`}>
+            <ChartFrame kind="heatmap">
+              <HeatmapChart data={DATA} rowLabels={ROWS} colLabels={COLS} valueLabel="sessions" appearance="rich" />
+            </ChartFrame>
+          </ComponentPreview>
+          <div className="mt-4" />
+          <ComponentPreview code={`<HeatmapChart data={data} rowLabels={rows} colLabels={cols} valueLabel="sessions" loading />`}>
+            <ChartFrame kind="heatmap">
+              <HeatmapChart data={DATA} rowLabels={ROWS} colLabels={COLS} valueLabel="sessions" loading />
+            </ChartFrame>
+          </ComponentPreview>
         </section>
 
         <section>
