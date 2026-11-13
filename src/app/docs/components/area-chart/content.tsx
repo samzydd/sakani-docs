@@ -22,7 +22,7 @@ const BASIC = `const data = [
   { label: "Mar", value: 4700 },
 ];
 
-<AreaChart data={data} height={240} />`;
+<AreaChart data={data} height={240} appearance="rich" />`;
 
 const STACKED = `// value2 is the second series; "stacked" puts it on top of value.
 <AreaChart
@@ -54,7 +54,7 @@ export default function AreaChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
           <ChartFrame kind="area">
-            <AreaChart data={DATA} height={240} />
+            <AreaChart data={DATA} height={240} appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -102,6 +102,7 @@ export default function AreaChartPage() {
             <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
             hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
             reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
           </p>
           <ComponentPreview code={`<AreaChart data={data} height={240} appearance="rich" />`}>
             <ChartFrame kind="area">

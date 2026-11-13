@@ -307,18 +307,18 @@ function ChartsDemo({ inView }: { inView: boolean }) {
     <div className="grid w-full gap-4 sm:grid-cols-3">
       <Panel label="Quarter goals" {...enter(0)}>
         <RadialChart
-          size="lg" variant="multi" centerValue={`${Math.round(RINGS[0].reduce((a, b) => a + b, 0) / 4)}%`} centerCaption="On track"
+          size="lg" variant="multi" appearance="rich" centerValue={`${Math.round(RINGS[0].reduce((a, b) => a + b, 0) / 4)}%`} centerCaption="On track"
           data={RING_LABELS.map((label, k) => ({ label, value: RINGS[0][k], max: 100 }))}
         />
       </Panel>
       <Panel label="Product scorecard" {...enter(1)}>
         <RadarChart
-          size="lg" variant="multiple" seriesLabels={["This year", "Last year"]}
+          size="lg" variant="multiple" appearance="rich" seriesLabels={["This year", "Last year"]}
           data={AXES.map((label, k) => ({ label, value: RADAR_NOW[0][k], value2: RADAR_PREV[0][k] }))}
         />
       </Panel>
       <Panel label="Signups this week" {...enter(2)}>
-        <BarChart size="lg" data={DAYS.map((label, k) => ({ label, value: BARS[0][k] }))} />
+        <BarChart size="lg" appearance="rich" data={DAYS.map((label, k) => ({ label, value: BARS[0][k] }))} />
       </Panel>
     </div>
   );

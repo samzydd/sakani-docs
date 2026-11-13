@@ -22,7 +22,7 @@ const BASIC = `const data = [
   { label: 'Mar', revenue: 5100 },
 ];
 
-<LineChart data={data} series={['revenue']} />`;
+<LineChart data={data} series={['revenue']} appearance="rich" />`;
 
 const VARIANTS = `<LineChart data={data} series={['revenue']} variant="default" />
 <LineChart data={data} series={['revenue']} variant="linear" />
@@ -71,7 +71,7 @@ export default function LineChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
           <ChartFrame kind="line">
-            <LineChart data={DATA} series={["revenue"]} />
+            <LineChart data={DATA} series={["revenue"]} appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -161,6 +161,7 @@ export default function LineChartPage() {
             <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
             hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
             reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
           </p>
           <ComponentPreview code={`<LineChart data={data} series={["revenue"]} appearance="rich" />`}>
             <ChartFrame kind="line">

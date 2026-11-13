@@ -29,6 +29,7 @@ const BASIC = `const data = [
   rowLabels={["Week 1", "Week 2", "Week 3", "Week 4"]}
   colLabels={["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
   valueLabel="sessions"
+  appearance="rich"
 />`;
 
 const PROPS = [
@@ -49,7 +50,7 @@ export default function HeatmapChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
           <ChartFrame kind="heatmap">
-            <HeatmapChart data={DATA} rowLabels={ROWS} colLabels={COLS} valueLabel="sessions" />
+            <HeatmapChart data={DATA} rowLabels={ROWS} colLabels={COLS} valueLabel="sessions" appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -81,6 +82,7 @@ export default function HeatmapChartPage() {
             <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
             hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
             reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
           </p>
           <ComponentPreview code={`<HeatmapChart data={data} rowLabels={rows} colLabels={cols} valueLabel="sessions" appearance="rich" />`}>
             <ChartFrame kind="heatmap">

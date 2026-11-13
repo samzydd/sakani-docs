@@ -21,7 +21,7 @@ const BASIC = `const data = [
   { label: "Converted", value: 940 },
 ];
 
-<FunnelChart data={data} />`;
+<FunnelChart data={data} appearance="rich" />`;
 
 const SIZES = `<FunnelChart data={data} size="sm" />
 <FunnelChart data={data} size="lg" />`;
@@ -43,7 +43,7 @@ export default function FunnelChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
           <ChartFrame kind="funnel">
-            <FunnelChart data={DATA} />
+            <FunnelChart data={DATA} appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -77,6 +77,7 @@ export default function FunnelChartPage() {
             <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
             hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
             reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
           </p>
           <ComponentPreview code={`<FunnelChart data={data} appearance="rich" />`}>
             <ChartFrame kind="funnel">

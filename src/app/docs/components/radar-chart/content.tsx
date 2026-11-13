@@ -35,7 +35,7 @@ const BASIC = `const data = [
   { label: 'March', value: 256 },
 ];
 
-<RadarChart data={data} />`;
+<RadarChart data={data} appearance="rich" />`;
 
 const MULTIPLE = `// A second shape appears as soon as rows carry value2.
 <RadarChart
@@ -79,7 +79,7 @@ export default function RadarChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
           <ChartFrame kind="radar">
-            <RadarChart data={DATA} />
+            <RadarChart data={DATA} appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -153,6 +153,7 @@ export default function RadarChartPage() {
             <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
             hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
             reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
           </p>
           <ComponentPreview code={`<RadarChart data={data} appearance="rich" />`}>
             <ChartFrame kind="radar">

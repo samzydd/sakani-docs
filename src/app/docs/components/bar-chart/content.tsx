@@ -29,19 +29,20 @@ const BASIC = `const data = [
   { label: "Mar", value: 4700 },
 ];
 
-<BarChart data={data} />`;
+<BarChart data={data} appearance="rich" />`;
 
 const MULTIPLE = `<BarChart
   data={data}
   variant="multiple"
   seriesLabels={["Revenue", "Costs"]}
+  appearance="rich"
 />`;
 
 const HORIZONTAL = `// Long category names read better along the y-axis.
-<BarChart data={data} variant="horizontal" />`;
+<BarChart data={data} variant="horizontal" appearance="rich" />`;
 
 const NEGATIVE_CODE = `// Bars below the axis need the negative variant to get a zero line.
-<BarChart data={quarterlyNet} variant="negative" />`;
+<BarChart data={quarterlyNet} variant="negative" appearance="rich" />`;
 
 const PROPS = [
   { name: "data", type: "{ label: string; value: number; value2?: number }[]", description: "One entry per bar. value2 adds a second series." },
@@ -60,7 +61,7 @@ export default function BarChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
           <ChartFrame kind="bar">
-            <BarChart data={DATA} />
+            <BarChart data={DATA} appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -71,10 +72,10 @@ export default function BarChartPage() {
             only on hover, for when the chart exists to make a point about a
             particular period.
           </p>
-          <ComponentPreview code={`<BarChart data={data} variant="default" />\n<BarChart data={data} variant="active" />`}>
+          <ComponentPreview code={`<BarChart data={data} variant="default" appearance="rich" />\n<BarChart data={data} variant="active" appearance="rich" />`}>
             <div className="flex w-full flex-col gap-6" style={{ maxWidth: CHART_WIDTH.bar }}>
-              <BarChart data={DATA} variant="default" />
-              <BarChart data={DATA} variant="active" />
+              <BarChart data={DATA} variant="default" appearance="rich" />
+              <BarChart data={DATA} variant="active" appearance="rich" />
             </div>
           </ComponentPreview>
         </section>
@@ -89,8 +90,8 @@ export default function BarChartPage() {
           </p>
           <ComponentPreview code={MULTIPLE}>
             <div className="flex w-full flex-col gap-6" style={{ maxWidth: CHART_WIDTH.bar }}>
-              <BarChart data={DATA} variant="multiple" seriesLabels={["Revenue", "Costs"]} />
-              <BarChart data={DATA} variant="stacked" seriesLabels={["Revenue", "Costs"]} />
+              <BarChart data={DATA} variant="multiple" seriesLabels={["Revenue", "Costs"]} appearance="rich" />
+              <BarChart data={DATA} variant="stacked" seriesLabels={["Revenue", "Costs"]} appearance="rich" />
             </div>
           </ComponentPreview>
         </section>
@@ -99,7 +100,7 @@ export default function BarChartPage() {
           <h2 className="mb-3 text-lg font-semibold text-ink">Horizontal</h2>
           <ComponentPreview code={HORIZONTAL}>
             <ChartFrame kind="bar">
-              <BarChart data={DATA} variant="horizontal" />
+              <BarChart data={DATA} variant="horizontal" appearance="rich" />
             </ChartFrame>
           </ComponentPreview>
         </section>
@@ -108,7 +109,7 @@ export default function BarChartPage() {
           <h2 className="mb-3 text-lg font-semibold text-ink">Negative values</h2>
           <ComponentPreview code={NEGATIVE_CODE}>
             <ChartFrame kind="bar">
-              <BarChart data={NEGATIVE} variant="negative" />
+              <BarChart data={NEGATIVE} variant="negative" appearance="rich" />
             </ChartFrame>
           </ComponentPreview>
         </section>
@@ -121,6 +122,7 @@ export default function BarChartPage() {
             <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
             hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
             reduced motion turns the motion off.
+            The previews on this page use it; leave it off for the Figma look.
           </p>
           <ComponentPreview code={`<BarChart data={data} appearance="rich" />`}>
             <ChartFrame kind="bar">

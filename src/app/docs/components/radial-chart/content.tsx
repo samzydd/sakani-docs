@@ -46,6 +46,7 @@ const BASIC_CODE = `const data = [{ label: 'Users', value: 800, max: 1000 }];
   variant="text"
   centerValue="800"
   centerCaption="Users"
+  appearance="rich"
 />`;
 
 const RINGS_CODE = `// One concentric ring per row, five rows.
@@ -105,7 +106,7 @@ export default function RadialChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC_CODE}>
           <ChartFrame kind="radial">
-            <RadialChart data={ONE_RING} variant="text" centerValue="800" centerCaption="Users" />
+            <RadialChart data={ONE_RING} variant="text" centerValue="800" centerCaption="Users" appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -185,6 +186,7 @@ export default function RadialChartPage() {
             <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
             hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
             reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
           </p>
           <ComponentPreview code={`<RadialChart data={data} variant="text" centerValue="800" centerCaption="Users" appearance="rich" />`}>
             <ChartFrame kind="radial">
