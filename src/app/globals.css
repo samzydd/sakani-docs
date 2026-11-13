@@ -668,3 +668,11 @@ html.dark .noise-overlay {
   ::view-transition-old(*),
   ::view-transition-new(*) { animation: none !important; }
 }
+
+/* The homepage Kanban demo is shrunk with CSS zoom. The board draws the lifted card, its slot and the cards' slide with
+   transforms and sizes measured in screen pixels, and zoom would scale those a second time. Undo the zoom on exactly those
+   elements (so a pixel is a pixel) and put it back on what they hold, so the cards still draw at the shrunk size. */
+.kanban-zoom [data-flip-id],
+.kanban-zoom [class*="_overlay_"] { zoom: calc(1 / var(--kz)); }
+.kanban-zoom [data-flip-id] > *,
+.kanban-zoom [class*="_overlay_"] > * { zoom: var(--kz); }

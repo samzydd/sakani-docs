@@ -7,7 +7,7 @@ import {
   BarChart, Button, Calendar, Card, ChainOfThought, ChainOfThoughtStep, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, RadarChart, RadialChart, SegmentedControl,
   Slider, SourceStack, Stepper, Switch, Tabs, Toast, sourceLogo, syncLiquidBackdrop, type DateRange,
 } from "@sakaniui/react";
-import { KanbanBoardBlock, ChatInterfaceBlock } from "@sakaniui/react/blocks";
+import { AiChatBlock, KanbanBoardBlock } from "@sakaniui/react/blocks";
 import { EmojiLightBulb, EmojiMagnifyingGlassTiltedLeft, EmojiPageFacingUp } from "@sakaniui/react/emoji";
 import {
   IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconMoon as Moon, IconPencil as Pencil, IconSun as Sun,
@@ -420,12 +420,13 @@ const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t 
  * the page's own focus and scroll are never touched, and the docs page has the block to use. It plays only while on
  * screen, mounts the first time it is, and stands still for prefers-reduced-motion.
  *
- * "scale" shrinks a fixed-size block to the stage (fine for a script that only clicks and types); "fluid" keeps a
- * block at its real size and lets the stage crop it, as a window would, because a drag measures the page and a
- * transform would skew it.
+ * Both shrink a block that is drawn at a fixed size to the stage. "scale" is a transform, fine for a script that only
+ * clicks and types. A drag can't use one: the block puts the lifted card where the pointer is with a transform of
+ * its own, which a scaled parent would skew. "zoom" (CSS zoom) shrinks the layout instead, and `.kanban-zoom` in
+ * globals.css puts the lifted card and its slot back at the true size.
  */
 function AutoDemo({ inView, mode, width = 1040, height = 640, play, children }: {
-  inView: boolean; mode: "scale" | "fluid"; width?: number; height?: number; play: Play; children: ReactNode;
+  inView: boolean; mode: "scale" | "zoom"; width?: number; height?: number; play: Play; children: ReactNode;
 }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -433,6 +434,7 @@ function AutoDemo({ inView, mode, width = 1040, height = 640, play, children }: 
   const rippleRef = useRef<HTMLSpanElement>(null);
   const [shown, setShown] = useState(false);
   const [scale, setScale] = useState(0.5);
+  const [stageH, setStageH] = useState(0);
   const [epoch, setEpoch] = useState(0);
   const [faded, setFaded] = useState(false);
   const round = useRef(0);
@@ -441,10 +443,10 @@ function AutoDemo({ inView, mode, width = 1040, height = 640, play, children }: 
   useEffect(() => { if (inView) setShown(true); }, [inView]);
 
   useEffect(() => {
-    if (mode !== "scale") return;
     const el = stageRef.current;
     if (!el) return;
-    const fit = () => setScale(el.clientWidth / width);
+    // the board never shrinks past half size: on a phone the card crops it, as a window would, rather than make it unreadable
+    const fit = () => { setScale(Math.max(el.clientWidth / width, mode === "zoom" ? 0.5 : 0)); setStageH(el.clientHeight); };
     fit();
     const ro = new ResizeObserver(fit);
     ro.observe(el);
@@ -533,8 +535,11 @@ function AutoDemo({ inView, mode, width = 1040, height = 640, play, children }: 
     <div ref={stageRef} className="pointer-events-none absolute inset-0 select-none overflow-hidden" aria-hidden="true">
       <div
         ref={rootRef}
-        className={cn("origin-top-left transition-opacity duration-300", faded && "opacity-0")}
-        style={mode === "scale" ? { width, height, transform: `scale(${scale})` } : { width, height: "100%" }}
+        className={cn("origin-top-left transition-opacity duration-300", mode === "zoom" && "kanban-zoom", faded && "opacity-0")}
+        style={
+          mode === "scale" ? { width, height, transform: `scale(${scale})` }
+            : { width, height: stageH / scale, zoom: scale, ["--kz" as string]: scale }
+        }
       >
         {shown ? <Fragment key={epoch}>{children}</Fragment> : null}
       </div>
@@ -587,48 +592,36 @@ const playKanban: Play = async (h, root, round) => {
   await h.wait(1400);
 };
 
-/** The chat block keeps its conversations in localStorage. The demo sends messages on a loop, so it starts from the block's
- *  own sample thread every time it mounts and leaves nothing behind, instead of piling messages up across visits. */
-const clearChatStorage = () => {
-  try { Object.keys(localStorage).filter((k) => k.startsWith("chat_messages_")).forEach((k) => localStorage.removeItem(k)); } catch { /* storage blocked: nothing to clear */ }
-};
-function ChatDemoBlock() {
-  useState(() => { clearChatStorage(); return null; });
-  useEffect(() => clearChatStorage, []);
-  return <ChatInterfaceBlock className="!h-full !w-full" />;
-}
+const AI_PROMPT = "Which deals need attention this week?";
 
-const CHAT_SCRIPT: Array<[string, string]> = [
-  ["Design guild", "Love the new spacing, merging today"],
-  ["Daniel Osei", "Can we ship the dashboard on Friday?"],
-  ["Priya Raman", "Thanks, sending the handoff notes now"],
-];
-
-/** AI chat: open a conversation, type a message, send it, let the reply arrive; three conversations, then start over. */
-const playChat: Play = async (h, root, round) => {
-  const [name, text] = CHAT_SCRIPT[round % CHAT_SCRIPT.length];
-  const row = [...root.querySelectorAll<HTMLElement>('[role="button"][data-hover-item]')].find((el) => el.textContent?.includes(name));
-  if (!row) return;
-  await h.move(() => h.at(row, 0.5, 0.5));
-  await h.wait(220);
-  h.click(row);
-  await h.wait(700);
-  const input = root.querySelector<HTMLInputElement>('input[placeholder*="essage"]');
-  if (!input) return;
-  await h.move(() => h.at(input, 0.3, 0.5));
-  await h.wait(200);
-  h.click(input);
-  const setValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!;
-  for (let i = 1; i <= text.length; i++) {
-    setValue.call(input, text.slice(0, i));
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-    await h.wait(38 + ((i * 37) % 46));
+/** AI chat: type a question, send it, and let the block play its reply (reasoning streams in, a tool runs, the answer is
+ *  written, follow-ups appear). Then a breath, and start over from the empty thread. */
+const playAiChat: Play = async (h, root) => {
+  const box = root.querySelector<HTMLTextAreaElement>("textarea");
+  if (!box) return;
+  await h.move(() => h.at(box, 0.3, 0.5));
+  await h.wait(260);
+  h.click(box);
+  const setValue = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value")!.set!;
+  for (let i = 1; i <= AI_PROMPT.length; i++) {
+    setValue.call(box, AI_PROMPT.slice(0, i));
+    box.dispatchEvent(new Event("input", { bubbles: true }));
+    await h.wait(34 + ((i * 29) % 40));
   }
-  await h.wait(380);
+  await h.wait(420);
   const send = root.querySelector<HTMLButtonElement>('button[aria-label="Send message"]');
-  if (send) { await h.move(() => h.at(send)); await h.wait(160); h.click(send); }
-  await h.wait(3400);
-  if (round % CHAT_SCRIPT.length === CHAT_SCRIPT.length - 1) return "reset";
+  if (!send) return;
+  await h.move(() => h.at(send));
+  await h.wait(180);
+  h.click(send);
+  await h.move(() => ({ x: h.stage.clientWidth * 0.78, y: h.stage.clientHeight * 0.6 }), 900);
+  // the block streams the whole reply on its own; the button turns back into Send when it is done
+  for (let i = 0; i < 80; i++) {
+    await h.wait(500);
+    if (!root.querySelector('button[aria-label="Stop generating"]')) break;
+  }
+  await h.wait(3200);
+  return "reset";
 };
 
 /* ------------------------------------------------------------------ */
@@ -823,15 +816,15 @@ export function ComponentWall() {
           {(v) => <ChartsDemo inView={v} />}
         </WallCard>
         <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards, labels and a drag state." stageClassName="aspect-[1040/640] flex-none max-md:aspect-auto max-md:h-[360px]" padded={false}>
-          {(v) => <AutoDemo inView={v} mode="fluid" play={playKanban}><KanbanBoardBlock /></AutoDemo>}
+          {(v) => <AutoDemo inView={v} mode="zoom" play={playKanban}><KanbanBoardBlock /></AutoDemo>}
         </WallCard>
-        <WallCard title="AI chat" kind="Block" href="/docs/blocks/panels" description="A full chat screen with a conversation list, messages and a composer." stageClassName="aspect-[1040/640] flex-none" padded={false} reveal={90}>
-          {(v) => <AutoDemo inView={v} mode="scale" play={playChat}><ChatDemoBlock /></AutoDemo>}
+        <WallCard title="AI chat" kind="Block" href="/docs/blocks/ai-chat" description="A full AI conversation: the reasoning streams in, a tool runs, the answer is written, with the prompt box and follow-ups." stageClassName="aspect-[1040/640] flex-none" padded={false} reveal={90}>
+          {(v) => <AutoDemo inView={v} mode="scale" play={playAiChat}><AiChatBlock className="!h-full !w-full" /></AutoDemo>}
         </WallCard>
-        <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." className="md:col-span-2" stageClassName="min-h-[400px]">
+        <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." stageClassName="min-h-[520px]">
           {(v) => <ChainDemo inView={v} />}
         </WallCard>
-        <WallCard title="Command Menu" kind="Search" href="/docs/components/command-menu" description="A ⌘K search and command palette with scopes, filter tokens, a preview pane and an Ask AI mode. It is the one this site uses. Click in and try it." className="md:col-span-2" stageClassName="min-h-[560px]" padded={false} reveal={90}>
+        <WallCard title="Command Menu" kind="Search" href="/docs/components/command-menu" description="A ⌘K search and command palette with scopes, filter tokens, a preview pane and an Ask AI mode. It is the one this site uses. Click in and try it." stageClassName="min-h-[520px]" padded={false} reveal={90}>
           {(v, d) => <CommandMenuDemo inView={v} dark={d} />}
         </WallCard>
       </div>
