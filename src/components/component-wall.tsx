@@ -389,22 +389,16 @@ function CommandMenuDemo({ inView, dark }: { inView: boolean; dark: boolean }) {
   );
 }
 
-/** A real block, scaled down to sit in a card: a visual sample, not a control (the docs page has the live one). */
-function ScaledBlock({ width, height, scale, children }: { width: number; height: number; scale: number; children: ReactNode }) {
-  const outer = useRef<HTMLDivElement>(null);
-  const [s, setS] = useState(scale);
-  useEffect(() => {
-    const el = outer.current;
-    if (!el) return;
-    const fit = () => setS(el.clientWidth / width);
-    fit();
-    const ro = new ResizeObserver(fit);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [width]);
+/** A real block at its natural size, fully interactive: nothing is scaled (a drag measures the page, and a transform
+ *  would skew it). Mounted the first time it scrolls into view and kept; the stage is as tall as the block either way,
+ *  so nothing jumps. Narrower than the block, the stage scrolls sideways. */
+function LiveBlock({ inView, width, height, children }: { inView: boolean; width: number; height: number; children: ReactNode }) {
+  const [shown, setShown] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { if (inView) setShown(true); }, [inView]);
   return (
-    <div ref={outer} className="wall-fade absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div className="pointer-events-none origin-top-left" style={{ width, height, transform: `scale(${s})` }}>{children}</div>
+    <div className="absolute inset-0 overflow-x-auto overflow-y-hidden overscroll-x-contain">
+      <div className="mx-auto" style={{ width, minWidth: width, height }}>{shown ? children : null}</div>
     </div>
   );
 }
@@ -600,11 +594,11 @@ export function ComponentWall() {
         <WallCard title="Charts" kind="Chart" href="/docs/components/radial-chart" description="Radial, radar and bar charts that tween as the data changes." className="md:col-span-2" stageClassName="min-h-[380px]">
           {(v) => <ChartsDemo inView={v} />}
         </WallCard>
-        <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards, labels and a drag state." stageClassName="min-h-[360px]" padded={false}>
-          {() => <ScaledBlock width={1040} height={640} scale={0.5}><KanbanBoardBlock /></ScaledBlock>}
+        <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards and labels. It's live: drag a card to another column, or reorder within one." className="md:col-span-2" stageClassName="h-[640px] flex-none" padded={false}>
+          {(v) => <LiveBlock inView={v} width={1040} height={640}><KanbanBoardBlock /></LiveBlock>}
         </WallCard>
-        <WallCard title="AI chat" kind="Block" href="/docs/blocks/panels" description="A full chat screen with a conversation list, messages and a composer." stageClassName="min-h-[360px]" padded={false} reveal={90}>
-          {() => <ScaledBlock width={1040} height={640} scale={0.5}><ChatInterfaceBlock /></ScaledBlock>}
+        <WallCard title="AI chat" kind="Block" href="/docs/blocks/panels" description="A full chat screen with a conversation list, messages and a composer. It's live: pick a conversation and send a message." className="md:col-span-2" stageClassName="h-[640px] flex-none" padded={false}>
+          {(v) => <LiveBlock inView={v} width={1040} height={640}><ChatInterfaceBlock className="!h-full !w-full" /></LiveBlock>}
         </WallCard>
         <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." className="md:col-span-2" stageClassName="min-h-[400px]">
           {(v) => <ChainDemo inView={v} />}
