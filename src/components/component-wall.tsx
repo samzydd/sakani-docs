@@ -74,6 +74,9 @@ type Kind = "Map" | "Search" | "Surface" | "AI" | "Chart" | "Block" | "Form" | "
  * One sample: a stage with the live component on it, then its name, kind and a line about it.
  * The stage stays interactive (so it is not inside the link); the name links to the docs.
  */
+/** How much smaller than its box a padded demo is drawn. */
+const DEMO_SCALE = 0.86;
+
 function WallCard({
   title, kind, description, href, children, className, stageClassName, reveal = 0, padded = true,
 }: {
@@ -109,7 +112,13 @@ function WallCard({
           stageClassName,
         )}
       >
-        {children(inView, isDark)}
+        {padded ? (
+          // The demo sits a little smaller than its box, so it has air around it: CSS zoom shrinks what has a fixed size
+          // (a calendar, a menu) and the wrapper's width shrinks what fills its box (a slider, a tab bar).
+          <div className="flex items-center justify-center" style={{ width: `${DEMO_SCALE * 100}%`, zoom: DEMO_SCALE }}>
+            {children(inView, isDark)}
+          </div>
+        ) : children(inView, isDark)}
         <button
           type="button"
           onClick={() => setMode(isDark ? "light" : "dark")}
@@ -384,7 +393,7 @@ function CommandMenuDemo({ inView, dark }: { inView: boolean; dark: boolean }) {
       key={dark ? "dark" : "light"}
       src={`/embed/command-menu?theme=${dark ? "dark" : "light"}`}
       title="Command menu: a live search that types a few queries, then lets you try it"
-      className="absolute inset-0 h-full w-full border-0"
+      className="absolute left-5 top-5 h-[calc(100%-2.5rem)] w-[calc(100%-2.5rem)] border-0"
     />
   );
 }
@@ -821,10 +830,10 @@ export function ComponentWall() {
         <WallCard title="AI chat" kind="Block" href="/docs/blocks/ai-chat" description="A full AI conversation: the reasoning streams in, a tool runs, the answer is written, with the prompt box and follow-ups." stageClassName="aspect-[1040/640] flex-none" padded={false} reveal={90}>
           {(v) => <AutoDemo inView={v} mode="scale" play={playAiChat}><AiChatBlock className="!h-full !w-full" /></AutoDemo>}
         </WallCard>
-        <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." stageClassName="min-h-[520px]">
+        <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." stageClassName="min-h-[420px]">
           {(v) => <ChainDemo inView={v} />}
         </WallCard>
-        <WallCard title="Command Menu" kind="Search" href="/docs/components/command-menu" description="A ⌘K search and command palette with scopes, filter tokens, a preview pane and an Ask AI mode. It is the one this site uses. Click in and try it." stageClassName="min-h-[520px]" padded={false} reveal={90}>
+        <WallCard title="Command Menu" kind="Search" href="/docs/components/command-menu" description="A ⌘K search and command palette with scopes, filter tokens, a preview pane and an Ask AI mode. It is the one this site uses. Click in and try it." stageClassName="min-h-[420px]" padded={false} reveal={90}>
           {(v, d) => <CommandMenuDemo inView={v} dark={d} />}
         </WallCard>
       </div>
