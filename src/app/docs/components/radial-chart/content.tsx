@@ -46,6 +46,7 @@ const BASIC_CODE = `const data = [{ label: 'Users', value: 800, max: 1000 }];
   variant="text"
   centerValue="800"
   centerCaption="Users"
+  appearance="rich"
 />`;
 
 const RINGS_CODE = `// One concentric ring per row, five rows.
@@ -93,6 +94,8 @@ const PROPS = [
   { name: "centerValue", type: "string", description: "Large figure in the middle." },
   { name: "centerCaption", type: "string", description: "Caption under the center value." },
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Preset diameter." },
+  { name: "loading", type: "boolean", default: "false", description: "Draws the chart's own silhouette instead of the chart, breathing quietly, at the chart's height so nothing below it moves when the data arrives. Announced as a busy status." },
+  { name: "appearance", type: "'default' | 'rich'", default: "'default'", description: "default is the Figma look. rich adds an entrance when the chart appears (played once, never on hover), a soft lift and glow on hover, and a frosted tooltip. Off for reduced motion." },
 ];
 
 export default function RadialChartPage() {
@@ -103,7 +106,7 @@ export default function RadialChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC_CODE}>
           <ChartFrame kind="radial">
-            <RadialChart data={ONE_RING} variant="text" centerValue="800" centerCaption="Users" />
+            <RadialChart data={ONE_RING} variant="text" centerValue="800" centerCaption="Users" appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -171,6 +174,29 @@ export default function RadialChartPage() {
           <ComponentPreview code={TICK_CODE}>
             <ChartFrame kind="radial">
               <RadialChart data={TICK_ROW} variant="gauge-tick" centerValue="3,130" centerCaption="Users" />
+            </ChartFrame>
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Loading and the rich look</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>loading</code> while the data is on its way: the chart draws its own silhouette, breathing
+            quietly, at the same height, so nothing below it moves when the data arrives. Pass{" "}
+            <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
+            hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
+            reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
+          </p>
+          <ComponentPreview code={`<RadialChart data={data} variant="text" centerValue="800" centerCaption="Users" appearance="rich" />`}>
+            <ChartFrame kind="radial">
+              <RadialChart data={ONE_RING} variant="text" centerValue="800" centerCaption="Users" appearance="rich" />
+            </ChartFrame>
+          </ComponentPreview>
+          <div className="mt-4" />
+          <ComponentPreview code={`<RadialChart data={data} variant="text" centerValue="800" centerCaption="Users" loading />`}>
+            <ChartFrame kind="radial">
+              <RadialChart data={ONE_RING} variant="text" centerValue="800" centerCaption="Users" loading />
             </ChartFrame>
           </ComponentPreview>
         </section>

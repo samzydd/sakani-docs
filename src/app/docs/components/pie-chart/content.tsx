@@ -21,7 +21,7 @@ const BASIC = `const data = [
   { label: "Paid", value: 9 },
 ];
 
-<PieChart data={data} />`;
+<PieChart data={data} appearance="rich" />`;
 
 const SOLID = `<PieChart data={data} variant="pie" />
 <PieChart data={data} variant="pie-no-separator" />`;
@@ -48,6 +48,8 @@ const PROPS = [
   { name: "centerValue", type: "string", description: "Center figure, for the donut variants." },
   { name: "centerCaption", type: "string", description: "Caption under the center value." },
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Preset diameter." },
+  { name: "loading", type: "boolean", default: "false", description: "Draws the chart's own silhouette instead of the chart, breathing quietly, at the chart's height so nothing below it moves when the data arrives. Announced as a busy status." },
+  { name: "appearance", type: "'default' | 'rich'", default: "'default'", description: "default is the Figma look. rich adds an entrance when the chart appears (played once, never on hover), a soft lift and glow on hover, and a frosted tooltip. Off for reduced motion." },
 ];
 
 export default function PieChartPage() {
@@ -58,7 +60,7 @@ export default function PieChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
           <ChartFrame kind="pie">
-            <PieChart data={DATA} />
+            <PieChart data={DATA} appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -142,6 +144,29 @@ export default function PieChartPage() {
           <ComponentPreview code={DONUT}>
             <ChartFrame kind="pie">
               <PieChart data={DATA} variant="donut-with-text" centerValue="12.4k" centerCaption="sessions" />
+            </ChartFrame>
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Loading and the rich look</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>loading</code> while the data is on its way: the chart draws its own silhouette, breathing
+            quietly, at the same height, so nothing below it moves when the data arrives. Pass{" "}
+            <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
+            hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
+            reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
+          </p>
+          <ComponentPreview code={`<PieChart data={data} appearance="rich" />`}>
+            <ChartFrame kind="pie">
+              <PieChart data={DATA} appearance="rich" />
+            </ChartFrame>
+          </ComponentPreview>
+          <div className="mt-4" />
+          <ComponentPreview code={`<PieChart data={data} loading />`}>
+            <ChartFrame kind="pie">
+              <PieChart data={DATA} loading />
             </ChartFrame>
           </ComponentPreview>
         </section>

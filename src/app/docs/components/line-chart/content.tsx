@@ -22,7 +22,7 @@ const BASIC = `const data = [
   { label: 'Mar', revenue: 5100 },
 ];
 
-<LineChart data={data} series={['revenue']} />`;
+<LineChart data={data} series={['revenue']} appearance="rich" />`;
 
 const VARIANTS = `<LineChart data={data} series={['revenue']} variant="default" />
 <LineChart data={data} series={['revenue']} variant="linear" />
@@ -59,6 +59,8 @@ const PROPS = [
   { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: "Preset height: 180, 240, 320, 420." },
   { name: "height", type: "number", description: "Pixel height override, takes precedence over size." },
   { name: "showLegend", type: "boolean", default: "false", description: "Shows a legend below the chart." },
+  { name: "loading", type: "boolean", default: "false", description: "Draws the chart's own silhouette instead of the chart, breathing quietly, at the chart's height so nothing below it moves when the data arrives. Announced as a busy status." },
+  { name: "appearance", type: "'default' | 'rich'", default: "'default'", description: "default is the Figma look. rich adds an entrance when the chart appears (played once, never on hover), a soft lift and glow on hover, and a frosted tooltip. Off for reduced motion." },
 ];
 
 export default function LineChartPage() {
@@ -69,7 +71,7 @@ export default function LineChartPage() {
       <div className="space-y-10">
         <ComponentPreview code={BASIC}>
           <ChartFrame kind="line">
-            <LineChart data={DATA} series={["revenue"]} />
+            <LineChart data={DATA} series={["revenue"]} appearance="rich" />
           </ChartFrame>
         </ComponentPreview>
 
@@ -147,6 +149,29 @@ export default function LineChartPage() {
           <ComponentPreview code={MULTI}>
             <ChartFrame kind="line">
               <LineChart data={DATA} series={["revenue", "cost"]} variant="multiple" showLegend />
+            </ChartFrame>
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Loading and the rich look</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>loading</code> while the data is on its way: the chart draws its own silhouette, breathing
+            quietly, at the same height, so nothing below it moves when the data arrives. Pass{" "}
+            <code>{'appearance="rich"'}</code> for the livelier look: an entrance when the chart appears (once, never on
+            hover), a soft lift and glow on hover, and a frosted tooltip. The default stays the Figma look, and
+            reduced motion turns the motion off.
+            The first preview at the top of this page uses it; leave it off for the Figma look.
+          </p>
+          <ComponentPreview code={`<LineChart data={data} series={["revenue"]} appearance="rich" />`}>
+            <ChartFrame kind="line">
+              <LineChart data={DATA} series={["revenue"]} appearance="rich" />
+            </ChartFrame>
+          </ComponentPreview>
+          <div className="mt-4" />
+          <ComponentPreview code={`<LineChart data={data} series={["revenue"]} loading />`}>
+            <ChartFrame kind="line">
+              <LineChart data={DATA} series={["revenue"]} loading />
             </ChartFrame>
           </ComponentPreview>
         </section>
