@@ -281,34 +281,44 @@ const RADAR_PREV = [[58, 52, 64, 70, 48, 60], [48, 66, 50, 58, 62, 44], [64, 50,
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const BARS = [[42, 68, 54, 88, 72, 36, 48], [66, 50, 82, 60, 94, 52, 40], [38, 76, 62, 70, 58, 84, 66]];
 
-function Panel({ label, children }: { label: string; children: ReactNode }) {
+function Panel({ label, children, className, style }: { label: string; children: ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
-    <div className="flex min-w-0 flex-col rounded-xl border border-line-subtle p-4">
+    <div className={cn("flex min-w-0 flex-col rounded-xl border border-line-subtle p-4", className)} style={style}>
       <p className="mb-2 text-xs font-medium text-ink-muted">{label}</p>
       <div className="flex min-h-0 flex-1 items-center justify-center">{children}</div>
     </div>
   );
 }
 
-/** A radial, a radar and a bar chart: the real library charts, their data stepping through three frames. */
+/** A radial, a radar and a bar chart: the real library charts, holding still. They fade up in turn the first time they
+ *  come on screen, and stay put after that. */
 function ChartsDemo({ inView }: { inView: boolean }) {
-  const [i] = useLoop(3, 2300, inView);
+  const [seen, setSeen] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { if (inView) setSeen(true); }, [inView]);
+  const enter = (k: number) => ({
+    className: cn(
+      "transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none",
+      seen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
+    ),
+    style: { transitionDelay: `${k * 120}ms` },
+  });
   return (
     <div className="grid w-full gap-4 sm:grid-cols-3">
-      <Panel label="Quarter goals">
+      <Panel label="Quarter goals" {...enter(0)}>
         <RadialChart
-          size="lg" variant="multi" centerValue={`${Math.round(RINGS[i].reduce((a, b) => a + b, 0) / 4)}%`} centerCaption="On track"
-          data={RING_LABELS.map((label, k) => ({ label, value: RINGS[i][k], max: 100 }))}
+          size="lg" variant="multi" centerValue={`${Math.round(RINGS[0].reduce((a, b) => a + b, 0) / 4)}%`} centerCaption="On track"
+          data={RING_LABELS.map((label, k) => ({ label, value: RINGS[0][k], max: 100 }))}
         />
       </Panel>
-      <Panel label="Product scorecard">
+      <Panel label="Product scorecard" {...enter(1)}>
         <RadarChart
           size="lg" variant="multiple" seriesLabels={["This year", "Last year"]}
-          data={AXES.map((label, k) => ({ label, value: RADAR_NOW[i][k], value2: RADAR_PREV[i][k] }))}
+          data={AXES.map((label, k) => ({ label, value: RADAR_NOW[0][k], value2: RADAR_PREV[0][k] }))}
         />
       </Panel>
-      <Panel label="Signups this week">
-        <BarChart size="lg" data={DAYS.map((label, k) => ({ label, value: BARS[i][k] }))} />
+      <Panel label="Signups this week" {...enter(2)}>
+        <BarChart size="lg" data={DAYS.map((label, k) => ({ label, value: BARS[0][k] }))} />
       </Panel>
     </div>
   );
@@ -821,7 +831,7 @@ export function ComponentWall() {
         <WallCard title="Liquid glass" kind="Surface" href="/docs/glass" description="Apple-style glass that bends the photo behind it. Pick the lens up and drag it." stageClassName="min-h-[420px]" padded={false} reveal={90}>
           {(v) => <GlassDemo inView={v} />}
         </WallCard>
-        <WallCard title="Charts" kind="Chart" href="/docs/components/radial-chart" description="Radial, radar and bar charts that tween as the data changes." className="md:col-span-2" stageClassName="min-h-[380px]">
+        <WallCard title="Charts" kind="Chart" href="/docs/components/radial-chart" description="Radial, radar and bar charts, drawn from the same tokens, that re-theme with the page." className="md:col-span-2" stageClassName="min-h-[380px]">
           {(v) => <ChartsDemo inView={v} />}
         </WallCard>
         <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards, labels and a drag state." stageClassName="aspect-[1040/640] flex-none max-md:aspect-auto max-md:h-[360px]" padded={false}>
