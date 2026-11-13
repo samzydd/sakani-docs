@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { IconClick as MousePointerClick, IconSun as Sun, IconMoon as Moon } from "@sakaniui/react/icons";
-import { CRMDashboardBlock, KanbanBoardBlock, DataTableBlock, LiquidDashboardBlock } from "@sakaniui/react/blocks";
+import { KanbanBoardBlock, DataTableBlock, LiquidDashboardBlock } from "@sakaniui/react/blocks";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";
 import { TextReveal } from "@/components/text-reveal";
@@ -42,19 +42,18 @@ type Tab =
 const TABS: Tab[] = [
   { key: "kanban", label: "Kanban Board", path: "app.yourcompany.com/projects", kind: "block", Block: KanbanBoardBlock as BlockComponent },
   {
-    key: "crm-demo-1",
-    label: "CRM demo 1",
+    key: "crm",
+    label: "CRM",
     path: "saas-crm-sakani-ds.vercel.app",
     kind: "iframe",
     url: "https://saas-crm-sakani-ds.vercel.app/",
   },
-  { key: "crm-demo-2", label: "CRM demo 2", path: "app.yourcompany.com/crm", kind: "block", Block: CRMDashboardBlock as BlockComponent },
   { key: "liquid-glass", label: "Liquid Glass", path: "app.yourcompany.com/dashboard", kind: "block", Block: LiquidGlassDemo },
   { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", kind: "block", Block: DataTableBlock as BlockComponent },
 ];
 
 // Matches the message contract useEmbeddedThemeControl listens for in the
-// CRM demo 1 app's own source (samzydd/saas-crm-sakani-ds) -- cross-origin
+// CRM app's own source (samzydd/saas-crm-sakani-ds) -- cross-origin
 // means postMessage is the only channel available to flip its theme from
 // out here, there's no reaching into that document's classList directly.
 const IFRAME_THEME_MESSAGE = "sakani-crm:set-theme";
