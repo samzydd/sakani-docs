@@ -29,6 +29,7 @@ export const docsNav: NavGroup[] = [
       { title: "Icon Button", href: "/docs/components/icon-button" },
       { title: "Card", href: "/docs/components/card" },
       { title: "Avatar", href: "/docs/components/avatar" },
+      { title: "Flag", href: "/docs/components/flag" },
       { title: "Alert", href: "/docs/components/alert" },
       { title: "Accordion", href: "/docs/components/accordion" },
       { title: "Divider", href: "/docs/components/divider" },
@@ -168,6 +169,7 @@ export const docsNav: NavGroup[] = [
       { title: "Billing", href: "/docs/blocks/billing" },
       { title: "Billing Address", href: "/docs/blocks/billing-address" },
       { title: "AI Chat", href: "/docs/blocks/ai-chat" },
+      { title: "Live Map", href: "/docs/blocks/live-map" },
     ],
   },
 ];
