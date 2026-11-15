@@ -113,6 +113,23 @@ const GLOBE_HOVER = `const [picked, setPicked] = useState<number | null>(null);
   onMarkerHover={(i) => console.log('over', i)}
 />`;
 
+const GLOBE_DATA = `const [picked, setPicked] = useState<number | null>(0);
+
+<MapGlobe
+  markers={cities.map((c, i) => ({
+    position: c.position, label: c.name, selected: picked === i,
+    rank: i + 1,                                    // the numbered chip, matching your list
+    size: c.value > 0.7 * top ? 'lg' : c.value > 0.4 * top ? 'md' : 'sm',   // a bigger dot means more
+    status: c.approvalsDipping ? 'watch' : 'healthy',                        // a dashed amber ring
+  }))}
+  center={picked == null ? [14, 75] : cities[picked].position}   // change it and the globe turns to face the new place
+  autoRotate={picked == null}                                    // hold still while a city is picked
+  markerScale={1}
+  cardPlacement="side"
+  renderMarkerCard={(i) => <MyCard city={cities[i]} />}          // your card, kept on the marker as the globe turns
+  onMarkerClick={(i) => setPicked(i)}
+/>`;
+
 const GLOBE_DARK = `// the globe has no background, so theme="dark" is for one on a dark surface in a light page
 <div className="bg-neutral-950 p-6">
   <MapGlobe theme="dark" />
@@ -175,8 +192,12 @@ const CLUSTER_PROPS = [
 
 const GLOBE_PROPS = [
   { name: "variant", type: "'land' | 'ocean'", default: "'land'", description: "Which part gets the bright dots." },
-  { name: "center", type: "[lat, lng]", default: "[15, 90]", description: "The place facing the viewer at first." },
-  { name: "markers", type: "MapGlobeMarker[]", description: "{ position, label?, active?, selected?, hovered? }. active pulses; selected has the larger halo; label shows in a card while hovered or selected." },
+  { name: "center", type: "[lat, lng]", default: "[15, 90]", description: "The place facing the viewer. When it changes, the globe turns to face the new place (the short way round, about 0.9s; at once under reduced motion)." },
+  { name: "zoom", type: "number", default: "1", description: "How big the sphere is, 0.7 to 2.2; changes ease in. Above about 1.19 the sphere reaches the edge of its box and is cropped." },
+  { name: "markers", type: "MapGlobeMarker[]", description: "{ position, label?, active?, selected?, hovered?, size?, rank?, status? }. active pulses; selected has the larger halo; label shows in a card while hovered or selected. size ('sm' | 'md' | 'lg') scales the dot so it can show a value; rank adds a numbered chip that matches a list beside the globe; status='watch' adds a dashed amber ring, so a warning is not only a colour." },
+  { name: "renderMarkerCard", type: "(index, marker) => ReactNode", description: "Your own card on the hovered (or pinned with hovered) or selected marker. It follows the marker as the globe turns, is hidden on the far side, takes no pointer events and is hidden from assistive tech, so put the same information in a list. Replaces the small text label." },
+  { name: "cardPlacement", type: "'above' | 'side'", default: "'above'", description: "Where the card sits on its marker: above it (below when there is no room), or beside it on the side with room." },
+  { name: "markerScale", type: "number", description: "How big the markers are drawn (dots, rings, halos and rank chips together). Follows the globe's size by default; pass 1 to keep the design size on a small globe, so rank numbers stay readable on a phone." },
   { name: "arcs", type: "{ from, to }[]", description: "Routes between two places, drawn over the sphere with a travelling pulse." },
   { name: "autoRotate", type: "boolean", default: "true", description: "Spins on its own. Off under reduced motion." },
   { name: "rotationSpeed", type: "number", default: "6", description: "Degrees per second." },
@@ -383,6 +404,65 @@ function GlobeHover() {
   );
 }
 
+const RANKED = [
+  { name: "Singapore", position: CITY.Singapore, value: 18.4, watch: false },
+  { name: "London", position: CITY.London, value: 14.2, watch: false },
+  { name: "Lagos", position: CITY.Lagos, value: 9.6, watch: true },
+  { name: "Tokyo", position: CITY.Tokyo, value: 7.1, watch: false },
+  { name: "Sydney", position: CITY.Sydney, value: 3.8, watch: false },
+];
+
+function GlobeData() {
+  const [picked, setPicked] = useState<number | null>(0);
+  const top = RANKED[0].value;
+  const markers = RANKED.map((c, i) => ({
+    position: c.position,
+    label: c.name,
+    rank: i + 1,
+    status: (c.watch ? "watch" : "healthy") as "watch" | "healthy",
+    selected: picked === i,
+    size: (c.value / top > 0.7 ? "lg" : c.value / top > 0.4 ? "md" : "sm") as "sm" | "md" | "lg",
+  }));
+  return (
+    <div className="flex w-full flex-col items-center gap-4 sm:flex-row">
+      <div className="w-full max-w-[380px] shrink-0">
+        <MapGlobe
+          markers={markers}
+          arcs={ARCS}
+          center={picked == null ? [14, 75] : RANKED[picked].position}
+          autoRotate={picked == null}
+          markerScale={1}
+          cardPlacement="side"
+          renderMarkerCard={(i) => (
+            <div className="whitespace-nowrap rounded-lg border border-line-subtle bg-surface px-3 py-2 text-[13px] font-medium text-ink shadow-md">
+              {RANKED[i].name} <span className="text-ink-muted">${RANKED[i].value}M</span>
+              {RANKED[i].watch && <span className="ml-2 text-warning-fg">Watch</span>}
+            </div>
+          )}
+          onMarkerClick={(i) => setPicked((p) => (p === i ? null : i))}
+          aria-label="Payment volume by city"
+        />
+      </div>
+      <ol className="grid w-full gap-1">
+        {RANKED.map((c, i) => (
+          <li key={c.name}>
+            <button
+              type="button"
+              aria-pressed={picked === i}
+              onClick={() => setPicked((p) => (p === i ? null : i))}
+              className={"flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-ink transition-colors hover:bg-subtle " + (picked === i ? "bg-subtle" : "")}
+            >
+              <span className="w-4 text-ink-muted">{i + 1}</span>
+              <span className="flex-1 font-medium">{c.name}</span>
+              <span className="text-ink-muted">${c.value}M</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 function GlobeDark() {
   return (
     <div className={globeBox + " rounded-xl bg-[#0e0e0f] p-4"}>
@@ -548,6 +628,19 @@ export default function MapPage() {
           </p>
           <ComponentPreview code={GLOBE_DARK}>
             <GlobeDark />
+          </ComponentPreview>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Markers that carry data</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            A marker can show a value and a status, and the globe can follow a list beside it: <code>size</code> makes a dot bigger for more, <code>rank</code>{" "}
+            adds the number your list uses, <code>status=&quot;watch&quot;</code> adds a dashed amber ring (a warning that does not rely on colour), a
+            changing <code>center</code> turns the globe to the new place, and <code>renderMarkerCard</code> keeps your own card on the marker. Pick a city
+            in the list or on the globe. This is how the <a href="/docs/blocks/live-map" className="underline underline-offset-2">Live Map</a> block is built.
+          </p>
+          <ComponentPreview code={GLOBE_DATA}>
+            <GlobeData />
           </ComponentPreview>
         </section>
 

@@ -73,7 +73,7 @@ const ITEM_PROPS = [
   { name: "label", type: "string", description: "Item text. Still required when collapsed, since it becomes the tooltip and accessible name." },
   { name: "icon", type: "IconComponent", description: "The icon component itself, not an element." },
   { name: "active", type: "boolean", default: "false", description: "Marks the current page." },
-  { name: "activeIndicator", type: "boolean", default: "true", description: "Active styling: true is the raised card with a left accent bar, false is a flat tint. Ignored when collapsed." },
+  { name: "activeIndicator", type: "boolean", default: "true", description: "Active styling: true is the raised card with a left accent bar, false is a flat tint with no bar. Works collapsed or expanded. Neither has a hover state: the active item is where you are, so the pointer changes nothing on it." },
   { name: "badge", type: "string", description: "Trailing count or status pill." },
   { name: "hasSubmenu", type: "boolean", default: "false", description: "Shows the disclosure chevron. You render the SidebarSubItems yourself." },
   { name: "disabled", type: "boolean", default: "false", description: "Dims the item and drops its click handler." },
