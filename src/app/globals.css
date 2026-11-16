@@ -498,7 +498,9 @@ html.dark .noise-overlay {
  * to animate at the one moment it would otherwise be responding to a theme
  * change instead of a real interaction. */
 .dashboard-theme-swap,
-.dashboard-theme-swap * {
+.dashboard-theme-swap *,
+.theme-swap,
+.theme-swap * {
   transition: none !important;
 }
 

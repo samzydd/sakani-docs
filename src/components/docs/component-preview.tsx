@@ -6,6 +6,7 @@ import { useLenis } from "lenis/react";
 import { CopyButton } from "@/components/copy-button";
 import { useHighlightedCode } from "@/lib/use-highlighted-code";
 import { cn } from "@/lib/utils";
+import { withThemeTransition } from "@/lib/theme-transition";
 
 /**
  * Shrinks a block that's wider than the preview column until the whole
@@ -266,7 +267,12 @@ function PreviewBody({
             {tab === "preview" && (
               <button
                 type="button"
-                onClick={() => setPreviewTheme((v) => (v === "dark" ? "light" : "dark"))}
+                onClick={() => {
+                  // One cross-fade, with the components inside the pane held still while it runs. Left alone they each
+                  // run their own colour transition at their own duration, which reads as the preview twitching.
+                  const next = previewTheme === "dark" ? "light" : "dark";
+                  withThemeTransition(() => setPreviewTheme(() => next));
+                }}
                 aria-label={previewTheme === "dark" ? "Preview in light mode" : "Preview in dark mode"}
                 className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-ink-muted transition-colors hover:bg-subtle hover:text-ink"
               >
