@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IconSearch as Search, IconX as X } from "@sakaniui/react/icons";
@@ -11,6 +11,36 @@ export function DocsSidebar() {
   const pathname = usePathname();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const arrived = useRef(false);
+
+  /**
+   * Keeps the list scrolled to the page that is open.
+   *
+   * The list is long (the Blocks group alone is 40+ items), so arriving from the header's "Blocks" link, or from the
+   * homepage, a search or a pasted URL, mounts it at the top with the open page far below the fold and the sidebar
+   * no longer matching the page on the right. This scrolls the list, and only the list (scrollIntoView would also
+   * move the page), so the active item sits about a third of the way down with the items around it visible.
+   *
+   * On arrival it is placed before the first paint so there is no visible jump from the top; when the page changes
+   * inside the docs (the layout and this list stay mounted) it eases there. An item that is already comfortably in
+   * view is left alone, so clicking around in the list does not make it move under the pointer.
+   */
+  useLayoutEffect(() => {
+    const box = listRef.current;
+    const el = box?.querySelector<HTMLElement>('[aria-current="page"]');
+    const first = !arrived.current;
+    arrived.current = true;
+    if (!box || !el) return;
+    const b = box.getBoundingClientRect();
+    const e = el.getBoundingClientRect();
+    const edge = 56;
+    if (!first && e.top >= b.top + edge && e.bottom <= b.bottom - edge) return;
+    const top = Math.max(0, box.scrollTop + (e.top - b.top) - box.clientHeight / 3);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    box.scrollTo({ top, behavior: first || reduce ? "auto" : "smooth" });
+    // Only the page changing moves the list; typing in the filter must not.
+  }, [pathname]);
 
   /**
    * Matches on the group name too, so "charts" surfaces that whole section
@@ -77,7 +107,8 @@ export function DocsSidebar() {
         {query ? `${count} ${count === 1 ? "result" : "results"}` : ""}
       </p>
 
-      <div className="min-h-0 flex-1 overflow-y-auto">
+      {/* data-lenis-prevent: the list scrolls natively, not through the page's smooth scroll. */}
+      <div ref={listRef} data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto">
         {count === 0 ? (
           <p className="px-1 py-6 text-sm text-ink-muted">
             No components match &ldquo;{query}&rdquo;.

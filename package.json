@@ -17,6 +17,7 @@
     "@sakaniui/react": "^0.18.2",
     "@types/mdx": "^2.0.14",
     "clsx": "^2.1.1",
+    "lenis": "^1.3.27",
     "next": "16.3.5",
     "next-themes": "^0.4.6",
     "react": "19.2.8",

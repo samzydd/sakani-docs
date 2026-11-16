@@ -126,6 +126,17 @@ html.dark {
   }
 }
 
+/* Lenis (components/smooth-scroll.tsx) does the easing itself; the browser's own smooth scrolling on top of it makes
+   every step lag. The class is only on <html> while Lenis runs, so /embed pages and reduced-motion keep the rule above. */
+html.lenis {
+  scroll-behavior: auto !important;
+}
+/* lenis.css turns pointer events off on iframes while it smooths, which would make the live dashboard demos on the
+   homepage unclickable. They stay interactive. */
+html.lenis.lenis-smooth iframe {
+  pointer-events: auto;
+}
+
 body {
   background: var(--color-bg-canvas);
   color: var(--color-fg-default);

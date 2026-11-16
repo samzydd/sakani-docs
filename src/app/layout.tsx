@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ChromeGate } from "@/components/chrome-gate";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import {
   SITE_URL,
   SITE_NAME,
@@ -134,6 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             to once they've switched. A first visit now lands on dark
             whatever the OS prefers; an explicit choice is still remembered. */}
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+          <SmoothScroll />
           <div aria-hidden className="noise-overlay" />
           <ChromeGate><SiteHeader /></ChromeGate>
           <div className="flex-1">{children}</div>

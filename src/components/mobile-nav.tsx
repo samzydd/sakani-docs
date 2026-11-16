@@ -45,7 +45,13 @@ export function MobileNav() {
               <X size={18} />
             </button>
           </div>
-          <nav className="h-[calc(100vh-4rem)] overflow-y-auto px-4 py-6">
+          {/* Opens centred on the current page: the list is long and starts at the top otherwise. The overlay is
+              fixed, so this scrolls the list and not the page behind it. */}
+          <nav
+            data-lenis-prevent
+            ref={(el) => { el?.querySelector('[aria-current="page"]')?.scrollIntoView({ block: "center" }); }}
+            className="h-[calc(100vh-4rem)] overflow-y-auto px-4 py-6"
+          >
             {docsNav.map((group) => (
               <div key={group.title} className="mb-6">
                 <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink-muted">
@@ -57,6 +63,7 @@ export function MobileNav() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setOpen(false)}
+                      aria-current={pathname === item.href ? "page" : undefined}
                       className={cn(
                         "rounded-md px-3 py-2 text-sm",
                         pathname === item.href

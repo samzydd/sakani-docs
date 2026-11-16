@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { IconSun as Sun, IconMoon as Moon, IconArrowsMaximize as Maximize, IconArrowsMinimize as Minimize } from "@sakaniui/react/icons";
+import { useLenis } from "lenis/react";
 import { CopyButton } from "@/components/copy-button";
 import { useHighlightedCode } from "@/lib/use-highlighted-code";
 import { cn } from "@/lib/utils";
@@ -151,6 +152,7 @@ function useExpand(holder: React.RefObject<HTMLDivElement | null>) {
   const [from, setFrom] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
   const [held, setHeld] = useState(0);
   const opener = useRef<HTMLElement | null>(null);
+  const lenis = useLenis();
 
   const open = () => {
     const el = holder.current;
@@ -195,9 +197,11 @@ function useExpand(holder: React.RefObject<HTMLDivElement | null>) {
     window.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prev; };
+    // Lenis moves the page itself, so overflow:hidden alone would not stop the wheel scrolling the page behind the card.
+    lenis?.stop();
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prev; lenis?.start(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase]);
+  }, [phase, lenis]);
 
   const expanded = phase === "open";
   const cardStyle: React.CSSProperties | undefined =
