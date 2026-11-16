@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { IconClick as MousePointerClick, IconSun as Sun, IconMoon as Moon } from "@sakaniui/react/icons";
-import { KanbanBoardBlock, DataTableBlock, LiquidDashboardBlock } from "@sakaniui/react/blocks";
+import { KanbanBoardBlock, DataTableBlock } from "@sakaniui/react/blocks";
 import { cn } from "@/lib/utils";
 import { withThemeTransition } from "@/lib/theme-transition";
 import { useScrollReveal } from "@/lib/use-scroll-reveal";
@@ -20,22 +20,6 @@ import { MaskReveal } from "@/components/mask-reveal";
  */
 type BlockComponent = React.ComponentType<{ fillPlaceholders?: boolean }>;
 
-/**
- * Liquid Glass needs a photograph behind it to refract, so unlike the other
- * blocks it takes image props. Wrapped here so it fits the same slot shape.
- */
-const LiquidGlassDemo: BlockComponent = () => (
-  <LiquidDashboardBlock
-    backgroundImage="/glass/backdrop.jpg"
-    accountAvatar="/glass/account.png"
-    people={{
-      emily: "/glass/emily-johnson.png",
-      michael: "/glass/michael-evans.png",
-      sarah: "/glass/sarah-williams.png",
-    }}
-  />
-);
-
 type Tab =
   | { key: string; label: string; path: string; kind: "block"; Block: BlockComponent }
   | { key: string; label: string; path: string; kind: "iframe"; url: string };
@@ -49,7 +33,6 @@ const TABS: Tab[] = [
     kind: "iframe",
     url: "https://saas-crm-sakani-ds.vercel.app/",
   },
-  { key: "liquid-glass", label: "Liquid Glass", path: "app.yourcompany.com/dashboard", kind: "block", Block: LiquidGlassDemo },
   { key: "table", label: "Data Table", path: "app.yourcompany.com/customers", kind: "block", Block: DataTableBlock as BlockComponent },
 ];
 
