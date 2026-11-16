@@ -113,7 +113,7 @@ export default function AiPage() {
           <code>cmd /c</code>: use <code>&quot;command&quot;: &quot;cmd&quot;, &quot;args&quot;: [&quot;/c&quot;, &quot;npx&quot;, &quot;-y&quot;, &quot;@sakaniui/mcp&quot;]</code>, or in
           Claude Code <code>claude mcp add sakaniui -- cmd /c npx -y @sakaniui/mcp</code>. It needs Node.js 18
           or later. To check it is connected, open your editor&apos;s MCP list (<code>/mcp</code> in Claude Code):{" "}
-          <code>sakaniui</code> should show 10 tools.
+          <code>sakaniui</code> should show 11 tools.
         </p>
       </div>
       <div className="doc-prose">
@@ -253,7 +253,7 @@ export default function AiPage() {
           </li>
           <li>
             <strong>Added it but no tools appear.</strong> Restart the editor. In Claude Code run <code>/mcp</code> and look
-            for <code>sakaniui</code> with 10 tools.
+            for <code>sakaniui</code> with 11 tools.
           </li>
           <li>
             <strong><code>Failed to connect</code> after typing the command by hand.</strong> Check the package name for a
