@@ -124,6 +124,7 @@ export const docsNav: NavGroup[] = [
       { title: "Chat", href: "/docs/components/chat" },
       { title: "Calendar", href: "/docs/components/calendar" },
       { title: "Map", href: "/docs/components/map" },
+      { title: "Region Map", href: "/docs/components/region-map" },
     ],
   },
   {
@@ -170,6 +171,7 @@ export const docsNav: NavGroup[] = [
       { title: "Billing Address", href: "/docs/blocks/billing-address" },
       { title: "AI Chat", href: "/docs/blocks/ai-chat" },
       { title: "Live Map", href: "/docs/blocks/live-map" },
+      { title: "Region Map", href: "/docs/blocks/region-map" },
     ],
   },
 ];
