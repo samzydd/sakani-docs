@@ -6,7 +6,9 @@ import { Fragment, useEffect, useMemo, useRef, useState, useSyncExternalStore, t
 import {
   BarChart, Button, Calendar, Card, ChainOfThought, ChainOfThoughtStep, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, RadarChart, RadialChart, SegmentedControl,
   Slider, SourceStack, Stepper, Switch, Tabs, Toast, sourceLogo, syncLiquidBackdrop, type DateRange,
+  RegionMap, RegionMapLegend,
 } from "@sakaniui/react";
+import { US_STATES, US_STATES_VIEWBOX } from "@sakaniui/react/regions/us";
 import { AiChatBlock, KanbanBoardBlock } from "@sakaniui/react/blocks";
 import { EmojiLightBulb, EmojiMagnifyingGlassTiltedLeft, EmojiPageFacingUp } from "@sakaniui/react/emoji";
 import {
@@ -165,6 +167,41 @@ function GlobeDemo({ inView, dark }: { inView: boolean; dark: boolean }) {
           this card flips a class on a nested element instead, so a globe flipped in place would keep its old colour
           (light dots on a light card: invisible). A fresh one reads it again. */}
       {inView ? <MapGlobe key={String(dark)} markers={markers} arcs={arcs} center={[14, 20]} rotationSpeed={8} aria-label="Offices around the world" /> : null}
+    </div>
+  );
+}
+
+
+const REGION_IDS = ["CA", "TX", "NY", "FL", "WA", "IL", "CO", "GA"];
+const REGION_SCALE = { breaks: [20, 40, 60, 80] };
+
+/** The US map, shaded, with a state outlined in turn; hover or click it to take over (click zooms). */
+function RegionMapDemo({ inView }: { inView: boolean }) {
+  const [i, take] = useLoop(REGION_IDS.length, 1700, inView);
+  const [picked, setPicked] = useState<string | null>(null);
+  const values = useMemo(
+    () => Object.fromEntries(US_STATES.map((s, k) => [s.id, Math.round((((Math.sin(k * 12.9898) * 43758.5453) % 1) + 1) % 1 * 100)])),
+    [],
+  );
+  return (
+    <div className="w-full max-w-[560px]">
+      {inView ? (
+        <>
+          <RegionMap
+            regions={US_STATES}
+            viewBox={US_STATES_VIEWBOX}
+            values={values}
+            scale={REGION_SCALE}
+            selected={picked}
+            onSelectedChange={setPicked}
+            hovered={picked ? null : REGION_IDS[i]}
+            onHoverChange={(id) => { if (id) take(Math.max(0, REGION_IDS.indexOf(id))); }}
+            formatValue={(n) => `${n} accounts`}
+            aria-label="Accounts by US state"
+          />
+          <div className="mt-2"><RegionMapLegend scale={REGION_SCALE} /></div>
+        </>
+      ) : null}
     </div>
   );
 }
@@ -833,6 +870,9 @@ export function ComponentWall() {
         </WallCard>
         <WallCard title="Charts" kind="Chart" href="/docs/components/radial-chart" description="Radial, radar and bar charts, drawn from the same tokens, that re-theme with the page." className="md:col-span-2" stageClassName="min-h-[380px]">
           {(v) => <ChartsDemo inView={v} />}
+        </WallCard>
+        <WallCard title="Region Map" kind="Map" href="/docs/components/region-map" description="Regions shaded by a value, with a hover card and click-to-zoom. Outlines for the US, UK, Spain, Germany, Canada and Australia. Click a state." className="md:col-span-2" stageClassName="min-h-[420px]">
+          {(v) => <RegionMapDemo inView={v} />}
         </WallCard>
         <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards, labels and a drag state." stageClassName="aspect-[1040/640] flex-none max-md:aspect-auto max-md:h-[360px]" padded={false}>
           {(v) => <AutoDemo inView={v} mode="zoom" play={playKanban}><KanbanBoardBlock /></AutoDemo>}

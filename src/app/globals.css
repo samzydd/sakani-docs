@@ -439,6 +439,17 @@ html.dark .noise-overlay {
 .force-light {
   --map-tile-filter: saturate(0.45) contrast(0.96) brightness(1.02);
 }
+/* Region Map ramp: --color-map-* mix the chart colours over bg/muted, and are resolved where they are declared, so a
+   pane that forces light inside a dark page has to declare them again where the light bg/muted is in scope. */
+.force-light {
+  --color-map-bin-0: color-mix(in srgb, var(--color-chart-2) 25%, var(--color-bg-muted));
+  --color-map-bin-1: color-mix(in srgb, var(--color-chart-2) 43.75%, var(--color-bg-muted));
+  --color-map-bin-2: color-mix(in srgb, var(--color-chart-2) 62.5%, var(--color-bg-muted));
+  --color-map-bin-3: color-mix(in srgb, var(--color-chart-2) 81.25%, var(--color-bg-muted));
+  --color-map-bin-4: var(--color-chart-2);
+  --color-map-neg-0: color-mix(in srgb, var(--color-chart-1) 85%, var(--color-bg-muted));
+  --color-map-neg-1: color-mix(in srgb, var(--color-chart-1) 40%, var(--color-bg-muted));
+}
 /* ...except a map that is itself dark (theme="dark"): it keeps the library's dark filter. */
 .force-light .dark {
   --map-tile-filter: initial;
