@@ -61,6 +61,46 @@ function ScaleToFit({ children }: { children: ReactNode }) {
   );
 }
 
+
+/**
+ * The expanded view: the component is centred in the canvas and, when it is bigger than the canvas, scaled down until
+ * all of it is visible (never up), so nothing is cut off and nothing needs scrolling. Like ScaleToFit, it keeps the
+ * component at its true size and zooms the result, so proportions stay as designed.
+ */
+function FitToCanvas({ children }: { children: ReactNode }) {
+  const outer = useRef<HTMLDivElement>(null);
+  const inner = useRef<HTMLDivElement>(null);
+  const [fit, setFit] = useState({ scale: 1, w: 0, h: 0 });
+
+  useEffect(() => {
+    const o = outer.current, i = inner.current;
+    if (!o || !i) return;
+    const measure = () => {
+      const nw = i.offsetWidth, nh = i.offsetHeight;   // layout size, unaffected by the transform
+      const aw = o.clientWidth, ah = o.clientHeight;
+      if (!nw || !nh || !aw || !ah) return;
+      const scale = Math.min(1, aw / nw, ah / nh);
+      setFit((f) => (Math.abs(f.scale - scale) < 0.001 && f.w === nw * scale && f.h === nh * scale ? f : { scale, w: nw * scale, h: nh * scale }));
+    };
+    measure();
+    // the canvas resizes with the window; the component's own height changes as its content does (a list expanding)
+    const ro = new ResizeObserver(measure);
+    ro.observe(o);
+    ro.observe(i);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div ref={outer} className="flex min-h-0 min-w-0 flex-1 items-center justify-center">
+      <div style={{ width: fit.w || undefined, height: fit.h || undefined, flexShrink: 0 }}>
+        <div ref={inner} style={{ transform: `scale(${fit.scale})`, transformOrigin: "top left", width: "max-content" }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ComponentPreview({
   children,
   code,
@@ -324,9 +364,7 @@ function PreviewBody({
           ) : center ? (
             <div className="m-auto p-8">{children}</div>
           ) : lifted && !fullBleed ? (
-            /* "Safe" centring: auto margins centre the content when it fits and collapse to 0 when it is taller than the
-               canvas, so it scrolls from its top edge. items-center/justify-center would clip a tall block on both ends. */
-            <div className="m-auto">{children}</div>
+            <FitToCanvas>{children}</FitToCanvas>
           ) : (
             children
           )}
