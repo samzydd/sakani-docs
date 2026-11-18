@@ -311,7 +311,7 @@ function PreviewBody({
             "text-[color:var(--color-fg-default)]",
             // Lifted: the pane fills what is left under the header and scrolls on its own, whatever its kind.
             lifted
-              ? cn("min-h-0 flex-1 overflow-auto", !scaleToFit && !fullBleed && "flex items-center justify-center p-10", center && "flex")
+              ? cn("min-h-0 flex-1 overflow-auto", !scaleToFit && !fullBleed && "flex p-10", center && "flex")
               : scaleToFit
                 ? "overflow-hidden"
                 : fullBleed
@@ -323,6 +323,10 @@ function PreviewBody({
             <ScaleToFit>{children}</ScaleToFit>
           ) : center ? (
             <div className="m-auto p-8">{children}</div>
+          ) : lifted && !fullBleed ? (
+            /* "Safe" centring: auto margins centre the content when it fits and collapse to 0 when it is taller than the
+               canvas, so it scrolls from its top edge. items-center/justify-center would clip a tall block on both ends. */
+            <div className="m-auto">{children}</div>
           ) : (
             children
           )}
