@@ -6,7 +6,7 @@ import { Fragment, useEffect, useMemo, useRef, useState, useSyncExternalStore, t
 import {
   BarChart, Button, Calendar, Card, ChainOfThought, ChainOfThoughtStep, LiquidBackdrop, LiquidGlass, MapGlobe, Menu, MenuItem, Progress, RadarChart, RadialChart, SegmentedControl,
   Slider, SourceStack, Stepper, Switch, Tabs, Toast, sourceLogo, syncLiquidBackdrop, type DateRange,
-  RegionMap, RegionMapLegend,
+  RegionMap, RegionMapLegend, MonthCalendar, type CalendarEventData,
 } from "@sakaniui/react";
 import { US_STATES, US_STATES_VIEWBOX } from "@sakaniui/react/regions/us";
 import { AiChatBlock, KanbanBoardBlock } from "@sakaniui/react/blocks";
@@ -201,6 +201,39 @@ function RegionMapDemo({ inView }: { inView: boolean }) {
           />
           <div className="mt-2"><RegionMapLegend scale={REGION_SCALE} /></div>
         </>
+      ) : null}
+    </div>
+  );
+}
+
+/** A month of events placed around today so the card always looks current. Drag one to another day. */
+function EventCalendarDemo({ inView }: { inView: boolean }) {
+  const today = useMemo(() => new Date(), []);
+  const seed = useMemo<CalendarEventData[]>(() => {
+    const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7));
+    const at = (d: number, h: number, m = 0) => new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + d, h, m);
+    const rows: [string, number, number, number, CalendarEventData["color"], boolean?, number?][] = [
+      ["Standup", 0, 9, 15, "blue"], ["Design crit", 1, 11, 0, "purple"], ["Customer call", 2, 14, 0, "green"], ["Launch checklist", 3, 10, 0, "teal"],
+      ["Sprint planning", 7, 9, 30, "blue"], ["Board prep", 8, 15, 0, "orange"], ["Demo day", 10, 13, 0, "purple"], ["Retro", 11, 16, 0, "blue"],
+      ["Run club", 4, 7, 0, "green"], ["Investor update", 14, 11, 0, "gold"], ["Team lunch", 15, 12, 30, "orange"], ["Hiring sync", 16, 10, 0, "blue"],
+      ["Launch week", 2, 0, 0, "teal", true, 4], ["Offsite", 17, 0, 0, "green", true, 1],
+    ];
+    return rows.map(([title, d, h, m, color, allDay, span], i) => ({
+      id: `w${i}`, title, color, allDay: !!allDay,
+      start: at(d, h, m), end: allDay ? at(d + (span ?? 0), 23, 59) : at(d, h + 1, m),
+    }));
+  }, [today]);
+  const [events, setEvents] = useState(seed);
+  return (
+    <div className="w-full max-w-[960px]">
+      {inView ? (
+        <MonthCalendar
+          events={events}
+          today={today}
+          defaultDate={today}
+          onEventMove={(e, next) => setEvents((all) => all.map((x) => (x.id === e.id ? { ...x, ...next } : x)))}
+          style={{ height: 600 }}
+        />
       ) : null}
     </div>
   );
@@ -873,6 +906,9 @@ export function ComponentWall() {
         </WallCard>
         <WallCard title="Region Map" kind="Map" href="/docs/components/region-map" description="Regions shaded by a value, with a hover card and click-to-zoom. Outlines for the US, UK, Spain, Germany, Canada and Australia. Click a state." className="md:col-span-2" stageClassName="min-h-[420px]">
           {(v) => <RegionMapDemo inView={v} />}
+        </WallCard>
+        <WallCard title="Event calendar" kind="Data display" href="/docs/components/event-calendar" description="Month and week calendars for events, with a day panel for busy time and free gaps. Drag an event to another day." className="md:col-span-2" stageClassName="min-h-[640px]">
+          {(v) => <EventCalendarDemo inView={v} />}
         </WallCard>
         <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards, labels and a drag state." stageClassName="aspect-[1040/640] flex-none max-md:aspect-auto max-md:h-[360px]" padded={false}>
           {(v) => <AutoDemo inView={v} mode="zoom" play={playKanban}><KanbanBoardBlock /></AutoDemo>}
