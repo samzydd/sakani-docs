@@ -91,7 +91,7 @@ const MONTH_PROPS = [
   { name: "maxRows", type: "number", default: "4", description: "Rows of events a cell holds before it says \"N more\"." },
   { name: "onEventClick", type: "(event, el) => void", description: "An event was pressed. el is its element, to place a card beside it." },
   { name: "onEventMove", type: "(event, { start, end }) => void", description: "An event was dragged to another day, or moved with Alt + arrows (a day left and right, a week up and down)." },
-  { name: "onMoreClick", type: "(date) => void", description: "\"N more\" was pressed." },
+  { name: "onMoreClick", type: "(date, el) => void", description: "\"N more\" was pressed (and its button, to place a card beside it)." },
   { name: "activeEventId", type: "string | null", description: "The event whose card is open: it stays lit." },
   { name: "today / hideHeader", type: "Date / boolean", description: "Today for the highlight (default: now). Hide the header to draw your own." },
 ];
