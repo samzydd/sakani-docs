@@ -210,13 +210,16 @@ function RegionMapDemo({ inView }: { inView: boolean }) {
 function EventCalendarDemo({ inView }: { inView: boolean }) {
   const today = useMemo(() => new Date(), []);
   const seed = useMemo<CalendarEventData[]>(() => {
-    const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7));
-    const at = (d: number, h: number, m = 0) => new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + d, h, m);
+    // events spread over the whole month shown, so no row is empty
+    const first = new Date(today.getFullYear(), today.getMonth(), 1);
+    const at = (d: number, h: number, m = 0) => new Date(first.getFullYear(), first.getMonth(), first.getDate() + d, h, m);
     const rows: [string, number, number, number, CalendarEventData["color"], boolean?, number?][] = [
-      ["Standup", 0, 9, 15, "blue"], ["Design crit", 1, 11, 0, "purple"], ["Customer call", 2, 14, 0, "green"], ["Launch checklist", 3, 10, 0, "teal"],
-      ["Sprint planning", 7, 9, 30, "blue"], ["Board prep", 8, 15, 0, "orange"], ["Demo day", 10, 13, 0, "purple"], ["Retro", 11, 16, 0, "blue"],
-      ["Run club", 4, 7, 0, "green"], ["Investor update", 14, 11, 0, "gold"], ["Team lunch", 15, 12, 30, "orange"], ["Hiring sync", 16, 10, 0, "blue"],
-      ["Launch week", 2, 0, 0, "teal", true, 4], ["Offsite", 17, 0, 0, "green", true, 1],
+      ["Sprint planning", 1, 9, 30, "blue"], ["Design review", 2, 11, 0, "purple"], ["Press kit", 2, 14, 30, "blue"], ["Run club", 3, 7, 0, "green"],
+      ["Customer call", 4, 14, 0, "green"], ["Retro", 5, 16, 0, "blue"], ["Offsite", 6, 0, 0, "orange", true, 1],
+      ["Sprint planning", 8, 9, 30, "blue"], ["Design crit", 9, 11, 0, "purple"], ["Launch checklist", 10, 10, 0, "teal"], ["Board prep", 10, 15, 0, "orange"],
+      ["Farmers market", 13, 10, 0, "green"], ["Hiring sync", 15, 10, 0, "blue"], ["Standup", 16, 9, 15, "blue"],
+      ["Launch week", 17, 0, 0, "teal", true, 4], ["Customer call", 18, 14, 0, "green"], ["Investor update", 19, 11, 0, "gold"],
+      ["Team lunch", 22, 12, 30, "orange"], ["Config Europe", 23, 0, 0, "purple", true, 1], ["Retro", 25, 16, 0, "blue"], ["Demo day", 26, 13, 0, "purple"],
     ];
     return rows.map(([title, d, h, m, color, allDay, span], i) => ({
       id: `w${i}`, title, color, allDay: !!allDay,
