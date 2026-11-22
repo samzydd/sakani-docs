@@ -232,7 +232,6 @@ function EventCalendarDemo({ inView }: { inView: boolean }) {
           today={today}
           defaultDate={today}
           onEventMove={(e, next) => setEvents((all) => all.map((x) => (x.id === e.id ? { ...x, ...next } : x)))}
-          style={{ height: 600 }}
         />
       ) : null}
     </div>
@@ -907,7 +906,7 @@ export function ComponentWall() {
         <WallCard title="Region Map" kind="Map" href="/docs/components/region-map" description="Regions shaded by a value, with a hover card and click-to-zoom. Outlines for the US, UK, Spain, Germany, Canada and Australia. Click a state." className="md:col-span-2" stageClassName="min-h-[420px]">
           {(v) => <RegionMapDemo inView={v} />}
         </WallCard>
-        <WallCard title="Event calendar" kind="Data display" href="/docs/components/event-calendar" description="Month and week calendars for events, with a day panel for busy time and free gaps. Drag an event to another day." className="md:col-span-2" stageClassName="min-h-[640px]">
+        <WallCard title="Event calendar" kind="Data display" href="/docs/components/event-calendar" description="Month and week calendars for events, with a day panel for busy time and free gaps. Drag an event to another day." className="md:col-span-2" stageClassName="min-h-[640px] items-start py-8">
           {(v) => <EventCalendarDemo inView={v} />}
         </WallCard>
         <WallCard title="Kanban board" kind="Block" href="/docs/blocks/kanban-board" description="A complete board with columns, cards, labels and a drag state." stageClassName="aspect-[1040/640] flex-none max-md:aspect-auto max-md:h-[360px]" padded={false}>

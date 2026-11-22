@@ -100,7 +100,7 @@ const WEEK_PROPS = [
   { name: "date / defaultDate / onDateChange", type: "Date", description: "Any date in the week shown." },
   { name: "days", type: "5 | 7", default: "7", description: "A work week shows the first five days." },
   { name: "weekStartsOn", type: "0 | 1 | … | 6", default: "1", description: "0 = Sunday, 1 = Monday." },
-  { name: "hourHeight / scrollToHour / height", type: "number", default: "48 / 8 / 640", description: "Pixels per hour, the hour the grid opens at, and the height of the scrolling grid." },
+  { name: "hourHeight / scrollToHour / height", type: "number", default: "52 / 8 / 640", description: "Pixels per hour, the hour the grid opens at, and the height of the scrolling grid." },
   { name: "snapMinutes", type: "number", default: "15", description: "A drag, and Alt + up or down, move by this many minutes." },
   { name: "onEventClick / onEventMove", type: "callbacks", description: "As in the month view. A drag moves across days and times; touch drags work too." },
   { name: "onSlotClick", type: "(start) => void", description: "An empty slot was pressed: the time under the pointer, snapped." },
@@ -146,7 +146,7 @@ export default function EventCalendarPage() {
           <ComponentPreview code={MONTH}>
             <Live>
               {(events, move) => (
-                <div style={{ width: 980, height: 640 }}>
+                <div style={{ width: 980 }}>
                   <MonthCalendar events={events} defaultDate={NOW} today={NOW} selectedDate={day} onSelectedDateChange={setDay} onEventMove={move} />
                 </div>
               )}
@@ -175,7 +175,7 @@ export default function EventCalendarPage() {
           <h2 className="mb-3 text-lg font-semibold text-ink">Day panel</h2>
           <p className="mb-3 text-sm text-ink-muted">
             Put it beside either view. It says how many events there are and how much of the working day is booked and free, draws the day as a strip, lists the
-            schedule, and offers each free gap as a <strong>Block focus time</strong> button.
+            schedule, and shows each free gap as a quiet line with its length; hover one and it offers <strong>Block focus time</strong>.
           </p>
           <ComponentPreview code={PANEL}>
             <div style={{ width: 340 }}>
