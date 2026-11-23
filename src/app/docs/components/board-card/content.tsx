@@ -34,6 +34,17 @@ const CARD = `<BoardCard
 const TYPES = `<BoardCard type="compact" title="KYC flow review" leading={<Checkbox />} />
 <BoardCard type="default" title="Icon library audit" description="Normalize stroke widths" />`;
 
+const MOVE = `<BoardCard
+  type="compact"
+  title="KYC flow review"
+  onMoveNext={() => moveTo('in-progress')}
+  nextLabel="In progress"
+  nextColor="var(--color-chart-2)"
+  onMoveBack={() => moveTo('todo')}
+  backLabel="To-do"
+  backColor="var(--color-chart-1)"
+/>`;
+
 const COLUMN = `<BoardColumn title="In progress" count={2} dotColor="var(--color-chart-2)">
   <BoardCard type="compact" title="Icon library audit" leading={<Checkbox />} />
   <BoardCard type="compact" title="Search performance" leading={<Checkbox />} />
@@ -56,6 +67,9 @@ const CARD_PROPS = [
   { name: "meta", type: "ReactNode", description: "CardMetaItem elements, e.g. due date and comment count." },
   { name: "assignees", type: "ReactNode", description: "Avatar or AvatarGroup, right-aligned in the footer." },
   { name: "cover", type: "ReactNode", description: "Cover media, for type=\"cover\"." },
+  { name: "onMoveNext / nextLabel / nextColor", type: "() => void / string / string", description: "Adds a round button on the card's right edge (hover or focus the card) that opens into a pill naming the stage: label, and a dot in the colour. Also Alt + → on the focused card." },
+  { name: "onMoveBack / backLabel / backColor", type: "() => void / string / string", description: "The same, on the left edge, going back a stage. Alt + ← on the focused card." },
+  { name: "moveDisabled", type: "boolean", description: "Hides the buttons and ignores the shortcuts while a move or a drag is under way." },
 ];
 
 const COLUMN_PROPS = [
@@ -113,6 +127,36 @@ export default function BoardCardPage() {
             block shows one way with native HTML5 drag events), which is what
             keeps dnd-kit or react-dnd a drop-in choice rather than a fight.
           </p>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Moving to the next stage</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>onMoveNext</code> (and <code>onMoveBack</code>) and the card grows a round button on each edge,
+            shown when the card is hovered or focused. Hover a button and it opens into a pill that names the stage,
+            with its colour. The card becomes focusable, and <kbd>Alt</kbd> + <kbd>→</kbd> / <kbd>←</kbd> do the same
+            from the keyboard. On touch the next button stays visible. The card only reports the click: moving it
+            (and sliding it across) is up to you; the{" "}
+            <a href="/docs/blocks/kanban-board" className="font-medium text-ink underline underline-offset-2">Kanban Board</a>{" "}
+            block shows it.
+          </p>
+          <ComponentPreview code={MOVE}>
+            <div className="px-10 py-6">
+              <BoardCard
+                type="compact"
+                leading={<Checkbox />}
+                title="KYC flow review"
+                trailing={<Flag size={14} color="var(--color-warning-fg)" />}
+                assignees={<AvatarGroup size="sm" max={2} avatars={[{ src: avatarImages.AK }]} />}
+                onMoveNext={() => {}}
+                nextLabel="In progress"
+                nextColor="var(--color-chart-2)"
+                onMoveBack={() => {}}
+                backLabel="To-do"
+                backColor="var(--color-chart-1)"
+              />
+            </div>
+          </ComponentPreview>
         </section>
 
         <section>
