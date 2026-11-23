@@ -52,6 +52,18 @@ export default function KanbanBoardBlockPage() {
           without the menu, and focus stays on the card. Each move is announced to screen readers. With reduced motion the card moves without the slide. <code>onTaskMove</code> reports
           every move, by drag or by menu, so you can save it.
         </p>
+        <h2>Move several cards at once</h2>
+        <p>
+          Tick the checkbox on a few cards (or Cmd / Ctrl-click them; once some are picked, a plain click adds or
+          removes one). They take an accent border and a bar rises at the bottom of the board: how many are selected,{" "}
+          <strong>Move to</strong>, and × to let go (or <kbd>Esc</kbd>).
+        </p>
+        <p>
+          <strong>Move to</strong>, in the bar or on any selected card, sends them all in a wave: each card lifts, arcs
+          across to the new column and settles at the top, a beat after the one before. <strong>Drag</strong> one of
+          them instead and the rest fly in and gather under it as a fanned deck with a count, while the columns they
+          left close up. Drop the deck on a column and it deals out into the list, card by card.
+        </p>
         <p>
           The button and its menu belong to <a href="/docs/components/board-card" className="font-medium text-ink underline underline-offset-2">BoardCard</a>:
           give any card <code>stages</code>, <code>stage</code> and <code>onMoveTo</code>.
