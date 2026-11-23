@@ -34,6 +34,21 @@ const CARD = `<BoardCard
 const TYPES = `<BoardCard type="compact" title="KYC flow review" leading={<Checkbox />} />
 <BoardCard type="default" title="Icon library audit" description="Normalize stroke widths" />`;
 
+const MOVE = `const stages = [
+  { id: 'todo', label: 'To-do', color: 'var(--color-chart-1)' },
+  { id: 'progress', label: 'In progress', color: 'var(--color-chart-2)' },
+  { id: 'review', label: 'In review', color: 'var(--color-chart-4)' },
+  { id: 'done', label: 'Done', color: 'var(--color-success-solid)' },
+];
+
+<BoardCard
+  type="compact"
+  title="KYC flow review"
+  stages={stages}
+  stage="progress"
+  onMoveTo={(id) => moveCard(card.id, id)}
+/>`;
+
 const COLUMN = `<BoardColumn title="In progress" count={2} dotColor="var(--color-chart-2)">
   <BoardCard type="compact" title="Icon library audit" leading={<Checkbox />} />
   <BoardCard type="compact" title="Search performance" leading={<Checkbox />} />
@@ -56,6 +71,10 @@ const CARD_PROPS = [
   { name: "meta", type: "ReactNode", description: "CardMetaItem elements, e.g. due date and comment count." },
   { name: "assignees", type: "ReactNode", description: "Avatar or AvatarGroup, right-aligned in the footer." },
   { name: "cover", type: "ReactNode", description: "Cover media, for type=\"cover\"." },
+  { name: "stages", type: "{ id, label, color? }[]", description: "Every stage the card can be in, in order. With stage and onMoveTo, adds a quiet Move to button (⇄) at the top right of the card that opens a short list of the stages." },
+  { name: "stage", type: "string", description: "The id of the stage the card is in: marked with a check in the menu." },
+  { name: "onMoveTo", type: "(stageId: string) => void", description: "A stage was chosen, from the menu or with Alt + → / Alt + ← on the focused card. The card only reports it: you move it." },
+  { name: "moveDisabled", type: "boolean", description: "Hides the button and ignores the shortcuts while a move or a drag is under way." },
 ];
 
 const COLUMN_PROPS = [
@@ -113,6 +132,39 @@ export default function BoardCardPage() {
             block shows one way with native HTML5 drag events), which is what
             keeps dnd-kit or react-dnd a drop-in choice rather than a fight.
           </p>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-ink">Moving to the next stage</h2>
+          <p className="mb-3 text-sm text-ink-muted">
+            Pass <code>stages</code>, <code>stage</code> and <code>onMoveTo</code> and the card&apos;s header gets a
+            small, quiet <strong>Move to</strong> button (⇄) at the top right, beside the flag. It is always there, so
+            nothing shifts on hover and the footer keeps its layout, and it works the same on touch. It opens a short list of the stages, each with its colour: the card&apos;s own stage has a check
+            and the next one is highlighted to start with. <kbd>↑</kbd> <kbd>↓</kbd> or a number pick, <kbd>Enter</kbd>
+            moves, and <kbd>Alt</kbd> + <kbd>→</kbd> / <kbd>←</kbd> on the focused card
+            skip the menu. The card only reports the choice: moving it (and sliding it across) is up to you; the{" "}
+            <a href="/docs/blocks/kanban-board" className="font-medium text-ink underline underline-offset-2">Kanban Board</a>{" "}
+            block shows it.
+          </p>
+          <ComponentPreview code={MOVE}>
+            <div className="px-10 pb-40 pt-6">
+              <BoardCard
+                type="compact"
+                leading={<Checkbox />}
+                title="KYC flow review"
+                trailing={<Flag size={14} color="var(--color-warning-fg)" />}
+                assignees={<AvatarGroup size="sm" max={2} avatars={[{ src: avatarImages.AK }]} />}
+                stages={[
+                  { id: "todo", label: "To-do", color: "var(--color-chart-1)" },
+                  { id: "progress", label: "In progress", color: "var(--color-chart-2)" },
+                  { id: "review", label: "In review", color: "var(--color-chart-4)" },
+                  { id: "done", label: "Done", color: "var(--color-success-solid)" },
+                ]}
+                stage="progress"
+                onMoveTo={() => {}}
+              />
+            </div>
+          </ComponentPreview>
         </section>
 
         <section>
