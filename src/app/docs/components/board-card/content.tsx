@@ -67,9 +67,9 @@ const CARD_PROPS = [
   { name: "meta", type: "ReactNode", description: "CardMetaItem elements, e.g. due date and comment count." },
   { name: "assignees", type: "ReactNode", description: "Avatar or AvatarGroup, right-aligned in the footer." },
   { name: "cover", type: "ReactNode", description: "Cover media, for type=\"cover\"." },
-  { name: "onMoveNext / nextLabel / nextColor", type: "() => void / string / string", description: "Adds a round button on the card's right edge (hover or focus the card) that opens into a pill naming the stage: label, and a dot in the colour. Also Alt + → on the focused card." },
-  { name: "onMoveBack / backLabel / backColor", type: "() => void / string / string", description: "The same, on the left edge, going back a stage. Alt + ← on the focused card." },
-  { name: "moveDisabled", type: "boolean", description: "Hides the buttons and ignores the shortcuts while a move or a drag is under way." },
+  { name: "onMoveNext / nextLabel / nextColor", type: "() => void / string / string", description: "Adds a small control to the card's footer (hover or focus the card); hover it and a label names the stage, with a dot in the colour. Also Alt + → on the focused card." },
+  { name: "onMoveBack / backLabel / backColor", type: "() => void / string / string", description: "A back half on the same control, going back a stage. Alt + ← on the focused card." },
+  { name: "moveDisabled", type: "boolean", description: "Hides the control and ignores the shortcuts while a move or a drag is under way." },
 ];
 
 const COLUMN_PROPS = [
@@ -132,11 +132,11 @@ export default function BoardCardPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Moving to the next stage</h2>
           <p className="mb-3 text-sm text-ink-muted">
-            Pass <code>onMoveNext</code> (and <code>onMoveBack</code>) and the card grows a round button on each edge,
-            shown when the card is hovered or focused. Hover a button and it opens into a pill that names the stage,
-            with its colour. The card becomes focusable, and <kbd>Alt</kbd> + <kbd>→</kbd> / <kbd>←</kbd> do the same
-            from the keyboard. On touch the next button stays visible. The card only reports the click: moving it
-            (and sliding it across) is up to you; the{" "}
+            Pass <code>onMoveNext</code> (and <code>onMoveBack</code>) and the card&apos;s footer gets a small control, shown
+            when the card is hovered or focused; it keeps its room, so nothing shifts when it appears. Hover it and a
+            label names the stage, with its colour. The card becomes focusable, and <kbd>Alt</kbd> + <kbd>→</kbd> /{" "}
+            <kbd>←</kbd> do the same from the keyboard. On touch the control stays visible. The card only reports the
+            click: moving it (and sliding it across) is up to you; the{" "}
             <a href="/docs/blocks/kanban-board" className="font-medium text-ink underline underline-offset-2">Kanban Board</a>{" "}
             block shows it.
           </p>
