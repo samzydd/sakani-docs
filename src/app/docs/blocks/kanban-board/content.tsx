@@ -35,25 +35,29 @@ export default function KanbanBoardBlockPage() {
           place. Mouse, pen and touch (press and hold) all work; the board scrolls at its edges, a card dropped
           outside a column springs back, and reduced motion turns the swing off.
         </p>
-        <h2>Move to the next stage</h2>
+        <h2>Move a card to another stage</h2>
         <p>
-          Dragging is not the only way. Hover or focus a card and a small control appears in its footer, beside the
-          avatars. Hover it and a label names the stage (&ldquo;In progress&rdquo;), with that stage&apos;s colour.
-          Click it and the card slides across into the next column at its own height, then glides up to the top while
-          the cards around it make room: one continuous move, with no jump. The new column&apos;s colour rings the
-          card as it lands and both counts tick. The control has a back half too, and the last column has no
-          &ldquo;next&rdquo;.
+          Dragging is not the only way. Hover or focus a card and a small <strong>Move to</strong> button (⇄) shows in
+          its footer. It opens a menu of every stage, laid out as a pipeline: the stages behind the card filled in, its
+          own stage ringed and marked &ldquo;Current&rdquo;, the ones ahead hollow, each with its colour and how many
+          cards it holds. The next stage is chosen to start with, so a click moves the card on; pick any other to send
+          it there.
         </p>
         <p>
-          From the keyboard, focus a card (<kbd>Tab</kbd>) and press <kbd>Alt</kbd> + <kbd>→</kbd> or{" "}
-          <kbd>Alt</kbd> + <kbd>←</kbd>; focus stays on the card so you can press again. Each move is announced to
-          screen readers (&ldquo;Retention rate by 23% moved to In progress, position 1 of 6&rdquo;). On touch the
-          control stays on every card, since there is no hover. With reduced motion the card moves without the slide.{" "}
-          <code>onTaskMove</code> reports every move, by drag or by control, so you can save it.
+          The card slides across into that column at its own height, settles, then glides up to the top while the cards
+          around it make room: no jump, and a move across several columns simply takes a little longer. The new
+          column&apos;s colour rings the card as it lands and both counts tick.
         </p>
         <p>
-          The control belongs to <a href="/docs/components/board-card" className="font-medium text-ink underline underline-offset-2">BoardCard</a>:
-          give any card <code>onMoveNext</code> and <code>nextLabel</code> and it appears.
+          With a keyboard: <kbd>↑</kbd> <kbd>↓</kbd> or a number key choose a stage, <kbd>Enter</kbd> moves,{" "}
+          <kbd>Esc</kbd> closes. On a focused card, <kbd>Alt</kbd> + <kbd>→</kbd> / <kbd>←</kbd> move it one stage
+          without the menu, and focus stays on the card. Each move is announced to screen readers. On touch the button
+          stays on every card. With reduced motion the card moves without the slide. <code>onTaskMove</code> reports
+          every move, by drag or by menu, so you can save it.
+        </p>
+        <p>
+          The button and its menu belong to <a href="/docs/components/board-card" className="font-medium text-ink underline underline-offset-2">BoardCard</a>:
+          give any card <code>stages</code>, <code>stage</code> and <code>onMoveTo</code>.
         </p>
       </div>
 

@@ -34,15 +34,19 @@ const CARD = `<BoardCard
 const TYPES = `<BoardCard type="compact" title="KYC flow review" leading={<Checkbox />} />
 <BoardCard type="default" title="Icon library audit" description="Normalize stroke widths" />`;
 
-const MOVE = `<BoardCard
+const MOVE = `const stages = [
+  { id: 'todo', label: 'To-do', color: 'var(--color-chart-1)', count: 6 },
+  { id: 'progress', label: 'In progress', color: 'var(--color-chart-2)', count: 5 },
+  { id: 'review', label: 'In review', color: 'var(--color-chart-4)', count: 5 },
+  { id: 'done', label: 'Done', color: 'var(--color-success-solid)', count: 5 },
+];
+
+<BoardCard
   type="compact"
   title="KYC flow review"
-  onMoveNext={() => moveTo('in-progress')}
-  nextLabel="In progress"
-  nextColor="var(--color-chart-2)"
-  onMoveBack={() => moveTo('todo')}
-  backLabel="To-do"
-  backColor="var(--color-chart-1)"
+  stages={stages}
+  stage="progress"
+  onMoveTo={(id) => moveCard(card.id, id)}
 />`;
 
 const COLUMN = `<BoardColumn title="In progress" count={2} dotColor="var(--color-chart-2)">
@@ -67,9 +71,10 @@ const CARD_PROPS = [
   { name: "meta", type: "ReactNode", description: "CardMetaItem elements, e.g. due date and comment count." },
   { name: "assignees", type: "ReactNode", description: "Avatar or AvatarGroup, right-aligned in the footer." },
   { name: "cover", type: "ReactNode", description: "Cover media, for type=\"cover\"." },
-  { name: "onMoveNext / nextLabel / nextColor", type: "() => void / string / string", description: "Adds a small control to the card's footer (hover or focus the card); hover it and a label names the stage, with a dot in the colour. Also Alt + → on the focused card." },
-  { name: "onMoveBack / backLabel / backColor", type: "() => void / string / string", description: "A back half on the same control, going back a stage. Alt + ← on the focused card." },
-  { name: "moveDisabled", type: "boolean", description: "Hides the control and ignores the shortcuts while a move or a drag is under way." },
+  { name: "stages", type: "{ id, label, color?, count? }[]", description: "Every stage the card can be in, in order. With stage and onMoveTo, adds a Move to button (⇄) to the footer, shown on hover or focus, that opens a menu of the stages." },
+  { name: "stage", type: "string", description: "The id of the stage the card is in: ringed and marked Current in the menu." },
+  { name: "onMoveTo", type: "(stageId: string) => void", description: "A stage was chosen, from the menu or with Alt + → / Alt + ← on the focused card. The card only reports it: you move it." },
+  { name: "moveDisabled", type: "boolean", description: "Hides the button and ignores the shortcuts while a move or a drag is under way." },
 ];
 
 const COLUMN_PROPS = [
@@ -132,28 +137,31 @@ export default function BoardCardPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-ink">Moving to the next stage</h2>
           <p className="mb-3 text-sm text-ink-muted">
-            Pass <code>onMoveNext</code> (and <code>onMoveBack</code>) and the card&apos;s footer gets a small control, shown
-            when the card is hovered or focused; it keeps its room, so nothing shifts when it appears. Hover it and a
-            label names the stage, with its colour. The card becomes focusable, and <kbd>Alt</kbd> + <kbd>→</kbd> /{" "}
-            <kbd>←</kbd> do the same from the keyboard. On touch the control stays visible. The card only reports the
-            click: moving it (and sliding it across) is up to you; the{" "}
+            Pass <code>stages</code>, <code>stage</code> and <code>onMoveTo</code> and the card&apos;s footer gets a
+            small <strong>Move to</strong> button (⇄), shown when the card is hovered or focused; it keeps its room, so
+            nothing shifts. It opens a menu of every stage as a pipeline, with each stage&apos;s colour and count, the
+            card&apos;s own stage marked Current and the next one chosen to start with. <kbd>↑</kbd> <kbd>↓</kbd> or a
+            number pick, <kbd>Enter</kbd> moves, and <kbd>Alt</kbd> + <kbd>→</kbd> / <kbd>←</kbd> on the focused card
+            skip the menu. The card only reports the choice: moving it (and sliding it across) is up to you; the{" "}
             <a href="/docs/blocks/kanban-board" className="font-medium text-ink underline underline-offset-2">Kanban Board</a>{" "}
             block shows it.
           </p>
           <ComponentPreview code={MOVE}>
-            <div className="px-10 py-6">
+            <div className="px-10 pb-64 pt-6">
               <BoardCard
                 type="compact"
                 leading={<Checkbox />}
                 title="KYC flow review"
                 trailing={<Flag size={14} color="var(--color-warning-fg)" />}
                 assignees={<AvatarGroup size="sm" max={2} avatars={[{ src: avatarImages.AK }]} />}
-                onMoveNext={() => {}}
-                nextLabel="In progress"
-                nextColor="var(--color-chart-2)"
-                onMoveBack={() => {}}
-                backLabel="To-do"
-                backColor="var(--color-chart-1)"
+                stages={[
+                  { id: "todo", label: "To-do", color: "var(--color-chart-1)", count: 6 },
+                  { id: "progress", label: "In progress", color: "var(--color-chart-2)", count: 5 },
+                  { id: "review", label: "In review", color: "var(--color-chart-4)", count: 5 },
+                  { id: "done", label: "Done", color: "var(--color-success-solid)", count: 5 },
+                ]}
+                stage="progress"
+                onMoveTo={() => {}}
               />
             </div>
           </ComponentPreview>
