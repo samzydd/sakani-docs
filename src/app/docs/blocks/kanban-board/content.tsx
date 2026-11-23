@@ -37,8 +37,8 @@ export default function KanbanBoardBlockPage() {
         </p>
         <h2>Move a card to another stage</h2>
         <p>
-          Dragging is not the only way. Hover or focus a card and a small <strong>Move to</strong> button (⇄) shows in
-          its footer. It opens a short list of the stages, each with its colour: the card&apos;s own stage has a check,
+          Dragging is not the only way. Each card has a small, quiet <strong>Move to</strong> button (⇄) at its top right,
+          beside the priority flag. It is always there (so nothing shifts on hover and the avatars stay put) and it opens a short list of the stages, each with its colour: the card&apos;s own stage has a check,
           and the next stage is highlighted to start with, so a click moves the card on; pick any other to send it
           there.
         </p>
@@ -49,8 +49,7 @@ export default function KanbanBoardBlockPage() {
         </p>
         <p>
           With a keyboard: <kbd>↑</kbd> <kbd>↓</kbd> or a number key choose a stage, <kbd>Enter</kbd> moves, <kbd>Esc</kbd> closes. On a focused card, <kbd>Alt</kbd> + <kbd>→</kbd> / <kbd>←</kbd> move it one stage
-          without the menu, and focus stays on the card. Each move is announced to screen readers. On touch the button
-          stays on every card. With reduced motion the card moves without the slide. <code>onTaskMove</code> reports
+          without the menu, and focus stays on the card. Each move is announced to screen readers. With reduced motion the card moves without the slide. <code>onTaskMove</code> reports
           every move, by drag or by menu, so you can save it.
         </p>
         <p>
