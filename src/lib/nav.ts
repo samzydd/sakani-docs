@@ -174,6 +174,7 @@ export const docsNav: NavGroup[] = [
       { title: "Live Map", href: "/docs/blocks/live-map" },
       { title: "Region Map", href: "/docs/blocks/region-map" },
       { title: "Calendar", href: "/docs/blocks/calendar" },
+      { title: "Share", href: "/docs/blocks/share" },
     ],
   },
 ];
