@@ -9,7 +9,8 @@ import {
   RegionMap, RegionMapLegend, MonthCalendar, type CalendarEventData,
 } from "@sakaniui/react";
 import { US_STATES, US_STATES_VIEWBOX } from "@sakaniui/react/regions/us";
-import { AiChatBlock, KanbanBoardBlock } from "@sakaniui/react/blocks";
+import { AiChatBlock, KanbanBoardBlock, ShareBlock } from "@sakaniui/react/blocks";
+import { SHARE_DEMO } from "@/lib/share-demo";
 import { EmojiLightBulb, EmojiMagnifyingGlassTiltedLeft, EmojiPageFacingUp } from "@sakaniui/react/emoji";
 import {
   IconArrowRight as ArrowRight, IconArrowUpRight as ArrowUpRight, IconMoon as Moon, IconPencil as Pencil, IconSun as Sun,
@@ -237,6 +238,15 @@ function EventCalendarDemo({ inView }: { inView: boolean }) {
           onEventMove={(e, next) => setEvents((all) => all.map((x) => (x.id === e.id ? { ...x, ...next } : x)))}
         />
       ) : null}
+    </div>
+  );
+}
+
+/** The Share panel, live: type chloe.wu@acme.com or marco.diaz@acme.com and a comma, then Invite. */
+function ShareDemo({ inView }: { inView: boolean }) {
+  return (
+    <div className="w-full max-w-[420px]">
+      {inView ? <ShareBlock {...SHARE_DEMO} defaultAccess="invited" /> : null}
     </div>
   );
 }
@@ -917,6 +927,9 @@ export function ComponentWall() {
         </WallCard>
         <WallCard title="AI chat" kind="Block" href="/docs/blocks/ai-chat" description="A full AI conversation: the reasoning streams in, a tool runs, the answer is written, with the prompt box and follow-ups." stageClassName="aspect-[1040/640] flex-none" padded={false} reveal={90}>
           {(v) => <AutoDemo inView={v} mode="scale" play={playAiChat}><AiChatBlock className="!h-full !w-full" /></AutoDemo>}
+        </WallCard>
+        <WallCard title="Share" kind="Block" href="/docs/blocks/share" description="Who can open a document, who you have invited, and the link. Type chloe.wu@acme.com and a comma, then Invite." className="md:col-span-2" stageClassName="min-h-[480px]">
+          {(v) => <ShareDemo inView={v} />}
         </WallCard>
         <WallCard title="Chain of Thought" kind="AI" href="/docs/components/chain-of-thought" description="Show an agent's work: steps on a rail with real site logos and emoji, counts, sources and a live Working line." stageClassName="min-h-[420px]">
           {(v) => <ChainDemo inView={v} />}
